@@ -25,5 +25,17 @@ export default {
       }
     }
   },
-  plugins: []
+  plugins: [
+    function ({ addComponents }) {
+      addComponents({
+        ".footer": {
+          display: "flex",
+          "flex-direction": "column",
+          "align-items": "center",
+          "justify-content": "space-between",
+          height: "50px"
+        }
+      });
+    }
+  ]
 };

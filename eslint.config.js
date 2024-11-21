@@ -29,7 +29,7 @@ export default [
       ...react.configs["jsx-runtime"].rules,
       ...reactHooks.configs.recommended.rules,
       "react/jsx-no-target-blank": "off",
-      "no-unused-vars": "off", // 안 쓰는 코드 warn or off
+      "no-unused-vars": "warn", // 안 쓰는 코드 warn or off
       "react-refresh/only-export-components": ["warn", { allowConstantExport: true }]
     }
   }

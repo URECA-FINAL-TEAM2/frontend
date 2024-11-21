@@ -11,12 +11,15 @@ import StylistDocs from "./pages/stylist/StylistDocs";
 import StylistStore from "./pages/stylist/StylistStore";
 import StylistChat from "./pages/stylist/StylistChat";
 import StylistMyPage from "./pages/stylist/StylistMyPage";
+import Notification from "./components/common/Notification";
 
 function App() {
   return (
     <div className="App">
       <Router>
         <Routes>
+          <Route path="/notification" element={<Notification />} />
+
           <Route path="/user" element={<UserLayout />}>
             <Route path="home" element={<UserHome />} />
             <Route path="docs" element={<UserDocs />} />

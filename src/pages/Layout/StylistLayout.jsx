@@ -1,6 +1,6 @@
 import Header from "../../components/common/Header";
 import { Outlet } from "react-router-dom";
-import StylistFooter from "../../components/common/StylistFooter";
+import StylistBottom from "../../components/common/StylistBottom";
 
 const StylistLayout = () => {
   return (
@@ -9,7 +9,7 @@ const StylistLayout = () => {
       <main>
         <Outlet />
       </main>
-      <StylistFooter />
+      <StylistBottom />
     </>
   );
 };

@@ -1,10 +1,10 @@
 import Header from "../../components/common/Header";
 import SubHeader from "../../components/common/SubHeader";
-import UserFooter from "../../components/common/UserFooter";
-import StylistFooter from "../../components/common/StylistFooter";
+import UserFooter from "../../components/common/UserBottom";
+import StylistFooter from "../../components/common/StylistBottom";
 
 const UserHome = () => {
-  return <div>홈입니다</div>;
+  return <div>user home</div>;
 };
 
 export default UserHome;

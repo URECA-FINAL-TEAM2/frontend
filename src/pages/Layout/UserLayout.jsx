@@ -1,5 +1,5 @@
 import Header from "../../components/common/Header";
-import UserFooter from "../../components/common/UserFooter";
+import UserBottom from "../../components/common/UserBottom";
 import { Outlet } from "react-router-dom";
 
 const UserLayout = () => {
@@ -9,7 +9,7 @@ const UserLayout = () => {
       <main>
         <Outlet />
       </main>
-      <UserFooter />
+      <UserBottom />
     </>
   );
 };

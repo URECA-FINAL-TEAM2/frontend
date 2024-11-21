@@ -1,15 +1,13 @@
 /** @type {import('tailwindcss').Config} */
 export default {
-  content: [
-    "./src/**/*.{js,jsx,ts,tsx}" //수정
-  ],
+  content: ["./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
     extend: {
       colors: {
         transparent: "transparent",
         white: "#FFFFFF",
         black: "#000000",
-        primary: {
+        main: {
           DEFAULT: "#FF8E8E",
           100: "#FFF3F3", // subcolor 3
           200: "#FFDCDC", // subcolor 2

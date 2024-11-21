@@ -9,35 +9,35 @@ const UserFooter = () => {
   return (
     <div className="fixed bottom-0 h-[75px] w-[400px] bg-white px-2">
       <div className="grid h-full grid-cols-5 items-center justify-items-center">
-        <Link to="/">
+        <Link to="/user/home">
           <div className="footer">
             <TfiHome size={25} />
             <span className="mt-1 text-xs">홈</span>
           </div>
         </Link>
-        <Link to="/">
+        <Link to="/user/docs">
           <div className="footer">
             <VscSymbolFile size={25} />
             <span className="mt-1 text-xs">견적서</span>
           </div>
         </Link>
-        <Link to="/">
+        <Link to="/user/search">
           <div className="footer">
             <TbPawFilled size={30} />
             <span className="mt-1 text-xs">미용사 찾기</span>
-          </div>{" "}
+          </div>
         </Link>
-        <Link to="/">
+        <Link to="/user/chat">
           <div className="footer">
             <PiChatCircle size={27} />
             <span className="mt-1 text-xs">채팅</span>
-          </div>{" "}
+          </div>
         </Link>
-        <Link to="/">
+        <Link to="/user/mypage">
           <div className="footer">
             <PiUserCircleLight size={30} />
             <span className="mt-1 text-xs">마이</span>
-          </div>{" "}
+          </div>
         </Link>
       </div>
     </div>

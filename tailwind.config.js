@@ -28,6 +28,7 @@ export default {
   plugins: [
     function ({ addComponents }) {
       addComponents({
+        // 하단바 스타일
         ".bottom": {
           display: "flex",
           "flex-direction": "column",
@@ -38,6 +39,28 @@ export default {
         ".bottom-active": {
           color: "#FF8E8E",
           "font-weight": "bold"
+        },
+        // form style
+        ".labelStyle": {
+          display: "block",
+          fontSize: "1.125rem",
+          color: "#FF8E8E",
+          width: "75%",
+          marginLeft: "auto",
+          marginRight: "auto"
+        },
+        ".inputStyle": {
+          paddingBottom: "7px",
+          marginLeft: "auto",
+          marginRight: "auto",
+          marginBottom: "1.8rem",
+          marginTop: "0.25rem",
+          display: "block",
+          width: "75%",
+          borderWidth: "1px",
+          borderBottom: "2px solid #FF8E8E",
+
+          color: "F5F5F5"
         }
       });
     }

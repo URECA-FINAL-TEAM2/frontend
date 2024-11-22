@@ -1,21 +1,22 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import UserHome from "./pages/User/UserHome";
-import UserSearch from "./pages/User/UserSearch";
-import UserDocs from "./pages/User/UserDocs";
-import UserMyPage from "./pages/User/UserMyPage";
-import UserChat from "./pages/User/UserChat";
-import UserLayout from "./pages/Layout/UserLayout";
-import StylistLayout from "./pages/Layout/StylistLayout";
-import StylistHome from "./pages/Stylist/StylistHome";
-import StylistDocs from "./pages/Stylist/StylistDocs";
-import StylistStore from "./pages/Stylist/StylistStore";
-import StylistChat from "./pages/Stylist/StylistChat";
-import StylistMyPage from "./pages/Stylist/StylistMyPage";
 import Notification from "./pages/Notification";
 import TestPage from "./pages/TestPage";
 import Onboarding from "./pages/Main/Onboarding";
 import Login from "./pages/Main/Login";
 import SelectRole from "./pages/Main/SelectRole";
+import InfoRequired from "./pages/Main/InfoRequired";
+import CustomerLayout from "./pages/Layout/CustomerLayout";
+import GroomerLayout from "./pages/Layout/GroomerLayout";
+import CustomerHome from "./pages/Customer/CustomerHome";
+import CustomerDocs from "./pages/Customer/CustomerDocs";
+import CustomerSearch from "./pages/Customer/CustomerSearch";
+import CustomerChat from "./pages/Customer/CustomerChat";
+import CustomerMypage from "./pages/Customer/CustomerMypage";
+import GroomerHome from "./pages/Groomer/GroomerHome";
+import GroomerDocs from "./pages/Groomer/GroomerDocs";
+import GroomerStore from "./pages/Groomer/GroomerStore";
+import GroomerChat from "./pages/Groomer/GroomerChat";
+import GroomerMypage from "./pages/Groomer/GroomerMypage";
 
 function App() {
   return (
@@ -26,22 +27,23 @@ function App() {
           <Route path="/" element={<Onboarding />} />
           <Route path="/login" element={<Login />} />
           <Route path="/SelectRole" element={<SelectRole />} />
+          <Route path="/infoRequired" element={<InfoRequired />} />
           <Route path="/notification" element={<Notification />} />
 
-          <Route path="/user" element={<UserLayout />}>
-            <Route path="home" element={<UserHome />} />
-            <Route path="docs" element={<UserDocs />} />
-            <Route path="search" element={<UserSearch />} />
-            <Route path="chat" element={<UserChat />} />
-            <Route path="mypage" element={<UserMyPage />} />
+          <Route path="/customer" element={<CustomerLayout />}>
+            <Route path="home" element={<CustomerHome />} />
+            <Route path="docs" element={<CustomerDocs />} />
+            <Route path="search" element={<CustomerSearch />} />
+            <Route path="chat" element={<CustomerChat />} />
+            <Route path="mypage" element={<CustomerMypage />} />
           </Route>
 
-          <Route path="/stylist" element={<StylistLayout />}>
-            <Route path="home" element={<StylistHome />} />
-            <Route path="docs" element={<StylistDocs />} />
-            <Route path="store" element={<StylistStore />} />
-            <Route path="chat" element={<StylistChat />} />
-            <Route path="mypage" element={<StylistMyPage />} />
+          <Route path="/groomer" element={<GroomerLayout />}>
+            <Route path="home" element={<GroomerHome />} />
+            <Route path="docs" element={<GroomerDocs />} />
+            <Route path="store" element={<GroomerStore />} />
+            <Route path="chat" element={<GroomerChat />} />
+            <Route path="mypage" element={<GroomerMypage />} />
           </Route>
         </Routes>
       </Router>

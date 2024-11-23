@@ -63,7 +63,7 @@ const Postcode = ({ setFormData, handleChange }) => {
             value={roadAddress}
             onChange={handleChange}
             placeholder="도로명 주소"
-            required
+            readOnly
           />
 
           <input type="text" onChange={changeHandler} value={detailAddress} placeholder="상세주소" />

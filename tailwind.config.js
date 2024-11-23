@@ -22,6 +22,9 @@ export default {
       },
       fontFamily: {
         sans: ["Pretendard", "Inter", "system-ui", "Avenir", "Helvetica", "Arial", "sans-serif"]
+      },
+      scale: {
+        103: "1.03"
       }
     }
   },
@@ -59,8 +62,19 @@ export default {
           width: "75%",
           borderWidth: "1px",
           borderBottom: "2px solid #FF8E8E",
-
           color: "F5F5F5"
+        },
+        // 공통 컴포넌트 bottom
+        ".bottomButtonPink": {
+          backgroundColor: "#FF8E8E",
+          color: "white",
+          width: "400px",
+          height: "60px",
+          fontSize: "1.2rem",
+          position: "fixed",
+          bottom: "0",
+          borderRadius: "10px 10px 0 0",
+          transition: "all 300ms"
         }
       });
     }

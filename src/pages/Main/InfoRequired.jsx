@@ -45,34 +45,28 @@ const InfoRequired = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const form = e.target;
-    if (!form.checkValidity()) {
-      const firstInvalid = form.querySelector(":invalid"); // 첫 번째 유효하지 않은 필드
-      firstInvalid.focus(); // 포커스 설정
-      return;
-    }
 
     console.log("Submitted Data:", formData);
-    // const formData = new FormData();
+    const formData = new FormData();
 
-    // formData.append("profile_image", formData.profile_image);
-    // formData.append("username", formData.username);
-    // formData.append("nickname", formData.nickname);
-    // formData.append("phone", formData.phone);
-    // formData.append("address", formData.address);
-    // formData.append("role", formData.role);
-    // formData.append("skill", formData.skill);
+    formData.append("profile_image", formData.profile_image);
+    formData.append("username", formData.username);
+    formData.append("nickname", formData.nickname);
+    formData.append("phone", formData.phone);
+    formData.append("address", formData.address);
+    formData.append("role", formData.role);
+    formData.append("skill", formData.skill);
 
-    // try {
-    //   const response = await axiosInstance.post("/profile/customer", formData, {
-    //     headers: {
-    //       "Content-Type": "multipart/form-data"
-    //     }
-    //   });
-    //   console.log("폼 전송 성공:", response.data);
-    // } catch (error) {
-    //   console.error("폼 전송 중 오류 발생:", error);
-    // }
+    try {
+      const response = await axiosInstance.post("/profile/customer", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data"
+        }
+      });
+      console.log("폼 전송 성공:", response.data);
+    } catch (error) {
+      console.error("폼 전송 중 오류 발생:", error);
+    }
   };
 
   // 이미지 클릭 시 input 클릭 트리거
@@ -184,10 +178,13 @@ const InfoRequired = () => {
           </div>
         )}
 
-        {/* 버튼 하나로 합치거나 ,,, onSubmit */}
         <BottomButton type={"submit"} onSubmit={handleSubmit} styleType={"pink"}>
           내 정보 저장하기
         </BottomButton>
+
+        {/* <button type="submit" onSubmit={handleSubmit} className="bottomButtonPink">
+          내 정보 저장하기
+        </button> */}
       </form>
     </div>
   );

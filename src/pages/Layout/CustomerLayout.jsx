@@ -7,7 +7,7 @@ const CustomerLayout = () => {
   return (
     <>
       <Header />
-      <main>
+      <main className="mt-[75px]">
         <Outlet />
       </main>
       <CustomerBottom />

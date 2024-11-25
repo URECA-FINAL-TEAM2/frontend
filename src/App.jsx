@@ -17,6 +17,7 @@ import GroomerDocs from "./pages/Groomer/GroomerDocs";
 import GroomerStore from "./pages/Groomer/GroomerStore";
 import GroomerChat from "./pages/Groomer/GroomerChat";
 import GroomerMypage from "./pages/Groomer/GroomerMypage";
+import BestReviews from "./pages/Main/BestReviews";
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
           <Route path="/SelectRole" element={<SelectRole />} />
           <Route path="/infoRequired" element={<InfoRequired />} />
           <Route path="/notification" element={<Notification />} />
+          <Route path="/bestReviews" element={<BestReviews />} />
 
           <Route path="/customer" element={<CustomerLayout />}>
             <Route path="home" element={<CustomerHome />} />

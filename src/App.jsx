@@ -17,13 +17,15 @@ import GroomerDocs from "./pages/Groomer/GroomerDocs";
 import GroomerStore from "./pages/Groomer/GroomerStore";
 import GroomerChat from "./pages/Groomer/GroomerChat";
 import GroomerMypage from "./pages/Groomer/GroomerMypage";
+import PaymentComponent from "./pages/Payment/PaymentComponent";
+import PaymentComplete from "./pages/Payment/PaymentComplete";
 
 function App() {
   return (
     <div className="App">
       <Router>
         <Routes>
-          <Route path="/testpage" element={<TestPage />} />
+          <Route path="/testpage" element={<PaymentComplete />} />
           <Route path="/" element={<Onboarding />} />
           <Route path="/login" element={<Login />} />
           <Route path="/SelectRole" element={<SelectRole />} />

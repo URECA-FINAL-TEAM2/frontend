@@ -18,6 +18,7 @@ import GroomerStore from "./pages/Groomer/GroomerStore";
 import GroomerChat from "./pages/Groomer/GroomerChat";
 import GroomerMypage from "./pages/Groomer/GroomerMypage";
 import BestReviews from "./pages/Main/BestReviews";
+import KakaoOAuth2RedirectPage from "./components/Login/KakaOauth2RedirectPage";
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
           <Route path="/testpage" element={<TestPage />} />
           <Route path="/" element={<Onboarding />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/oauth/kakao" element={<KakaoOAuth2RedirectPage />} />
           <Route path="/SelectRole" element={<SelectRole />} />
           <Route path="/infoRequired" element={<InfoRequired />} />
           <Route path="/notification" element={<Notification />} />

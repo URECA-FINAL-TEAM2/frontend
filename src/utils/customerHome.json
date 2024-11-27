@@ -1,0 +1,49 @@
+{
+  "message": "메인페이지 조회 성공",
+  "data": {
+    "bestReviews": [
+      {
+        "reviewId": 1,
+        "shopName": "블레스펫살롱",
+        "reviewImage": "/Main/customer.svg",
+        "content": "컷이 이쁘고 청결해서 마음에 들고 청결해서 마음에 들고 왈가 컷이 이쁘고 청결해서 마음에 들고 청결해서 마음에  가 컷이 이쁘고 청결해서 마음에 들고 청결해서 마음에 ",
+        "starScore": 4.5,
+        "recommendCount": 54,
+        "timestamp": "2024-11-14"
+      },
+      {
+        "reviewId": 2,
+        "shopName": "블레스펫살롱",
+        "reviewImage": "/Main/customer.svg",
+        "content": "컷이 이쁘고 청결해서 마음에 들고 청결해서 마음에 들고 왈가",
+        "recommendCount": 45,
+        "starScore": 4.5,
+        "timestamp": "2024-11-14"
+      }
+    ],
+    "localGroomers": [
+      {
+        "groomerId": 1,
+        "shopId": 1,
+        "shopLogo": "/Main/customer.svg",
+        "shopName": "블레스펫살롱",
+        "starScore": 4.8,
+        "starCount": 30,
+        "address": "서울시 영등포구 여의대로 15-1",
+        "businessTime": "10:00-19:00 매주 월 휴무",
+        "skill": "소형견, 중형견, 비숑"
+      },
+      {
+        "groomerId": 2,
+        "shopId": 2,
+        "shopLogo": "/Main/customer.svg",
+        "shopName": "핏드독",
+        "starScore": 4.2,
+        "starCount": 30,
+        "address": "서울시 영등포구 여의대로 15-1",
+        "businessTime": "10:00-19:00 매주 토, 일 ",
+        "skill": "소형견, 중형견, 비숑"
+      }
+    ]
+  }
+}

@@ -10,11 +10,17 @@ const SelectRole = () => {
       <div className="mb-5 text-2xl">어떤 서비스를 원하시나요?</div>
 
       <div>
-        <button onClick={() => navigate("/infoRequired")} className="m-3 rounded-xl bg-white p-3">
+        <button
+          onClick={() => navigate("/infoRequired", { state: { role: "customer" } })}
+          className="m-3 rounded-xl bg-white p-3"
+        >
           <img src={customer} alt="select customer img" />
           <div className="mt-1 text-xl font-bold text-main-300">고객</div>
         </button>
-        <button onClick={() => navigate("/infoRequired")} className="m-3 rounded-xl bg-white p-3">
+        <button
+          onClick={() => navigate("/infoRequired", { state: { role: "groomer" } })}
+          className="m-3 rounded-xl bg-white p-3"
+        >
           <img src={groomer} alt="select groomer img" />
           <div className="mt-1 text-xl font-bold text-main-300">미용사</div>
         </button>

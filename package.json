@@ -10,11 +10,14 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@tosspayments/payment-widget-sdk": "^0.12.0",
     "aos": "^2.3.4",
     "axios": "^1.7.7",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-import": "^2.31.0",
     "eslint-plugin-jsx-a11y": "^6.10.2",
+    "iamport-react-native": "^2.0.12",
+    "lottie-react": "^2.4.0",
     "prettier": "^3.3.3",
     "prettier-plugin-tailwindcss": "^0.6.9",
     "react": "^18.3.1",

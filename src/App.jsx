@@ -21,14 +21,15 @@ import BestReviews from "./pages/Main/BestReviews";
 import KakaoOAuth2RedirectPage from "./components/Login/KakaOauth2RedirectPage";
 import UserInfo from "./pages/Common/UserInfo";
 import BookmarkedStore from "./pages/Customer/BookmarkedStore";
+import PaymentComponent from "./pages/Payment/PaymentComponent";
+import PaymentComplete from "./pages/Payment/PaymentComplete";
 
 function App() {
   return (
     <div className="App">
       <Router>
         <Routes>
-          {/* main */}
-          <Route path="/testpage" element={<TestPage />} />
+          <Route path="/testpage" element={<PaymentComponent />} />
           <Route path="/" element={<Onboarding />} />
           <Route path="/login" element={<Login />} />
           <Route path="/oauth/kakao/login" element={<KakaoOAuth2RedirectPage />} />

@@ -30,8 +30,8 @@
         "starScore": 4.8,
         "starCount": 30,
         "address": "서울시 영등포구 여의대로 15-1",
-        "businessTime": "10:00-19:00",
-        "skills": "소형견, 중형견, 비숑"
+        "businessTime": "10:00-19:00 매주 월 휴무",
+        "skill": "소형견, 중형견, 비숑"
       },
       {
         "groomerId": 2,
@@ -41,8 +41,8 @@
         "starScore": 4.2,
         "starCount": 30,
         "address": "서울시 영등포구 여의대로 15-1",
-        "businessTime": "10:00-19:00",
-        "skills": "소형견, 중형견, 비숑"
+        "businessTime": "10:00-19:00 매주 토, 일 ",
+        "skill": "소형견, 중형견, 비숑"
       }
     ]
   }

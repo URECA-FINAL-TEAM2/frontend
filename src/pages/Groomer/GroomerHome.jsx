@@ -3,6 +3,8 @@ import line from "/Icons/groomerGrayVerticalLine.svg";
 import GrommerTotalRequest from "../../components/Main/GrommerTotalRequest";
 import mockJson from "../../utils/groomerHome.json";
 import { useEffect, useState } from "react";
+import { getRequest } from "../../api/axiosInstance";
+import Summary from "../../components/common/Summary";
 
 const GroomerHome = () => {
   const [preview, setPreview] = useState({
@@ -12,6 +14,15 @@ const GroomerHome = () => {
     unsentQuote: 0 // 견적 미발송
   });
 
+  const fetchUserData = async () => {
+    try {
+      const data = await getRequest("/main/groomer");
+      console.log("User Data:", data);
+    } catch (error) {
+      console.error("Error fetching user data:", error);
+    }
+  };
+
   useEffect(() => {
     setPreview({
       todayReservation: mockJson.todayReservation,
@@ -19,6 +30,7 @@ const GroomerHome = () => {
       todayRequest: mockJson.todayRequest,
       unsentQuote: mockJson.unsentQuote
     });
+    fetchUserData();
   }, []);
 
   return (
@@ -38,24 +50,15 @@ const GroomerHome = () => {
             <span className="text-lg">1:1 견적 요청</span>
             <span className="text-sm text-main">받은 요청을 확인하고, 견적을 보내보세요!</span>
 
-            <article>
-              <Link to="/groomer/docs" className="justify my-4 flex items-center justify-around text-center">
-                <div className="flex w-[33%] flex-col">
-                  <span>{preview.totalDirectRequest}</span>
-                  <span className="text-sm text-gray-300">전체</span>
-                </div>
-                <img src={line} alt="grayLine" />
-                <div className="flex w-[33%] flex-col">
-                  <span>{preview.todayRequest}</span>
-                  <span className="text-sm text-gray-300">오늘 요청</span>
-                </div>
-                <img src={line} alt="grayLine" />
-                <div className="flex w-[33%] flex-col">
-                  <span>{preview.unsentQuote}</span>
-                  <span className="text-sm text-gray-300">견적 미발송</span>
-                </div>
-              </Link>
-            </article>
+            <Summary
+              firstName={"전체"}
+              firstValue={preview.totalDirectRequest}
+              secondName={"오늘 요청"}
+              secondValue={preview.todayRequest}
+              thirdName={"견적 미발송"}
+              thirdValue={preview.unsentQuote}
+              navigate={"/groomer/docs"}
+            />
           </div>
         </section>
 

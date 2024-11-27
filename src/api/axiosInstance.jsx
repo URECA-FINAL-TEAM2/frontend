@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const axiosInstance = axios.create({
-  baseURL: "http://localhost:3000",
+  baseURL: "http://52.79.139.131:8081",
   headers: {
     "Content-Type": "application/json"
   }
@@ -51,5 +51,28 @@ axiosInstance.interceptors.response.use(
     return Promise.reject(error);
   }
 );
+
+// GET 요청 함수
+export const getRequest = async (url, params = {}) => {
+  try {
+    const response = await axiosInstance.get(url, { params });
+    console.log(response);
+    return response.data; // 응답 데이터 반환
+  } catch (error) {
+    console.error("GET Request Error:", error);
+    throw error;
+  }
+};
+
+// POST 요청 함수
+export const postRequest = async (url, data = {}) => {
+  try {
+    const response = await axiosInstance.post(url, data);
+    return response.data; // 응답 데이터 반환
+  } catch (error) {
+    console.error("POST Request Error:", error);
+    throw error;
+  }
+};
 
 export default axiosInstance;

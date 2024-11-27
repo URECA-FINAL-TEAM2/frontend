@@ -2,10 +2,11 @@ import { VscChevronLeft } from "react-icons/vsc";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 
-const SubHeader = ({ title }) => {
+const SubHeader = ({ title, navigate = -1 }) => {
   return (
-    <div className="grid h-[75px] grid-cols-[1fr_2fr_1fr] items-center px-5 text-center">
-      <Link to={-1}>
+    // <div className="fixed flex h-[75px] w-[400px] items-center justify-between bg-white px-5">
+    <div className="fixed top-0 grid h-[75px] w-[400px] grid-cols-[1fr_2fr_1fr] items-center px-5 text-center">
+      <Link to={navigate}>
         <VscChevronLeft size={20} />
       </Link>
       <span className="text-lg">{title}</span>
@@ -14,7 +15,8 @@ const SubHeader = ({ title }) => {
 };
 
 SubHeader.propTypes = {
-  title: PropTypes.string.isRequired
+  title: PropTypes.string.isRequired,
+  navigate: PropTypes.string.isRequired
 };
 
 export default SubHeader;

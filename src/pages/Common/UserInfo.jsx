@@ -6,17 +6,18 @@ import { useLocation } from "react-router-dom";
 import SubHeader from "../../components/common/SubHeader";
 import Postcode from "../../components/Main/Postcode";
 
-const InfoRequired = () => {
+const UserInfo = () => {
+  // 회원 정보 조회 API 필요
   const location = useLocation();
   const [isDefault, setIsDefault] = useState(true);
   const [imagePreview, setImagePreview] = useState(DefaultCustomerProfile);
   const [formData, setFormData] = useState({
-    role: "",
+    role: "customer",
     profile_image: "",
-    username: "",
-    nickname: "",
-    phone: "",
-    address: ""
+    username: "노승희",
+    nickname: "승2",
+    phone: "010-1111-2222",
+    address: "경기도 성남시~"
   });
 
   const { role } = location.state || {};
@@ -81,7 +82,7 @@ const InfoRequired = () => {
 
   return (
     <div className="flex min-h-screen flex-col">
-      <SubHeader title={"내 정보를 완성해주세요"} />
+      <SubHeader title={"내 정보 수정"} />
       <form onSubmit={handleSubmit} className="mt-5 grow">
         {/* Profile Image */}
         <div className="mx-auto">
@@ -182,11 +183,11 @@ const InfoRequired = () => {
         </BottomButton> */}
 
         <button type="submit" onSubmit={handleSubmit} className="bottomButtonPink">
-          내 정보 저장하기
+          내 정보 수정하기
         </button>
       </form>
     </div>
   );
 };
 
-export default InfoRequired;
+export default UserInfo;

@@ -23,6 +23,7 @@ import UserInfo from "./pages/Common/UserInfo";
 import BookmarkedStore from "./pages/Customer/BookmarkedStore";
 import PaymentComponent from "./pages/Payment/PaymentComponent";
 import PaymentComplete from "./pages/Payment/PaymentComplete";
+import ReservationMain from "./pages/Reservation/ReservationMain";
 
 function App() {
   return (
@@ -52,6 +53,7 @@ function App() {
             <Route path="mypage" element={<CustomerMypage />} />
             <Route path="info" element={<UserInfo />} />
             <Route path="bookmarkedStore" element={<BookmarkedStore />} />
+            <Route path="reservation" element={<ReservationMain />} />
           </Route>
 
           {/* groomer/ -layout */}

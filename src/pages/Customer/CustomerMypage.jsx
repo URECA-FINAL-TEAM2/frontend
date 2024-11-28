@@ -53,12 +53,17 @@ const CustomerMypage = () => {
           <h2 className="text-xl">🐾 My Pet</h2>
 
           <div className="flex">
-            <Link to="/펫 조회"></Link>
-            <div className="flex w-[80px] flex-col p-2 text-center">
-              <img src={dog} alt="Pet Image" className="mx-auto mb-2 h-[70px] w-[70px] rounded-[50%] drop-shadow-xl" />
-              <span className="text-xs">멍당이</span>
-            </div>
-            <Link to="/펫 등록 페이지">
+            <Link to={`/customer/myPet/${3}`}>
+              <div className="flex w-[80px] flex-col p-2 text-center">
+                <img
+                  src={dog}
+                  alt="Pet Image"
+                  className="mx-auto mb-2 h-[70px] w-[70px] rounded-[50%] drop-shadow-xl"
+                />
+                <span className="text-xs">멍당이</span>
+              </div>
+            </Link>
+            <Link to="/customer/mypet">
               <div className="flex w-[80px] flex-col p-2 text-center">
                 <img src={addPetIcons} alt="" className="mx-auto mb-2 h-[70px] w-[70px] rounded-[50%] drop-shadow-md" />
                 <span className="text-xs">추가</span>

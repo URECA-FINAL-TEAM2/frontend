@@ -33,7 +33,7 @@ Summary.propTypes = {
   secondValue: PropTypes.number.isRequired,
   thirdName: PropTypes.string.isRequired,
   thirdValue: PropTypes.number.isRequired,
-  navigate: PropTypes.number.isRequired
+  navigate: PropTypes.number
 };
 
 export default Summary;

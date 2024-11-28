@@ -61,7 +61,7 @@ export default {
           display: "block",
           width: "75%",
           borderWidth: "1px",
-          borderBottom: "2px solid #FF8E8E",
+          borderBottom: "2px solid #FFAEAE",
           color: "F5F5F5"
         },
         // 공통 컴포넌트 bottom

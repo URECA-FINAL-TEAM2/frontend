@@ -23,6 +23,8 @@ import UserInfo from "./pages/Common/UserInfo";
 import BookmarkedStore from "./pages/Customer/BookmarkedStore";
 import PaymentComponent from "./pages/Payment/PaymentComponent";
 import PaymentComplete from "./pages/Payment/PaymentComplete";
+import MyPet from "./pages/Pet/MyPet";
+import AddPet from "./pages/Pet/AddPet";
 
 function App() {
   return (
@@ -39,7 +41,7 @@ function App() {
           <Route path="/notification" element={<Notification />} />
           <Route path="/bestReviews" element={<BestReviews />} />
 
-          {/* customer/ - layout */}
+          {/* customer/ -layout */}
           <Route path="/customer" element={<CustomerLayout />}>
             <Route path="home" element={<CustomerHome />} />
             <Route path="docs" element={<CustomerDocs />} />
@@ -47,11 +49,14 @@ function App() {
             <Route path="chat" element={<CustomerChat />} />
           </Route>
 
-          {/* customer/ - none */}
+          {/* customer/ -none */}
           <Route path="/customer">
             <Route path="mypage" element={<CustomerMypage />} />
             <Route path="info" element={<UserInfo />} />
             <Route path="bookmarkedStore" element={<BookmarkedStore />} />
+
+            <Route path="myPet" element={<MyPet />} />
+            <Route path="myPet/:id" element={<MyPet />} />
           </Route>
 
           {/* groomer/ -layout */}

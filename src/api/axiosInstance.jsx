@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const axiosInstance = axios.create({
-  baseURL: "http://52.79.139.131:8081",
+  baseURL: "https://beautymeongdang.duckdns.org",
   headers: {
     "Content-Type": "application/json"
   }

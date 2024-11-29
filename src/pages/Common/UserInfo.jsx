@@ -57,16 +57,16 @@ const UserInfo = () => {
     formData.append("role", formData.role);
     formData.append("skill", formData.skill);
 
-    try {
-      const response = await axiosInstance.post("/profile/customer", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data"
-        }
-      });
-      console.log("폼 전송 성공:", response.data);
-    } catch (error) {
-      console.error("폼 전송 중 오류 발생:", error);
-    }
+    // try {
+    //   const response = await axiosInstance.post("/profile/customer", formData, {
+    //     headers: {
+    //       "Content-Type": "multipart/form-data"
+    //     }
+    //   });
+    //   console.log("폼 전송 성공:", response.data);
+    // } catch (error) {
+    //   console.error("폼 전송 중 오류 발생:", error);
+    // }
   };
 
   // 이미지 클릭 시 input 클릭 트리거

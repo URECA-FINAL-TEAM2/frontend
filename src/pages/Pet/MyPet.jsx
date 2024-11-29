@@ -66,7 +66,7 @@ const MyPet = () => {
       setIsState("register");
       setOnlyRead(false);
     }
-  }, []);
+  }, [params]);
 
   return (
     <>

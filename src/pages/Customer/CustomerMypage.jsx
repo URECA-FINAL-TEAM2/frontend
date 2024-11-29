@@ -86,7 +86,7 @@ const CustomerMypage = () => {
                 <span className="text-lg">예약내역</span>
               </li>
             </Link>
-            <Link to="">
+            <Link to="/customer/myreviews">
               <li className="flex items-center border-b-2 border-gray-200 py-4">
                 <MdOutlineRateReview className="mr-3" size={22} color="#ff8e8e" />
                 <span className="text-lg">리뷰관리</span>

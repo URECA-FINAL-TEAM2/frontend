@@ -56,7 +56,7 @@ export default {
           paddingBottom: "7px",
           marginLeft: "auto",
           marginRight: "auto",
-          marginBottom: "1.8rem",
+          marginBottom: "1.5rem",
           marginTop: "0.25rem",
           display: "block",
           width: "75%",
@@ -75,6 +75,23 @@ export default {
           bottom: "0",
           borderRadius: "10px 10px 0 0",
           transition: "all 300ms"
+        },
+        // 박스 내부 버튼
+        ".buttonInBox-main": {
+          color: "#FF8E8E",
+          width: "48%",
+          backgroundColor: "#FFDCDC",
+          borderRadius: "8px",
+          padding: "3px",
+          margin: "3px"
+        },
+        ".buttonInBox-sub": {
+          color: "white",
+          width: "48%",
+          backgroundColor: "#FF8E8E",
+          borderRadius: "8px",
+          padding: "3px",
+          margin: "3px"
         }
       });
     }

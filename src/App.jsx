@@ -1,6 +1,5 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Notification from "./pages/Notification";
-import TestPage from "./pages/TestPage";
 import Onboarding from "./pages/Main/Onboarding";
 import Login from "./pages/Main/Login";
 import SelectRole from "./pages/Main/SelectRole";
@@ -18,13 +17,14 @@ import GroomerStore from "./pages/Groomer/GroomerStore";
 import GroomerChat from "./pages/Groomer/GroomerChat";
 import GroomerMypage from "./pages/Groomer/GroomerMypage";
 import BestReviews from "./pages/Main/BestReviews";
-import KakaoOAuth2RedirectPage from "./components/Login/KakaOauth2RedirectPage";
 import UserInfo from "./pages/Common/UserInfo";
 import BookmarkedStore from "./pages/Customer/BookmarkedStore";
 import PaymentComponent from "./pages/Payment/PaymentComponent";
 import PaymentComplete from "./pages/Payment/PaymentComplete";
 import MyPet from "./pages/Pet/MyPet";
-import AddPet from "./pages/Pet/AddPet";
+import MyReviews from "./pages/Reviews/MyReviews";
+import WriteReviews from "./pages/Reviews/WriteReviews";
+import OAuth2RedirectPage from "./components/Login/Oauth2RedirectPage";
 
 function App() {
   return (
@@ -34,7 +34,7 @@ function App() {
           <Route path="/testpage" element={<PaymentComponent />} />
           <Route path="/" element={<Onboarding />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/oauth/kakao/login" element={<KakaoOAuth2RedirectPage />} />
+          <Route path="/oauth/login" element={<OAuth2RedirectPage />} />
 
           <Route path="/SelectRole" element={<SelectRole />} />
           <Route path="/infoRequired" element={<InfoRequired />} />
@@ -57,6 +57,8 @@ function App() {
 
             <Route path="myPet" element={<MyPet />} />
             <Route path="myPet/:id" element={<MyPet />} />
+            <Route path="myReviews" element={<MyReviews />} />
+            <Route path="writeReviews" element={<WriteReviews />} />
           </Route>
 
           {/* groomer/ -layout */}

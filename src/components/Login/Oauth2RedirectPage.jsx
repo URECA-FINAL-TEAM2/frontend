@@ -1,19 +1,24 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import axiosInstance from "../../api/axiosInstance";
+
 import BounceLoader from "react-spinners/BounceLoader";
 import axios from "axios";
 
-function KakaoOAuth2RedirectPage() {
+function OAuth2RedirectPage() {
   const navigate = useNavigate();
   const code = new URL(window.location.href).searchParams.get("code");
 
+  useEffect(() => {
+    console.log(code);
+  }, [code]);
+
   const sendCodeToBackend = async (code) => {
+    console.log("요청 시도");
     try {
       // GET 요청으로 인가 코드를 쿼리스트링으로 전달
       // const response = await axiosInstance.get(`/auth/kakao/login?code=${code}`);
-      const response = await axios.get(`http://52.79.139.131:8081/auth/kakao/login?code=${code}`);
-
+      const response = await axios.get(`https://beautymeongdang.duckdns.org/oauth/kakao/login?code=${code}`);
+      console.log(response);
       // 백엔드 연동 후 로직 수정해야 함. -----------------------
       // 1. 백엔드에서 받은 사용자 정보 및 토큰 처리
       const { access_token, role, isRegistered } = response.data;
@@ -30,7 +35,8 @@ function KakaoOAuth2RedirectPage() {
 
   useEffect(() => {
     if (code) {
-      sendCodeToBackend(code); // 인가 코드를 백엔드로 전달
+      // 백엔드에 인가코드 전달하는
+      sendCodeToBackend();
     }
   }, []);
 
@@ -42,4 +48,4 @@ function KakaoOAuth2RedirectPage() {
   );
 }
 
-export default KakaoOAuth2RedirectPage;
+export default OAuth2RedirectPage;

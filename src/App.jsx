@@ -34,9 +34,9 @@ function App() {
           <Route path="/testpage" element={<PaymentComponent />} />
           <Route path="/" element={<Onboarding />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/oauth/login" element={<OAuth2RedirectPage />} />
+          <Route path="/login/oauth2/code/kakao" element={<OAuth2RedirectPage />} />
 
-          <Route path="/SelectRole" element={<SelectRole />} />
+          <Route path="/selectRole" element={<SelectRole />} />
           <Route path="/infoRequired" element={<InfoRequired />} />
           <Route path="/notification" element={<Notification />} />
           <Route path="/bestReviews" element={<BestReviews />} />

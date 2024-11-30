@@ -2,41 +2,48 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 import BounceLoader from "react-spinners/BounceLoader";
-import axios from "axios";
+import axiosInstance from "../../api/axiosInstance";
+import useAuthStore from "../../store/authStore";
 
 function OAuth2RedirectPage() {
+  const { setAccessToken, setUser, setDefaultRole } = useAuthStore();
   const navigate = useNavigate();
   const code = new URL(window.location.href).searchParams.get("code");
 
-  useEffect(() => {
-    console.log(code);
-  }, [code]);
-
   const sendCodeToBackend = async (code) => {
-    console.log("요청 시도");
+    console.log("요청 시도: ", code);
     try {
-      // GET 요청으로 인가 코드를 쿼리스트링으로 전달
-      // const response = await axiosInstance.get(`/auth/kakao/login?code=${code}`);
-      const response = await axios.get(`https://beautymeongdang.duckdns.org/oauth/kakao/login?code=${code}`);
+      const response = await axiosInstance.get(`/login/oauth2/code/kakao`, {
+        params: {
+          code: encodeURIComponent(code) // URL 인코딩 적용
+        }
+      });
       console.log(response);
-      // 백엔드 연동 후 로직 수정해야 함. -----------------------
-      // 1. 백엔드에서 받은 사용자 정보 및 토큰 처리
-      const { access_token, role, isRegistered } = response.data;
+      const { accessToken, role, user } = response.data; // 응답 값
 
-      // 2. 사용자 정보를 프론트에 저장
+      setAccessToken(accessToken);
+      setUser(user);
+      setDefaultRole(role);
+      // 그럼 이때 id도 줘야겠네(customerId, groomerId)
 
-      // 3-1. 이미 가입한 회원인지 처음 가입한 회원인지 구분
-      // 3-2. 사용자 역할이 고객인지, 미용사인지 구분하여 페이지 이동
-      navigate("/selectRole");
+      if (role === "customer") {
+        navigate("/customer/home");
+      } else {
+        navigate("/groomer/home");
+      }
     } catch (error) {
-      console.error("Error sending code to backend:", error);
+      if (error.response?.status === 403) {
+        console.error("등록되지 않은 회원입니다. 추가 정보를 입력해주세요.");
+        navigate("/selectRole");
+      } else {
+        console.error("Error sending code to backend:", error);
+      }
     }
   };
 
   useEffect(() => {
     if (code) {
-      // 백엔드에 인가코드 전달하는
-      sendCodeToBackend();
+      sendCodeToBackend(code);
     }
   }, []);
 

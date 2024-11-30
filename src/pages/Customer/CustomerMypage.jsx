@@ -1,6 +1,6 @@
 import SubHeader from "../../components/common/SubHeader";
 import ToggleButton from "../../components/Main/ToggleButton";
-import DefaultProfile from "/Main/DefaultCustomerProfile.svg";
+import DefaultProfile from "/Icons/DefaultCustomerProfile.svg";
 import { VscChevronRight } from "react-icons/vsc";
 import Summary from "../../components/common/Summary";
 import dog from "/Test/dog.jpg";
@@ -9,6 +9,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { BsShop } from "react-icons/bs";
 import { VscSymbolFile } from "react-icons/vsc";
 import { MdOutlineRateReview } from "react-icons/md";
+import CustomerBottom from "@/components/common/CustomerBottom";
 
 const CustomerMypage = () => {
   const navigate = useNavigate();
@@ -28,8 +29,11 @@ const CustomerMypage = () => {
             <img src={DefaultProfile} alt="Default Image" className="rounded-[50%] border-[2px] border-main" />
           </div>
           <div className="flex flex-col">
-            <span>노승희 고객님</span>
-            <span>tmdgml2494@gamil.com</span>
+            <div>
+              <span className="text-lg">노승희</span>
+              <span> 고객님</span>
+            </div>
+            <span className="underline">tmdgml2494@gamil.com</span>
           </div>
           <div className="ml-2">
             <button onClick={() => navigate("/customer/info", { state: { role: "customer" } })}>
@@ -49,7 +53,7 @@ const CustomerMypage = () => {
           />
         </div>
         {/* 반려견 정보 */}
-        <div className="mx-auto w-11/12 border-t-2 border-t-main-200 pl-3 pt-6">
+        <div className="mx-auto border-t-2 border-t-main-200 pl-8 pt-6">
           <h2 className="text-xl">🐾 My Pet</h2>
 
           <div className="flex">
@@ -101,6 +105,7 @@ const CustomerMypage = () => {
           </ul>
         </div>
       </main>
+      <CustomerBottom />
     </>
   );
 };

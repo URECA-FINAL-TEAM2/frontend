@@ -1,0 +1,56 @@
+import React, { useState } from "react";
+import SubHeader from "../../../components/common/SubHeader";
+import Summary from "../../../components/common/Summary";
+import DefaultStore from "/Icons/DefaultStoreProfile.svg";
+import StoreInfo from "../../../components/Mypage/Store/StoreInfo";
+import StorePortfolio from "../../../components/Mypage/Store/StorePortfolio";
+
+const MyStore = () => {
+  const [activeComponent, setActiveComponent] = useState("info");
+
+  return (
+    <div>
+      <SubHeader title="내 매장" />
+
+      <div className="mt-[75px]">
+        <img src={DefaultStore} alt="default store img" className="img-border mx-auto mb-8 mt-28" />
+        <div className="mx-auto px-6">
+          <Summary firstName={"매장 찜 수"} firstValue={40} secondName={"내 매장 리뷰"} secondValue={3} />
+        </div>
+
+        <div className="relative mt-14 flex items-center">
+          <button
+            onClick={() => setActiveComponent("info")}
+            className={`w-1/2 border-b border-b-main px-14 py-2 text-lg ${
+              activeComponent === "info" ? "font-bold text-main" : "text-gray-400"
+            } transition duration-300`}
+          >
+            매장 정보
+          </button>
+
+          {/* 중앙에 위치한 선 */}
+          <div className="absolute left-1/2 h-1/2 w-[1px] -translate-x-1/2 transform bg-main"></div>
+
+          <button
+            onClick={() => setActiveComponent("portfolio")}
+            className={`w-1/2 border-b border-b-main px-14 py-2 text-lg ${
+              activeComponent === "portfolio" ? "font-bold text-main" : "text-gray-400"
+            } transition duration-300`}
+          >
+            포트폴리오
+          </button>
+        </div>
+
+        <div>
+          {activeComponent === "info" && <StoreInfo />}
+          {activeComponent === "portfolio" && <StorePortfolio />}
+        </div>
+
+        {activeComponent === "info" && <button className="bottomButtonPink">매장정보 수정</button>}
+        {activeComponent === "portfolio" && <button className="bottomButtonPink">포트폴리오 수정</button>}
+      </div>
+    </div>
+  );
+};
+
+export default MyStore;

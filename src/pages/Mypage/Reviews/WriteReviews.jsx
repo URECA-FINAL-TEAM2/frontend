@@ -1,9 +1,9 @@
 import { useNavigate } from "react-router-dom";
-import SubHeader from "../../components/common/SubHeader";
+import SubHeader from "../../../components/common/SubHeader";
 import { useState } from "react";
 import { GoStarFill } from "react-icons/go";
-import Modal from "../../components/common/modal/modal";
 import testImg from "/Test/dog.jpg";
+import Modal from "../../../components/common/modal/modal";
 
 const WriteReviews = () => {
   const navigate = useNavigate();

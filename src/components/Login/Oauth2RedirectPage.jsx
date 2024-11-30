@@ -32,7 +32,7 @@ function OAuth2RedirectPage() {
         navigate("/groomer/home");
       }
     } catch (error) {
-      if (error.response?.status === 403) {
+      if (error.response?.status === 400) {
         console.error("등록되지 않은 회원입니다. 추가 정보를 입력해주세요.");
         navigate("/selectRole");
       } else {

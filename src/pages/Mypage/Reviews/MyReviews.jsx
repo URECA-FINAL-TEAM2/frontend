@@ -1,5 +1,5 @@
-import SubHeader from "../../components/common/SubHeader";
-import ReviewBox from "../../components/Mypage/Review/ReviewBox";
+import SubHeader from "../../../components/common/SubHeader";
+import ReviewBox from "../../../components/Mypage/Review/ReviewBox";
 
 const MyReviews = () => {
   return (

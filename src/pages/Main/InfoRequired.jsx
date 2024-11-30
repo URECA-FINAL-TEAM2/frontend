@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import BottomButton from "../../components/common/button/BottomButton";
-import DefaultCustomerProfile from "/Main/DefaultCustomerProfile.svg";
+import DefaultCustomerProfile from "/Icons/DefaultCustomerProfile.svg";
 import axiosInstance from "../../api/axiosInstance";
 import { useLocation } from "react-router-dom";
 import SubHeader from "../../components/common/SubHeader";

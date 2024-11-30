@@ -1,6 +1,12 @@
 /** @type {import('tailwindcss').Config} */
+import tailwindcssAnimate from "tailwindcss-animate";
 export default {
-  content: ["./src/**/*.{js,jsx,ts,tsx}"],
+  darkMode: ["class"],
+  content: [
+    "./index.html",
+    "./src/**/*.{js,jsx,ts,tsx}",
+    "./node_modules/@shadcn/ui/dist/**/*.{js,jsx,ts,tsx}" // shadcn/ui 경로 추가
+  ],
   theme: {
     extend: {
       colors: {
@@ -8,16 +14,16 @@ export default {
         white: "#FFFFFF",
         black: "#000000",
         main: {
-          DEFAULT: "#FF8E8E",
-          100: "#FFF3F3", // subcolor 3
-          200: "#FFDCDC", // subcolor 2
-          300: "#FFAEAE", // subcolor 1
-          400: "#FF8E8E" // default 색상과 동일
+          100: "#FFF3F3",
+          200: "#FFDCDC",
+          300: "#FFAEAE",
+          400: "#FF8E8E",
+          DEFAULT: "#FF8E8E"
         },
         gray: {
-          100: "#FAFAFA", // button, background
-          200: "#F5F5F5", // badge background
-          300: "#AAAAAA" // dark button
+          100: "#FAFAFA",
+          200: "#F5F5F5",
+          300: "#AAAAAA"
         }
       },
       fontFamily: {
@@ -25,6 +31,11 @@ export default {
       },
       scale: {
         103: "1.03"
+      },
+      borderRadius: {
+        lg: "var(--radius)",
+        md: "calc(var(--radius) - 2px)",
+        sm: "calc(var(--radius) - 4px)"
       }
     }
   },
@@ -60,7 +71,6 @@ export default {
           marginTop: "0.25rem",
           display: "block",
           width: "75%",
-          borderWidth: "1px",
           borderBottom: "2px solid #FFAEAE",
           color: "F5F5F5"
         },
@@ -92,8 +102,13 @@ export default {
           borderRadius: "8px",
           padding: "3px",
           margin: "3px"
+        },
+        ".img-border": {
+          borderRadius: "50%",
+          border: "2px solid #FF8E8E"
         }
       });
-    }
+    },
+    tailwindcssAnimate
   ]
 };

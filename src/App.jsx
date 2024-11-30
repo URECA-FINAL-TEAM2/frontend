@@ -17,14 +17,15 @@ import GroomerStore from "./pages/Groomer/GroomerStore";
 import GroomerChat from "./pages/Groomer/GroomerChat";
 import GroomerMypage from "./pages/Groomer/GroomerMypage";
 import BestReviews from "./pages/Main/BestReviews";
-import UserInfo from "./pages/Common/UserInfo";
-import BookmarkedStore from "./pages/Customer/BookmarkedStore";
 import PaymentComponent from "./pages/Payment/PaymentComponent";
 import PaymentComplete from "./pages/Payment/PaymentComplete";
-import MyPet from "./pages/Pet/MyPet";
-import MyReviews from "./pages/Reviews/MyReviews";
-import WriteReviews from "./pages/Reviews/WriteReviews";
 import OAuth2RedirectPage from "./components/Login/Oauth2RedirectPage";
+import UserInfo from "./pages/Mypage/UserInfo";
+import BookmarkedStore from "./pages/Mypage/BookmarkedStore";
+import MyPet from "./pages/Mypage/CustomerPet/MyPet";
+import MyReviews from "./pages/Mypage/Reviews/MyReviews";
+import WriteReviews from "./pages/Mypage/Reviews/WriteReviews";
+import MyStore from "./pages/Mypage/GroomerStore.jsx/MyStore";
 
 function App() {
   return (
@@ -73,6 +74,7 @@ function App() {
           <Route path="/groomer">
             <Route path="mypage" element={<GroomerMypage />} />
             <Route path="info" element={<UserInfo />} />
+            <Route path="mystore" element={<MyStore />} />
           </Route>
         </Routes>
       </Router>

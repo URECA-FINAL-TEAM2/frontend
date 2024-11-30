@@ -44,12 +44,7 @@ const PetProfileImage = ({ onlyRead, setFormData }) => {
         />
       )}
       <div className="mx-auto mb-16 mt-24 flex flex-col items-center justify-center">
-        <img
-          src={imagePreview}
-          alt="Default Image"
-          onClick={handleImageClick}
-          className="h-[100px] w-1/4 rounded-[50%] border-[2px] border-main"
-        />
+        <img src={imagePreview} alt="Default Image" onClick={handleImageClick} className="img-border h-[100px] w-1/4" />
 
         {!isDefault && (
           <button onClick={handleResetImage} className="mt-2 text-sm text-gray-300">

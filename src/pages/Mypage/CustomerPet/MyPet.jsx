@@ -1,13 +1,13 @@
-import SubHeader from "../../components/common/SubHeader";
 import { useEffect, useState } from "react";
-import Modal from "../../components/common/modal/modal";
-import "../../css/styles.css";
-import PetBirth from "../../components/Mypage/Pet/PetBirth";
-import PetGender from "../../components/Mypage/Pet/PetGender";
-import PetNeutering from "../../components/Mypage/Pet/PetNeutering";
-import PetExperienced from "../../components/Mypage/Pet/PetExperienced";
-import PetProfileImage from "../../components/Mypage/Pet/PetProfileImage";
+import "../../../css/styles.css";
+import PetBirth from "../../../components/Mypage/Pet/PetBirth";
+import PetGender from "../../../components/Mypage/Pet/PetGender";
+import PetNeutering from "../../../components/Mypage/Pet/PetNeutering";
+import PetExperienced from "../../../components/Mypage/Pet/PetExperienced";
+import PetProfileImage from "../../../components/Mypage/Pet/PetProfileImage";
 import { useParams } from "react-router-dom";
+import SubHeader from "../../../components/common/SubHeader";
+import Modal from "../../../components/common/modal/modal";
 
 const MyPet = () => {
   const params = useParams();

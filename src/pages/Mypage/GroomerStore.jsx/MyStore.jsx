@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import SubHeader from "../../../components/common/SubHeader";
 import Summary from "../../../components/common/Summary";
 import DefaultStore from "/Icons/DefaultStoreProfile.svg";

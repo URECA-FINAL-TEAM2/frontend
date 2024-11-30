@@ -4,10 +4,10 @@ const PetExperienced = ({ onlyRead, formData, setFormData }) => {
   return (
     <div>
       <label className="labelStyle">미용경험</label>
-      <div className="mx-auto grid w-3/4 grid-cols-2 gap-4 py-3 text-center">
+      <div className="mx-auto grid w-3/4 grid-cols-2 gap-4 pb-6 pt-2 text-center">
         <button
           type="button"
-          className={`rounded-lg border-2 py-1 ${
+          className={`rounded-lg border py-1 ${
             formData.experienced === "O"
               ? onlyRead
                 ? "btn-selected-readonly"
@@ -23,7 +23,7 @@ const PetExperienced = ({ onlyRead, formData, setFormData }) => {
         </button>
         <button
           type="button"
-          className={`rounded-lg border-2 py-1 ${
+          className={`rounded-lg border py-1 ${
             formData.experienced === "X"
               ? onlyRead
                 ? "btn-selected-readonly"

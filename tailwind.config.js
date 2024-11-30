@@ -71,7 +71,7 @@ export default {
           marginTop: "0.25rem",
           display: "block",
           width: "75%",
-          borderBottom: "2px solid #FFAEAE",
+          borderBottom: "1px solid #FFAEAE",
           color: "F5F5F5"
         },
         // 공통 컴포넌트 bottom
@@ -105,7 +105,7 @@ export default {
         },
         ".img-border": {
           borderRadius: "50%",
-          border: "2px solid #FF8E8E"
+          border: "1px solid #FF8E8E"
         }
       });
     },

@@ -15,19 +15,19 @@ const PetBirth = ({ onlyRead, formData, setFormData }) => {
   return (
     <div>
       <label className="labelStyle">생년월일</label>
-      <div className="mx-auto grid w-3/4 grid-cols-3 gap-3 py-3">
+      <div className="mx-auto grid w-3/4 grid-cols-3 gap-3 pb-6 pt-2">
         {/* 반려견 정보 조회 */}
         {onlyRead ? (
           <>
-            <div className="rounded-lg border-2 border-main-400 px-2 py-1">{formData.dogBirth.year}</div>
-            <div className="rounded-lg border-2 border-main-400 px-2 py-1">{formData.dogBirth.month}</div>
-            <div className="rounded-lg border-2 border-main-400 px-2 py-1">{formData.dogBirth.day}</div>
+            <div className="rounded-lg border border-main-400 px-2 py-1">{formData.dogBirth.year}</div>
+            <div className="rounded-lg border border-main-400 px-2 py-1">{formData.dogBirth.month}</div>
+            <div className="rounded-lg border border-main-400 px-2 py-1">{formData.dogBirth.day}</div>
           </>
         ) : (
           <>
             {/* 반려전 정보 수정 */}
             <select
-              className="rounded-lg border-2 border-main-200 px-2 py-1"
+              className="rounded-lg border border-main-200 px-2 py-1"
               name="year"
               value={formData.dogBirth.year}
               onChange={handleBirthChange}
@@ -44,7 +44,7 @@ const PetBirth = ({ onlyRead, formData, setFormData }) => {
             </select>
 
             <select
-              className="rounded-lg border-2 border-main-200 px-2 py-1"
+              className="rounded-lg border border-main-200 px-2 py-1"
               name="month"
               value={formData.dogBirth.month}
               onChange={handleBirthChange}
@@ -58,7 +58,7 @@ const PetBirth = ({ onlyRead, formData, setFormData }) => {
             </select>
 
             <select
-              className="rounded-lg border-2 border-main-200 px-2 py-1"
+              className="rounded-lg border border-main-200 px-2 py-1"
               name="day"
               value={formData.dogBirth.day}
               onChange={handleBirthChange}

@@ -5,10 +5,10 @@ const PetGender = ({ onlyRead, formData, setFormData }) => {
   return (
     <div>
       <label className="labelStyle">성별</label>
-      <div className="mx-auto grid w-3/4 grid-cols-2 gap-4 py-3 text-center">
+      <div className="mx-auto grid w-3/4 grid-cols-2 gap-4 pb-6 pt-2 text-center">
         <button
           type="button"
-          className={`rounded-lg border-2 py-1 ${
+          className={`rounded-lg border py-1 ${
             formData.dogGender === "남아"
               ? onlyRead
                 ? "btn-selected-readonly"
@@ -24,7 +24,7 @@ const PetGender = ({ onlyRead, formData, setFormData }) => {
         </button>
         <button
           type="button"
-          className={`rounded-lg border-2 border-main-400 py-1 ${
+          className={`rounded-lg border py-1 ${
             formData.dogGender === "여아"
               ? onlyRead
                 ? "btn-selected-readonly"

@@ -26,6 +26,7 @@ import MyPet from "./pages/Mypage/CustomerPet/MyPet";
 import MyReviews from "./pages/Mypage/Reviews/MyReviews";
 import WriteReviews from "./pages/Mypage/Reviews/WriteReviews";
 import MyStore from "./pages/Mypage/GroomerStore.jsx/MyStore";
+import Pet from "./pages/Mypage/CustomerPet/Pet";
 
 function App() {
   return (

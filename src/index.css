@@ -23,6 +23,13 @@
   font-style: normal;
 }
 
+@font-face {
+  font-family: "UhBeeZZIBA-Regular";
+  src: url("https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2104@1.0/UhBeeZZIBA-Regular.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
 #root {
   font-family: Pretendard, Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   display: flex;
@@ -33,4 +40,8 @@
   width: 400px;
   min-height: 100vh;
   box-shadow: rgba(120, 120, 122, 0.1) 0px 7px 29px 0px;
+}
+
+.titleFont {
+  font-family: "UhBeeZZIBA-Regular";
 }

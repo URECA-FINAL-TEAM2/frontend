@@ -1,0 +1,41 @@
+{
+  "todayReservation": 10,
+  "totalDirectRequest": 20,
+  "todayRequest": 5,
+  "unsentQuote": 2,
+  "totalRequest": [
+    {
+      "customerId": 1,
+      "profileImage": "/Main/customer.svg",
+      "nickname": "ㅎㅎㅎ",
+      "closingDate": "2024-11-19T13:31:00",
+      "beautyDate": "2024-11-24T15:00:00",
+      "breed": "웰시코기",
+      "dogWeight": "6.1",
+      "dogGender": "남아",
+      "requestContent": "목욕 + 식빵컷"
+    },
+    {
+      "customerId": 2,
+      "profileImage": "/Main/customer.svg",
+      "nickname": "ㅎㅎㅎ",
+      "closingDate": "2024-11-19T13:31:00",
+      "beautyDate": "2024-11-24T15:00:00",
+      "breed": "말티즈",
+      "dogWeight": "3.1",
+      "dogGender": "남아",
+      "requestContent": "목욕 + 식빵컷"
+    },
+    {
+      "customerId": 3,
+      "profileImage": "/Main/customer.svg",
+      "nickname": "ㅎㅎㅎ",
+      "closingDate": "2024-11-19T13:31:00",
+      "beautyDate": "2024-11-24T15:00:00",
+      "breed": "비숑",
+      "dogWeight": "2.1",
+      "dogGender": "여아",
+      "requestContent": "목욕 + 식빵컷"
+    }
+  ]
+}

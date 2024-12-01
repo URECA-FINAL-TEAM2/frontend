@@ -3,6 +3,7 @@ import Logo2 from "/Logo/onboardingLogo2.svg";
 import line from "/Icons/line.svg";
 import Aos from "aos";
 import { useNavigate } from "react-router-dom";
+import KakaoLoginBtn from "../../components/Login/KakaoLoginBtn";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -44,15 +45,11 @@ const Login = () => {
           <div className="mx-3">SNS 계정으로 로그인</div>
           <img src={line} alt="line" />
         </div>
-        <button
-          data-aos="fade-down"
-          data-aos-easing="linear"
-          data-aos-duration="1200"
-          className="my-2 w-full rounded-lg bg-white p-3 text-main"
-          onClick={() => navigate("/selectRole")}
-        >
-          카카오톡 로그인 btn{" "}
+
+        <button data-aos="fade-down" data-aos-easing="linear" data-aos-duration="1200">
+          <KakaoLoginBtn />
         </button>
+
         <button
           data-aos="fade-down"
           data-aos-easing="linear"

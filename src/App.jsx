@@ -19,13 +19,15 @@ import GroomerChat from "./pages/Groomer/GroomerChat";
 import GroomerMypage from "./pages/Groomer/GroomerMypage";
 import PaymentComponent from "./pages/Payment/PaymentComponent";
 import PaymentComplete from "./pages/Payment/PaymentComplete";
+import ReservationMain from "./pages/Reservation/ReservationMain";
+import ReservationDetail from "./pages/Reservation/ReservationDetail";
 
 function App() {
   return (
     <div className="App">
       <Router>
         <Routes>
-          <Route path="/testpage" element={<PaymentComponent />} />
+          <Route path="/testpage" element={<ReservationMain />} />
           <Route path="/" element={<Onboarding />} />
           <Route path="/login" element={<Login />} />
           <Route path="/SelectRole" element={<SelectRole />} />

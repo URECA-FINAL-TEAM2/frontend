@@ -24,13 +24,14 @@ import BookmarkedStore from "./pages/Customer/BookmarkedStore";
 import PaymentComponent from "./pages/Payment/PaymentComponent";
 import PaymentComplete from "./pages/Payment/PaymentComplete";
 import ReservationMain from "./pages/Reservation/ReservationMain";
+import ReservationDetail from "./pages/Reservation/ReservationDetail";
 
 function App() {
   return (
     <div className="App">
       <Router>
         <Routes>
-          <Route path="/testpage" element={<ReservationMain />} />
+          <Route path="/testpage" element={<ReservationDetail />} />
           <Route path="/" element={<Onboarding />} />
           <Route path="/login" element={<Login />} />
           <Route path="/oauth/kakao/login" element={<KakaoOAuth2RedirectPage />} />

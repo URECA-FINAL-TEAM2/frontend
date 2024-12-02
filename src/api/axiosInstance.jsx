@@ -1,78 +1,87 @@
 import axios from "axios";
+import useAuthStore from "../store/authStore";
 
 const axiosInstance = axios.create({
-  baseURL: "http://52.79.139.131:8081",
+  baseURL: "https://www.beautymeongdang.com",
   headers: {
     "Content-Type": "application/json"
   }
 });
 
-// Request Interceptors : 요청 인터셉터
-// 클라이언트 -> 서버 모든 요청시 Authorization 헤더에 Access Token 포함해서 보냄
+// Refresh Token Lock: 중복 Refresh 방지 변수
+let isRefreshing = false;
+let refreshSubscribers = [];
+
+// Refresh Token 성공 시 모든 구독된 요청 재시도
+const onRrefreshed = (newAccessToken) => {
+  refreshSubscribers.forEach((callback) => callback(newAccessToken));
+  refreshSubscribers = [];
+};
+
+// Request Interceptor: 요청에 Access Token 추가
 axiosInstance.interceptors.request.use(
   (config) => {
-    const token = sessionStorage.getItem("access_token");
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
+    const { accessToken } = useAuthStore.getState(); // Zustand에서 Access Token 가져오기
+    if (accessToken) {
+      config.headers.Authorization = `Bearer ${accessToken}`;
     }
     return config;
   },
-  (error) => {
-    return Promise.reject(error);
-  }
+  (error) => Promise.reject(error)
 );
 
-// Response Intercepters : 응답 인터셉터
-// Access Token 만료 시 Refresh Token을 사용해 갱신, 또는 에러 처리
+// Response Interceptor: 401 에러 시 Refresh Token 처리
 axiosInstance.interceptors.response.use(
-  (response) => {
-    return response;
-  },
+  (response) => response,
   async (error) => {
     const originalRequest = error.config;
 
+    // Access Token 만료 시 처리
     if (error.response?.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
 
-      const refreshToken = sessionStorage.getItem("refresh_token");
-      try {
-        const { data } = await axios.post("/auth/refresh-token", { refresh_token: refreshToken });
+      if (!isRefreshing) {
+        isRefreshing = true;
 
-        sessionStorage.setItem("access_token", data.access_token);
+        try {
+          const { refreshToken, setAccessToken } = useAuthStore.getState();
 
-        originalRequest.headers.Authorization = `Bearer ${data.access_token}`;
+          // Refresh Token으로 Access Token 갱신
+          const { data } = await axios.post("https://beautymeongdang.duckdns.org/auth/refresh-token", {
+            refresh_token: refreshToken
+          });
 
-        return axiosInstance(originalRequest);
-      } catch (refreshError) {
-        console.error("Token refresh failed:", refreshError);
+          const newAccessToken = data.access_token;
+
+          // 상태 업데이트
+          setAccessToken(newAccessToken);
+
+          // 모든 대기 요청에 새로운 토큰 전달
+          onRrefreshed(newAccessToken);
+
+          isRefreshing = false;
+        } catch (refreshError) {
+          console.error("Token refresh failed:", refreshError);
+
+          // Refresh 실패 시 로그아웃 처리
+          const { clearAuth } = useAuthStore.getState();
+          clearAuth();
+          window.location.href = "/login";
+          return Promise.reject(refreshError);
+        }
       }
+
+      // Refresh Token 요청 대기
+      return new Promise((resolve) => {
+        refreshSubscribers.push((newAccessToken) => {
+          originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
+          resolve(axiosInstance(originalRequest));
+        });
+      });
     }
 
     return Promise.reject(error);
   }
 );
-
-// GET 요청 함수
-export const getRequest = async (url, params = {}) => {
-  try {
-    const response = await axiosInstance.get(url, { params });
-    console.log(response);
-    return response.data; // 응답 데이터 반환
-  } catch (error) {
-    console.error("GET Request Error:", error);
-    throw error;
-  }
-};
-
-// POST 요청 함수
-export const postRequest = async (url, data = {}) => {
-  try {
-    const response = await axiosInstance.post(url, data);
-    return response.data; // 응답 데이터 반환
-  } catch (error) {
-    console.error("POST Request Error:", error);
-    throw error;
-  }
-};
 
 export default axiosInstance;

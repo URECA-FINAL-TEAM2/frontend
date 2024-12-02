@@ -3,7 +3,7 @@ import line from "/Icons/groomerGrayVerticalLine.svg";
 import GrommerTotalRequest from "../../components/Main/GrommerTotalRequest";
 import mockJson from "../../utils/groomerHome.json";
 import { useEffect, useState } from "react";
-import { getRequest } from "../../api/axiosInstance";
+// import { getRequest } from "../../api/axiosInstance";
 import Summary from "../../components/common/Summary";
 
 const GroomerHome = () => {
@@ -14,14 +14,14 @@ const GroomerHome = () => {
     unsentQuote: 0 // 견적 미발송
   });
 
-  const fetchUserData = async () => {
-    try {
-      const data = await getRequest("/main/groomer");
-      console.log("User Data:", data);
-    } catch (error) {
-      console.error("Error fetching user data:", error);
-    }
-  };
+  // const fetchUserData = async () => {
+  //   try {
+  //     const data = await getRequest("/main/groomer");
+  //     console.log("User Data:", data);
+  //   } catch (error) {
+  //     console.error("Error fetching user data:", error);
+  //   }
+  // };
 
   useEffect(() => {
     setPreview({
@@ -30,7 +30,7 @@ const GroomerHome = () => {
       todayRequest: mockJson.todayRequest,
       unsentQuote: mockJson.unsentQuote
     });
-    fetchUserData();
+    // fetchUserData();
   }, []);
 
   return (

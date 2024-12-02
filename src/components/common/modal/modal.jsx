@@ -1,10 +1,17 @@
 import PropTypes from "prop-types";
 
-const Modal = ({ isOpen, onClose, onConfirm, children, closeText, confirmText }) => {
+const Modal = ({
+  isOpen = false,
+  onClose,
+  onConfirm,
+  children = "모달 내용",
+  closeText = "닫기",
+  confirmText = "확인"
+}) => {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 mx-auto flex w-[400px] items-center justify-center bg-black bg-opacity-30">
+    <div className="fixed inset-0 z-20 mx-auto flex w-[400px] items-center justify-center bg-black bg-opacity-30">
       <div className="flex h-[170px] w-[360px] flex-col items-center justify-between rounded-lg bg-white p-5 shadow-md">
         <div></div>
         <div className="mb-3 text-center">{children}</div>
@@ -28,12 +35,6 @@ Modal.propTypes = {
   children: PropTypes.node,
   closeText: PropTypes.string,
   confirmText: PropTypes.string
-};
-
-Modal.defaultProps = {
-  children: "모달 내용",
-  closeText: "닫기",
-  confirmText: "확인"
 };
 
 export default Modal;

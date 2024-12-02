@@ -1,7 +1,7 @@
 import React from "react";
 import ShopItem from "./ShopItem";
-import useShopStore from "../../../store/shopStore";
-import useListPositionStore from "../../../store/listPositionStore";
+import useShopStore from "../../store/shopStore";
+import useListPositionStore from "../../store/listPositionStore";
 
 const ShopList = () => {
   const listPosition = useListPositionStore((state) => state.listPosition);

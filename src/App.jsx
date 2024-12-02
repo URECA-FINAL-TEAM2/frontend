@@ -25,6 +25,7 @@ import PaymentComplete from "./pages/Payment/PaymentComplete";
 import ReservationMain from "./pages/Reservation/ReservationMain";
 import CustomerSearchPage from "./pages/Customer/CustomerSearchPage";
 import ShopDetailPage from "./pages/Customer/ShopDetailPage";
+import CustomerSearchLayout from "./pages/Layout/CustomerSearchLayout";
 
 function App() {
   return (
@@ -50,8 +51,10 @@ function App() {
 
           {/* customer/ - none */}
           <Route path="/customer">
-            <Route path="shop" element={<CustomerSearchPage />} />
-            <Route path="shop/:shopId" element={<ShopDetailPage />} />
+            <Route path="shop" element={<CustomerSearchLayout />}>
+              <Route index element={<CustomerSearchPage />} />
+              <Route path=":shopId" element={<ShopDetailPage />} />
+            </Route>
             <Route path="mypage" element={<CustomerMypage />} />
             <Route path="info" element={<UserInfo />} />
             <Route path="bookmarkedStore" element={<BookmarkedStore />} />

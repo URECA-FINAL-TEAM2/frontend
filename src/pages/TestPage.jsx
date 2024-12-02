@@ -3,7 +3,7 @@ import Button from "../components/common/button/button";
 import BottomButton from "../components/common/button/BottomButton";
 // import Modal from "../components/common/modal/modal";
 import RegionSelectModal from "../components/common/modal/RegionSelectModal";
-import StaticMap from "../components/Features/Map/StaticMap";
+import StaticMap from "../components/Map/StaticMap";
 
 const TestPage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);

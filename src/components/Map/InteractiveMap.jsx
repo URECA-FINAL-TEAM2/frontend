@@ -1,15 +1,15 @@
-import { useState, useCallback, useRef } from "react";
+import { useState, useCallback, useRef, useEffect } from "react";
 import { GoogleMap, MarkerF } from "@react-google-maps/api";
-import useShopStore from "../../../store/shopStore";
+import useShopStore from "../../store/shopStore";
 import { useMapSetup } from "./MapBase";
-import useListPositionStore from "../../../store/listPositionStore";
-import useUserPositionStore from "../../../store/userPositionStore";
+import useListPositionStore from "../../store/listPositionStore";
+import { useNavigate } from "react-router-dom";
 
 const InteractiveMap = () => {
   const listPosition = useListPositionStore((state) => state.listPosition);
-  const { userPosition, setUserPosition } = useUserPositionStore();
   const shops = useShopStore((state) => state.shops);
   const setSelectedShop = useShopStore((state) => state.setSelectedShop);
+  const selectedShop = useShopStore((state) => state.selectedShop);
 
   const sidoName = "경기도";
   const sigunguName = "수원시 장안구"; // storage에서 꺼낼 것
@@ -118,19 +118,28 @@ const InteractiveMap = () => {
     [address, calculateMapOffset, smoothlyAnimateToPosition]
   );
 
-  const handleShopClick = useCallback(
-    (shop) => {
-      setSelectedShop(shop);
-      setUserPosition({ lat: shop.latitude, lng: shop.longitude });
+  const navigate = useNavigate();
 
-      if (mapRef.current) {
-        const offset = calculateMapOffset();
-        const position = { lat: shop.latitude, lng: shop.longitude };
-        smoothlyAnimateToPosition(position, offset);
-      }
+  // handleShopClick 수정
+  const handleShopClick = useCallback(
+    (shopInfo) => {
+      setSelectedShop({ shopId: shopInfo.shopId, latitude: shopInfo.latitude, longitude: shopInfo.longitude });
+      navigate(`/customer/shop/${shopInfo.shopId}`);
     },
-    [setSelectedShop, setUserPosition, calculateMapOffset, smoothlyAnimateToPosition]
+    [setSelectedShop]
   );
+
+  // selectedShop 변경 감지를 위한 useEffect 추가
+  useEffect(() => {
+    if (selectedShop && mapRef.current) {
+      const offset = calculateMapOffset();
+      const position = {
+        lat: selectedShop.latitude,
+        lng: selectedShop.longitude
+      };
+      smoothlyAnimateToPosition(position, offset);
+    }
+  }, [selectedShop, calculateMapOffset, smoothlyAnimateToPosition]);
 
   if (!isLoaded) return error;
 

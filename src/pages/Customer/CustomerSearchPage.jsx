@@ -1,15 +1,15 @@
 import { useState } from "react";
 import CustomerBottom from "../../components/common/CustomerBottom";
 import RegionSelectModal from "../../components/common/modal/RegionSelectModal.jsx";
-import CustomerSearch from "../../components/Features/Customer/CustomerSearch";
-import SearchBox from "../../components/Features/Customer/SearchBox.jsx";
+import CustomerSearch from "../../components/CustomerSearch/CustomerSearch.jsx";
+import SearchBox from "../../components/CustomerSearch/SearchBox.jsx";
 import { MdOutlineEditLocation } from "react-icons/md";
 import { HiMap } from "react-icons/hi2";
 
 function CustomerSearchPage(props) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const sidoName = "경기도";
-  const sigunguName = "수원시 영통구"; // storage에서 꺼낼 것
+  const sigunguName = "수원시 장안구"; // storage에서 꺼낼 것
 
   const onModalClose = () => {
     setIsModalOpen(false);

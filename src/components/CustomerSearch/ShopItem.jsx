@@ -2,11 +2,15 @@ import React from "react";
 import { FaStar } from "react-icons/fa";
 import { GoHeartFill } from "react-icons/go";
 import { useNavigate } from "react-router-dom";
+import useShopStore from "../../store/shopStore";
 
 const ShopItem = ({ shopInfo }) => {
+  const setSelectedShop = useShopStore((state) => state.setSelectedShop);
+
   const navigate = useNavigate();
 
   const handleClick = () => {
+    setSelectedShop({ shopId: shopInfo.shopId, latitude: shopInfo.latitude, longitude: shopInfo.longitude });
     navigate(`/customer/shop/${shopInfo.shopId}`);
   };
 

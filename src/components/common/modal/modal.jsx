@@ -1,6 +1,13 @@
 import PropTypes from "prop-types";
 
-const Modal = ({ isOpen, onClose, onConfirm, children, closeText, confirmText }) => {
+const Modal = ({
+  isOpen = false,
+  onClose,
+  onConfirm,
+  children = "모달 내용",
+  closeText = "닫기",
+  confirmText = "확인"
+}) => {
   if (!isOpen) return null;
 
   return (
@@ -28,12 +35,6 @@ Modal.propTypes = {
   children: PropTypes.node,
   closeText: PropTypes.string,
   confirmText: PropTypes.string
-};
-
-Modal.defaultProps = {
-  children: "모달 내용",
-  closeText: "닫기",
-  confirmText: "확인"
 };
 
 export default Modal;

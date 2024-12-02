@@ -4,6 +4,7 @@ import line from "/Icons/line.svg";
 import Aos from "aos";
 import { useNavigate } from "react-router-dom";
 import KakaoLoginBtn from "../../components/Login/KakaoLoginBtn";
+import GoogleLoginBtn from "../../components/Login/GoogleLoginBtn";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -49,16 +50,9 @@ const Login = () => {
         <button data-aos="fade-down" data-aos-easing="linear" data-aos-duration="1200">
           <KakaoLoginBtn />
         </button>
-
-        <button
-          data-aos="fade-down"
-          data-aos-easing="linear"
-          data-aos-duration="1400"
-          className="my-2 w-full rounded-lg bg-white p-3 text-main"
-          onClick={() => navigate("/selectRole")}
-        >
-          구글 로그인 btn
-        </button>
+        <div className="mx-auto mt-2 w-11/12" data-aos="fade-down" data-aos-easing="linear" data-aos-duration="1400">
+          <GoogleLoginBtn />
+        </div>
       </div>
     </div>
   );

@@ -9,7 +9,7 @@ const BottomButton = ({ styleType, onClick = () => {}, children }) => {
   return (
     <button
       onClick={onClick}
-      className={`hover:scale-103 fixed bottom-0 flex h-[60px] w-[400px] items-center justify-center rounded-t-[10px] text-[20px] transition-all duration-300 ease-in-out hover:shadow-md ${buttonStyle}`}
+      className={`w-100 fixed bottom-0 left-0 right-0 mx-auto flex h-[55px] w-full max-w-[400px] items-center justify-center rounded-t-[10px] text-[20px] transition-all duration-300 ease-in-out hover:scale-103 hover:shadow-md ${buttonStyle}`}
     >
       {children}
     </button>

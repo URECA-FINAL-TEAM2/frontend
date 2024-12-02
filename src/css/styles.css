@@ -1,0 +1,15 @@
+.btn-selected-readonly {
+  @apply cursor-not-allowed border-main-400 bg-main-400 text-white;
+}
+
+.btn-selected-editable {
+  @apply border-main-200 bg-main-200 text-black;
+}
+
+.btn-unselected-readonly {
+  @apply cursor-not-allowed border-main-400;
+}
+
+.btn-unselected-editable {
+  @apply border-main-200;
+}

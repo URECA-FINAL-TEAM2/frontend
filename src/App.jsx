@@ -1,6 +1,5 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Notification from "./pages/Notification";
-import TestPage from "./pages/TestPage";
 import Onboarding from "./pages/Main/Onboarding";
 import Login from "./pages/Main/Login";
 import SelectRole from "./pages/Main/SelectRole";
@@ -17,39 +16,45 @@ import GroomerStore from "./pages/Groomer/GroomerStore";
 import GroomerChat from "./pages/Groomer/GroomerChat";
 import GroomerMypage from "./pages/Groomer/GroomerMypage";
 import BestReviews from "./pages/Main/BestReviews";
-import KakaoOAuth2RedirectPage from "./components/Login/KakaOauth2RedirectPage";
-import UserInfo from "./pages/Common/UserInfo";
-import BookmarkedStore from "./pages/Customer/BookmarkedStore";
 import PaymentComponent from "./pages/Payment/PaymentComponent";
 import PaymentComplete from "./pages/Payment/PaymentComplete";
+import OAuth2RedirectPage from "./components/Login/Oauth2RedirectPage";
+import UserInfo from "./pages/Mypage/UserInfo";
+import BookmarkedStore from "./pages/Mypage/BookmarkedStore";
+import MyPet from "./pages/Mypage/CustomerPet/MyPet";
+import MyReviews from "./pages/Mypage/Reviews/MyReviews";
+import WriteReviews from "./pages/Mypage/Reviews/WriteReviews";
+import MyStore from "./pages/Mypage/GroomerStore.jsx/MyStore";
+import CreateStore from "./pages/Mypage/GroomerStore.jsx/CreateStore";
 import ReservationMain from "./pages/Reservation/ReservationMain";
 import CustomerSearchPage from "./pages/Customer/CustomerSearchPage";
 import ShopDetailPage from "./pages/Customer/ShopDetailPage";
 import CustomerSearchLayout from "./pages/Layout/CustomerSearchLayout";
+import ReservationDetail from "./pages/Reservation/ReservationDetail";
 
 function App() {
   return (
     <div className="App">
       <Router>
         <Routes>
-          <Route path="/testpage" element={<TestPage />} />
+          <Route path="/testpage" element={<ReservationDetail />} />
           <Route path="/" element={<Onboarding />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/oauth/kakao/login" element={<KakaoOAuth2RedirectPage />} />
+          <Route path="/login/oauth2/code/kakao" element={<OAuth2RedirectPage />} />
 
-          <Route path="/SelectRole" element={<SelectRole />} />
+          <Route path="/selectRole" element={<SelectRole />} />
           <Route path="/infoRequired" element={<InfoRequired />} />
           <Route path="/notification" element={<Notification />} />
           <Route path="/bestReviews" element={<BestReviews />} />
 
-          {/* customer/ - layout */}
+          {/* customer/ -layout */}
           <Route path="/customer" element={<CustomerLayout />}>
             <Route path="home" element={<CustomerHome />} />
             <Route path="docs" element={<CustomerDocs />} />
             <Route path="chat" element={<CustomerChat />} />
           </Route>
 
-          {/* customer/ - none */}
+          {/* customer/ -none */}
           <Route path="/customer">
             <Route path="shop" element={<CustomerSearchLayout />}>
               <Route index element={<CustomerSearchPage />} />
@@ -58,6 +63,11 @@ function App() {
             <Route path="mypage" element={<CustomerMypage />} />
             <Route path="info" element={<UserInfo />} />
             <Route path="bookmarkedStore" element={<BookmarkedStore />} />
+
+            <Route path="myPet" element={<MyPet />} />
+            <Route path="myPet/:id" element={<MyPet />} />
+            <Route path="myReviews" element={<MyReviews />} />
+            <Route path="writeReviews" element={<WriteReviews />} />
             <Route path="reservation" element={<ReservationMain />} />
           </Route>
 
@@ -73,6 +83,8 @@ function App() {
           <Route path="/groomer">
             <Route path="mypage" element={<GroomerMypage />} />
             <Route path="info" element={<UserInfo />} />
+            <Route path="mystore" element={<MyStore />} />
+            <Route path="createstore" element={<CreateStore />} />
           </Route>
         </Routes>
       </Router>

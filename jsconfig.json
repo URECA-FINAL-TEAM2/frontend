@@ -1,0 +1,9 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".", // 프로젝트 루트 경로
+    "paths": {
+      "@/*": ["./src/*"] // src를 '@'로 매핑
+    }
+  },
+  "include": ["src"] // src 디렉토리만 포함
+}

@@ -16,7 +16,7 @@ const SubHeader = ({ title, navigate = -1 }) => {
 
 SubHeader.propTypes = {
   title: PropTypes.string.isRequired,
-  navigate: PropTypes.string.isRequired
+  navigate: PropTypes.string
 };
 
 export default SubHeader;

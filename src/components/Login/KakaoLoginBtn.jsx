@@ -1,4 +1,4 @@
-import kakaoBtn from "/Main/kakaoBtn.png";
+import kakaoBtn from "/Main/kakaoBtn.svg";
 
 const KakaoLoginBtn = () => {
   const KAKAO_REST_API_KEY = import.meta.env.VITE_KAKAO_REST_API_KEY;
@@ -13,7 +13,7 @@ const KakaoLoginBtn = () => {
   return (
     <>
       <button onClick={onKakaoSocialLogin}>
-        <img src={kakaoBtn} alt="kakao button" className="mx-auto w-10/12" />
+        <img src={kakaoBtn} alt="kakao button" className="mx-auto w-11/12" />
       </button>
     </>
   );

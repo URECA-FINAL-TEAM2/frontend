@@ -9,7 +9,7 @@ const UserInfo = () => {
   const location = useLocation();
   const [formData, setFormData] = useState({
     role: "customer",
-    profile_image: "",
+    profile_image: null,
     username: "노승희",
     nickname: "승2",
     phone: "010-1111-2222",
@@ -57,7 +57,7 @@ const UserInfo = () => {
       <SubHeader title={"내 정보 수정"} />
       <UserForm
         formData={formData}
-        setFormDate={setFormData}
+        setFormData={setFormData}
         handleSubmit={handleSubmit}
         handleChange={handleChange}
         role={role}

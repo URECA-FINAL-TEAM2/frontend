@@ -10,10 +10,10 @@ const ProfileImage = ({ setFormData, onlyRead = false }) => {
   useEffect(() => {
     if (location.pathname.includes("store")) {
       setImagePreview(DefaultStoreProfile);
-    } else if (location.pathname.includes("pet")) {
-      setImagePreview(DefaultPetProfile);
-    } else {
+    } else if (location.pathname.includes("info")) {
       setImagePreview(DefaultCustomerProfile);
+    } else {
+      setImagePreview(DefaultPetProfile);
     }
   }, []);
 

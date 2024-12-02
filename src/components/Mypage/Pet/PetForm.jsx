@@ -1,4 +1,3 @@
-import PetProfileImage from "./PetProfileImage";
 import PetBirth from "./PetBirth";
 import PetGender from "./PetGender";
 import PetNeutering from "./PetNeutering";

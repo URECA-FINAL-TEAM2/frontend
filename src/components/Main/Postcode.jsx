@@ -1,7 +1,7 @@
 import { useState } from "react";
 import PropTypes from "prop-types";
 
-const Postcode = ({ setFormData }) => {
+const Postcode = ({ setFormData, handleChange }) => {
   const [address, setAddress] = useState(""); // 주소
   const [detailAddress, setDetailAddress] = useState(""); // 상세주소
 
@@ -78,8 +78,4 @@ const Postcode = ({ setFormData }) => {
   );
 };
 
-Postcode.propTypes = {
-  setFormData: PropTypes.func.isRequired,
-  handleChange: PropTypes.func.isRequired
-};
 export default Postcode;

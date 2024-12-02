@@ -1,6 +1,6 @@
 const PetSignificant = ({ onlyRead, formData, handleChange }) => {
   return (
-    <div>
+    <div className="mb-28">
       <label className="labelStyle" htmlFor="significant">
         특이사항
       </label>

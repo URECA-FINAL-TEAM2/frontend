@@ -1,7 +1,6 @@
 import { IoCalendarOutline } from "react-icons/io5";
 import { FaDog } from "react-icons/fa";
 import { VscSymbolFile } from "react-icons/vsc";
-import PropTypes from "prop-types";
 
 const GrommerTotalRequest = ({
   profileImage,
@@ -42,17 +41,6 @@ const GrommerTotalRequest = ({
       </div>
     </article>
   );
-};
-
-GrommerTotalRequest.propTypes = {
-  profileImage: PropTypes.string.isRequired,
-  nickname: PropTypes.string.isRequired,
-  closingDate: PropTypes.string.isRequired,
-  beautyDate: PropTypes.string.isRequired,
-  breed: PropTypes.string.isRequired,
-  dogGender: PropTypes.string.isRequired,
-  dogWeight: PropTypes.number.isRequired,
-  requestContent: PropTypes.string.isRequired
 };
 
 export default GrommerTotalRequest;

@@ -56,7 +56,7 @@ const UserForm = ({ formData, setFormData, handleSubmit, handleChange, role }) =
         />
       </div>
       {/* Address */}
-      {role === "customer" && <Postcode handleChange={handleChange} setFormData={setFormData} />}
+      {role === "customer" && <Postcode setFormData={setFormData} handleChange={handleChange} />}
 
       {/* 미용사 스킬 */}
       {role === "groomer" && (

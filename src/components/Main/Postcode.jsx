@@ -63,8 +63,8 @@ const Postcode = ({ setFormData }) => {
         </button>
       </div>
 
-      <div className="">
-        <input type="text" id="address" className="inputStyle mb-2 mt-3" placeholder="주소" value={address} readOnly />
+      <div>
+        <input type="text" id="address" className="inputStyle mb-2" placeholder="주소" value={address} readOnly />
         <input
           type="text"
           id="detailAddress"

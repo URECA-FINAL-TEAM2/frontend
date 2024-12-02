@@ -7,12 +7,13 @@ import PetName from "./PetName";
 import PetBreed from "./PetBreed";
 import PetWeight from "./PetWeight";
 import PetSignificant from "./PetSignificant";
+import ProfileImage from "../ProfileImage";
 
 const PetForm = ({ onlyRead, formData, setFormData, handleChange }) => {
   return (
     <form>
       {/* 반려견 프로필 사진 */}
-      <PetProfileImage onlyRead={onlyRead} setFormData={setFormData} />
+      <ProfileImage onlyRead={onlyRead} setFormData={setFormData} />
       {/* 이름 */}
       <PetName onlyRead={onlyRead} formData={formData} handleChange={handleChange} />
       {/* 품종 */}

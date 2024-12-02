@@ -9,7 +9,7 @@ import PetForm from "@/components/Mypage/Pet/PetForm";
 const MyPet = () => {
   const params = useParams();
   const [isState, setIsState] = useState("register");
-  const [onlyRead, setOnlyRead] = useState(true); // 조회
+  const [onlyRead, setOnlyRead] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [formData, setFormData] = useState({
     dogName: "",

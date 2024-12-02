@@ -26,7 +26,7 @@ import MyPet from "./pages/Mypage/CustomerPet/MyPet";
 import MyReviews from "./pages/Mypage/Reviews/MyReviews";
 import WriteReviews from "./pages/Mypage/Reviews/WriteReviews";
 import MyStore from "./pages/Mypage/GroomerStore.jsx/MyStore";
-import Pet from "./pages/Mypage/CustomerPet/Pet";
+import CreateStore from "./pages/Mypage/GroomerStore.jsx/CreateStore";
 
 function App() {
   return (
@@ -76,6 +76,7 @@ function App() {
             <Route path="mypage" element={<GroomerMypage />} />
             <Route path="info" element={<UserInfo />} />
             <Route path="mystore" element={<MyStore />} />
+            <Route path="createstore" element={<CreateStore />} />
           </Route>
         </Routes>
       </Router>

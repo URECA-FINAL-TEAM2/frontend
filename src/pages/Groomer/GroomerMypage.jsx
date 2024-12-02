@@ -1,15 +1,11 @@
 import SubHeader from "../../components/common/SubHeader";
-import ToggleButton from "../../components/Main/ToggleButton";
 import DefaultProfile from "/Icons/DefaultCustomerProfile.svg";
 import { VscChevronRight } from "react-icons/vsc";
 import Summary from "../../components/common/Summary";
-import dog from "/Test/dog.jpg";
-import addPetIcons from "/Icons/addPet.svg";
-import { Link, useNavigate } from "react-router-dom";
-import { BsShop } from "react-icons/bs";
-import { VscSymbolFile } from "react-icons/vsc";
-import { MdOutlineRateReview } from "react-icons/md";
+import { useNavigate } from "react-router-dom";
 import GroomerBottom from "@/components/common/GroomerBottom";
+import GroomerList from "@/components/Mypage/GroomerList";
+import ToggleButton from "@/components/Main/ToggleButton";
 
 const GroomerMypage = () => {
   const navigate = useNavigate();
@@ -52,31 +48,8 @@ const GroomerMypage = () => {
             thirdValue={9}
           />
         </div>
-        {/* 반려견 정보 */}
-        {/* <div className="mx-auto w-11/12 border-t-2 border-t-main-200 pl-3 pt-6"> */}
         {/* 목록 */}
-        <div className="border-t-2 border-t-main-200">
-          <ul className="mt-6 px-8">
-            <Link to="/groomer/mystore">
-              <li className="flex items-center border-b-2 border-gray-200 py-4">
-                <BsShop className="mr-3" size={20} color="#ff8e8e" />
-                <span className="text-lg">매장관리</span>
-              </li>
-            </Link>
-            <Link to="">
-              <li className="flex items-center border-b-2 border-gray-200 py-4">
-                <VscSymbolFile className="mr-3" size={22} color="#ff8e8e" />
-                <span className="text-lg">예약내역</span>
-              </li>
-            </Link>
-            <button
-              className="mx-auto flex py-4 text-sm text-gray-300 underline"
-              onClick={() => console.log("로그아웃")}
-            >
-              <li>로그아웃</li>
-            </button>
-          </ul>
-        </div>
+        <GroomerList />
       </main>
       <GroomerBottom />
     </>

@@ -27,6 +27,7 @@ import MyReviews from "./pages/Mypage/Reviews/MyReviews";
 import WriteReviews from "./pages/Mypage/Reviews/WriteReviews";
 import MyStore from "./pages/Mypage/GroomerStore.jsx/MyStore";
 import CreateStore from "./pages/Mypage/GroomerStore.jsx/CreateStore";
+import ReservationMain from "./pages/Reservation/ReservationMain";
 
 function App() {
   return (
@@ -61,6 +62,7 @@ function App() {
             <Route path="myPet/:id" element={<MyPet />} />
             <Route path="myReviews" element={<MyReviews />} />
             <Route path="writeReviews" element={<WriteReviews />} />
+            <Route path="reservation" element={<ReservationMain />} />
           </Route>
 
           {/* groomer/ -layout */}

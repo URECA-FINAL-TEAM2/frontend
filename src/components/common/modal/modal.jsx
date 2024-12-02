@@ -14,7 +14,7 @@ const Modal = ({
     <div className="fixed inset-0 z-20 mx-auto flex w-[400px] items-center justify-center bg-black bg-opacity-30">
       <div className="flex h-[170px] w-[360px] flex-col items-center justify-between rounded-lg bg-white p-5 shadow-md">
         <div></div>
-        <div className="mb-5 text-center">{children}</div>
+        <div className="mb-3 text-center">{children}</div>
         <div className="flex gap-4">
           <button className="h-[35px] w-[152px] rounded-md bg-gray-100" onClick={onClose}>
             {closeText}

@@ -12,6 +12,7 @@ const shopDetail = {
   latitude: 37.2567,
   longitude: 127.0218,
   favorite: 14,
+  isFavorite: false,
   description: '위드뮤의 모토는 "모든 아이들은 별과 같이 소중한 존재고, 반짝일 가치가 있다."입니다.',
   groomerPortfolioImages: [
     {
@@ -31,7 +32,8 @@ const shopDetail = {
       content: "강아지가 편안해하고 미용도 꼼꼼하게 해주셨어요.",
       recommendCount: 5,
       reviewsImage: ["review-image1.jpg", "review-image2.jpg", "review-image3.jpg"],
-      createdAt: "2024-11-19 10:00:00"
+      createdAt: "2024-11-19 10:00:00",
+      isRecommended: false
     },
     {
       reviewId: 2,
@@ -40,7 +42,8 @@ const shopDetail = {
       content: "서비스가 좋아요, 강아지 미용도 깔끔했어요.",
       recommendCount: 3,
       reviewsImage: ["review-image4.jpg", "review-image5.jpg"],
-      createdAt: "2024-11-19 11:30:00"
+      createdAt: "2024-11-19 11:30:00",
+      isRecommended: true
     }
   ]
 };

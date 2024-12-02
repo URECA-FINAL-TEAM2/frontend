@@ -9,14 +9,17 @@ const useDragPosition = () => {
 
   const handleDragStart = (e) => {
     setIsDragging(true);
-    dragStartY.current = e.clientY;
+    // touchstart와 mousedown 이벤트를 모두 처리
+    dragStartY.current = e.type.includes("touch") ? e.touches[0].clientY : e.clientY;
     dragStartPosition.current = listPosition;
   };
 
   const handleDrag = (e) => {
     if (!isDragging) return;
 
-    const deltaY = dragStartY.current - e.clientY;
+    // touchmove와 mousemove 이벤트를 모두 처리
+    const currentY = e.type.includes("touch") ? e.touches[0].clientY : e.clientY;
+    const deltaY = dragStartY.current - currentY;
     const deltaPercent = (deltaY / window.innerHeight) * 100;
     const newPosition = Math.max(0, Math.min(100, dragStartPosition.current + deltaPercent));
     setListPosition(newPosition);
@@ -37,10 +40,10 @@ const useDragPosition = () => {
   };
 
   const dragHandlers = {
-    onMouseDown: handleDragStart,
-    onTouchStart: (e) => handleDragStart(e.touches[0]),
-    onMouseMove: handleDrag,
-    onTouchMove: (e) => handleDrag(e.touches[0]),
+    onMouseDown: (e) => handleDragStart(e),
+    onTouchStart: (e) => handleDragStart(e),
+    onMouseMove: (e) => handleDrag(e),
+    onTouchMove: (e) => handleDrag(e),
     onMouseUp: handleDragEnd,
     onTouchEnd: handleDragEnd
   };

@@ -14,7 +14,15 @@ const useShopStore = create((set, get) => ({
       originalShops: [...shops], // 원본 데이터 저장
       sortType: "favorite"
     }),
-  setSelectedShop: (shop) => set({ selectedShop: shop }),
+
+  setSelectedShop: (shop) =>
+    set({
+      selectedShop: {
+        shopId: shop.shopId,
+        latitude: shop.latitude,
+        longitude: shop.longitude
+      }
+    }),
 
   // Sort action
   setSortType: (sortType) => {

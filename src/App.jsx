@@ -35,7 +35,7 @@ function App() {
     <div className="App">
       <Router>
         <Routes>
-          <Route path="/testpage" element={<ReservationMain />} />
+          <Route path="/testpage" element={<ReservationDetail />} />
           <Route path="/" element={<Onboarding />} />
           <Route path="/login" element={<Login />} />
           <Route path="/login/oauth2/code/kakao" element={<OAuth2RedirectPage />} />

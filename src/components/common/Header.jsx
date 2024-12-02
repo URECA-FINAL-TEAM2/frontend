@@ -16,7 +16,7 @@ const Header = () => {
   }, [location.pathname]);
 
   return (
-    <div className="fixed flex h-[75px] w-[400px] items-center justify-between bg-white px-5">
+    <div className="fixed flex h-[var(--header-height)] w-[400px] items-center justify-between bg-white px-5">
       <Link to={url}>
         <img src={logo} alt="logo" className="" />
       </Link>

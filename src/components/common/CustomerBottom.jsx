@@ -13,7 +13,7 @@ const CustomerBottom = () => {
   const routes = [
     { path: "/customer/home", name: "home" },
     { path: "/customer/docs", name: "docs" },
-    { path: "/customer/search", name: "search" },
+    { path: "/customer/shop", name: "shop" },
     { path: "/customer/chat", name: "chat" },
     { path: "/customer/mypage", name: "mypage" }
   ];
@@ -25,7 +25,7 @@ const CustomerBottom = () => {
   }, [location.pathname]);
 
   return (
-    <div className="fixed bottom-0 h-[75px] w-[400px] bg-white px-2">
+    <div className="fixed bottom-0 h-[var(--bottom-bar-height)] w-[400px] bg-white px-2">
       <div className="grid h-full grid-cols-5 items-center justify-items-center">
         <Link to="/customer/home">
           <div className={`bottom ${active === "home" && "bottom-active"}`}>
@@ -39,8 +39,8 @@ const CustomerBottom = () => {
             <span className="mt-1 text-xs">견적서</span>
           </div>
         </Link>
-        <Link to="/customer/search">
-          <div className={`bottom ${active === "search" && "bottom-active"}`}>
+        <Link to="/customer/shop">
+          <div className={`bottom ${active === "shop" && "bottom-active"}`}>
             <TbPawFilled size={30} />
             <span className="mt-1 text-xs">미용사 찾기</span>
           </div>

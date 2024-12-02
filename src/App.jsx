@@ -8,7 +8,6 @@ import CustomerLayout from "./pages/Layout/CustomerLayout";
 import GroomerLayout from "./pages/Layout/GroomerLayout";
 import CustomerHome from "./pages/Customer/CustomerHome";
 import CustomerDocs from "./pages/Customer/CustomerDocs";
-import CustomerSearch from "./pages/Customer/CustomerSearch";
 import CustomerChat from "./pages/Customer/CustomerChat";
 import CustomerMypage from "./pages/Customer/CustomerMypage";
 import GroomerHome from "./pages/Groomer/GroomerHome";
@@ -28,6 +27,9 @@ import WriteReviews from "./pages/Mypage/Reviews/WriteReviews";
 import MyStore from "./pages/Mypage/GroomerStore.jsx/MyStore";
 import CreateStore from "./pages/Mypage/GroomerStore.jsx/CreateStore";
 import ReservationMain from "./pages/Reservation/ReservationMain";
+import CustomerSearchPage from "./pages/Customer/CustomerSearchPage";
+import ShopDetailPage from "./pages/Customer/ShopDetailPage";
+import CustomerSearchLayout from "./pages/Layout/CustomerSearchLayout";
 import ReservationDetail from "./pages/Reservation/ReservationDetail";
 
 function App() {
@@ -49,12 +51,15 @@ function App() {
           <Route path="/customer" element={<CustomerLayout />}>
             <Route path="home" element={<CustomerHome />} />
             <Route path="docs" element={<CustomerDocs />} />
-            <Route path="search" element={<CustomerSearch />} />
             <Route path="chat" element={<CustomerChat />} />
           </Route>
 
           {/* customer/ -none */}
           <Route path="/customer">
+            <Route path="shop" element={<CustomerSearchLayout />}>
+              <Route index element={<CustomerSearchPage />} />
+              <Route path=":shopId" element={<ShopDetailPage />} />
+            </Route>
             <Route path="mypage" element={<CustomerMypage />} />
             <Route path="info" element={<UserInfo />} />
             <Route path="bookmarkedStore" element={<BookmarkedStore />} />

@@ -31,9 +31,10 @@
 }
 
 #root {
-  font-family: Pretendard, Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   display: flex;
   justify-content: center;
+  --header-height: 75px;
+  --bottom-bar-height: 75px;
 }
 
 .App {
@@ -44,6 +45,25 @@
 
 .titleFont {
   font-family: "UhBeeZZIBA-Regular";
+}
+
+/* 모든 브라우저에서 스크롤바 숨기기 */
+
+html,
+body {
+  height: 100vh;
+  overflow-y: auto;
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}
+
+#root::-webkit-scrollbar {
+  display: none;
 }
 
 @layer base {

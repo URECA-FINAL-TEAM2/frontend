@@ -25,7 +25,7 @@ const GroomerBottom = () => {
   }, [location.pathname]);
 
   return (
-    <div className="fixed bottom-0 h-[75px] w-[400px] bg-white px-2">
+    <div className="fixed bottom-0 h-[var(--bottom-bar-height)] w-[400px] bg-white px-2">
       <div className="grid h-full grid-cols-5 items-center justify-items-center">
         <Link to="/groomer/home">
           <div className={`bottom ${active === "home" && "bottom-active"}`}>

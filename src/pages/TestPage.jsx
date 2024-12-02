@@ -3,6 +3,7 @@ import Button from "../components/common/button/button";
 import BottomButton from "../components/common/button/BottomButton";
 // import Modal from "../components/common/modal/modal";
 import RegionSelectModal from "../components/common/modal/RegionSelectModal";
+import StaticMap from "../components/Features/Map/StaticMap";
 
 const TestPage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -78,6 +79,10 @@ const TestPage = () => {
         onClose={handleCloseModal}
         onConfirm={handleConfirmRegionModal}
       ></RegionSelectModal>
+
+      <div className="mx-auto h-[200px] w-[360px]">
+        <StaticMap location={{ lat: 37.5545, lng: 126.978 }} shopName="매장명" />
+      </div>
     </div>
   );
 };

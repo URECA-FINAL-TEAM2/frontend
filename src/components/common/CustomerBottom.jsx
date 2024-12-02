@@ -13,7 +13,7 @@ const CustomerBottom = () => {
   const routes = [
     { path: "/customer/home", name: "home" },
     { path: "/customer/docs", name: "docs" },
-    { path: "/customer/search", name: "search" },
+    { path: "/customer/shop", name: "shop" },
     { path: "/customer/chat", name: "chat" },
     { path: "/customer/mypage", name: "mypage" }
   ];
@@ -39,8 +39,8 @@ const CustomerBottom = () => {
             <span className="mt-1 text-xs">견적서</span>
           </div>
         </Link>
-        <Link to="/customer/search">
-          <div className={`bottom ${active === "search" && "bottom-active"}`}>
+        <Link to="/customer/shop">
+          <div className={`bottom ${active === "shop" && "bottom-active"}`}>
             <TbPawFilled size={30} />
             <span className="mt-1 text-xs">미용사 찾기</span>
           </div>

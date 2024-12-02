@@ -9,7 +9,6 @@ import CustomerLayout from "./pages/Layout/CustomerLayout";
 import GroomerLayout from "./pages/Layout/GroomerLayout";
 import CustomerHome from "./pages/Customer/CustomerHome";
 import CustomerDocs from "./pages/Customer/CustomerDocs";
-import CustomerSearch from "./pages/Customer/CustomerSearch";
 import CustomerChat from "./pages/Customer/CustomerChat";
 import CustomerMypage from "./pages/Customer/CustomerMypage";
 import GroomerHome from "./pages/Groomer/GroomerHome";
@@ -24,13 +23,15 @@ import BookmarkedStore from "./pages/Customer/BookmarkedStore";
 import PaymentComponent from "./pages/Payment/PaymentComponent";
 import PaymentComplete from "./pages/Payment/PaymentComplete";
 import ReservationMain from "./pages/Reservation/ReservationMain";
+import CustomerSearchPage from "./pages/Customer/CustomerSearchPage";
+import ShopDetailPage from "./pages/Customer/ShopDetailPage";
 
 function App() {
   return (
     <div className="App">
       <Router>
         <Routes>
-          <Route path="/testpage" element={<PaymentComponent />} />
+          <Route path="/testpage" element={<TestPage />} />
           <Route path="/" element={<Onboarding />} />
           <Route path="/login" element={<Login />} />
           <Route path="/oauth/kakao/login" element={<KakaoOAuth2RedirectPage />} />
@@ -44,12 +45,13 @@ function App() {
           <Route path="/customer" element={<CustomerLayout />}>
             <Route path="home" element={<CustomerHome />} />
             <Route path="docs" element={<CustomerDocs />} />
-            <Route path="search" element={<CustomerSearch />} />
             <Route path="chat" element={<CustomerChat />} />
           </Route>
 
           {/* customer/ - none */}
           <Route path="/customer">
+            <Route path="shop" element={<CustomerSearchPage />} />
+            <Route path="shop/:shopId" element={<ShopDetailPage />} />
             <Route path="mypage" element={<CustomerMypage />} />
             <Route path="info" element={<UserInfo />} />
             <Route path="bookmarkedStore" element={<BookmarkedStore />} />

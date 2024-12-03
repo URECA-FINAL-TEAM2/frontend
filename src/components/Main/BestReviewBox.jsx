@@ -1,9 +1,20 @@
-import PropTypes from "prop-types";
+import { getShopDetail } from "@/queries/shopQuery";
+import { useEffect } from "react";
 import { GoThumbsup } from "react-icons/go";
+import { useNavigate } from "react-router-dom";
 
 const BestReviewBox = ({ reviewImage, shopName, starScore, timestamp, content, recommendCount }) => {
+  const navigate = useNavigate();
+  const handleShopDetail = () => {
+    console.log("매장 상세 페이지로 이동");
+    // navigate("/");
+  };
+
   return (
-    <article className="my-4 flex items-center justify-between rounded-xl bg-white py-2">
+    <button
+      onClick={() => handleShopDetail(2)} // 파라미터에 shopId or groomerId
+      className="my-4 flex w-full items-center justify-between rounded-xl bg-white py-2"
+    >
       <img src={reviewImage} alt="storeLogo" className="h-[120px] w-[120px] rounded-xl bg-white" />
       <div className="ml-2 grow">
         <div className="flex items-center justify-between text-lg">
@@ -19,17 +30,8 @@ const BestReviewBox = ({ reviewImage, shopName, starScore, timestamp, content, r
         </div>
         <div className="h-[30px] w-[180px] overflow-hidden text-ellipsis text-xs">{content}</div>
       </div>
-    </article>
+    </button>
   );
-};
-
-BestReviewBox.propTypes = {
-  reviewImage: PropTypes.string.isRequired,
-  shopName: PropTypes.string.isRequired,
-  starScore: PropTypes.number.isRequired,
-  timestamp: PropTypes.string.isRequired,
-  content: PropTypes.string.isRequired,
-  recommendCount: PropTypes.number.isRequired
 };
 
 export default BestReviewBox;

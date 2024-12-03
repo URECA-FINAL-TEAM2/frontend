@@ -20,7 +20,7 @@ const ProfileImage = ({ setFormData, onlyRead = false }) => {
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     if (file) {
-      setFormData((prev) => ({ ...prev, profile_image: file }));
+      setFormData((prev) => ({ ...prev, profileImage: file }));
       const reader = new FileReader();
       reader.onloadend = () => {
         setImagePreview(reader.result);
@@ -47,7 +47,7 @@ const ProfileImage = ({ setFormData, onlyRead = false }) => {
         <input
           type="file"
           id="profile_image_input"
-          name="profile_image"
+          name="profileImage"
           accept="image/*"
           onChange={handleFileChange}
           className="hidden"

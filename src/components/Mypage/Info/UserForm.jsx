@@ -1,5 +1,5 @@
+import BottomButton from "@/components/common/button/BottomButton";
 import ProfileImage from "../ProfileImage";
-import Postcode from "@/components/Main/Postcode";
 
 const UserForm = ({ formData, setFormData, handleSubmit, handleChange, role }) => {
   return (
@@ -12,16 +12,13 @@ const UserForm = ({ formData, setFormData, handleSubmit, handleChange, role }) =
         <label htmlFor="username" className="labelStyle">
           이름
         </label>
-        <input
-          type="text"
-          id="username"
-          name="username"
-          value={formData.username}
-          onChange={handleChange}
-          placeholder="이름을 입력해주세요."
-          className="inputStyle"
-          required
-        />
+        <div className="inputStyle">{formData.name}</div>
+      </div>
+      <div>
+        <label htmlFor="email" className="labelStyle">
+          이메일
+        </label>
+        <div className="inputStyle">{formData.email}</div>
       </div>
       {/* Nickname */}
       <div>
@@ -55,20 +52,34 @@ const UserForm = ({ formData, setFormData, handleSubmit, handleChange, role }) =
           required
         />
       </div>
-      {/* Address */}
-      {role === "customer" && <Postcode setFormData={setFormData} handleChange={handleChange} />}
-
-      {/* 미용사 스킬 */}
+      {/* 고객 - 우리동네 선택 */}
+      {role === "customer" && (
+        <div>
+          <label htmlFor="address" className="labelStyle">
+            동네 선택하기
+          </label>
+          <input
+            type="text"
+            id="address"
+            name="address"
+            value={formData.address}
+            onChange={handleChange}
+            placeholder="동네 선택 select box"
+            className="inputStyle"
+          />
+        </div>
+      )}
+      {/* 미용사 - 스킬 */}
       {role === "groomer" && (
         <div>
-          <label htmlFor="skill" className="labelStyle">
+          <label htmlFor="skills" className="labelStyle">
             미용사 스킬
           </label>
           <input
             type="text"
-            id="skill"
-            name="skill"
-            value={formData.skill}
+            id="skills"
+            name="skills"
+            value={formData.skills}
             onChange={handleChange}
             placeholder="미용사 스킬을 입력해주세요."
             className="inputStyle"
@@ -76,13 +87,9 @@ const UserForm = ({ formData, setFormData, handleSubmit, handleChange, role }) =
         </div>
       )}
 
-      {/* <BottomButton type={"submit"} onSubmit={handleSubmit} styleType={"pink"}>
-    내 정보 저장하기
-  </BottomButton> */}
-
-      <button type="submit" onSubmit={handleSubmit} className="bottomButtonPink">
-        내 정보 수정하기
-      </button>
+      <BottomButton type={"submit"} onSubmit={handleSubmit} styleType={"pink"}>
+        내 정보 저장하기
+      </BottomButton>
     </form>
   );
 };

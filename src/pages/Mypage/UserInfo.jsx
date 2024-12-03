@@ -4,52 +4,53 @@ import axiosInstance from "../../api/axiosInstance";
 import { useLocation } from "react-router-dom";
 import SubHeader from "../../components/common/SubHeader";
 import UserForm from "@/components/Mypage/Info/UserForm";
+import { updateUserInfo } from "@/queries/userQuery";
 
 const UserInfo = () => {
   const location = useLocation();
-  const [formData, setFormData] = useState({
-    role: "customer",
-    profile_image: null,
-    username: "노승희",
-    nickname: "승2",
-    phone: "010-1111-2222",
-    address: "경기도 성남시~"
-  });
-
   const { role } = location.state || {};
-
-  useEffect(() => {
-    setFormData((prev) => ({ ...prev, role: role }));
-  }, [role]);
+  const [formData, setFormData] = useState({
+    profileImage: null,
+    name: "노승희",
+    email: "tmdtmd@naver.com",
+    nickname: "뭉뭉객",
+    phone: "010-2222-3333",
+    address: "경기도 성남시 중원구", // 고객 필드
+    skills: "소형견/특수견 미용" // 미용사 필드
+  });
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
+  const prepareDataForBackend = (role, data) => {
+    const filteredData = { ...data };
+    delete filteredData.name;
+    delete filteredData.email;
+
+    if (role === "customer") {
+      delete filteredData.skills; // 고객은 skills 필드 제거
+    } else if (role === "groomer") {
+      delete filteredData.address; // 미용사는 address 필드 제거
+    }
+
+    return filteredData;
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const formData = new FormData();
+    const preparedData = prepareDataForBackend(role, formData);
 
-    formData.append("profile_image", formData.profile_image);
-    formData.append("username", formData.username);
-    formData.append("nickname", formData.nickname);
-    formData.append("phone", formData.phone);
-    formData.append("address", formData.address);
-    formData.append("role", formData.role);
-    formData.append("skill", formData.skill);
-
-    // try {
-    //   const response = await axiosInstance.post("/profile/customer", formData, {
-    //     headers: {
-    //       "Content-Type": "multipart/form-data"
-    //     }
-    //   });
-    //   console.log("폼 전송 성공:", response.data);
-    // } catch (error) {
-    //   console.error("폼 전송 중 오류 발생:", error);
-    // }
+    try {
+      // role에 따라 id 추가해서 보내야 됨
+      const response = await updateUserInfo(role, preparedData, 2);
+      console.log("응답 데이터:", response);
+      console.log("formData 상태 업데이트");
+    } catch (error) {
+      alert("업데이트에 실패했습니다.");
+    }
   };
 
   return (

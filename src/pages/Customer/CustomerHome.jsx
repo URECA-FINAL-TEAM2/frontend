@@ -2,8 +2,27 @@ import { Link } from "react-router-dom";
 import BestReviewBox from "../../components/Main/BestReviewBox";
 import ShopBox from "../../components/Main/ShopBox";
 import mockJson from "../../utils/customerHome.json";
+import { useEffect, useState } from "react";
+import { getCustomerMain } from "@/queries/mainQuery";
 
 const CustomerHome = () => {
+  const [bestReviews, setBestReviews] = useState([]);
+  const [localGroomers, setLocalGroomers] = useState([]);
+
+  useEffect(() => {
+    const getMain = async () => {
+      try {
+        const response = await getCustomerMain();
+        setBestReviews(response[0].data.bestReviews);
+        setLocalGroomers(response[0].data.localGroomers);
+      } catch (error) {
+        console.error("Error: Customer Main", error);
+      }
+    };
+
+    getMain();
+  }, []);
+
   return (
     <main className="min-h-screen bg-main-100">
       <div className="mx-auto w-11/12 bg-main-100 pb-24 pt-6">
@@ -20,7 +39,7 @@ const CustomerHome = () => {
             </Link>
           </div>
 
-          {mockJson.data.bestReviews.map((items) => {
+          {bestReviews.map((items) => {
             return (
               <BestReviewBox
                 key={items.reviewId}
@@ -44,16 +63,16 @@ const CustomerHome = () => {
             </Link>
           </div>
 
-          {mockJson.data.localGroomers.map((items) => {
+          {localGroomers.map((items) => {
             return (
               <ShopBox
                 key={items.shopId}
                 shopLogo={items.shopLogo}
                 shopName={items.shopName}
-                starScore={items.starScore}
-                starCount={items.starCount}
+                starScoreAvg={items.starScoreAvg}
+                reviewCount={items.reviewCount}
                 address={items.address}
-                skill={items.skill}
+                skills={items.skills}
                 businessTime={items.businessTime}
               />
             );

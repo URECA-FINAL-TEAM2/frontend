@@ -7,18 +7,28 @@ const UserForm = ({ formData, setFormData, handleSubmit, handleChange, role }) =
       {/* Profile Image */}
       <ProfileImage setFormData={setFormData} />
 
-      {/* Username */}
-      <div>
-        <label htmlFor="username" className="labelStyle">
-          이름
-        </label>
-        <div className="inputStyle">{formData.name}</div>
-      </div>
+      {/* email */}
       <div>
         <label htmlFor="email" className="labelStyle">
           이메일
         </label>
         <div className="inputStyle">{formData.email}</div>
+      </div>
+
+      <div>
+        <label htmlFor="name" className="labelStyle">
+          이름
+        </label>
+        <input
+          type="text"
+          id="name"
+          name="name"
+          value={formData.name}
+          onChange={handleChange}
+          placeholder="이름을 입력해주세요."
+          className="inputStyle"
+          required
+        />
       </div>
       {/* Nickname */}
       <div>
@@ -87,7 +97,7 @@ const UserForm = ({ formData, setFormData, handleSubmit, handleChange, role }) =
         </div>
       )}
 
-      <BottomButton type={"submit"} onSubmit={handleSubmit} styleType={"pink"}>
+      <BottomButton type={"button"} onClick={handleSubmit} styleType={"pink"}>
         내 정보 저장하기
       </BottomButton>
     </form>

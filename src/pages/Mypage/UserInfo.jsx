@@ -4,7 +4,7 @@ import axiosInstance from "../../api/axiosInstance";
 import { useLocation } from "react-router-dom";
 import SubHeader from "../../components/common/SubHeader";
 import UserForm from "@/components/Mypage/Info/UserForm";
-import { updateUserInfo } from "@/queries/userQuery";
+import { getUserInfo, updateUserInfo } from "@/queries/userQuery";
 
 const UserInfo = () => {
   const location = useLocation();
@@ -46,12 +46,41 @@ const UserInfo = () => {
     try {
       // role에 따라 id 추가해서 보내야 됨
       const response = await updateUserInfo(role, preparedData, 2);
-      console.log("응답 데이터:", response);
-      console.log("formData 상태 업데이트");
+      console.log("응답 데이터:", response[0].data);
+      const updateData = response[0].data;
+
+      setFormData((prev) => ({
+        ...prev, // 기존 상태 유지
+        profileImage: updateData.profileImage || prev.profileImage,
+        nickname: updateData.nickname || prev.nickname, // 새 데이터가 없으면 이전 상태 유지
+        phone: updateData.phone || prev.phone,
+        ...(role === "customer"
+          ? { address: updateData.address || prev.address }
+          : { skills: updateData.skills || prev.skills })
+      }));
     } catch (error) {
       alert("업데이트에 실패했습니다.");
     }
   };
+
+  useEffect(() => {
+    const getInfo = async () => {
+      const response = await getUserInfo(role, 2);
+      const updateData = response[0].data;
+
+      setFormData((prev) => ({
+        ...prev, // 기존 상태 유지
+        profileImage: updateData.profileImage || prev.profileImage,
+        nickname: updateData.nickname || prev.nickname, // 새 데이터가 없으면 이전 상태 유지
+        phone: updateData.phone || prev.phone,
+        ...(role === "customer"
+          ? { address: updateData.address || prev.address }
+          : { skills: updateData.skills || prev.skills })
+      }));
+    };
+
+    getInfo();
+  }, []);
 
   return (
     <div className="flex min-h-screen flex-col">

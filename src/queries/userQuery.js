@@ -1,5 +1,33 @@
 import axiosInstance from "@/api/axiosInstance";
 
+const getCustomerData = [
+  {
+    message: "get Customer Success",
+    data: {
+      profileImage: "이미지",
+      name: "노승희",
+      nickname: "수정된닉네임",
+      phoneNumber: "010-2222-2222",
+      address: "경기도 안양시 만안구"
+    },
+    timestamp: "2024-10-17 00:00:00"
+  }
+];
+
+const getGroomerData = [
+  {
+    message: "get Groomer Success",
+    data: {
+      profileImage: "이미지",
+      name: "노승희",
+      nickname: "받아온닉네임",
+      phoneNumber: "010-2222-2222",
+      skills: "특수견/소형견 미용"
+    },
+    timestamp: "2024-10-17 00:00:00"
+  }
+];
+
 const updateCustomerData = [
   {
     message: "Update Customer Success",
@@ -26,6 +54,26 @@ const updateGroomerData = [
   }
 ];
 
+// 고객, 미용사 정보 조회
+export const getUserInfo = async (role, id) => {
+  const endpoint = role === "customer" ? `/profile/customer/${id}` : `/profile/groomer/${id}`;
+
+  try {
+    // const response = await axiosInstance.get(endpoint);
+    // return response.data; // 요청 성공 시 데이터 반환
+
+    if (role === "customer") {
+      return getCustomerData;
+    } else {
+      return getGroomerData;
+    }
+  } catch (error) {
+    console.error("요청 실패:", error);
+    throw error;
+  }
+};
+
+// 고객, 미용사 정보 수정
 export const updateUserInfo = async (role, preparedData, id) => {
   const formDataToSend = new FormData();
 

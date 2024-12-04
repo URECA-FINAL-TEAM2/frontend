@@ -15,7 +15,8 @@ function OAuth2RedirectPage() {
     try {
       const response = await axiosInstance.get(`/login/oauth2/code/kakao`, {
         params: {
-          code: encodeURIComponent(code) // URL 인코딩 적용
+          // code: encodeURIComponent(code) // URL 인코딩 적용
+          code: code
         }
       });
       console.log(response);
@@ -32,12 +33,7 @@ function OAuth2RedirectPage() {
         navigate("/groomer/home");
       }
     } catch (error) {
-      if (error.response?.status === 400) {
-        console.error("등록되지 않은 회원입니다. 추가 정보를 입력해주세요.");
-        navigate("/selectRole");
-      } else {
-        console.error("Error sending code to backend:", error);
-      }
+      console.error("Error sending code to backend:", error);
     }
   };
 

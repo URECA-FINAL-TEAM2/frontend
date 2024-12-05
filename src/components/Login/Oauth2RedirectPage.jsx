@@ -27,11 +27,11 @@ function OAuth2RedirectPage() {
       setDefaultRole(role);
       // 그럼 이때 id도 줘야겠네(customerId, groomerId)
 
-      if (role === "customer") {
-        navigate("/customer/home");
-      } else {
-        navigate("/groomer/home");
-      }
+      // if (role === "customer") {
+      //   navigate("/customer/home");
+      // } else {
+      //   navigate("/groomer/home");
+      // }
     } catch (error) {
       console.error("Error sending code to backend:", error);
     }

@@ -1,7 +1,17 @@
 import BottomButton from "@/components/common/button/BottomButton";
 import ProfileImage from "../ProfileImage";
+import { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
+import SelectRegion from "./SelectRegion";
 
 const UserForm = ({ formData, setFormData, handleSubmit, handleChange, role }) => {
+  const location = useLocation();
+  const [pathname, setPathname] = useState();
+
+  useEffect(() => {
+    setPathname(location.pathname);
+  }, []);
+
   return (
     <form onSubmit={handleSubmit} className="mt-5 grow">
       {/* Profile Image */}
@@ -35,16 +45,23 @@ const UserForm = ({ formData, setFormData, handleSubmit, handleChange, role }) =
         <label htmlFor="nickname" className="labelStyle">
           닉네임
         </label>
-        <input
-          type="text"
-          id="nickname"
-          name="nickname"
-          value={formData.nickname}
-          onChange={handleChange}
-          placeholder="닉네임을 입력해주세요."
-          className="inputStyle"
-          required
-        />
+        <div className="inputStyle flex justify-between">
+          <input
+            type="text"
+            id="nickname"
+            name="nickname"
+            value={formData.nickname}
+            onChange={handleChange}
+            placeholder="닉네임을 입력해주세요."
+            className=""
+            required
+          />
+          {pathname === "/infoRequired" && (
+            <button className="rounded-xl bg-main px-2 text-xs text-white" onClick={() => console.log("중복확인")}>
+              중복확인
+            </button>
+          )}
+        </div>
       </div>
       {/* Phone */}
       <div>
@@ -68,15 +85,7 @@ const UserForm = ({ formData, setFormData, handleSubmit, handleChange, role }) =
           <label htmlFor="address" className="labelStyle">
             동네 선택하기
           </label>
-          <input
-            type="text"
-            id="address"
-            name="address"
-            value={formData.address}
-            onChange={handleChange}
-            placeholder="동네 선택 select box"
-            className="inputStyle"
-          />
+          <SelectRegion formData={formData} setFormData={setFormData} />
         </div>
       )}
       {/* 미용사 - 스킬 */}

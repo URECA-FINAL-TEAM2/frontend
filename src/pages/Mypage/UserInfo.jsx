@@ -15,7 +15,8 @@ const UserInfo = () => {
     email: "tmdtmd@naver.com",
     nickname: "뭉뭉객",
     phone: "010-2222-3333",
-    address: "경기도 성남시 중원구", // 고객 필드
+    sido: "", // 고객 필드
+    sigungu: "", // 고객 필드
     skills: "소형견/특수견 미용" // 미용사 필드
   });
 
@@ -24,34 +25,18 @@ const UserInfo = () => {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const prepareDataForBackend = (role, data) => {
-    const filteredData = { ...data };
-    delete filteredData.name;
-    delete filteredData.email;
-
-    if (role === "customer") {
-      delete filteredData.skills; // 고객은 skills 필드 제거
-    } else if (role === "groomer") {
-      delete filteredData.address; // 미용사는 address 필드 제거
-    }
-
-    return filteredData;
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const preparedData = prepareDataForBackend(role, formData);
-
     try {
       // role에 따라 id 추가해서 보내야 됨
-      const response = await updateUserInfo(role, preparedData, 2);
-      console.log("응답 데이터:", response[0].data);
+      const response = await updateUserInfo(role, formData, 2);
       const updateData = response[0].data;
 
       setFormData((prev) => ({
         ...prev, // 기존 상태 유지
         profileImage: updateData.profileImage || prev.profileImage,
+        name: updateData.name || prev.name,
         nickname: updateData.nickname || prev.nickname, // 새 데이터가 없으면 이전 상태 유지
         phone: updateData.phone || prev.phone,
         ...(role === "customer"

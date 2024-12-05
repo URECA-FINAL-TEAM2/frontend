@@ -1,5 +1,23 @@
 import axiosInstance from "@/api/axiosInstance";
 
+const successResponse = [
+  {
+    message: "반려견 정보 수정 성공",
+    data: {
+      dogId: 123,
+      dogName: "멍당이",
+      breed: "말티즈",
+      dogWeight: "5.0",
+      dogBirth: "2024-02-29",
+      dogGender: "MALE",
+      neutering: true,
+      experience: true,
+      significant: "목 쪽 피부병 치료 완료."
+    },
+    timestamp: "2024-12-04 00:00:00"
+  }
+];
+
 const petInfo = [
   {
     message: "Get Pet Success",
@@ -19,17 +37,6 @@ const petInfo = [
   }
 ];
 
-// 반려견 정보 등록
-export const postPetInfo = async (data) => {
-  try {
-    const response = await axiosInstance.post(`/profile/customer/pets`, data);
-    return response.data;
-  } catch (error) {
-    console.error("반려견 정보 등록 요청 실패:", error);
-    throw error;
-  }
-};
-
 // 반려견 정보 조회
 export const getPetInfo = async (id) => {
   try {
@@ -48,8 +55,12 @@ export const getPetInfo = async (id) => {
   }
 };
 
-// 반려견 정보 수정
-export const putPetInfo = async (id, dogData) => {
+// 반려견 정보 업데이트(등록, 수정)
+export const updatePetInfo = async (id, dogData) => {
+  const method = id ? "put" : "post";
+  const endPoint = id ? `/profile/customer/dogs/${id}` : `/profile/customer/dogs`;
+  console.log(id, method, endPoint);
+
   const formatedData = {
     ...dogData,
     dogBirth: reformatDogBirth(dogData.dogBirth) // "2024-11-11"
@@ -77,15 +88,18 @@ export const putPetInfo = async (id, dogData) => {
   }
 
   try {
-    const response = await axiosInstance.put(`/profile/customer/pets/${id}`, formData, {
-      headers: {
-        "Content-Type": "multipart/form-data"
-      }
-    });
-
-    return response.data;
+    // const response = await axiosInstance({
+    //   method,
+    //   url: endPoint,
+    //   data: formData,
+    //   headers: {
+    //     "Content-Type": "multipart/form-data"
+    //   }
+    // });
+    // return response.data;
+    return successResponse;
   } catch (error) {
-    console.error("반려견 정보 수정 요청 실패:", error);
+    console.error("반려견 정보 업데이트 요청 실패:", error);
     throw error;
   }
 };
@@ -101,7 +115,7 @@ export const deletePetInfo = async (id) => {
   }
 };
 
-// 날짜 변환 함수
+// 2024-12-02 > year, month, day 분리
 function formatDogBirth(dateString) {
   const [year, month, day] = dateString.split("-");
   return {
@@ -111,6 +125,7 @@ function formatDogBirth(dateString) {
   };
 }
 
+// year, month, day > 2024-12-02 형태로 연결
 function reformatDogBirth(dogBirth) {
   const year = dogBirth.year; // "2024"
   const month = String(dogBirth.month).padStart(2, "0"); // "11" (앞에 0 추가)

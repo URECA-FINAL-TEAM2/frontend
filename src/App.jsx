@@ -36,6 +36,7 @@ import TotalQuoteRequestPage from "./pages/Quote/Customer/TotalQuoteRequestPage"
 import GroomerQuoteDetail from "./components/Quote/GroomerQuote";
 import GroomerQuoteForm from "./components/Quote/GroomerQuoteForm";
 import NotFound from "./pages/NotFound";
+import GoogleOAuth2RedirectPage from "./components/Login/GoogleOauth2RedirectPage";
 
 function App() {
   return (
@@ -46,6 +47,7 @@ function App() {
           <Route path="/" element={<Onboarding />} />
           <Route path="/login" element={<Login />} />
           <Route path="/login/oauth2/code/kakao" element={<OAuth2RedirectPage />} />
+          <Route path="/login/oauth2/code/google" element={<GoogleOAuth2RedirectPage />} />
 
           <Route path="/selectRole" element={<SelectRole />} />
           <Route path="/infoRequired" element={<InfoRequired />} />

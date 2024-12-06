@@ -4,15 +4,15 @@ import BounceLoader from "react-spinners/BounceLoader";
 import axiosInstance from "../../api/axiosInstance";
 import useAuthStore from "../../store/authStore";
 
-function OAuth2RedirectPage() {
+function GoogleOAuth2RedirectPage() {
   const { setUser, setDefaultRole } = useAuthStore();
   const navigate = useNavigate();
   const code = new URL(window.location.href).searchParams.get("code");
 
   const sendCodeToBackend = async (code) => {
-    console.log("요청 시도: ", code);
+    console.log("인가코드: ", code);
     try {
-      const response = await axiosInstance.get(`/login/oauth2/code/kakao`, {
+      const response = await axiosInstance.get(`/login/oauth2/code/google`, {
         params: {
           code: code
         }
@@ -51,9 +51,9 @@ function OAuth2RedirectPage() {
   return (
     <div className="flex min-h-screen flex-col items-center justify-center bg-main-100">
       <BounceLoader color="#FF8E8E" />
-      <div className="mt-10 text-xl text-main">카카오 로그인 시도중</div>
+      <div className="mt-10 text-xl text-main">구글 로그인 시도중</div>
     </div>
   );
 }
 
-export default OAuth2RedirectPage;
+export default GoogleOAuth2RedirectPage;

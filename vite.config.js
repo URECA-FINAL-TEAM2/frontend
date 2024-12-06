@@ -7,6 +7,7 @@ const __dirname = path.dirname(__filename);
 
 export default {
   plugins: [react()],
+  base: "/",
   build: {
     rollupOptions: {
       output: {

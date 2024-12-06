@@ -1,40 +1,29 @@
-import { GoogleOAuthProvider, useGoogleLogin } from "@react-oauth/google";
+import { GoogleOAuthProvider } from "@react-oauth/google";
 import googleBtn from "/Main/googleBtn.svg";
-import axiosInstance from "../../api/axiosInstance";
 
 const GoogleLoginBtn = () => {
   const GOOGLE_CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID;
+  const GOOGLE_REDIRECT_URI = import.meta.env.VITE_GOOGLE_REDIRECT_URL;
 
-  const GoogleLoginButton = () => {
-    const signIn = useGoogleLogin({
-      onSuccess: (res) => {
-        console.log("access_token 백엔드로 전달", res.access_token);
-        axiosInstance
-          .post("/login/oauth2/code/google", {
-            access_token: res.access_token
-          })
-          .then((response) => {
-            // Cookies.set("accessToken", response.data.token);
-            console.log(response);
-          })
-          .catch((error) => {
-            console.log(error);
-          });
-      },
-      onError: (error) => {
-        console.log(error);
-      }
-    });
+  const handleGoogleLogin = () => {
+    const googleAuthUrl = new URL("https://accounts.google.com/o/oauth2/v2/auth");
 
-    return (
-      <div onClick={() => signIn()}>
-        <img src={googleBtn} alt="Login with Google" style={{ cursor: "pointer" }} />
-      </div>
-    );
+    // URLSearchParams로 파라미터 설정
+    googleAuthUrl.search = new URLSearchParams({
+      client_id: GOOGLE_CLIENT_ID,
+      redirect_uri: GOOGLE_REDIRECT_URI,
+      response_type: "code",
+      scope: "email profile" // 필요한 권한 설정
+    }).toString();
+
+    window.location.href = googleAuthUrl.toString();
   };
+
   return (
     <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
-      <GoogleLoginButton />
+      <div onClick={handleGoogleLogin} style={{ cursor: "pointer" }}>
+        <img src={googleBtn} alt="Login with Google" />
+      </div>
     </GoogleOAuthProvider>
   );
 };

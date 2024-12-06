@@ -7,17 +7,14 @@ const KakaoLoginBtn = () => {
   const handleKakaoLogin = () => {
     const kakaoAuthUrl = new URL("https://kauth.kakao.com/oauth/authorize");
 
-    // 필수 파라미터 설정
-    const params = {
+    // URLSearchParams로 파라미터 설정
+    kakaoAuthUrl.search = new URLSearchParams({
       client_id: KAKAO_REST_API_KEY,
       redirect_uri: KAKAO_REDIRECT_URI,
       response_type: "code"
-    };
+    }).toString();
 
-    // URL에 파라미터 추가
-    kakaoAuthUrl.search = new URLSearchParams(params).toString();
-
-    // 카카오 로그인 페이지로 리다이렉트
+    // 생성된 URL을 브라우저로 리디렉션
     window.location.href = kakaoAuthUrl.toString();
   };
 

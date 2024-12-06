@@ -16,7 +16,6 @@ import GroomerStore from "./pages/Groomer/GroomerStore";
 import GroomerChat from "./pages/Groomer/GroomerChat";
 import GroomerMypage from "./pages/Groomer/GroomerMypage";
 import BestReviews from "./pages/Main/BestReviews";
-import PaymentComponent from "./pages/Payment/PaymentComponent";
 import PaymentComplete from "./pages/Payment/PaymentComplete";
 import OAuth2RedirectPage from "./components/Login/Oauth2RedirectPage";
 import UserInfo from "./pages/Mypage/UserInfo";

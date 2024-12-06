@@ -16,14 +16,14 @@ const shopDetail = {
   description: '위드뮤의 모토는 "모든 아이들은 별과 같이 소중한 존재고, 반짝일 가치가 있다."입니다.',
   groomerPortfolioImages: [
     {
-      imageUrl: "https://example.com/portfolio1.jpg"
+      imageUrl: "https://picsum.photos/200"
     },
     {
-      imageUrl: "https://example.com/portfolio1.jpg"
+      imageUrl: "https://picsum.photos/200"
     }
   ],
   groomerUsername: "문정",
-  groomerProfileImage: "",
+  groomerProfileImage: "https://picsum.photos/200",
   reviews: [
     {
       reviewId: 1,

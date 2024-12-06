@@ -7,11 +7,11 @@ import InfoRequired from "./pages/Main/InfoRequired";
 import CustomerLayout from "./pages/Layout/CustomerLayout";
 import GroomerLayout from "./pages/Layout/GroomerLayout";
 import CustomerHome from "./pages/Customer/CustomerHome";
-import CustomerDocs from "./pages/Customer/CustomerDocs";
+import CustomerQuote from "./pages/Customer/CustomerQuote";
 import CustomerChat from "./pages/Customer/CustomerChat";
 import CustomerMypage from "./pages/Customer/CustomerMypage";
 import GroomerHome from "./pages/Groomer/GroomerHome";
-import GroomerDocs from "./pages/Groomer/GroomerDocs";
+import GroomerQuote from "./pages/Groomer/GroomerQuote";
 import GroomerStore from "./pages/Groomer/GroomerStore";
 import GroomerChat from "./pages/Groomer/GroomerChat";
 import GroomerMypage from "./pages/Groomer/GroomerMypage";
@@ -28,16 +28,21 @@ import MyStore from "./pages/Mypage/GroomerStore.jsx/MyStore";
 import CreateStore from "./pages/Mypage/GroomerStore.jsx/CreateStore";
 import ReservationMain from "./pages/Reservation/ReservationMain";
 import CustomerSearchPage from "./pages/Customer/CustomerSearchPage";
-import ShopDetailPage from "./pages/Customer/ShopDetailPage";
+import ShopDetailPage from "./pages/Shop/ShopDetailPage";
 import CustomerSearchLayout from "./pages/Layout/CustomerSearchLayout";
 import ReservationDetail from "./pages/Reservation/ReservationDetail";
+import PetSelectModal from "./components/QuoteRequest/PetSelectModal";
+import ShopQuoteRequestPage from "./pages/Quote/Customer/ShopQuoteRequestPage";
+import TotalQuoteRequestPage from "./pages/Quote/Customer/TotalQuoteRequestPage";
+import GroomerQuoteDetail from "./components/Quote/GroomerQuote";
+import GroomerQuoteForm from "./components/Quote/GroomerQuoteForm";
 
 function App() {
   return (
     <div className="App">
       <Router>
         <Routes>
-          <Route path="/testpage" element={<ReservationDetail />} />
+          <Route path="/testpage" element={<GroomerQuoteForm />} />
           <Route path="/" element={<Onboarding />} />
           <Route path="/login" element={<Login />} />
           <Route path="/login/oauth2/code/kakao" element={<OAuth2RedirectPage />} />
@@ -50,7 +55,7 @@ function App() {
           {/* customer/ -layout */}
           <Route path="/customer" element={<CustomerLayout />}>
             <Route path="home" element={<CustomerHome />} />
-            <Route path="docs" element={<CustomerDocs />} />
+            <Route path="quote" element={<CustomerQuote />} />
             <Route path="chat" element={<CustomerChat />} />
           </Route>
 
@@ -60,6 +65,8 @@ function App() {
               <Route index element={<CustomerSearchPage />} />
               <Route path=":shopId" element={<ShopDetailPage />} />
             </Route>
+            <Route path="shop/quote/:shopId" element={<ShopQuoteRequestPage />} />
+            <Route path="quote/request" element={<TotalQuoteRequestPage />} />
             <Route path="mypage" element={<CustomerMypage />} />
             <Route path="info" element={<UserInfo />} />
             <Route path="bookmarkedStore" element={<BookmarkedStore />} />
@@ -74,7 +81,7 @@ function App() {
           {/* groomer/ -layout */}
           <Route path="/groomer" element={<GroomerLayout />}>
             <Route path="home" element={<GroomerHome />} />
-            <Route path="docs" element={<GroomerDocs />} />
+            <Route path="quote" element={<GroomerQuote />} />
             <Route path="store" element={<GroomerStore />} />
             <Route path="chat" element={<GroomerChat />} />
           </Route>

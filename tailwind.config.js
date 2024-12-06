@@ -1,5 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 import tailwindcssAnimate from "tailwindcss-animate";
+import tailwindScrollbarHide from "tailwind-scrollbar-hide";
+
 export default {
   darkMode: ["class"],
   content: [
@@ -109,6 +111,7 @@ export default {
         }
       });
     },
-    tailwindcssAnimate
+    tailwindcssAnimate,
+    tailwindScrollbarHide
   ]
 };

@@ -25,7 +25,7 @@ const CustomerBottom = () => {
   }, [location.pathname]);
 
   return (
-    <div className="fixed bottom-0 h-[var(--bottom-bar-height)] w-[400px] bg-white px-2">
+    <div className="fixed bottom-0 z-20 h-[var(--bottom-bar-height)] w-[400px] bg-white px-2">
       <div className="grid h-full grid-cols-5 items-center justify-items-center">
         <Link to="/customer/home">
           <div className={`bottom ${active === "home" && "bottom-active"}`}>
@@ -33,7 +33,7 @@ const CustomerBottom = () => {
             <span className="mt-1 text-xs">홈</span>
           </div>
         </Link>
-        <Link to="/customer/docs">
+        <Link to="/customer/quote">
           <div className={`bottom ${active === "docs" && "bottom-active"}`}>
             <VscSymbolFile size={25} />
             <span className="mt-1 text-xs">견적서</span>

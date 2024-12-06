@@ -19,7 +19,7 @@ import { Outlet } from "react-router-dom";
 
 const CustomerSearchLayout = () => {
   return (
-    <div className="relative h-[calc(100vh-var(--bottom-bar-height))] w-full overflow-hidden">
+    <div className="relative h-[100vh] w-full">
       <div className="absolute inset-0 top-[var(--header-height)] z-0">
         <InteractiveMap />
       </div>

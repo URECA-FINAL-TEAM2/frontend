@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Lottie from "lottie-react";
 import PaymentCompleteAnimation from "./PaymentCompleteAnimation.json";
-import Button from "../../components/common/button/button";
+import Button from "../../components/common/button/Button";
 
 function PaymentComplete() {
   // 서버에서 데이터를 받아오기 위한 state

@@ -70,12 +70,12 @@ const ReservationDetail = () => {
 
       <div className="mb-6 rounded-lg border border-main-400 p-4">
         <div className="flex items-center">
-          <img src="/path/to/logo.png" alt="매장 로고" className="mr-4 h-16 w-16 rounded-full" />
+          <img src="https://picsum.photos/200" alt="매장 로고" className="mr-4 h-20 w-20 rounded-lg" />
           <div>
-            <p className="font-bold">멍댕살롱</p>
-            <p className="text-gray-600">경기 안양시 만안구 만안로 96 1층 140호</p>
-            <p className="font-bold">가영 디자이너</p>
-            <p className="text-gray-600">010-1234-5678</p>
+            <p className="text-[15px] font-semibold">멍댕살롱</p>
+            <p className="mb-0.5 text-[13px] text-gray-600">경기 안양시 만안구 만안로 96 1층 140호</p>
+            <p className="text-[15px] font-semibold">가영 디자이너</p>
+            <p className="text-[13px] text-gray-600">010-1234-5678</p>
           </div>
         </div>
       </div>

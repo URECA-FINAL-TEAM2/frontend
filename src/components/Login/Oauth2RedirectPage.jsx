@@ -21,7 +21,7 @@ function OAuth2RedirectPage() {
       console.log(response);
       const { accessToken, role, user } = response.data; // 응답 값
 
-      setAccessToken(accessToken);
+      localStorage.setItem("accessToken", accessToken);
       setUser(user);
       setDefaultRole(role);
       // 그럼 이때 id도 줘야겠네(customerId, groomerId)
@@ -34,6 +34,8 @@ function OAuth2RedirectPage() {
     } catch (error) {
       if (error.response?.status === 400) {
         console.error("등록되지 않은 회원입니다. 추가 정보를 입력해주세요.");
+        const accessToken = error.response.data.body.data.accessToken;
+        localStorage.setItem("accessToken", accessToken);
         navigate("/selectRole");
       } else {
         console.error("Error sending code to backend:", error);

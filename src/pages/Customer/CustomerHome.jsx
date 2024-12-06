@@ -1,7 +1,5 @@
 import { Link } from "react-router-dom";
 import BestReviewBox from "../../components/Main/BestReviewBox";
-import ShopBox from "../../components/Main/ShopBox";
-import mockJson from "../../utils/customerHome.json";
 import { useEffect, useState } from "react";
 import { getCustomerMain } from "@/queries/mainQuery";
 import ShopItem from "@/components/CustomerSearch/ShopItem";

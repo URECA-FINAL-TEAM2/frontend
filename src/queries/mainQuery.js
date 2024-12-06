@@ -1,3 +1,5 @@
+import axiosInstance from "@/api/axiosInstance";
+
 const customerData = [
   {
     message: "메인페이지 조회 성공",
@@ -108,15 +110,22 @@ const groomerData = [
 
 export const getCustomerMain = async () => {
   try {
-    return customerData;
+    const customerId = 1;
+    const response = await axiosInstance.get("/main/customer", {
+      params: { customerId }
+    });
+    console.log("customerhome ", response.data);
+    // return successCustomer;
   } catch (error) {
-    throw new Error("Failed to fetch customer main data");
+    console.error("고객 정보 등록 실패:", error);
+    throw error;
   }
 };
 
 export const getGroomerMain = async () => {
   try {
-    return groomerData;
+    const response = await axiosInstance.get("/main/groomer/1");
+    console.log(response, "groomer");
   } catch (error) {
     throw new Error("Failed to fetch customer main data");
   }

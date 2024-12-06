@@ -15,7 +15,8 @@ const InfoRequired = () => {
     email: "tmdtmd@naver.com",
     nickname: "",
     phone: "",
-    address: "", // 고객 필드
+    sido: "",
+    sigungu: "",
     skills: "" // 미용사 필드
   });
 

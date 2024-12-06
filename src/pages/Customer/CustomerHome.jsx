@@ -4,6 +4,7 @@ import ShopBox from "../../components/Main/ShopBox";
 import mockJson from "../../utils/customerHome.json";
 import { useEffect, useState } from "react";
 import { getCustomerMain } from "@/queries/mainQuery";
+import ShopItem from "@/components/CustomerSearch/ShopItem";
 
 const CustomerHome = () => {
   const [bestReviews, setBestReviews] = useState([]);
@@ -24,19 +25,16 @@ const CustomerHome = () => {
   }, []);
 
   return (
-    <main className="min-h-screen bg-main-100">
-      <div className="mx-auto w-11/12 bg-main-100 pb-24 pt-6">
+    <main className="min-h-screen">
+      <div className="mx-auto w-11/12 pb-24 pt-6">
         {/* 배너 */}
         <section className="mb-6">
           <div className="h-[200px] rounded-xl bg-white p-3">배너</div>
         </section>
         {/* BEST 미용후기 추천 */}
-        <section>
+        <section className="mb-8">
           <div className="flex items-center justify-between px-3">
-            <h2 className="text-lg">🩷 BEST 미용 후기 추천</h2>
-            <Link to="/bestReviews">
-              <div className="text-xs">더보기</div>
-            </Link>
+            <h2 className="text-lg">BEST 미용 후기 추천</h2>
           </div>
 
           {bestReviews.map((items) => {
@@ -57,25 +55,14 @@ const CustomerHome = () => {
         {/* 우리동네 디자이너 */}
         <section>
           <div className="flex items-center justify-between px-3">
-            <h2 className="text-lg">🐾 우리동네 디자이너</h2>
+            <h2 className="text-lg">우리동네 디자이너</h2>
             <Link to="/customer/search">
               <div className="text-xs">더보기</div>
             </Link>
           </div>
 
-          {localGroomers.map((items) => {
-            return (
-              <ShopBox
-                key={items.shopId}
-                shopLogo={items.shopLogo}
-                shopName={items.shopName}
-                starScoreAvg={items.starScoreAvg}
-                reviewCount={items.reviewCount}
-                address={items.address}
-                skills={items.skills}
-                businessTime={items.businessTime}
-              />
-            );
+          {localGroomers.map((shopInfo) => {
+            return <ShopItem key={shopInfo.shopId} shopInfo={shopInfo} />;
           })}
         </section>
       </div>

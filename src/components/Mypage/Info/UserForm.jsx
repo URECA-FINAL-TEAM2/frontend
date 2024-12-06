@@ -3,14 +3,30 @@ import ProfileImage from "../ProfileImage";
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import SelectRegion from "./SelectRegion";
+import { nicknameCheck } from "@/queries/authQuery";
+import NicknameCheck from "@/components/Login/NicknameCheck";
 
 const UserForm = ({ formData, setFormData, handleSubmit, handleChange, role }) => {
   const location = useLocation();
   const [pathname, setPathname] = useState();
+  const [nickname, setNickname] = useState();
 
   useEffect(() => {
     setPathname(location.pathname);
   }, []);
+
+  const handleNicknameCheck = async (nickname) => {
+    if (!nickname) {
+      setNickname("required");
+    } else {
+      const response = await nicknameCheck(nickname);
+      if (response.data) {
+        setNickname("possible");
+      } else {
+        setNickname("duplication");
+      }
+    }
+  };
 
   return (
     <form onSubmit={handleSubmit} className="mt-5 grow">
@@ -45,7 +61,7 @@ const UserForm = ({ formData, setFormData, handleSubmit, handleChange, role }) =
         <label htmlFor="nickname" className="labelStyle">
           닉네임
         </label>
-        <div className="inputStyle flex justify-between">
+        <div className={`inputStyle ${nickname ? "mb-2" : "mb-8"} flex justify-between`}>
           <input
             type="text"
             id="nickname"
@@ -57,11 +73,16 @@ const UserForm = ({ formData, setFormData, handleSubmit, handleChange, role }) =
             required
           />
           {pathname === "/infoRequired" && (
-            <button className="rounded-xl bg-main px-2 text-xs text-white" onClick={() => console.log("중복확인")}>
+            <button
+              type="button"
+              className="rounded-xl bg-main px-2 text-xs text-white"
+              onClick={() => handleNicknameCheck(formData.nickname)}
+            >
               중복확인
             </button>
           )}
         </div>
+        <NicknameCheck nickname={nickname} />
       </div>
       {/* Phone */}
       <div>
@@ -83,7 +104,7 @@ const UserForm = ({ formData, setFormData, handleSubmit, handleChange, role }) =
       {role === "customer" && (
         <div>
           <label htmlFor="address" className="labelStyle">
-            동네 선택하기
+            지역
           </label>
           <SelectRegion formData={formData} setFormData={setFormData} />
         </div>
@@ -106,7 +127,7 @@ const UserForm = ({ formData, setFormData, handleSubmit, handleChange, role }) =
         </div>
       )}
 
-      <BottomButton type={"button"} onClick={handleSubmit} styleType={"pink"}>
+      <BottomButton type={"submit"} onClick={handleSubmit} styleType={"pink"}>
         내 정보 저장하기
       </BottomButton>
     </form>

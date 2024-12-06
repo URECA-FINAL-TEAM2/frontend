@@ -78,7 +78,7 @@ const CustomerMypage = () => {
         {/* 프로필 수정 메인  */}
         <div className="flex items-center justify-around p-6 px-10">
           <div>
-            <img src={DefaultProfile} alt="Default Image" className="rounded-[50%] border-[2px] border-main" />
+            <img src={DefaultProfile} alt="Default Image" className="rounded-[50%] border border-main" />
           </div>
           <div className="ml-5 flex grow flex-col">
             <div>

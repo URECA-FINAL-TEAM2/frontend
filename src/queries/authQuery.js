@@ -26,7 +26,8 @@ export const registerUser = async (userData, role) => {
   if (role === "customer") {
     delete jsonData.skills;
   } else {
-    delete jsonData.address;
+    delete jsonData.sido;
+    delete jsonData.sigungu;
   }
 
   // JSON 데이터 직렬화 후 FormData에 추가
@@ -46,11 +47,22 @@ export const registerUser = async (userData, role) => {
 
   try {
     console.log(endPoint, formData);
-    // const response = await axiosInstance.post(endPoint, formData);
-    // return response.data;
-    return successCustomer;
+    const response = await axiosInstance.post(endPoint, formData);
+    return response.data;
+    // return successCustomer;
   } catch (error) {
     console.error("고객 정보 등록 실패:", error);
+    throw error;
+  }
+};
+
+// 닉네임 중복 확인
+export const nicknameCheck = async (nickname) => {
+  try {
+    const response = await axiosInstance.get(`api/users/nickname/${nickname}/check`);
+    return response.data;
+  } catch (error) {
+    console.error("닉네임 중복 체크 실패:", error);
     throw error;
   }
 };

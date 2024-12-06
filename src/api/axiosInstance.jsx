@@ -5,7 +5,8 @@ const axiosInstance = axios.create({
   baseURL: "https://www.beautymeongdang.com",
   headers: {
     "Content-Type": "application/json"
-  }
+  },
+  withCredentials: true
 });
 
 // Refresh Token Lock: 중복 Refresh 방지 변수

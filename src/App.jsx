@@ -1,41 +1,97 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import UserHome from "./pages/user/UserHome";
-import UserSearch from "./pages/user/UserSearch";
-import UserDocs from "./pages/user/UserDocs";
-import UserMyPage from "./pages/user/UserMyPage";
-import UserChat from "./pages/user/UserChat";
-import UserLayout from "./pages/Layout/UserLayout";
-import StylistLayout from "./pages/Layout/StylistLayout";
-import StylistHome from "./pages/stylist/StylistHome";
-import StylistDocs from "./pages/stylist/StylistDocs";
-import StylistStore from "./pages/stylist/StylistStore";
-import StylistChat from "./pages/stylist/StylistChat";
-import StylistMyPage from "./pages/stylist/StylistMyPage";
 import Notification from "./pages/Notification";
-import TestPage from "./pages/TestPage";
+import Onboarding from "./pages/Main/Onboarding";
+import Login from "./pages/Main/Login";
+import SelectRole from "./pages/Main/SelectRole";
+import InfoRequired from "./pages/Main/InfoRequired";
+import CustomerLayout from "./pages/Layout/CustomerLayout";
+import GroomerLayout from "./pages/Layout/GroomerLayout";
+import CustomerHome from "./pages/Customer/CustomerHome";
+import CustomerQuote from "./pages/Customer/CustomerQuote";
+import CustomerChat from "./pages/Customer/CustomerChat";
+import CustomerMypage from "./pages/Customer/CustomerMypage";
+import GroomerHome from "./pages/Groomer/GroomerHome";
+import GroomerQuote from "./pages/Groomer/GroomerQuote";
+import GroomerStore from "./pages/Groomer/GroomerStore";
+import GroomerChat from "./pages/Groomer/GroomerChat";
+import GroomerMypage from "./pages/Groomer/GroomerMypage";
+import BestReviews from "./pages/Main/BestReviews";
+import PaymentComponent from "./pages/Payment/PaymentComponent";
+import PaymentComplete from "./pages/Payment/PaymentComplete";
+import OAuth2RedirectPage from "./components/Login/Oauth2RedirectPage";
+import UserInfo from "./pages/Mypage/UserInfo";
+import BookmarkedStore from "./pages/Mypage/BookmarkedStore";
+import MyPet from "./pages/Mypage/CustomerPet/MyPet";
+import MyReviews from "./pages/Mypage/Reviews/MyReviews";
+import WriteReviews from "./pages/Mypage/Reviews/WriteReviews";
+import MyStore from "./pages/Mypage/GroomerStore.jsx/MyStore";
+import CreateStore from "./pages/Mypage/GroomerStore.jsx/CreateStore";
+import ReservationMain from "./pages/Reservation/ReservationMain";
+import CustomerSearchPage from "./pages/Customer/CustomerSearchPage";
+import ShopDetailPage from "./pages/Shop/ShopDetailPage";
+import CustomerSearchLayout from "./pages/Layout/CustomerSearchLayout";
+import ReservationDetail from "./pages/Reservation/ReservationDetail";
+import PetSelectModal from "./components/QuoteRequest/PetSelectModal";
+import ShopQuoteRequestPage from "./pages/Quote/Customer/ShopQuoteRequestPage";
+import TotalQuoteRequestPage from "./pages/Quote/Customer/TotalQuoteRequestPage";
+import GroomerQuoteDetail from "./components/Quote/GroomerQuote";
+import GroomerQuoteForm from "./components/Quote/GroomerQuoteForm";
 
 function App() {
   return (
     <div className="App">
       <Router>
         <Routes>
-          <Route path="/testpage" element={<TestPage />} />
-          <Route path="/notification" element={<Notification />} />
+          <Route path="/testpage" element={<GroomerQuoteForm />} />
+          <Route path="/" element={<Onboarding />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/login/oauth2/code/kakao" element={<OAuth2RedirectPage />} />
 
-          <Route path="/user" element={<UserLayout />}>
-            <Route path="home" element={<UserHome />} />
-            <Route path="docs" element={<UserDocs />} />
-            <Route path="search" element={<UserSearch />} />
-            <Route path="chat" element={<UserChat />} />
-            <Route path="mypage" element={<UserMyPage />} />
+          <Route path="/selectRole" element={<SelectRole />} />
+          <Route path="/infoRequired" element={<InfoRequired />} />
+          <Route path="/notification" element={<Notification />} />
+          <Route path="/bestReviews" element={<BestReviews />} />
+
+          {/* customer/ -layout */}
+          <Route path="/customer" element={<CustomerLayout />}>
+            <Route path="home" element={<CustomerHome />} />
+            <Route path="quote" element={<CustomerQuote />} />
+            <Route path="chat" element={<CustomerChat />} />
           </Route>
 
-          <Route path="/stylist" element={<StylistLayout />}>
-            <Route path="home" element={<StylistHome />} />
-            <Route path="docs" element={<StylistDocs />} />
-            <Route path="store" element={<StylistStore />} />
-            <Route path="chat" element={<StylistChat />} />
-            <Route path="mypage" element={<StylistMyPage />} />
+          {/* customer/ -none */}
+          <Route path="/customer">
+            <Route path="shop" element={<CustomerSearchLayout />}>
+              <Route index element={<CustomerSearchPage />} />
+              <Route path=":shopId" element={<ShopDetailPage />} />
+            </Route>
+            <Route path="shop/quote/:shopId" element={<ShopQuoteRequestPage />} />
+            <Route path="quote/request" element={<TotalQuoteRequestPage />} />
+            <Route path="mypage" element={<CustomerMypage />} />
+            <Route path="info" element={<UserInfo />} />
+            <Route path="bookmarkedStore" element={<BookmarkedStore />} />
+
+            <Route path="myPet" element={<MyPet />} />
+            <Route path="myPet/:id" element={<MyPet />} />
+            <Route path="myReviews" element={<MyReviews />} />
+            <Route path="writeReviews" element={<WriteReviews />} />
+            <Route path="reservation" element={<ReservationMain />} />
+          </Route>
+
+          {/* groomer/ -layout */}
+          <Route path="/groomer" element={<GroomerLayout />}>
+            <Route path="home" element={<GroomerHome />} />
+            <Route path="quote" element={<GroomerQuote />} />
+            <Route path="store" element={<GroomerStore />} />
+            <Route path="chat" element={<GroomerChat />} />
+          </Route>
+
+          {/* groomer/ -none */}
+          <Route path="/groomer">
+            <Route path="mypage" element={<GroomerMypage />} />
+            <Route path="info" element={<UserInfo />} />
+            <Route path="mystore" element={<MyStore />} />
+            <Route path="createstore" element={<CreateStore />} />
           </Route>
         </Routes>
       </Router>

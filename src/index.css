@@ -23,14 +23,60 @@
   font-style: normal;
 }
 
+@font-face {
+  font-family: "UhBeeZZIBA-Regular";
+  src: url("https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2104@1.0/UhBeeZZIBA-Regular.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
 #root {
-  font-family: Pretendard, Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   display: flex;
   justify-content: center;
+  --header-height: 75px;
+  --bottom-bar-height: 75px;
 }
 
 .App {
   width: 400px;
   min-height: 100vh;
   box-shadow: rgba(120, 120, 122, 0.1) 0px 7px 29px 0px;
+}
+
+.titleFont {
+  font-family: "UhBeeZZIBA-Regular";
+}
+
+/* 모든 브라우저에서 스크롤바 숨기기 */
+html,
+body {
+  height: 100vh;
+  overflow-y: auto;
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}
+#root::-webkit-scrollbar {
+  display: none;
+}
+
+/* 모든 브라우저에서 input number속성의 화살표 없애기 */
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+/* Firefox  */
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+@layer base {
+  :root {
+    --radius: 0.5rem;
+  }
 }

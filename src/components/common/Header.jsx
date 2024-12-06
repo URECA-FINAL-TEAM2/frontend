@@ -8,15 +8,15 @@ const Header = () => {
   const [url, setUrl] = useState("");
 
   useEffect(() => {
-    if (location.pathname.includes("user")) {
-      setUrl("/user/home");
+    if (location.pathname.includes("customer")) {
+      setUrl("/customer/home");
     } else {
-      setUrl("/stylist/home");
+      setUrl("/groomer/home");
     }
   }, [location.pathname]);
 
   return (
-    <div className="flex h-[75px] items-center justify-between bg-white px-5">
+    <div className="fixed flex h-[var(--header-height)] w-[400px] items-center justify-between bg-white px-5">
       <Link to={url}>
         <img src={logo} alt="logo" className="" />
       </Link>

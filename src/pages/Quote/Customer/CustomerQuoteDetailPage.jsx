@@ -15,5 +15,3 @@ function CustomerQuoteDetailPage(props) {
     </div>
   );
 }
-
-export default CustomerQuoteDetailPage;

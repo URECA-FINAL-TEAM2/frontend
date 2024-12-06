@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { getReservationDetail } from "@/queries/reservationQuery";
 import { RiCalendarScheduleLine } from "react-icons/ri";
 import { ImScissors } from "react-icons/im";
@@ -97,7 +97,7 @@ const ReservationDetail = ({ selectedQuoteId = 1 }) => {
 
       <div className="mb-6 rounded-lg border border-main-400 p-4">
         <div className="flex items-center">
-          <img src={detail.profileImage} alt="매장 로고" className="mr-4 h-16 w-16 rounded-full" />
+          <img src={detail.profileImage} alt="매장 로고" className="mr-4 h-16 w-16 rounded-lg" />
           <div>
             <p className="font-bold">{detail.shopName}</p>
             <p className="text-gray-600">{detail.address}</p>

@@ -20,7 +20,7 @@ const ProfileImage = ({ setFormData, onlyRead = false }) => {
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     if (file) {
-      setFormData((prev) => ({ ...prev, profile_image: file }));
+      setFormData((prev) => ({ ...prev, profileImage: file }));
       const reader = new FileReader();
       reader.onloadend = () => {
         setImagePreview(reader.result);
@@ -47,13 +47,13 @@ const ProfileImage = ({ setFormData, onlyRead = false }) => {
         <input
           type="file"
           id="profile_image_input"
-          name="profile_image"
+          name="profileImage"
           accept="image/*"
           onChange={handleFileChange}
           className="hidden"
         />
       )}
-      <div className="mx-auto mb-16 mt-24 flex flex-col items-center justify-center">
+      <div className="mx-auto mb-12 mt-20 flex flex-col items-center justify-center">
         <img src={imagePreview} alt="Default Image" onClick={handleImageClick} className="img-border h-[100px] w-1/4" />
 
         {!isDefault && (

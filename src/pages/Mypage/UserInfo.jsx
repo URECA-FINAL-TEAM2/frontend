@@ -4,23 +4,21 @@ import axiosInstance from "../../api/axiosInstance";
 import { useLocation } from "react-router-dom";
 import SubHeader from "../../components/common/SubHeader";
 import UserForm from "@/components/Mypage/Info/UserForm";
+import { getUserInfo, updateUserInfo } from "@/queries/userQuery";
 
 const UserInfo = () => {
   const location = useLocation();
-  const [formData, setFormData] = useState({
-    role: "customer",
-    profile_image: null,
-    username: "노승희",
-    nickname: "승2",
-    phone: "010-1111-2222",
-    address: "경기도 성남시~"
-  });
-
   const { role } = location.state || {};
-
-  useEffect(() => {
-    setFormData((prev) => ({ ...prev, role: role }));
-  }, [role]);
+  const [formData, setFormData] = useState({
+    profileImage: null,
+    name: "노승희",
+    email: "tmdtmd@naver.com",
+    nickname: "뭉뭉객",
+    phone: "010-2222-3333",
+    sido: "", // 고객 필드
+    sigungu: "", // 고객 필드
+    skills: "소형견/특수견 미용" // 미용사 필드
+  });
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -30,27 +28,44 @@ const UserInfo = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const formData = new FormData();
+    try {
+      // role에 따라 id 추가해서 보내야 됨
+      const response = await updateUserInfo(role, formData, 2);
+      const updateData = response[0].data;
 
-    formData.append("profile_image", formData.profile_image);
-    formData.append("username", formData.username);
-    formData.append("nickname", formData.nickname);
-    formData.append("phone", formData.phone);
-    formData.append("address", formData.address);
-    formData.append("role", formData.role);
-    formData.append("skill", formData.skill);
-
-    // try {
-    //   const response = await axiosInstance.post("/profile/customer", formData, {
-    //     headers: {
-    //       "Content-Type": "multipart/form-data"
-    //     }
-    //   });
-    //   console.log("폼 전송 성공:", response.data);
-    // } catch (error) {
-    //   console.error("폼 전송 중 오류 발생:", error);
-    // }
+      setFormData((prev) => ({
+        ...prev, // 기존 상태 유지
+        profileImage: updateData.profileImage || prev.profileImage,
+        name: updateData.name || prev.name,
+        nickname: updateData.nickname || prev.nickname, // 새 데이터가 없으면 이전 상태 유지
+        phone: updateData.phone || prev.phone,
+        ...(role === "customer"
+          ? { address: updateData.address || prev.address }
+          : { skills: updateData.skills || prev.skills })
+      }));
+    } catch (error) {
+      alert("업데이트에 실패했습니다.");
+    }
   };
+
+  useEffect(() => {
+    const getInfo = async () => {
+      const response = await getUserInfo(role, 2);
+      const updateData = response[0].data;
+
+      setFormData((prev) => ({
+        ...prev, // 기존 상태 유지
+        profileImage: updateData.profileImage || prev.profileImage,
+        nickname: updateData.nickname || prev.nickname, // 새 데이터가 없으면 이전 상태 유지
+        phone: updateData.phone || prev.phone,
+        ...(role === "customer"
+          ? { address: updateData.address || prev.address }
+          : { skills: updateData.skills || prev.skills })
+      }));
+    };
+
+    getInfo();
+  }, []);
 
   return (
     <div className="flex min-h-screen flex-col">

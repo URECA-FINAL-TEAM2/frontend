@@ -1,39 +1,30 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { getReservationList } from "@/queries/reservationQuery";
 
 const ReservationMain = () => {
+  const [reservations, setReservations] = useState([]);
   const [activeTab, setActiveTab] = useState("completed");
 
-  // 임시로 넣어놨음 보기 좋게
-  const reservations = [
-    {
-      image: "",
-      title: "예약예약 - 00디자이너",
-      date: "2024.11.14 목 14:00",
-      petName: "뭉치",
-      status: "예약"
-    },
-    {
-      image: "",
-      title: "완료완료 - 00디자이너",
-      date: "2024.11.14 목 14:00",
-      petName: "뭉치",
-      status: "완료"
-    },
-    {
-      image: "",
-      title: "취소취소 - 00디자이너",
-      date: "2024.11.14 목 14:00",
-      petName: "뭉치",
-      status: "취소",
-      cancelReason: "단순 변심"
-    }
-  ];
+  useEffect(() => {
+    const fetchReservations = async () => {
+      try {
+        const response = await getReservationList();
+        if (response.code === 200) {
+          setReservations(response.data);
+        }
+      } catch (error) {
+        console.error("Failed to fetch reservations:", error);
+      }
+    };
+
+    fetchReservations();
+  }, []);
 
   // 탭별 데이터 필터링
   const tabs = {
-    completed: reservations.filter((item) => item.status === "완료"), // 미용완료=공통코드040
-    reserved: reservations.filter((item) => item.status === "예약"), // 예약완료=공통코드010
-    canceled: reservations.filter((item) => item.status === "취소") // 취소완료=공통코드030
+    completed: reservations.filter((item) => item.status === "030"), // 미용 완료
+    reserved: reservations.filter((item) => item.status === "010"), // 예약 완료
+    canceled: reservations.filter((item) => item.status === "020") // 취소 완료
   };
 
   return (
@@ -71,24 +62,26 @@ const ReservationMain = () => {
 
       {/* 탭 내용 */}
       <div>
-        {tabs[activeTab]?.map((item, index) => (
+        {tabs[activeTab]?.map((item) => (
           <div
-            key={index}
+            key={item.selectedQuoteId}
             className="mb-4 flex flex-col items-center rounded-lg border p-4"
-            style={{ borderColor: "#ff8e8e" }}
+            style={{ borderColor: activeTab === "canceled" ? "#858585" : "#ff8e8e" }}
           >
             <div className="flex w-full items-center">
-              <img src={item.image} alt={item.title} className="mr-6 h-24 w-24 rounded-lg" />
+              <img src={item.profileImage} alt={item.shopName} className="mr-6 h-24 w-24 rounded-lg" />
               <div className="flex w-full flex-col">
-                <p className="mb-2 text-lg font-bold">{item.title}</p>
+                <p className="mb-2 text-lg font-bold">
+                  {item.shopName} - {item.groomerName}
+                </p>
                 <div className="flex justify-between text-sm text-gray-500">
                   <div>
                     <p>예약 일자</p>
                     <p>반려견</p>
                   </div>
                   <div className="text-right">
-                    <p>{item.date}</p>
-                    <p>{item.petName}</p>
+                    <p>{new Date(item.beautyDate).toLocaleString()}</p>
+                    <p>{item.dogName}</p>
                   </div>
                 </div>
               </div>
@@ -99,16 +92,14 @@ const ReservationMain = () => {
               <button className="w-full rounded-full bg-main-200 py-1 font-medium text-main-400">리뷰 쓰기</button>
             )}
 
-            {/* 예약 취소 버튼 */}
+            {/* 예약 상세 버튼 */}
             {activeTab === "reserved" && (
-              <button className="w-full rounded-full bg-main-200 py-1 font-medium text-main-400">예약 취소</button>
+              <button className="w-full rounded-full bg-main-200 py-1 font-medium text-main-400">예약 상세</button>
             )}
 
-            {/* 취소사유 */}
-            {activeTab === "canceled" && item.cancelReason && (
-              <div className="mt-4 flex w-full justify-end text-gray-500">
-                <p className="font-semibold">취소 사유 : {item.cancelReason}</p>
-              </div>
+            {/* 취소 예약 상세 버튼 */}
+            {activeTab === "canceled" && (
+              <button className="w-full rounded-full bg-gray-300 py-1 font-medium text-white">예약 상세</button>
             )}
           </div>
         ))}

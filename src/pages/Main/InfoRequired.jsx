@@ -8,11 +8,11 @@ import { registerUser } from "@/queries/authQuery";
 const InfoRequired = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { role } = location.state || {};
+  const { role, email } = location.state || {};
   const [formData, setFormData] = useState({
     profileImage: null,
     name: "",
-    email: "tmdtmd@naver.com",
+    email: email,
     nickname: "",
     phone: "",
     sido: "",

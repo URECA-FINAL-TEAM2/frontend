@@ -10,7 +10,7 @@ function GoogleOAuth2RedirectPage() {
   const code = new URL(window.location.href).searchParams.get("code");
 
   const sendCodeToBackend = async (code) => {
-    console.log("인가코드: ", code);
+    console.log("구글 인가코드: ", code);
     try {
       const response = await axiosInstance.get(`/login/oauth2/code/google`, {
         params: {
@@ -34,8 +34,9 @@ function GoogleOAuth2RedirectPage() {
       if (error.response?.status === 400) {
         console.error("등록되지 않은 회원입니다. 추가 정보를 입력해주세요.");
         const accessToken = error.response.data.body.data.accessToken;
+        const email = error.response.data.body.data.email;
         localStorage.setItem("accessToken", accessToken);
-        navigate("/selectRole");
+        navigate("/selectRole", { state: { email: email } });
       } else {
         console.error("Error sending code to backend:", error);
       }

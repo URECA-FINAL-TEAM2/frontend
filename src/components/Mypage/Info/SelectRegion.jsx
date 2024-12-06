@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { getSidoList, getSigunguList } from "../../../queries/regionQuery";
 
 const SelectRegion = ({ formData, setFormData }) => {
@@ -10,7 +10,7 @@ const SelectRegion = ({ formData, setFormData }) => {
     const fetchSidoList = async () => {
       try {
         const response = await getSidoList();
-        setSidoList(response.data.sidoList);
+        setSidoList(response);
       } catch (error) {
         console.error("시도 목록 로드 실패:", error);
       }
@@ -29,7 +29,7 @@ const SelectRegion = ({ formData, setFormData }) => {
 
       try {
         const response = await getSigunguList(formData.sido);
-        setSigunguList(response.data.sigunguList);
+        setSigunguList(response);
       } catch (error) {
         console.error("시군구 목록 로드 실패:", error);
       }

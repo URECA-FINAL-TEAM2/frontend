@@ -1,9 +1,11 @@
 import customer from "/Main/customer.svg";
 import groomer from "/Main/groomer.svg";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const SelectRole = () => {
+  const location = useLocation();
   const navigate = useNavigate();
+  const { email } = location.state || {};
 
   return (
     <div className="flex min-h-screen flex-col items-center justify-center bg-main-300 text-white">
@@ -11,14 +13,14 @@ const SelectRole = () => {
 
       <div>
         <button
-          onClick={() => navigate("/infoRequired", { state: { role: "customer" } })}
+          onClick={() => navigate("/infoRequired", { state: { role: "customer", email: email } })}
           className="m-3 rounded-xl bg-white p-3"
         >
           <img src={customer} alt="select customer img" />
           <div className="mt-1 text-xl font-bold text-main-300">고객</div>
         </button>
         <button
-          onClick={() => navigate("/infoRequired", { state: { role: "groomer" } })}
+          onClick={() => navigate("/infoRequired", { state: { role: "groomer", email: email } })}
           className="m-3 rounded-xl bg-white p-3"
         >
           <img src={groomer} alt="select groomer img" />

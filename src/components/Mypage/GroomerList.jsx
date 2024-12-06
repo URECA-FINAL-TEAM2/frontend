@@ -4,7 +4,7 @@ import { VscSymbolFile } from "react-icons/vsc";
 
 const GroomerList = () => {
   return (
-    <div className="border-t-2 border-t-main-200">
+    <div className="mb-24 border-t-2 border-t-main-200">
       <ul className="mt-6 px-8">
         <Link to="/groomer/mystore">
           <li className="flex items-center border-b-2 border-gray-200 py-4">

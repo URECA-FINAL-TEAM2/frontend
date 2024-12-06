@@ -6,14 +6,14 @@ import { MdOutlineRateReview } from "react-icons/md";
 const CustomerList = () => {
   return (
     <div>
-      <ul className="mt-6 px-8">
+      <ul className="mb-24 mt-6 px-8">
         <Link to="/customer/bookmarkedStore">
           <li className="flex items-center border-b-2 border-gray-200 py-4">
             <BsShop className="mr-3" size={20} color="#ff8e8e" />
             <span className="text-lg">내 단골샵</span>
           </li>
         </Link>
-        <Link to="">
+        <Link to="/customer/reservation">
           <li className="flex items-center border-b-2 border-gray-200 py-4">
             <VscSymbolFile className="mr-3" size={22} color="#ff8e8e" />
             <span className="text-lg">예약내역</span>

@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
 import line from "/Icons/groomerGrayVerticalLine.svg";
-import PropTypes from "prop-types";
 import { useEffect, useState } from "react";
 
 const Summary = ({ firstName, firstValue, secondName, secondValue, thirdName, thirdValue, navigate }) => {
@@ -37,16 +36,6 @@ const Summary = ({ firstName, firstValue, secondName, secondValue, thirdName, th
       </Link>
     </article>
   );
-};
-
-Summary.propTypes = {
-  firstName: PropTypes.string.isRequired,
-  firstValue: PropTypes.number.isRequired,
-  secondName: PropTypes.string.isRequired,
-  secondValue: PropTypes.number.isRequired,
-  thirdName: PropTypes.string,
-  thirdValue: PropTypes.number,
-  navigate: PropTypes.number
 };
 
 export default Summary;

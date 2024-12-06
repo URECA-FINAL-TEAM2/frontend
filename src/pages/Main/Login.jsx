@@ -47,9 +47,9 @@ const Login = () => {
           <img src={line} alt="line" />
         </div>
 
-        <button data-aos="fade-down" data-aos-easing="linear" data-aos-duration="1200">
+        <div data-aos="fade-down" data-aos-easing="linear" data-aos-duration="1200">
           <KakaoLoginBtn />
-        </button>
+        </div>
         <div className="mx-auto mt-2 w-11/12" data-aos="fade-down" data-aos-easing="linear" data-aos-duration="1400">
           <GoogleLoginBtn />
         </div>

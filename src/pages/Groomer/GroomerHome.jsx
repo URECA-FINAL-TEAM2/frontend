@@ -5,8 +5,10 @@ import mockJson from "../../utils/groomerHome.json";
 import { useEffect, useState } from "react";
 // import { getRequest } from "../../api/axiosInstance";
 import Summary from "../../components/common/Summary";
+import { getGroomerMain } from "@/queries/mainQuery";
 
 const GroomerHome = () => {
+  const [totalRequest, setTotalRequest] = useState([]);
   const [preview, setPreview] = useState({
     todayReservation: 0, // 오늘의 예약
     totalDirectRequest: 0, // 전체
@@ -14,23 +16,28 @@ const GroomerHome = () => {
     unsentQuote: 0 // 견적 미발송
   });
 
-  // const fetchUserData = async () => {
-  //   try {
-  //     const data = await getRequest("/main/groomer");
-  //     console.log("User Data:", data);
-  //   } catch (error) {
-  //     console.error("Error fetching user data:", error);
-  //   }
-  // };
+  const updatePreview = (data) => {
+    setPreview((prev) => ({
+      ...prev,
+      todayReservation: data.todayReservation || 0,
+      totalDirectRequest: data.totalDirectRequest || 0,
+      todayRequest: data.todayRequest || 0,
+      unsentQuote: data.unsentQuote || 0
+    }));
+  };
 
   useEffect(() => {
-    setPreview({
-      todayReservation: mockJson.todayReservation,
-      totalDirectRequest: mockJson.totalDirectRequest,
-      todayRequest: mockJson.todayRequest,
-      unsentQuote: mockJson.unsentQuote
-    });
-    // fetchUserData();
+    const getMain = async () => {
+      try {
+        const response = await getGroomerMain();
+        setTotalRequest(response[0].data.totalRequest);
+        updatePreview(response[0].data);
+      } catch (error) {
+        console.error("Error: Customer Main", error);
+      }
+    };
+
+    getMain();
   }, []);
 
   return (
@@ -71,10 +78,10 @@ const GroomerHome = () => {
             </Link>
           </div>
 
-          {mockJson.totalRequest.map((items) => {
+          {totalRequest.map((items) => {
             return (
               <GrommerTotalRequest
-                key={items.customerId}
+                key={items.requestId}
                 profileImage={items.profileImage}
                 nickname={items.nickname}
                 closingDate={items.closingDate}

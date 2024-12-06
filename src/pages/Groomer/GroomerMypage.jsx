@@ -6,9 +6,51 @@ import { useNavigate } from "react-router-dom";
 import GroomerBottom from "@/components/common/GroomerBottom";
 import GroomerList from "@/components/Mypage/GroomerList";
 import ToggleButton from "@/components/Main/ToggleButton";
+import { useEffect, useState } from "react";
+import { getGroomerMypage } from "@/queries/mypageQuery";
 
 const GroomerMypage = () => {
   const navigate = useNavigate();
+  const [counts, setCounts] = useState({
+    completedServices: 0,
+    confirmedReservations: 0,
+    myReviews: 0
+  });
+  const [userInfo, setUserInfo] = useState({
+    id: 0,
+    nickname: "",
+    email: "",
+    profileImage: ""
+  });
+
+  useEffect(() => {
+    const getMypage = async () => {
+      try {
+        const response = await getGroomerMypage();
+        const counts = response[0].data.counts;
+        const info = response[0].data;
+
+        setCounts((prev) => ({
+          ...prev,
+          completedServices: counts.completedServices,
+          confirmedReservations: counts.confirmedReservations,
+          myReviews: counts.myReviews
+        }));
+
+        setUserInfo((prev) => ({
+          ...prev,
+          id: info.GroomerId,
+          nickname: info.nickname,
+          email: info.email,
+          profileImage: info.profileImage
+        }));
+      } catch (error) {
+        console.error("Error: groomer Mypage", error);
+      }
+    };
+
+    getMypage();
+  }, []);
 
   return (
     <>
@@ -20,16 +62,20 @@ const GroomerMypage = () => {
           <ToggleButton />
         </div>
         {/* 프로필 수정 메인  */}
-        <div className="flex items-center justify-around p-6">
-          <div>
-            <img src={DefaultProfile} alt="Default Image" className="rounded-[50%] border-[2px] border-main" />
+        <div className="flex items-center justify-around p-6 px-10">
+          <div className="aspect-w-1 aspect-h-1">
+            <img
+              src={DefaultProfile}
+              alt="Default"
+              className="h-full w-full rounded-[50%] border-[2px] border-main object-cover"
+            />
           </div>
-          <div className="flex flex-col">
+          <div className="ml-5 flex grow flex-col">
             <div>
-              <span className="text-lg">노승희</span>
+              <span className="text-lg">{userInfo.nickname}</span>
               <span> 미용사</span>
             </div>
-            <span className="underline">tmdgml2494@gamil.com</span>
+            <span className="underline">{userInfo.email}</span>
           </div>
           <div className="ml-2">
             <button onClick={() => navigate("/groomer/info", { state: { role: "groomer" } })}>
@@ -41,11 +87,11 @@ const GroomerMypage = () => {
         <div className="mx-auto px-6 pb-6">
           <Summary
             firstName={"미용 완료"}
-            firstValue={2}
+            firstValue={counts.completedServices}
             secondName={"확정된 예약"}
-            secondValue={2}
+            secondValue={counts.confirmedReservations}
             thirdName={"내 매장 리뷰"}
-            thirdValue={9}
+            thirdValue={counts.myReviews}
           />
         </div>
         {/* 목록 */}

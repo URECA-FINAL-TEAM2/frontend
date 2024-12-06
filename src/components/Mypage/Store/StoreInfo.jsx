@@ -1,6 +1,6 @@
 const StoreInfo = () => {
   return (
-    <div className="mt-10">
+    <div className="mb-20 mt-10">
       <div>
         <div className="labelStyle">매장 명</div>
         <div className="inputStyle">뭉뭉이샵</div>

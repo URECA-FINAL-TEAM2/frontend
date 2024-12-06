@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import useShopStore from "../../store/shopStore";
 
 const ShopItem = ({ shopInfo }) => {
+  console.log(shopInfo);
   const setSelectedShop = useShopStore((state) => state.setSelectedShop);
 
   const navigate = useNavigate();

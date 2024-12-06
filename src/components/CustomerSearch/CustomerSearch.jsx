@@ -39,7 +39,7 @@ const CustomerSearch = () => {
   }
 
   return (
-    <div className="pointer-events-none absolute inset-x-0 bottom-0 h-[calc(100vh-var(--bottom-bar-height)-var(--header-height))] w-full">
+    <div className="pointer-events-none absolute inset-x-0 bottom-[--var(--bottom-bar-height)] h-[calc(100vh-var(--bottom-bar-height)-var(--header-height))] w-full">
       <div
         className={`pointer-events-auto absolute bottom-0 left-0 right-0 z-10 bg-white transition-transform duration-200 ease-in-out ${
           isDragging ? "transition-none" : ""
@@ -59,7 +59,7 @@ const CustomerSearch = () => {
           <div className="h-1.5 w-16 rounded-full bg-gray-300" />
         </div>
 
-        <div className="h-[calc(100%-2.5rem)] overflow-y-scroll [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+        <div className="scrollbar-hide h-[calc(100%-2.5rem)] overflow-y-scroll">
           {isLoading ? (
             <div className="flex h-full items-center justify-center">
               <div className="h-8 w-8 animate-spin rounded-full border-4 border-gray-200 border-t-blue-500" />
@@ -73,7 +73,7 @@ const CustomerSearch = () => {
       {/* 드래그 중 오버레이도 pointer-events-auto로 설정 */}
       {isDragging && (
         <div
-          className="pointer-events-auto fixed inset-0 z-30"
+          className="pointer-events-auto fixed inset-0 z-[30]"
           onMouseMove={dragHandlers.onMouseMove}
           onMouseUp={dragHandlers.onMouseUp}
           onTouchMove={dragHandlers.onTouchMove}

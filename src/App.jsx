@@ -33,7 +33,7 @@ import ReservationDetail from "./pages/Reservation/ReservationDetail";
 import PetSelectModal from "./components/QuoteRequest/PetSelectModal";
 import ShopQuoteRequestPage from "./pages/Quote/Customer/ShopQuoteRequestPage";
 import TotalQuoteRequestPage from "./pages/Quote/Customer/TotalQuoteRequestPage";
-import GroomerQuoteDetail from "./components/Quote/GroomerQuote";
+import GroomerQuoteDetail from "./components/Quote/GroomerQuoteDetail";
 import GroomerQuoteForm from "./components/Quote/GroomerQuoteForm";
 import NotFound from "./pages/NotFound";
 import GoogleOAuth2RedirectPage from "./components/Login/GoogleOauth2RedirectPage";
@@ -57,18 +57,18 @@ function App() {
           {/* customer/ -layout */}
           <Route path="/customer" element={<CustomerLayout />}>
             <Route path="home" element={<CustomerHome />} />
-            <Route path="quote" element={<CustomerQuote />} />
             <Route path="chat" element={<CustomerChat />} />
           </Route>
 
           {/* customer/ -none */}
           <Route path="/customer">
+            <Route path="quotes" element={<CustomerQuote />} />
             <Route path="shop" element={<CustomerSearchLayout />}>
               <Route index element={<CustomerSearchPage />} />
               <Route path=":shopId" element={<ShopDetailPage />} />
             </Route>
-            <Route path="shop/quote/:shopId" element={<ShopQuoteRequestPage />} />
-            <Route path="quote/request" element={<TotalQuoteRequestPage />} />
+            <Route path="shop/quotes/:shopId" element={<ShopQuoteRequestPage />} />
+            <Route path="quotes/request" element={<TotalQuoteRequestPage />} />
             <Route path="mypage" element={<CustomerMypage />} />
             <Route path="info" element={<UserInfo />} />
             <Route path="bookmarkedStore" element={<BookmarkedStore />} />
@@ -83,13 +83,13 @@ function App() {
           {/* groomer/ -layout */}
           <Route path="/groomer" element={<GroomerLayout />}>
             <Route path="home" element={<GroomerHome />} />
-            <Route path="quote" element={<GroomerQuote />} />
             <Route path="store" element={<GroomerStore />} />
             <Route path="chat" element={<GroomerChat />} />
           </Route>
 
           {/* groomer/ -none */}
           <Route path="/groomer">
+            <Route path="quotes" element={<GroomerQuote />} />
             <Route path="mypage" element={<GroomerMypage />} />
             <Route path="info" element={<UserInfo />} />
             <Route path="mystore" element={<MyStore />} />

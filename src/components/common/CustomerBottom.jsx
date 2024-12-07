@@ -12,7 +12,7 @@ const CustomerBottom = () => {
 
   const routes = [
     { path: "/customer/home", name: "home" },
-    { path: "/customer/docs", name: "docs" },
+    { path: "/customer/quotes", name: "quotes" },
     { path: "/customer/shop", name: "shop" },
     { path: "/customer/chat", name: "chat" },
     { path: "/customer/mypage", name: "mypage" }
@@ -33,8 +33,8 @@ const CustomerBottom = () => {
             <span className="mt-1 text-xs">홈</span>
           </div>
         </Link>
-        <Link to="/customer/quote">
-          <div className={`bottom ${active === "docs" && "bottom-active"}`}>
+        <Link to="/customer/quotes">
+          <div className={`bottom ${active === "quotes" && "bottom-active"}`}>
             <VscSymbolFile size={25} />
             <span className="mt-1 text-xs">견적서</span>
           </div>

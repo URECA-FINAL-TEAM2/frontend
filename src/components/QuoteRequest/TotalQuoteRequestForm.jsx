@@ -1,18 +1,23 @@
 import React, { useState } from "react";
 import { RiCalendarScheduleLine } from "react-icons/ri";
-import { ImScissors } from "react-icons/im";
 import { BiSolidDog } from "react-icons/bi";
 import { GrDocumentUser } from "react-icons/gr";
 import { TbPhoto } from "react-icons/tb";
-import PetSelectModal from "@/components/QuoteRequest/PetSelectModal";
+import { GrMap } from "react-icons/gr";
 
-const ShopQuoteRequest = (shopId) => {
+import RegionSelectModal from "../common/modal/RegionSelectModal";
+import PetSelectModal from "./PetSelectModal";
+
+const TotalQuoteRequestForm = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [cancelReason, setCancelReason] = useState("");
   const [attachedImages, setAttachedImages] = useState([]);
   const [petInfo, setPetInfo] = useState(null);
   const [selectedDate, setSelectedDate] = useState(new Date(2024, 10, 24));
   const [selectedTime, setSelectedTime] = useState("15:00");
+
+  const [isLocationModalOpen, SetIsLocationModalOpen] = useState(false);
+  const [location, setLocation] = useState(null);
 
   const handleDateChange = (e) => {
     setSelectedDate(new Date(e.target.value));
@@ -37,6 +42,24 @@ const ShopQuoteRequest = (shopId) => {
     setCancelReason("");
   };
 
+  const openLocationModal = () => {
+    SetIsLocationModalOpen(true);
+  };
+
+  const handleCloseLocationModal = () => {
+    SetIsLocationModalOpen(false);
+  };
+
+  const handleLocationSelect = (selectLocation) => {
+    setLocation({
+      sido: selectLocation.sido,
+      sigungu: selectLocation.sigungu,
+      sidoName: selectLocation.sidoName,
+      sigunguName: selectLocation.sigunguName
+    });
+    SetIsLocationModalOpen(false);
+  };
+
   const handlePetSelect = (selectedDog) => {
     console.log("selectedDog", selectedDog);
     // Transform the selected dog data to match your petInfo structure
@@ -57,22 +80,20 @@ const ShopQuoteRequest = (shopId) => {
 
   return (
     <div className="mx-auto mb-[var(--bottom-bar-height)] mt-[var(--header-height)] max-w-lg bg-white px-6">
-      {/* 매장 및 디자이너 정보 */}
+      {/* 지역 */}
       <div className="mb-2 flex items-center space-x-2">
-        <ImScissors size={24} color="black" />
-        <h2 className="text-xl font-semibold">매장 · 디자이너 정보</h2>
+        <GrMap size={24} color="black" />
+        <h2 className="text-xl font-semibold">지역</h2>
       </div>
 
       <div className="mb-6 rounded-lg border border-main-400 p-4">
-        <div className="flex items-center">
-          <img src="https://picsum.photos/200" alt="매장 로고" className="mr-4 h-20 w-20 rounded-lg" />
-          <div>
-            <p className="text-[15px] font-semibold">멍댕살롱</p>
-            <p className="mb-0.5 text-[13px] text-gray-600">경기 안양시 만안구 만안로 96 1층 140호</p>
-            <p className="text-[15px] font-semibold">가영 디자이너</p>
-            <p className="text-[13px] text-gray-600">010-1234-5678</p>
-          </div>
-        </div>
+        {location ? (
+          <p>
+            {location.sidoName} {location.sigunguName}
+          </p>
+        ) : (
+          <p onClick={openLocationModal}>클릭해서 견적 요청을 보낼 지역을 선택하세요!</p>
+        )}
       </div>
 
       {/* 미용 일시 */}
@@ -102,17 +123,6 @@ const ShopQuoteRequest = (shopId) => {
           </div>
         </div>
       </div>
-
-      {/* <div className="mb-6 rounded-lg">
-        <div className="flex items-center justify-between space-x-4">
-          <div className="flex flex-1 items-center justify-center rounded-lg border border-main-400 px-4 py-2 text-center text-sm">
-            <p>2024년 11월 24일</p>
-          </div>
-          <div className="flex flex-1 items-center justify-center rounded-lg border border-main-400 px-4 py-2 text-center text-sm">
-            <p>오후 3:00</p>
-          </div>
-        </div>
-      </div> */}
 
       {/* 반려견 정보 */}
       <div className="mb-2 flex items-center space-x-2">
@@ -197,8 +207,28 @@ const ShopQuoteRequest = (shopId) => {
           />
         </div>
       </PetSelectModal>
+
+      {/* 모달 */}
+      <RegionSelectModal
+        isOpen={isLocationModalOpen}
+        onClose={handleCloseLocationModal}
+        onConfirm={handleLocationSelect}
+        closeText="닫기"
+        confirmText="확인"
+      >
+        <div>
+          <p className="mb-4 text-sm font-medium">취소 사유를 입력해주세요.</p>
+          <input
+            type="text"
+            value={cancelReason}
+            onChange={(e) => setCancelReason(e.target.value)}
+            placeholder="취소 사유 입력"
+            className="w-full rounded-md border p-2 text-sm"
+          />
+        </div>
+      </RegionSelectModal>
     </div>
   );
 };
 
-export default ShopQuoteRequest;
+export default TotalQuoteRequestForm;

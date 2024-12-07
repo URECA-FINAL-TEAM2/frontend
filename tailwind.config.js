@@ -20,6 +20,8 @@ export default {
           200: "#FFDCDC",
           300: "#FFAEAE",
           400: "#FF8E8E",
+          500: "#FC7272",
+          600: "#F25A5A",
           DEFAULT: "#FF8E8E"
         },
         gray: {

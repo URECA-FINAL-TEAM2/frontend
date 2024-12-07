@@ -1,31 +1,50 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
 import Lottie from "lottie-react";
 import PaymentCompleteAnimation from "./PaymentCompleteAnimation.json";
-import Button from "../../components/common/button/Button";
+import SubHeader from "@/components/common/SubHeader";
+import CustomerBottom from "@/components/common/CustomerBottom";
+import { useNavigate } from "react-router-dom";
+import { getReservationDetail } from "@/queries/reservationQuery";
 
-function PaymentComplete() {
-  // 서버에서 데이터를 받아오기 위한 state
-  const [paymentData, setPaymentData] = useState(null);
+function PaymentComplete({ selectedQuoteId }) {
+  const [reservationDetail, setReservationDetail] = useState(null);
+  const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    // 예제용 GET 요청
-    axios
-      .get("/api/payment-details")
-      .then((response) => {
-        setPaymentData(response.data); // 서버에서 받은 데이터를 state에 저장
-      })
-      .catch((error) => console.error(error));
-  }, []);
+    const fetchReservationDetail = async () => {
+      try {
+        const selectedQuoteId = 1;
+        const response = await getReservationDetail(selectedQuoteId);
+        if (response.code === 200) {
+          setReservationDetail(response.data);
+        } else {
+          throw new Error(response.message);
+        }
+      } catch (err) {
+        setError(err.message);
+      }
+    };
+
+    fetchReservationDetail();
+  }, [selectedQuoteId]);
+
+  if (error) {
+    return <p className="text-center text-red-500">{error}</p>;
+  }
+
+  if (!reservationDetail) {
+    return <p className="text-center text-gray-500">로딩 중...</p>;
+  }
 
   return (
     <div>
-      헤더
-      <div className="my-6 flex flex-col items-center">
-        <Lottie animationData={PaymentCompleteAnimation} loop={true} style={{ height: "180px", width: "180px" }} />
+      <SubHeader title="결제 완료" />
+      <div className="my-6 mt-20 flex flex-col items-center">
+        <Lottie animationData={PaymentCompleteAnimation} loop style={{ height: "180px", width: "180px" }} />
         <p className="mt-4 text-center text-sm">
           예약 완료! <br />
-          <span className="font-bold text-red-500">사랑스러운 반려견</span>이 더욱 아름다워질 거예요!
+          <span className="font-bold text-red-500">{reservationDetail.dogName}</span>이(가) 더욱 아름다워질 거예요!
         </p>
       </div>
       {/* 정보 섹션 */}
@@ -34,15 +53,15 @@ function PaymentComplete() {
         <div className="space-y-2">
           <div className="flex justify-between">
             <span className="font-bold text-gray-700">펫 주인</span>
-            <span className="text-gray-500">{paymentData?.ownerName || "주인 이름"}</span>
+            <span className="text-gray-500">{reservationDetail.customerName}</span>
           </div>
           <div className="flex justify-between">
             <span className="font-bold text-gray-700">번호</span>
-            <span className="text-gray-500">{paymentData?.phone || "번호"}</span>
+            <span className="text-gray-500">{reservationDetail.phone}</span>
           </div>
           <div className="flex justify-between">
             <span className="font-bold text-gray-700">마이 펫</span>
-            <span className="text-gray-500">{paymentData?.petName || "댕댕이"}</span>
+            <span className="text-gray-500">{reservationDetail.dogName}</span>
           </div>
         </div>
 
@@ -52,23 +71,23 @@ function PaymentComplete() {
         <div className="space-y-2">
           <div className="flex justify-between">
             <span className="font-bold text-gray-700">예약 날짜</span>
-            <span className="text-gray-500">{paymentData?.reservationDate || "언젠가"}</span>
+            <span className="text-gray-500">{new Date(reservationDetail.beautyDate).toLocaleDateString()}</span>
           </div>
           <div className="flex justify-between">
             <span className="font-bold text-gray-700">매장 이름</span>
-            <span className="text-gray-500">{paymentData?.storeName || "마릴린펫"}</span>
+            <span className="text-gray-500">{reservationDetail.shopName}</span>
           </div>
           <div className="flex justify-between">
             <span className="font-bold text-gray-700">매장 주소</span>
-            <span className="text-gray-500">{paymentData?.storeAddress || "서울시 엘지구"}</span>
+            <span className="text-gray-500">{reservationDetail.address}</span>
           </div>
           <div className="flex justify-between">
             <span className="font-bold text-gray-700">디자이너</span>
-            <span className="text-gray-500">{paymentData?.designer || "문정"}</span>
+            <span className="text-gray-500">{reservationDetail.groomerName}</span>
           </div>
           <div className="flex justify-between">
             <span className="font-bold text-gray-700">견적 내용</span>
-            <span className="text-gray-500">{paymentData?.estimateDetails || "빡빡이컷"}</span>
+            <span className="text-gray-500">{reservationDetail.quoteContent}</span>
           </div>
         </div>
 
@@ -77,14 +96,19 @@ function PaymentComplete() {
         {/* 결제금액 */}
         <div className="flex justify-between">
           <span className="font-bold text-gray-700">결제된 금액</span>
-          <span className="text-red-500">{paymentData?.price || "12,345원"}</span>
+          <span className="text-red-500">{(reservationDetail.cost * 0.2)?.toLocaleString()}원</span>
         </div>
       </div>
-      {/* 하단 버튼 */}
-      <div className="mt-8 flex justify-center">
-        <Button styleType="lightPink">예약 내역 확인</Button>
+
+      <div className="mt-5 flex justify-center">
+        <button
+          className="w-[65%] rounded-lg bg-main-400 py-2 text-white shadow hover:bg-main-300"
+          onClick={() => navigate("/customer/reservation")}
+        >
+          예약 내역 확인
+        </button>
       </div>
-      <div>푸터</div>
+      <CustomerBottom />
     </div>
   );
 }

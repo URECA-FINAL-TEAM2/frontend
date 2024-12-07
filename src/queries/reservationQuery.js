@@ -65,10 +65,10 @@ export const getReservationList = async () => {
 ///////////////////////////////////////////
 
 const reservationDetail = {
-  customerName: "Test User",
-  groomerName: "Test User",
+  customerName: "Test customer",
+  groomerName: "Test groomer",
   shopName: "미용멍당",
-  address: "f",
+  address: "address",
   phone: "010-1234-5678",
   dogName: "Test Dog",
   profileImage: "test_image.jpg",
@@ -83,7 +83,8 @@ const reservationDetail = {
   beautyDate: "2024-12-01T10:00:00",
   requestContent: "Test Request Content",
   quoteContent: "Test Quote Content",
-  requestImage: ["test1.jpg", "test2.jpg", "test3.jpg"]
+  requestImage: ["test1.jpg", "test2.jpg", "test3.jpg"],
+  cost: 30000
 };
 
 // 예약 상세 조회 함수

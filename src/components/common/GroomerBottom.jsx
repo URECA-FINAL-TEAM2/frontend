@@ -12,7 +12,7 @@ const GroomerBottom = () => {
 
   const routes = [
     { path: "/groomer/home", name: "home" },
-    { path: "/groomer/docs", name: "docs" },
+    { path: "/groomer/quotes", name: "quotes" },
     { path: "/groomer/store", name: "store" },
     { path: "/groomer/chat", name: "chat" },
     { path: "/groomer/mypage", name: "mypage" }
@@ -33,8 +33,8 @@ const GroomerBottom = () => {
             <span className="mt-1 text-xs">홈</span>
           </div>
         </Link>
-        <Link to="/groomer/quote">
-          <div className={`bottom ${active === "docs" && "bottom-active"}`}>
+        <Link to="/groomer/quotes">
+          <div className={`bottom ${active === "quotes" && "bottom-active"}`}>
             <VscSymbolFile size={25} />
             <span className="mt-1 text-xs">견적 요청</span>
           </div>

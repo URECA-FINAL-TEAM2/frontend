@@ -6,7 +6,7 @@ import { ImScissors } from "react-icons/im";
 import { RiCalendarScheduleLine } from "react-icons/ri";
 import { TbPhoto, TbCash } from "react-icons/tb";
 
-function CustomerQuote(quotesId) {
+function GroomerQuoteDetail(quotesId) {
   const [dogInfo, setDogInfo] = useState(null);
 
   useEffect(() => {
@@ -140,4 +140,4 @@ function CustomerQuote(quotesId) {
   );
 }
 
-export default CustomerQuote;
+export default GroomerQuoteDetail;

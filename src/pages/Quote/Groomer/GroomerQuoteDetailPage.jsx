@@ -1,12 +1,12 @@
 import SubHeader from "@/components/common/SubHeader";
-import GroomerQuote from "@/components/Quote/GroomerQuote";
+import GroomerQuoteDetail from "@/components/Quote/GroomerQuoteDetail";
 import React from "react";
 
 function GroomerQuoteDetailPage(props) {
   return (
     <div>
       <SubHeader title="보낸 견적서 상세" navigate={-1} />
-      <GroomerQuote quotesId={quotesId} />
+      <GroomerQuoteDetail quotesId={quotesId} />
     </div>
   );
 }

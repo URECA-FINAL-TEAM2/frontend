@@ -1,18 +1,19 @@
 import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import BounceLoader from "react-spinners/BounceLoader";
 import axiosInstance from "../../api/axiosInstance";
 import useAuthStore from "../../store/authStore";
 
 function OAuth2RedirectPage() {
-  const { setUser, setDefaultRole } = useAuthStore();
   const navigate = useNavigate();
+  const location = useLocation();
   const code = new URL(window.location.href).searchParams.get("code");
+  const socialLogin = location.pathname.includes("kakao") ? "kakao" : "google";
+  const { updateId, updateUserInfo, updateDefaultRole } = useAuthStore();
 
   const sendCodeToBackend = async (code) => {
-    console.log("카카오 인가코드: ", code);
     try {
-      const response = await axiosInstance.get(`/login/oauth2/code/kakao`, {
+      const response = await axiosInstance.get(`/login/oauth2/code/${socialLogin}`, {
         params: {
           code: code
         }
@@ -21,9 +22,9 @@ function OAuth2RedirectPage() {
       const { accessToken, role, user } = response.data; // 응답 값
 
       localStorage.setItem("accessToken", accessToken);
-      setUser(user);
-      setDefaultRole(role);
-      // 그럼 이때 id도 줘야겠네(customerId, groomerId)
+      updateUserInfo(user);
+      updateDefaultRole(role);
+      updateId({ customerId: 12345 });
 
       if (role === "customer") {
         navigate("/customer/home");
@@ -52,7 +53,7 @@ function OAuth2RedirectPage() {
   return (
     <div className="flex min-h-screen flex-col items-center justify-center bg-main-100">
       <BounceLoader color="#FF8E8E" />
-      <div className="mt-10 text-xl text-main">카카오 로그인 시도중</div>
+      <div className="mt-10 text-xl text-main">로그인 시도중</div>
     </div>
   );
 }

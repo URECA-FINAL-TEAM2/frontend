@@ -31,10 +31,8 @@ export const registerUser = async (userData, role) => {
   }
 
   try {
-    console.log(endPoint, formData);
     const response = await axiosInstance.post(endPoint, formData);
     return response.data;
-    // return successCustomer;
   } catch (error) {
     console.error("고객 정보 등록 실패:", error);
     throw error;

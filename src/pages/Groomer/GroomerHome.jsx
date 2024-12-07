@@ -1,9 +1,6 @@
 import { Link } from "react-router-dom";
-import line from "/Icons/groomerGrayVerticalLine.svg";
 import GrommerTotalRequest from "../../components/Main/GrommerTotalRequest";
-import mockJson from "../../utils/groomerHome.json";
 import { useEffect, useState } from "react";
-// import { getRequest } from "../../api/axiosInstance";
 import Summary from "../../components/common/Summary";
 import { getGroomerMain } from "@/queries/mainQuery";
 
@@ -29,9 +26,9 @@ const GroomerHome = () => {
   useEffect(() => {
     const getMain = async () => {
       try {
-        const response = await getGroomerMain();
-        setTotalRequest(response[0].data.totalRequest);
-        updatePreview(response[0].data);
+        const response = await getGroomerMain(1);
+        setTotalRequest(response.totalRequest);
+        updatePreview(response);
       } catch (error) {
         console.error("Error: Customer Main", error);
       }
@@ -78,20 +75,8 @@ const GroomerHome = () => {
             </Link>
           </div>
 
-          {totalRequest.map((items) => {
-            return (
-              <GrommerTotalRequest
-                key={items.requestId}
-                profileImage={items.profileImage}
-                nickname={items.nickname}
-                closingDate={items.closingDate}
-                beautyDate={items.beautyDate}
-                breed={items.breed}
-                dogWeight={items.dogWeight}
-                dogGender={items.dogGender}
-                requestContent={items.requestContent}
-              />
-            );
+          {totalRequest.map((request) => {
+            return <GrommerTotalRequest key={request.requestId} request={request} />;
           })}
         </section>
       </div>

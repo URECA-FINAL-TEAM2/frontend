@@ -14,7 +14,6 @@ const getSidoList = async () => {
 const getSigunguList = async (sidoId) => {
   try {
     const response = await axiosInstance.get(`/addresses/${sidoId}`);
-    console.log(response);
     return response.data.data.sigunguList;
   } catch (error) {
     throw new Error("Failed to fetch sigungu data");

@@ -1,18 +1,21 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { useLocation, useNavigate } from "react-router-dom";
 import SubHeader from "../../components/common/SubHeader";
 import UserForm from "@/components/Mypage/Info/UserForm";
 import { registerUser } from "@/queries/authQuery";
+import useAuthStore from "@/store/authStore";
 
 const InfoRequired = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const { updateId, updateUserInfo, updateDefaultRole, setLoginStatus } = useAuthStore();
   const { role, email } = location.state || {};
   const [formData, setFormData] = useState({
-    profileImage: null,
-    name: "",
     email: email,
+    profileImage: null,
+    role: "",
+    name: "",
     nickname: "",
     phone: "",
     sido: "",
@@ -31,6 +34,9 @@ const InfoRequired = () => {
       const response = await registerUser(formData, role);
       const responseRole = response[0].data.roles[0];
 
+      setLoginStatus(true);
+      // 토큰, id, role, 정보 저장
+
       if (responseRole === "customer") {
         navigate("/customer/home");
       } else {
@@ -40,6 +46,10 @@ const InfoRequired = () => {
       console.error("회원 등록 실패:", error);
     }
   };
+
+  useEffect(() => {
+    setFormData((prev) => ({ ...prev, role: role }));
+  }, [role]);
 
   return (
     <>

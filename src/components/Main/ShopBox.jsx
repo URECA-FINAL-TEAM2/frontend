@@ -4,7 +4,7 @@ import { IoHeart } from "react-icons/io5";
 import { useLocation } from "react-router-dom";
 import Modal from "../common/modal/modal";
 
-const ShopBox = ({ shopLogo, shopName, starScoreAvg, reviewCount, address, skills, businessTime }) => {
+const ShopBox = ({ reviewImage, shopName, starScoreAvg, reviewCount, address, skills, businessTime }) => {
   const location = useLocation();
   const [isBookmarked, setIsBookmarked] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -38,7 +38,7 @@ const ShopBox = ({ shopLogo, shopName, starScoreAvg, reviewCount, address, skill
       className="my-4 flex w-full items-start justify-between rounded-xl bg-white py-2"
     >
       <div className="flex text-start">
-        <img src={shopLogo} alt="storeLogo" className="h-[120px] w-[120px] rounded-xl bg-white" />
+        <img src={reviewImage} alt="storeLogo" className="h-[120px] w-[120px] rounded-xl bg-white" />
         <div className="ml-2 grow pt-3">
           <div className="text-lg">{shopName}</div>
           <div className="flex text-xs">

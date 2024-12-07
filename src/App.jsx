@@ -37,13 +37,15 @@ import GroomerQuoteDetail from "./components/Quote/GroomerQuoteDetail";
 import GroomerQuoteForm from "./components/Quote/GroomerQuoteForm";
 import NotFound from "./pages/NotFound";
 import EditPortfolio from "./components/Mypage/Store/EditPortfolio";
+import GoogleOAuth2RedirectPage from "./components/Login/GoogleOauth2RedirectPage";
+import PaymentCancel from "./pages/Payment/PaymentCancel";
 
 function App() {
   return (
     <div className="App">
       <Router>
         <Routes>
-          <Route path="/testpage" element={<GroomerQuoteForm />} />
+          <Route path="/testpage" element={<PaymentCancel />} />
           <Route path="/" element={<Onboarding />} />
           <Route path="/login" element={<Login />} />
           <Route path="/login/oauth2/code/kakao" element={<OAuth2RedirectPage />} />

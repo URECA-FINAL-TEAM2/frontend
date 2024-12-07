@@ -14,3 +14,5 @@ function ShopQuoteRequestPage(props) {
     </div>
   );
 }
+
+export default ShopQuoteRequestPage;

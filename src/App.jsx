@@ -57,7 +57,6 @@ function App() {
           {/* customer/ -layout */}
           <Route path="/customer" element={<CustomerLayout />}>
             <Route path="home" element={<CustomerHome />} />
-            <Route path="quote" element={<CustomerQuote />} />
             <Route path="chat" element={<CustomerChat />} />
           </Route>
 
@@ -68,8 +67,8 @@ function App() {
               <Route index element={<CustomerSearchPage />} />
               <Route path=":shopId" element={<ShopDetailPage />} />
             </Route>
-            <Route path="shop/quote/:shopId" element={<ShopQuoteRequestPage />} />
-            <Route path="quote/request" element={<TotalQuoteRequestPage />} />
+            <Route path="shop/quotes/:shopId" element={<ShopQuoteRequestPage />} />
+            <Route path="quotes/request" element={<TotalQuoteRequestPage />} />
             <Route path="mypage" element={<CustomerMypage />} />
             <Route path="info" element={<UserInfo />} />
             <Route path="bookmarkedStore" element={<BookmarkedStore />} />
@@ -84,7 +83,6 @@ function App() {
           {/* groomer/ -layout */}
           <Route path="/groomer" element={<GroomerLayout />}>
             <Route path="home" element={<GroomerHome />} />
-            <Route path="quote" element={<GroomerQuote />} />
             <Route path="store" element={<GroomerStore />} />
             <Route path="chat" element={<GroomerChat />} />
           </Route>

@@ -80,6 +80,9 @@ function App() {
             <Route path="myReviews" element={<MyReviews />} />
             <Route path="writeReviews" element={<WriteReviews />} />
             <Route path="reservation" element={<ReservationMain />} />
+            <Route path="reservation/detail" element={<ReservationDetail />} />
+            <Route path="payment/complete" element={<PaymentComplete />} />
+            <Route path="payment/cancel" element={<PaymentCancel />} />
           </Route>
 
           {/* groomer/ -layout */}

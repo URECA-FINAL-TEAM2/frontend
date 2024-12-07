@@ -11,13 +11,13 @@ const UserInfo = () => {
   const { role } = location.state || {};
   const [formData, setFormData] = useState({
     profileImage: null,
-    name: "노승희",
-    email: "tmdtmd@naver.com",
-    nickname: "뭉뭉객",
-    phone: "010-2222-3333",
-    sido: "", // 고객 필드
-    sigungu: "", // 고객 필드
-    skills: "소형견/특수견 미용" // 미용사 필드
+    userName: "",
+    email: "",
+    nickname: "",
+    phone: "",
+    sidoName: 1, // 고객 필드
+    sigunguName: 2, // 고객 필드
+    skills: "" // 미용사 필드
   });
 
   const handleChange = (e) => {
@@ -36,7 +36,7 @@ const UserInfo = () => {
       setFormData((prev) => ({
         ...prev, // 기존 상태 유지
         profileImage: updateData.profileImage || prev.profileImage,
-        name: updateData.name || prev.name,
+        userName: updateData.userName || prev.userName,
         nickname: updateData.nickname || prev.nickname, // 새 데이터가 없으면 이전 상태 유지
         phone: updateData.phone || prev.phone,
         ...(role === "customer"
@@ -51,17 +51,17 @@ const UserInfo = () => {
   useEffect(() => {
     const getInfo = async () => {
       const response = await getUserInfo(role, 2);
-      const updateData = response[0].data;
-
-      setFormData((prev) => ({
-        ...prev, // 기존 상태 유지
-        profileImage: updateData.profileImage || prev.profileImage,
-        nickname: updateData.nickname || prev.nickname, // 새 데이터가 없으면 이전 상태 유지
-        phone: updateData.phone || prev.phone,
-        ...(role === "customer"
-          ? { address: updateData.address || prev.address }
-          : { skills: updateData.skills || prev.skills })
-      }));
+      const updateData = response;
+      setFormData(updateData);
+      // setFormData((prev) => ({
+      //   ...prev, // 기존 상태 유지
+      //   profileImage: updateData.profileImage || prev.profileImage,
+      //   nickname: updateData.nickname || prev.nickname, // 새 데이터가 없으면 이전 상태 유지
+      //   phone: updateData.phone || prev.phone,
+      //   ...(role === "customer"
+      //     ? { address: updateData.address || prev.address }
+      //     : { skills: updateData.skills || prev.skills })
+      // }));
     };
 
     getInfo();

@@ -42,14 +42,14 @@ const UserForm = ({ formData, setFormData, handleSubmit, handleChange, role }) =
       </div>
 
       <div>
-        <label htmlFor="name" className="labelStyle">
+        <label htmlFor="userName" className="labelStyle">
           이름
         </label>
         <input
           type="text"
-          id="name"
-          name="name"
-          value={formData.name}
+          id="userName"
+          name="userName"
+          value={formData.userName}
           onChange={handleChange}
           placeholder="이름을 입력해주세요."
           className="inputStyle"

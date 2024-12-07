@@ -2,8 +2,16 @@ import ShopItem from "@/components/CustomerSearch/ShopItem";
 import SubHeader from "../../components/common/SubHeader";
 import ShopBox from "../../components/Main/ShopBox";
 import mockJson from "../../utils/customerHome.json";
+import { useEffect } from "react";
+import { getFavoriteShop } from "@/queries/userQuery";
 
 const BookmarkedStore = () => {
+  useEffect(() => {
+    const getShop = async () => {
+      const response = await getFavoriteShop();
+    };
+    getShop();
+  }, []);
   return (
     <div className="min-h-screen">
       <SubHeader title={"내 단골샵"} />

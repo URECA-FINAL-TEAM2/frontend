@@ -1,3 +1,5 @@
+import axiosInstance from "@/api/axiosInstance";
+
 const customerData = [
   // 고객일 때
   {
@@ -53,7 +55,10 @@ export const getCustomerMypage = async () => {
 
 export const getGroomerMypage = async () => {
   try {
-    return groomerData;
+    const groomerId = 2; // 수정 필요
+    const response = await axiosInstance.get(`/mypage/groomer/${groomerId}`);
+    console.log(response);
+    return response.data.data;
   } catch (error) {
     throw new Error("Failed to fetch customer mypage data");
   }

@@ -61,14 +61,9 @@ export const getUserInfo = async (role, id) => {
   const endpoint = role === "customer" ? `/profile/customer/${id}` : `/profile/groomer/${id}`;
 
   try {
-    // const response = await axiosInstance.get(endpoint);
-    // return response.data; // 요청 성공 시 데이터 반환
-
-    if (role === "customer") {
-      return getCustomerData;
-    } else {
-      return getGroomerData;
-    }
+    const response = await axiosInstance.get(endpoint);
+    console.log(response);
+    return response.data.data;
   } catch (error) {
     console.error("요청 실패:", error);
     throw error;
@@ -111,6 +106,16 @@ export const updateUserInfo = async (role, preparedData, id) => {
   } catch (error) {
     console.error("요청 실패:", error);
     throw error; // 에러 발생 시 호출한 곳에서 처리
+  }
+};
+
+export const getFavoriteShop = async () => {
+  try {
+    const customerId = 1;
+    const response = await axiosInstance.get(`/profile/${customerId}/favorites`);
+    console.log(response);
+  } catch (error) {
+    throw new Error("Failed to fetch favorite shop");
   }
 };
 

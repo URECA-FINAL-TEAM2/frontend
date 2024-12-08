@@ -31,25 +31,25 @@ const UserForm = ({ formData, setFormData, handleSubmit, handleChange, role }) =
   return (
     <form onSubmit={handleSubmit} className="mt-5 grow">
       {/* Profile Image */}
-      <ProfileImage setFormData={setFormData} />
+      <ProfileImage formData={formData} setFormData={setFormData} />
 
       {/* email */}
       <div>
         <label htmlFor="email" className="labelStyle">
           이메일
         </label>
-        <div className="inputStyle">{formData.email}</div>
+        <div className="inputStyle">{formData?.email}</div>
       </div>
 
       <div>
-        <label htmlFor="userName" className="labelStyle">
+        <label htmlFor="username" className="labelStyle">
           이름
         </label>
         <input
           type="text"
-          id="userName"
-          name="userName"
-          value={formData.userName}
+          id="username"
+          name="username"
+          value={formData?.username}
           onChange={handleChange}
           placeholder="이름을 입력해주세요."
           className="inputStyle"
@@ -66,7 +66,7 @@ const UserForm = ({ formData, setFormData, handleSubmit, handleChange, role }) =
             type="text"
             id="nickname"
             name="nickname"
-            value={formData.nickname}
+            value={formData?.nickname}
             onChange={handleChange}
             placeholder="닉네임을 입력해주세요."
             className=""
@@ -93,7 +93,7 @@ const UserForm = ({ formData, setFormData, handleSubmit, handleChange, role }) =
           type="tel"
           id="phone"
           name="phone"
-          value={formData.phone}
+          value={formData?.phone}
           onChange={handleChange}
           placeholder="전화번호를 입력해주세요."
           className="inputStyle"
@@ -119,7 +119,7 @@ const UserForm = ({ formData, setFormData, handleSubmit, handleChange, role }) =
             type="text"
             id="skills"
             name="skills"
-            value={formData.skills}
+            value={formData?.skills}
             onChange={handleChange}
             placeholder="미용사 스킬을 입력해주세요."
             className="inputStyle"

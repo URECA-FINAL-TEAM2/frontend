@@ -1,34 +1,5 @@
 import axiosInstance from "@/api/axiosInstance";
 
-const getCustomerData = [
-  {
-    message: "get Customer Success",
-    data: {
-      profileImage: "이미지",
-      name: "노승희",
-      nickname: "수정된닉네임",
-      phoneNumber: "010-2222-2222",
-      sido: "", // 고객 필드
-      sigungu: "" // 고객 필드
-    },
-    timestamp: "2024-10-17 00:00:00"
-  }
-];
-
-const getGroomerData = [
-  {
-    message: "get Groomer Success",
-    data: {
-      profileImage: "이미지",
-      name: "노승희",
-      nickname: "받아온닉네임",
-      phoneNumber: "010-2222-2222",
-      skills: "특수견/소형견 미용"
-    },
-    timestamp: "2024-10-17 00:00:00"
-  }
-];
-
 const updateCustomerData = [
   {
     message: "Update Customer Success",
@@ -109,11 +80,11 @@ export const updateUserInfo = async (role, preparedData, id) => {
   }
 };
 
-export const getFavoriteShop = async () => {
+export const getFavoriteShop = async (customerId) => {
   try {
     const customerId = 1;
     const response = await axiosInstance.get(`/profile/${customerId}/favorites`);
-    console.log(response);
+    return response.data.data;
   } catch (error) {
     throw new Error("Failed to fetch favorite shop");
   }
@@ -125,10 +96,12 @@ const prepareDataForBackend = (role, data) => {
   delete filteredData.email;
 
   if (role === "customer") {
-    delete filteredData.skills; // 고객은 skills 필드 제거
-  } else if (role === "groomer") {
-    delete filteredData.sido; // 미용사는 sido 필드 제거
-    delete filteredData.sigungu; // 미용사는 sigungu 필드 제거
+    delete filteredData.skills;
+  } else {
+    delete filteredData.sidoId;
+    delete filteredData.sidoName;
+    delete filteredData.sigunguId;
+    delete filteredData.sigunguName;
   }
 
   return filteredData;

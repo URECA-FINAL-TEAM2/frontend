@@ -1,3 +1,5 @@
+import axiosInstance from "@/api/axiosInstance";
+
 const shopDetail = {
   groomerId: 1,
   shopId: 1,
@@ -345,5 +347,77 @@ export const getShopDetail = async (shopId) => {
     return shopDetail;
   } catch (error) {
     throw new Error("Failed to fetch shop data");
+  }
+};
+
+export const getGroomerShop = async (shopId) => {
+  try {
+    const shopId = 1;
+    const groomerId = 1;
+    const response = await axiosInstance.get(`/profile/groomer/shop/${shopId}`, {
+      params: { groomerId }
+    });
+
+    return response.data.data;
+  } catch (error) {
+    throw new Error("Failed to fetch shop data");
+  }
+};
+
+export const updateGroomerShop = async (data) => {
+  const { profileImage, ...jsonData } = data; // `data`에서 `profileImage`와 나머지 데이터를 분리
+  const formData = new FormData();
+
+  // 불필요한 필드 제거
+  if (jsonData.shopId) delete jsonData.shopId;
+
+  // `requestDto` JSON 데이터를 문자열로 변환하여 추가
+  formData.append("requestDto", JSON.stringify(jsonData));
+
+  // `profileImage`가 있는 경우에만 추가
+  if (profileImage) {
+    formData.append("shopLogo", profileImage); // 파일 추가
+  }
+
+  // 디버깅용: FormData 확인
+  for (let [key, value] of formData.entries()) {
+    console.log(`FormData 확인 - ${key}:`, value);
+  }
+
+  try {
+    const shopId = 1; // Shop ID
+    const groomerId = 1; // Groomer ID
+
+    // PUT 요청 보내기
+    const response = await axiosInstance.put(`/profile/groomer/shop/${shopId}`, formData, {
+      params: {
+        groomerId // 요청 쿼리 파라미터 추가
+      }
+    });
+
+    console.log("응답 데이터:", response.data);
+    return response.data; // 필요한 데이터 반환
+  } catch (error) {
+    console.error("API 요청 에러:", error);
+    throw error; // 에러 재발생
+  }
+};
+
+export const deleteGroomerShop = async (shopId) => {
+  try {
+    const groomerId = 1;
+    const response = await axiosInstance.put(
+      `/profile/groomer/shop/${shopId}/delete`,
+      {},
+      {
+        params: { groomerId }
+      }
+    );
+
+    console.log("매장삭제", response);
+
+    return response.data.data;
+  } catch (error) {
+    throw new Error("Failed to delete shop data");
   }
 };

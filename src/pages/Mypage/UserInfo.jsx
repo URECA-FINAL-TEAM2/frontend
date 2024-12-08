@@ -11,7 +11,7 @@ const UserInfo = () => {
   const { role } = location.state || {};
   const [formData, setFormData] = useState({
     profileImage: null,
-    userName: "",
+    username: "",
     email: "",
     nickname: "",
     phone: "",
@@ -50,18 +50,8 @@ const UserInfo = () => {
 
   useEffect(() => {
     const getInfo = async () => {
-      const response = await getUserInfo(role, 2);
-      const updateData = response;
-      setFormData(updateData);
-      // setFormData((prev) => ({
-      //   ...prev, // 기존 상태 유지
-      //   profileImage: updateData.profileImage || prev.profileImage,
-      //   nickname: updateData.nickname || prev.nickname, // 새 데이터가 없으면 이전 상태 유지
-      //   phone: updateData.phone || prev.phone,
-      //   ...(role === "customer"
-      //     ? { address: updateData.address || prev.address }
-      //     : { skills: updateData.skills || prev.skills })
-      // }));
+      const response = await getUserInfo(role, 1);
+      setFormData(response);
     };
 
     getInfo();

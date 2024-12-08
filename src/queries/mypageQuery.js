@@ -55,7 +55,7 @@ export const getCustomerMypage = async () => {
 
 export const getGroomerMypage = async () => {
   try {
-    const groomerId = 2; // 수정 필요
+    const groomerId = 1; // 수정 필요
     const response = await axiosInstance.get(`/mypage/groomer/${groomerId}`);
     console.log(response);
     return response.data.data;

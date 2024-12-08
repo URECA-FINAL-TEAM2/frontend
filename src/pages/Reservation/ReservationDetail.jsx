@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { getReservationDetail } from "@/queries/reservationQuery";
 import { RiCalendarScheduleLine } from "react-icons/ri";
 import { ImScissors } from "react-icons/im";

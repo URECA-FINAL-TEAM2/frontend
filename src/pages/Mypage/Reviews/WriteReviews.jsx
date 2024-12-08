@@ -1,15 +1,16 @@
 import SubHeader from "../../../components/common/SubHeader";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ImStarFull, ImStarHalf, ImStarEmpty } from "react-icons/im"; // 아이콘 변경
 import testImg from "/Test/dog.jpg";
 import Modal from "../../../components/common/modal/modal";
 import EditReviewImage from "@/components/Mypage/Review/EditReviewImage";
+import { getCustomerReviewList } from "@/queries/reviewQuery";
 
 const WriteReviews = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [rating, setRating] = useState(4.5);
   const [reviewContent, setReviewContent] = useState("리뷰 내용입니다.");
-  const [images, setImages] = useState([testImg, testImg, testImg, testImg]); // 초기 이미지 배열
+  const [images, setImages] = useState([testImg, testImg, testImg]); // 초기 이미지 배열
 
   const handleSelectChange = (e) => {
     setRating(Number(e.target.value));
@@ -34,10 +35,17 @@ const WriteReviews = () => {
   };
 
   const handleConfirmModal = () => {
-    // 리뷰 삭제 로직
-    console.log("리뷰 삭제 확인!");
+    console.log("리뷰 수정완료");
     setIsModalOpen(false);
   };
+
+  useEffect(() => {
+    const getReview = async () => {
+      const response = await getCustomerReviewList();
+      console.log(response);
+    };
+    getReview();
+  }, []);
 
   // 별 렌더링 함수
   const renderStars = () => {
@@ -68,11 +76,11 @@ const WriteReviews = () => {
             <div className="text-sm">2024.11.14</div>
           </div>
 
-          <div className="mb-4 flex items-center">
+          <div className="mb-2 flex items-center">
             {/* 별 아이콘 렌더링 */}
             <div className="mr-2 flex items-center space-x-1">{renderStars()}</div>
             {/* Select Box */}
-            <select value={rating} onChange={handleSelectChange} className="rounded-md border border-gray-300 p-1">
+            <select value={rating} onChange={handleSelectChange} className="rounded-xl border border-gray-200 px-3">
               {Array.from({ length: 11 }, (_, index) => index * 0.5).map((value) => (
                 <option key={value} value={value}>
                   {value.toFixed(1)}
@@ -93,7 +101,7 @@ const WriteReviews = () => {
         </div>
 
         <button className="bottomButtonPink" onClick={handleOpenModal}>
-          리뷰 수정하기
+          수정완료
         </button>
 
         <Modal

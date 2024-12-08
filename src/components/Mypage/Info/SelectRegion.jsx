@@ -22,13 +22,13 @@ const SelectRegion = ({ formData, setFormData }) => {
   // 시군구 목록 로드
   useEffect(() => {
     const fetchSigunguList = async () => {
-      if (!formData.sidoName) {
+      if (!formData.sidoId) {
         setSigunguList([]);
         return;
       }
 
       try {
-        const response = await getSigunguList(formData.sidoName); // id로 보내야됨
+        const response = await getSigunguList(formData.sidoId);
         setSigunguList(response);
       } catch (error) {
         console.error("시군구 목록 로드 실패:", error);
@@ -36,20 +36,20 @@ const SelectRegion = ({ formData, setFormData }) => {
     };
 
     fetchSigunguList();
-  }, [formData.sidoName]);
+  }, [formData.sidoId]);
 
   const handleSidoChange = (e) => {
     setFormData((prevFormData) => ({
       ...prevFormData,
-      sidoName: Number(e.target.value),
-      sigunguName: ""
+      sidoId: Number(e.target.value),
+      sigunguId: ""
     }));
   };
 
   return (
     <div className="mx-auto mt-2 flex w-3/4 gap-4">
       <select
-        value={formData.sidoName}
+        value={formData.sidoId || ""}
         onChange={handleSidoChange}
         className="h-[30px] w-[152px] rounded-md border border-main-300 px-2"
       >
@@ -62,14 +62,14 @@ const SelectRegion = ({ formData, setFormData }) => {
       </select>
 
       <select
-        value={formData.sigunguName}
+        value={formData.sigunguId || ""}
         onChange={(e) =>
           setFormData((prevFormData) => ({
             ...prevFormData,
-            sigunguName: Number(e.target.value)
+            sigunguId: Number(e.target.value)
           }))
         }
-        disabled={!formData.sidoName}
+        disabled={!formData.sidoId}
         className="h-[30px] w-[152px] rounded-md border border-main-300 px-2 disabled:bg-gray-100"
       >
         <option value="">시/군/구 선택</option>

@@ -18,8 +18,10 @@ const InfoRequired = () => {
     name: "",
     nickname: "",
     phone: "",
-    sido: "",
-    sigungu: "",
+    sidoId: "",
+    sigunguId: "",
+    sidoName: "",
+    sigunguName: "",
     skills: "" // 미용사 필드
   });
 

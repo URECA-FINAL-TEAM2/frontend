@@ -2,21 +2,24 @@ import { useState } from "react";
 import testImg from "/Test/dog.jpg";
 import { GoStarFill } from "react-icons/go";
 import Modal from "../../common/modal/modal";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { deleteReview } from "@/queries/reviewQuery";
 
 const ReviewBox = () => {
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleDelete = async () => {
+    setIsModalOpen(false);
+    const response = await deleteReview();
+    console.log(response);
+  };
 
   const handleOpenModal = () => {
     setIsModalOpen(true);
   };
 
   const handleCloseModal = () => {
-    setIsModalOpen(false);
-  };
-
-  const handleConfirmModal = () => {
     setIsModalOpen(false);
   };
 
@@ -31,11 +34,10 @@ const ReviewBox = () => {
           </div>
           <div className="ml-3 text-xs">2024.11.14</div>
         </div>
-        <div className="flex overflow-x-scroll">
-          <img className="my-2 mr-2 w-1/3 rounded-xl" src={testImg} alt="dog Img" />
-          <img className="my-2 mr-2 w-1/3 rounded-xl" src={testImg} alt="dog Img" />
-          <img className="my-2 mr-2 w-1/3 rounded-xl" src={testImg} alt="dog Img" />
-          <img className="my-2 mr-2 w-1/3 rounded-xl" src={testImg} alt="dog Img" />
+        <div className="grid grid-cols-3">
+          <img className="my-2 rounded-xl px-1" src={testImg} alt="dog Img" />
+          <img className="my-2 rounded-xl px-1" src={testImg} alt="dog Img" />
+          <img className="my-2 rounded-xl px-1" src={testImg} alt="dog Img" />
         </div>
         <div className="py-2 text-sm">
           리뷰 내용입니다. 리뷰 내용입니다. 리뷰 내용입니다. 리뷰 내용입니다. 리뷰 내용입니다. 리뷰 내용입니다.
@@ -53,7 +55,7 @@ const ReviewBox = () => {
       <Modal
         isOpen={isModalOpen}
         onClose={handleCloseModal}
-        onConfirm={handleConfirmModal}
+        onConfirm={handleDelete}
         closeText="닫기"
         confirmText="확인"
       >

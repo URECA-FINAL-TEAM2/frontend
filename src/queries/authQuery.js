@@ -8,14 +8,18 @@ export const registerUser = async (userData, role) => {
   const { profileImage, ...jsonData } = userData;
 
   delete jsonData.email;
+  delete jsonData.username;
+  delete jsonData.role;
   if (role === "customer") {
     delete jsonData.skills;
+    jsonData.latitude = 0;
+    jsonData.longitude = 0;
   } else {
     delete jsonData.sidoId;
-    delete jsonData.sidoName;
     delete jsonData.sigunguId;
-    delete jsonData.sigunguName;
   }
+
+  console.log(jsonData);
 
   // JSON 데이터 직렬화 후 FormData에 추가
   formData.append("requestDto", JSON.stringify(jsonData));
@@ -34,6 +38,7 @@ export const registerUser = async (userData, role) => {
 
   try {
     const response = await axiosInstance.post(endPoint, formData);
+    console.log("제발 ㅜ", response);
     return response.data;
   } catch (error) {
     console.error("고객 정보 등록 실패:", error);

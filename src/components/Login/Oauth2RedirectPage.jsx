@@ -9,7 +9,7 @@ function OAuth2RedirectPage() {
   const location = useLocation();
   const code = new URL(window.location.href).searchParams.get("code");
   const socialLogin = location.pathname.includes("kakao") ? "kakao" : "google";
-  const { updateId, updateUserInfo, updateDefaultRole } = useAuthStore();
+  const { updateId, updateDefaultRole } = useAuthStore();
 
   const sendCodeToBackend = async (code) => {
     try {
@@ -18,17 +18,16 @@ function OAuth2RedirectPage() {
           code: code
         }
       });
-      console.log(response);
-      const { accessToken, role, user } = response.data; // 응답 값
-
-      localStorage.setItem("accessToken", accessToken);
-      updateUserInfo(user);
-      updateDefaultRole(role);
-      updateId({ customerId: 12345 });
-
+      console.log("추가정보입력 성공 후 로그인,", response);
+      localStorage.setItem("accessToken", response.data.body.data.accessToken);
+      const role = response.data.body.data.user.roles;
       if (role === "customer") {
+        updateId({ customerId: response.data.body.data.user.id });
+        updateDefaultRole(role);
         navigate("/customer/home");
       } else {
+        updateId({ groomerId: response.data.body.data.user.id });
+        updateDefaultRole(role);
         navigate("/groomer/home");
       }
     } catch (error) {
@@ -36,8 +35,9 @@ function OAuth2RedirectPage() {
         console.error("등록되지 않은 회원입니다. 추가 정보를 입력해주세요.");
         const accessToken = error.response.data.body.data.accessToken;
         const email = error.response.data.body.data.email;
+        const username = error.response.data.body.data.user.username;
         localStorage.setItem("accessToken", accessToken);
-        navigate("/selectRole", { state: { email: email } });
+        navigate("/selectRole", { state: { email: email, username: username } });
       } else {
         console.error("Error sending code to backend:", error);
       }

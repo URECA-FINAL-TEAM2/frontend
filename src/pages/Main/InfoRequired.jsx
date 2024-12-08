@@ -12,18 +12,15 @@ const InfoRequired = () => {
   const phoneRef = useRef();
   const { updateId, updateUserInfo, updateDefaultRole, setLoginStatus } = useAuthStore();
   const [validPhone, setValidPhone] = useState("yet");
-  const { role, email } = location.state || {};
+  const { role, email, username } = location.state || {};
   const [formData, setFormData] = useState({
     email: email,
     profileImage: null,
-    role: "",
-    name: "",
+    username: username,
     nickname: "",
     phone: "",
     sidoId: "",
     sigunguId: "",
-    sidoName: "",
-    sigunguName: "",
     skills: "" // 미용사 필드
   });
 

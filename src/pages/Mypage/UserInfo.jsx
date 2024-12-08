@@ -15,8 +15,8 @@ const UserInfo = () => {
     email: "",
     nickname: "",
     phone: "",
-    sidoName: 1, // 고객 필드
-    sigunguName: 2, // 고객 필드
+    sidoId: 1, // 고객 필드
+    sigunguId: 2, // 고객 필드
     skills: "" // 미용사 필드
   });
 
@@ -29,20 +29,21 @@ const UserInfo = () => {
     e.preventDefault();
 
     try {
+      console.log(formData);
       // role에 따라 id 추가해서 보내야 됨
-      const response = await updateUserInfo(role, formData, 2);
-      const updateData = response[0].data;
+      // const response = await updateUserInfo(role, formData, 2);
+      // const updateData = response[0].data;
 
-      setFormData((prev) => ({
-        ...prev, // 기존 상태 유지
-        profileImage: updateData.profileImage || prev.profileImage,
-        userName: updateData.userName || prev.userName,
-        nickname: updateData.nickname || prev.nickname, // 새 데이터가 없으면 이전 상태 유지
-        phone: updateData.phone || prev.phone,
-        ...(role === "customer"
-          ? { address: updateData.address || prev.address }
-          : { skills: updateData.skills || prev.skills })
-      }));
+      // setFormData((prev) => ({
+      //   ...prev, // 기존 상태 유지
+      //   profileImage: updateData.profileImage || prev.profileImage,
+      //   userName: updateData.userName || prev.userName,
+      //   nickname: updateData.nickname || prev.nickname, // 새 데이터가 없으면 이전 상태 유지
+      //   phone: updateData.phone || prev.phone,
+      //   ...(role === "customer"
+      //     ? { address: updateData.address || prev.address } // 여기 수정필요
+      //     : { skills: updateData.skills || prev.skills })
+      // }));
     } catch (error) {
       alert("업데이트에 실패했습니다.");
     }

@@ -5,9 +5,11 @@ import { useLocation } from "react-router-dom";
 import SubHeader from "../../components/common/SubHeader";
 import UserForm from "@/components/Mypage/Info/UserForm";
 import { getUserInfo, updateUserInfo } from "@/queries/userQuery";
+import useAuthStore from "@/store/authStore";
 
 const UserInfo = () => {
   const location = useLocation();
+  const { id } = useAuthStore();
   const { role } = location.state || {};
   const [formData, setFormData] = useState({
     profileImage: null,
@@ -15,8 +17,10 @@ const UserInfo = () => {
     email: "",
     nickname: "",
     phone: "",
-    sidoId: 1, // 고객 필드
-    sigunguId: 2, // 고객 필드
+    sidoId: 0, // 고객 필드
+    sigunguId: 0, // 고객 필드
+    sidoName: 0, // 고객 필드
+    sigunguName: 0, // 고객 필드
     skills: "" // 미용사 필드
   });
 
@@ -29,29 +33,15 @@ const UserInfo = () => {
     e.preventDefault();
 
     try {
-      console.log(formData);
-      // role에 따라 id 추가해서 보내야 됨
-      // const response = await updateUserInfo(role, formData, 2);
-      // const updateData = response[0].data;
-
-      // setFormData((prev) => ({
-      //   ...prev, // 기존 상태 유지
-      //   profileImage: updateData.profileImage || prev.profileImage,
-      //   userName: updateData.userName || prev.userName,
-      //   nickname: updateData.nickname || prev.nickname, // 새 데이터가 없으면 이전 상태 유지
-      //   phone: updateData.phone || prev.phone,
-      //   ...(role === "customer"
-      //     ? { address: updateData.address || prev.address } // 여기 수정필요
-      //     : { skills: updateData.skills || prev.skills })
-      // }));
+      await updateUserInfo(role, formData, id);
     } catch (error) {
-      alert("업데이트에 실패했습니다.");
+      console.error("프로필 정보 수정을 실패했습니다.");
     }
   };
 
   useEffect(() => {
     const getInfo = async () => {
-      const response = await getUserInfo(role, 1);
+      const response = await getUserInfo(role, 3);
       setFormData(response);
     };
 

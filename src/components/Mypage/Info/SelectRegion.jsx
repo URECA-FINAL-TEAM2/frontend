@@ -39,10 +39,21 @@ const SelectRegion = ({ formData, setFormData }) => {
   }, [formData.sidoId]);
 
   const handleSidoChange = (e) => {
+    const sidoName = sidoList.find((sido) => sido.sidoId === Number(e.target.value));
     setFormData((prevFormData) => ({
       ...prevFormData,
       sidoId: Number(e.target.value),
+      sidoName: sidoName,
       sigunguId: ""
+    }));
+  };
+
+  const handleSigunguChange = (e) => {
+    const sigunguName = sigunguList.find((sido) => sido.sigunguId === Number(e.target.value));
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      sigunguId: Number(e.target.value),
+      sigunguName: sigunguName
     }));
   };
 
@@ -63,12 +74,7 @@ const SelectRegion = ({ formData, setFormData }) => {
 
       <select
         value={formData.sigunguId || ""}
-        onChange={(e) =>
-          setFormData((prevFormData) => ({
-            ...prevFormData,
-            sigunguId: Number(e.target.value)
-          }))
-        }
+        onChange={handleSigunguChange}
         disabled={!formData.sidoId}
         className="h-[30px] w-[152px] rounded-md border border-main-300 px-2 disabled:bg-gray-100"
       >

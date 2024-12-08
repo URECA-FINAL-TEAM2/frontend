@@ -47,7 +47,10 @@ const groomerData = [
 
 export const getCustomerMypage = async () => {
   try {
-    return customerData;
+    const customerId = 1; // 수정 필요
+    // const response = await axiosInstance.get(`/mypage/customer/${customerId}`);
+    // console.log(response);
+    // return response.data.data;
   } catch (error) {
     throw new Error("Failed to fetch customer mypage data");
   }
@@ -55,7 +58,7 @@ export const getCustomerMypage = async () => {
 
 export const getGroomerMypage = async () => {
   try {
-    const groomerId = 1; // 수정 필요
+    const groomerId = 3; // 수정 필요
     const response = await axiosInstance.get(`/mypage/groomer/${groomerId}`);
     console.log(response);
     return response.data.data;

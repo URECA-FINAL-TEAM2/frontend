@@ -1,6 +1,16 @@
+import { authLogout } from "@/queries/authQuery";
+import useAuthStore from "@/store/authStore";
+import { useNavigate } from "react-router-dom";
+
 const Logout = () => {
+  const { logout } = useAuthStore();
+  const navigate = useNavigate();
   const handleLogout = async () => {
-    console.log("로그아웃 구현 필요");
+    const response = await authLogout();
+    if (response === 201) {
+      navigate("/");
+      logout();
+    }
   };
 
   return (

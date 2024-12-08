@@ -46,6 +46,16 @@ export const registerUser = async (userData, role) => {
   }
 };
 
+// 로그아웃
+export const authLogout = async () => {
+  try {
+    const response = await axiosInstance.post("/api/users/logout");
+    return response.data.code;
+  } catch (error) {
+    console.error("로그아웃 실패");
+  }
+};
+
 // 닉네임 중복 확인
 export const nicknameCheck = async (nickname) => {
   try {

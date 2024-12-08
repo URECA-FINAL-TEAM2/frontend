@@ -11,12 +11,14 @@ export const registerUser = async (userData, role) => {
   if (role === "customer") {
     delete jsonData.skills;
   } else {
-    delete jsonData.sido;
-    delete jsonData.sigungu;
+    delete jsonData.sidoId;
+    delete jsonData.sidoName;
+    delete jsonData.sigunguId;
+    delete jsonData.sigunguName;
   }
 
   // JSON 데이터 직렬화 후 FormData에 추가
-  formData.append("requestDTO", JSON.stringify(jsonData));
+  formData.append("requestDto", JSON.stringify(jsonData));
 
   // 파일 데이터 추가
   if (profileImage) {
@@ -52,4 +54,10 @@ export const nicknameCheck = async (nickname) => {
       throw error;
     }
   }
+};
+
+// 전화번호 유효성 검사
+export const validatePhoneNumber = (phoneNumber) => {
+  const phoneRegex = /^01[016789]-\d{3,4}-\d{4}$/;
+  return phoneRegex.test(phoneNumber);
 };

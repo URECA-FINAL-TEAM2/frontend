@@ -1,15 +1,17 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { useLocation, useNavigate } from "react-router-dom";
 import SubHeader from "../../components/common/SubHeader";
 import UserForm from "@/components/Mypage/Info/UserForm";
-import { registerUser } from "@/queries/authQuery";
+import { registerUser, validatePhoneNumber } from "@/queries/authQuery";
 import useAuthStore from "@/store/authStore";
 
 const InfoRequired = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const phoneRef = useRef();
   const { updateId, updateUserInfo, updateDefaultRole, setLoginStatus } = useAuthStore();
+  const [validPhone, setValidPhone] = useState("yet");
   const { role, email } = location.state || {};
   const [formData, setFormData] = useState({
     email: email,
@@ -26,12 +28,23 @@ const InfoRequired = () => {
   });
 
   const handleChange = (e) => {
+    if (e.target.name === "phone") {
+      if (!e.target.value.trim()) {
+        setValidPhone("required");
+      } else if (validatePhoneNumber(e.target.value)) {
+        setValidPhone("possible");
+      } else {
+        setValidPhone("impossible");
+      }
+    }
+
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     try {
       const response = await registerUser(formData, role);
       const responseRole = response[0].data.roles[0];
@@ -58,6 +71,8 @@ const InfoRequired = () => {
       <div className="flex min-h-screen flex-col">
         <SubHeader title={"내 정보를 완성해주세요"} />
         <UserForm
+          phoneRef={phoneRef}
+          validPhone={validPhone}
           formData={formData}
           setFormData={setFormData}
           handleSubmit={handleSubmit}

@@ -1,4 +1,3 @@
-import ShopItem from "@/components/CustomerSearch/ShopItem";
 import SubHeader from "../../../components/common/SubHeader";
 import ReviewBox from "../../../components/Mypage/Review/ReviewBox";
 import { useEffect } from "react";
@@ -6,7 +5,6 @@ import { getCustomerReviewList } from "@/queries/reviewQuery";
 
 const MyReviews = () => {
   useEffect(() => {
-    console.log("리뷰관리");
     const getList = async () => {
       const response = await getCustomerReviewList(1);
       console.log("리뷰목록조회", response);

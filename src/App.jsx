@@ -38,13 +38,14 @@ import GroomerQuoteForm from "./components/Quote/GroomerQuoteForm";
 import NotFound from "./pages/NotFound";
 import GoogleOAuth2RedirectPage from "./components/Login/GoogleOauth2RedirectPage";
 import PaymentCancel from "./pages/Payment/PaymentCancel";
+import PaymentTestPage from "./pages/Payment/PaymentTestPage";
 
 function App() {
   return (
     <div className="App">
       <Router>
         <Routes>
-          <Route path="/testpage" element={<PaymentCancel />} />
+          <Route path="/testpage" element={<PaymentTestPage />} />
           <Route path="/" element={<Onboarding />} />
           <Route path="/login" element={<Login />} />
           <Route path="/login/oauth2/code/kakao" element={<OAuth2RedirectPage />} />

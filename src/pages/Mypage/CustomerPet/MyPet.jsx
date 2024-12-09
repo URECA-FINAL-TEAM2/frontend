@@ -13,9 +13,9 @@ const MyPet = () => {
   const [onlyRead, setOnlyRead] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [formData, setFormData] = useState({
-    dogIg: 0,
+    dogId: 0,
     dogName: "",
-    breed: "",
+    dogBreedCodeId: "",
     dogWeight: "",
     dogBirth: { year: "년", month: "월", day: "일" },
     dogGender: "",

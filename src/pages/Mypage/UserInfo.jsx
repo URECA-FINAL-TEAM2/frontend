@@ -33,7 +33,8 @@ const UserInfo = () => {
     e.preventDefault();
 
     try {
-      await updateUserInfo(role, formData, id);
+      const response = await updateUserInfo(role, formData, id);
+      console.log(response);
     } catch (error) {
       console.error("프로필 정보 수정을 실패했습니다.");
     }

@@ -10,10 +10,10 @@ export const registerUser = async (userData, role) => {
   delete jsonData.email;
   delete jsonData.username;
   delete jsonData.role;
+  delete jsonData.sidoName;
+  delete jsonData.sigunguName;
   if (role === "customer") {
     delete jsonData.skills;
-    jsonData.latitude = 0;
-    jsonData.longitude = 0;
   } else {
     delete jsonData.sidoId;
     delete jsonData.sigunguId;

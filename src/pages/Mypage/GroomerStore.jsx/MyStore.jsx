@@ -11,7 +11,7 @@ import { getGroomerShop } from "@/queries/shopQuery";
 const MyStore = () => {
   const navigate = useNavigate();
   const [activeComponent, setActiveComponent] = useState("info");
-  const [storeExists, setStoreExists] = useState(true);
+  const [storeExists, setStoreExists] = useState(false);
   const [shopInfo, setShopInfo] = useState({});
 
   useEffect(() => {

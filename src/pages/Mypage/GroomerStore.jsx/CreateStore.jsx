@@ -38,7 +38,8 @@ const CreateStore = () => {
         sigunguName: response.sigunguName
       }));
     };
-    getShop();
+
+    if (isUpdate === "매장수정") getShop();
   }, []);
 
   const handleChange = (e) => {
@@ -51,8 +52,9 @@ const CreateStore = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("보내니 전", formData);
-    const response = await updateGroomerShop(formData);
+    setIsModalOpen(false);
+
+    const response = await updateGroomerShop(formData, isUpdate);
   };
 
   const handleOpenModal = () => {
@@ -61,11 +63,6 @@ const CreateStore = () => {
 
   const handleCloseModal = () => {
     setIsModalOpen(false);
-  };
-
-  const handleConfirmModal = (e) => {
-    setIsModalOpen(false);
-    handleSubmit(e);
   };
 
   useEffect(() => {
@@ -91,7 +88,7 @@ const CreateStore = () => {
       <Modal
         isOpen={isModalOpen}
         onClose={handleCloseModal}
-        onConfirm={handleConfirmModal}
+        onConfirm={handleSubmit}
         closeText="닫기"
         confirmText="확인"
       >

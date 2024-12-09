@@ -1,9 +1,12 @@
 import { deleteGroomerShop } from "@/queries/shopQuery";
 import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 const StoreInfo = ({ shopInfo }) => {
+  const navigate = useNavigate();
   const handleDeleteShop = async (shopId) => {
     const response = await deleteGroomerShop(shopId);
+    navigate("/groomer/home");
   };
 
   return (

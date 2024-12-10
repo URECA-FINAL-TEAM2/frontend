@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import SubHeader from "../../../components/common/SubHeader";
 import Summary from "../../../components/common/Summary";
 import DefaultStore from "/Icons/DefaultStoreProfile.svg";
@@ -6,11 +6,21 @@ import StoreInfo from "../../../components/Mypage/Store/StoreInfo";
 import StorePortfolio from "../../../components/Mypage/Store/StorePortfolio";
 import NotFoundStore from "./NotFoundStore";
 import { useNavigate } from "react-router-dom";
+import { getGroomerShop } from "@/queries/shopQuery";
 
 const MyStore = () => {
   const navigate = useNavigate();
   const [activeComponent, setActiveComponent] = useState("info");
   const [storeExists, setStoreExists] = useState(true);
+  const [shopInfo, setShopInfo] = useState({});
+
+  useEffect(() => {
+    const getShop = async () => {
+      const response = await getGroomerShop();
+      setShopInfo(response);
+    };
+    getShop();
+  }, []);
 
   return (
     <>
@@ -19,7 +29,11 @@ const MyStore = () => {
 
         {storeExists ? (
           <div className="mt-[75px]">
-            <img src={DefaultStore} alt="default store img" className="img-border mx-auto mb-8 mt-28" />
+            <img
+              src={shopInfo.shopLogo ? shopInfo.shopLogo : DefaultStore}
+              alt="default store img"
+              className="img-border mx-auto mb-8 mt-24 aspect-square w-1/3"
+            />
             <div className="mx-auto px-6">
               <Summary firstName={"매장 찜 수"} firstValue={40} secondName={"내 매장 리뷰"} secondValue={3} />
             </div>
@@ -48,7 +62,7 @@ const MyStore = () => {
             </div>
 
             <div>
-              {activeComponent === "info" && <StoreInfo />}
+              {activeComponent === "info" && <StoreInfo shopInfo={shopInfo} />}
               {activeComponent === "portfolio" && <StorePortfolio />}
             </div>
 
@@ -60,7 +74,11 @@ const MyStore = () => {
                 매장정보 수정
               </button>
             )}
-            {activeComponent === "portfolio" && <button className="bottomButtonPink">포트폴리오 수정</button>}
+            {activeComponent === "portfolio" && (
+              <button onClick={() => navigate("/groomer/editportfolio")} className="bottomButtonPink">
+                포트폴리오 수정
+              </button>
+            )}
           </div>
         ) : (
           <NotFoundStore />

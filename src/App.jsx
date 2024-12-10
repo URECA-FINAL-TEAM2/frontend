@@ -93,6 +93,8 @@ function App() {
             <Route path="mystore" element={<MyStore />} />
             <Route path="createstore" element={<CreateStore />} />
             <Route path="editportfolio" element={<EditPortfolio />} />
+            <Route path="reservation" element={<GroomerReservationMain />} />
+            <Route path="reservation/detail" element={<GroomerReservationDetail />} />
           </Route>
 
           <Route path="*" element={<NotFound />} />

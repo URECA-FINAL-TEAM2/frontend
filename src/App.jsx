@@ -36,6 +36,7 @@ import TotalQuoteRequestPage from "./pages/Quote/Customer/TotalQuoteRequestPage"
 import GroomerQuoteDetail from "./components/Quote/GroomerQuoteDetail";
 import GroomerQuoteForm from "./components/Quote/GroomerQuoteForm";
 import NotFound from "./pages/NotFound";
+import EditPortfolio from "./components/Mypage/Store/EditPortfolio";
 
 function App() {
   return (
@@ -95,6 +96,7 @@ function App() {
             <Route path="info" element={<UserInfo />} />
             <Route path="mystore" element={<MyStore />} />
             <Route path="createstore" element={<CreateStore />} />
+            <Route path="editportfolio" element={<EditPortfolio />} />
           </Route>
 
           <Route path="*" element={<NotFound />} />

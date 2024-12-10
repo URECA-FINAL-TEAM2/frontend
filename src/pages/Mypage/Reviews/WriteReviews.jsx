@@ -10,7 +10,7 @@ const WriteReviews = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [rating, setRating] = useState(4.5);
   const [reviewContent, setReviewContent] = useState("리뷰 내용입니다.");
-  const [images, setImages] = useState([testImg, testImg, testImg]); // 초기 이미지 배열
+  const [images, setImages] = useState([testImg, testImg, testImg]);
 
   const handleSelectChange = (e) => {
     setRating(Number(e.target.value));

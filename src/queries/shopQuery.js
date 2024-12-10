@@ -414,3 +414,20 @@ export const deleteGroomerShop = async (shopId) => {
     throw new Error("Failed to delete shop data");
   }
 };
+
+export const insertGroomerPortfolio = async (images, groomerId) => {
+  const formData = new FormData();
+  const jsonData = { groomerId: groomerId };
+  formData.append("requestDto", JSON.stringify(jsonData));
+
+  images.forEach((image, index) => {
+    formData.append(`images`, image);
+  });
+
+  try {
+    const response = await axiosInstance.put("/profile/groomer/portfolio", formData);
+    console.log(response);
+  } catch (error) {
+    throw new Error("Failed to delete shop data");
+  }
+};

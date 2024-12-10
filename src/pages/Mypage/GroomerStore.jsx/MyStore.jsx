@@ -11,7 +11,7 @@ import { getGroomerShop } from "@/queries/shopQuery";
 const MyStore = () => {
   const navigate = useNavigate();
   const [activeComponent, setActiveComponent] = useState("info");
-  const [storeExists, setStoreExists] = useState(false);
+  const [storeExists, setStoreExists] = useState(true);
   const [shopInfo, setShopInfo] = useState({});
 
   useEffect(() => {
@@ -74,7 +74,11 @@ const MyStore = () => {
                 매장정보 수정
               </button>
             )}
-            {activeComponent === "portfolio" && <button className="bottomButtonPink">포트폴리오 수정</button>}
+            {activeComponent === "portfolio" && (
+              <button onClick={() => navigate("/groomer/editportfolio")} className="bottomButtonPink">
+                포트폴리오 수정
+              </button>
+            )}
           </div>
         ) : (
           <NotFoundStore />

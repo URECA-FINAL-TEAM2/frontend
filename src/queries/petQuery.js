@@ -73,16 +73,12 @@ export const updatePetInfo = async (id, dogData) => {
     dogBirth: reformatDogBirth(dogData.dogBirth) // "2024-11-11"
   };
 
-  // FormData 생성
   const formData = new FormData();
 
-  // profileImage를 dogData에서 추출
   const { profileImage, ...jsonData } = formatedData;
 
-  // JSON 데이터 직렬화 후 FormData에 추가
   formData.append("requestDTO", JSON.stringify(jsonData));
 
-  // 파일 데이터 추가
   if (profileImage) {
     formData.append("profileImage", profileImage);
   } else {
@@ -100,10 +96,7 @@ export const updatePetInfo = async (id, dogData) => {
       method,
       url: endPoint,
       data: formData,
-      params: { customerId }, // 쿼리 파라미터 추가
-      headers: {
-        "Content-Type": "multipart/form-data"
-      }
+      params: { customerId }
     });
 
     console.log(response.data);

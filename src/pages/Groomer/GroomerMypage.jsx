@@ -8,8 +8,10 @@ import GroomerList from "@/components/Mypage/GroomerList";
 import ToggleButton from "@/components/Main/ToggleButton";
 import { useEffect, useState } from "react";
 import { getGroomerMypage } from "@/queries/mypageQuery";
+import useAuthStore from "@/store/authStore";
 
 const GroomerMypage = () => {
+  const { id } = useAuthStore();
   const navigate = useNavigate();
   const [counts, setCounts] = useState({
     completedServices: 0,
@@ -26,7 +28,7 @@ const GroomerMypage = () => {
   useEffect(() => {
     const getMypage = async () => {
       try {
-        const response = await getGroomerMypage();
+        const response = await getGroomerMypage(id.groomerId);
         const counts = response.counts;
         const info = response;
 

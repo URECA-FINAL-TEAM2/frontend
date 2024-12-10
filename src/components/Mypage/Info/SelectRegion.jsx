@@ -58,7 +58,7 @@ const SelectRegion = ({ formData, setFormData }) => {
   };
 
   return (
-    <div className="mx-auto mt-2 flex w-3/4 gap-4">
+    <div className="mx-auto mb-6 mt-2 flex w-3/4 gap-4">
       <select
         value={formData.sidoId || ""}
         onChange={handleSidoChange}

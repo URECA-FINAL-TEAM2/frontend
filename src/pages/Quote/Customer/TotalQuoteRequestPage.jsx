@@ -1,6 +1,6 @@
 import BottomButton from "@/components/common/button/BottomButton";
 import SubHeader from "@/components/common/SubHeader";
-import TotalQuoteRequestForm from "@/components/QuoteRequest/TotalQuoteRequestForm";
+import TotalQuoteRequestForm from "@/components/QuoteRequest/Customer/TotalQuoteRequestForm";
 import React from "react";
 
 function TotalQuoteRequestPage(props) {

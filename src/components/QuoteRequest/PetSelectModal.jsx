@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { getDogList } from "@/queries/quoteRequestQuery";
+import { getDogInfo, getDogList } from "@/queries/quoteRequestQuery";
 import { IoCloseCircleOutline } from "react-icons/io5";
 import Button from "../common/button/Button";
 
@@ -7,6 +7,7 @@ const PetSelectModal = ({ isOpen = false, onClose, onConfirm }) => {
   if (!isOpen) return null;
 
   const [dogList, setDogList] = useState(null);
+  const [dogInfo, setDogInfo] = useState(null);
 
   useEffect(() => {
     const fetchDogList = async () => {
@@ -21,18 +22,6 @@ const PetSelectModal = ({ isOpen = false, onClose, onConfirm }) => {
 
     fetchDogList();
   }, []);
-
-  const dogInfo = {
-    name: "두부",
-    image: "https://picsum.photos/200",
-    weight: "2.1kg",
-    age: 5,
-    dogGender: "MALE",
-    breed: "포메라니안",
-    neutering: false,
-    experience: false,
-    significant: "과하게 용맹해요"
-  };
 
   const onSubmit = () => {};
 
@@ -84,7 +73,24 @@ const PetSelectModal = ({ isOpen = false, onClose, onConfirm }) => {
         </div>
         <div className="flex h-full items-center justify-center">
           {dogList.slice(0, 5).map((dog) => (
-            <div key={dog.dogId} className="mx-1 cursor-pointer items-center" onClick={() => onConfirm(dogInfo)}>
+            <div
+              key={dog.dogId}
+              className="mx-1 cursor-pointer items-center"
+              onClick={() => {
+                const fetchDogInfo = async () => {
+                  try {
+                    const data = await getDogInfo();
+                    setDogInfo(data);
+                  } catch (error) {
+                    console.error("Error fetching dog info:", error);
+                    setDogInfo({});
+                  }
+                };
+
+                fetchDogInfo();
+                onConfirm(dogInfo);
+              }}
+            >
               <img src={dog.profileImage} alt={dog.dogName} className="h-14 w-14 rounded-sm" />
               <div className="text-center">{dog.dogName}</div>
             </div>

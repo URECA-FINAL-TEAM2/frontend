@@ -30,14 +30,15 @@ import CustomerSearchPage from "./pages/Customer/CustomerSearchPage";
 import ShopDetailPage from "./pages/Shop/ShopDetailPage";
 import CustomerSearchLayout from "./pages/Layout/CustomerSearchLayout";
 import ReservationDetail from "./pages/Reservation/ReservationDetail";
-import PetSelectModal from "./components/QuoteRequest/PetSelectModal";
 import ShopQuoteRequestPage from "./pages/Quote/Customer/ShopQuoteRequestPage";
 import TotalQuoteRequestPage from "./pages/Quote/Customer/TotalQuoteRequestPage";
-import GroomerQuoteDetail from "./components/Quote/GroomerQuoteDetail";
-import GroomerQuoteForm from "./components/Quote/GroomerQuoteForm";
 import NotFound from "./pages/NotFound";
 import GoogleOAuth2RedirectPage from "./components/Login/GoogleOauth2RedirectPage";
 import PaymentCancel from "./pages/Payment/PaymentCancel";
+import GroomerQuoteDetailPage from "./pages/Quote/Groomer/GroomerQuoteDetailPage";
+import GroomerQuoteRequestPage from "./pages/Quote/Groomer/GroomerQuoteRequestPage";
+import QuoteRequestDetailPage from "./pages/Quote/Customer/QuoteRequestDetailPage";
+import CustomerQuoteDetailPage from "./pages/Quote/Customer/CustomerQuoteDetailPage";
 
 function App() {
   return (
@@ -68,8 +69,10 @@ function App() {
               <Route index element={<CustomerSearchPage />} />
               <Route path=":shopId" element={<ShopDetailPage />} />
             </Route>
-            <Route path="shop/quotes/:shopId" element={<ShopQuoteRequestPage />} />
+            <Route path="quotes/detail/:quotesId" element={<CustomerQuoteDetailPage />} />
             <Route path="quotes/request" element={<TotalQuoteRequestPage />} />
+            <Route path="quotes/request/:groomerId" element={<ShopQuoteRequestPage />} />
+            <Route path="quotes/request/detail/:requestId" element={<QuoteRequestDetailPage />} />
             <Route path="mypage" element={<CustomerMypage />} />
             <Route path="info" element={<UserInfo />} />
             <Route path="bookmarkedStore" element={<BookmarkedStore />} />
@@ -94,6 +97,8 @@ function App() {
           {/* groomer/ -none */}
           <Route path="/groomer">
             <Route path="quotes" element={<GroomerQuote />} />
+            <Route path="quotes/request/detail/:requestId" element={<GroomerQuoteRequestPage />} />
+            <Route path="quotes/detail/:requestId" element={<GroomerQuoteDetailPage />} />
             <Route path="mypage" element={<GroomerMypage />} />
             <Route path="info" element={<UserInfo />} />
             <Route path="mystore" element={<MyStore />} />

@@ -11,8 +11,10 @@ const InteractiveMap = () => {
   const setSelectedShop = useShopStore((state) => state.setSelectedShop);
   const selectedShop = useShopStore((state) => state.selectedShop);
 
-  const sidoName = "경기도";
-  const sigunguName = "수원시 장안구"; // storage에서 꺼낼 것
+  // TODO: store에서 꺼낼 것
+  // TODO: store에 저장된 값이 바뀔 경우, 여기도 바로 반영되도록
+  const sidoName = "서울특별시";
+  const sigunguName = "강남구";
   const address = sidoName + " " + sigunguName;
 
   const mapRef = useRef(null);

@@ -1,44 +1,60 @@
 //GroomerShopRequests.jsx
+import { formatDate } from "@/utils/formatDate";
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 function GroomerShopRequests({ Infos }) {
   return (
     <>
       <GroomerEstimate Info={Infos[0]} />
-      <GroomerEstimate Info={Infos[0]} />
+      <GroomerEstimate Info={Infos[1]} />
+      <GroomerEstimate Info={Infos[2]} />
     </>
   );
 }
 
 const GroomerEstimate = ({ Info }) => {
+  const navigate = useNavigate();
   return (
-    <div className="m-5 rounded-lg bg-white p-5">
-      <div className="mb-4 flex">
-        <img src={Info.profileImage} alt="고객 반려견" className="mr-2 h-12 w-12 rounded-sm object-cover" />
+    <div className="m-5 rounded-xl bg-white p-4">
+      <div className="mb-3 flex">
+        <img src={Info.userProfileImage} alt="고객 프로필" className="mr-3 h-10 w-10 rounded-lg object-cover" />
         <div>
-          <p className="text-lg font-medium leading-snug">{Info.nickname} 고객님</p>
-          <span className="rounded-md bg-main-100 px-2 py-0.5 text-sm text-main">{Info.closingDate}</span>
+          <p className="px-0.5 font-semibold leading-[1.1]">{Info.userName} 고객님</p>
+          <span className="rounded-md bg-main-100 px-1 py-[1px] text-xs text-main">
+            {formatDate(Info.expiryDate)}까지
+          </span>
         </div>
       </div>
-      <div>
-        <div className="flex items-center">
-          <img src="/public/Icons/Schedule.svg" alt="Description" className="mr-2 h-6 w-6" />
-          <p>{Info.beautyDate}</p>
+      <div className="mb-2 text-sm">
+        <div className="mb-1 flex items-center">
+          <img src="/public/Icons/Schedule.svg" alt="Description" className="mr-2 h-5 w-5" />
+          <p>{formatDate(Info.beautyDate)}</p>
         </div>
-        <div className="flex items-center">
-          <img src="/public/Icons/Corgi.svg" alt="Description" className="mr-2 h-6 w-6" />
+        <div className="mb-1 flex items-center">
+          <img src="/public/Icons/Corgi.svg" alt="Description" className="mr-2 h-5 w-5" />
           <p>
-            {Info.breed} {Info.dogGender} {Info.dogWeight}kg
+            {Info.dogBreed} • {Info.dogGender == "MALE" ? "남아" : "여아"} • {Info.dogWeight}kg
           </p>
         </div>
         <div className="flex items-center">
-          <img src="/public/Icons/Note.svg" alt="Description" className="mr-2 h-6 w-6" />
-          <p>{Info.requestContent}</p>
+          <img src="/public/Icons/Note.svg" alt="Description" className="mr-2 h-5 w-5" />
+          <p className="line-clamp-1">{Info.requestContent}</p>
         </div>
       </div>
-      <div className="mt-3 flex h-[35px] items-center justify-center rounded-sm bg-gray-50 text-center">
-        요청 거절하기
-      </div>{" "}
+      <div className="flex w-full gap-2">
+        <div
+          onClick={() => {
+            navigate(`/groomer/quotes/${Info.requestId}`);
+          }}
+          className="flex h-[35px] w-3/4 cursor-pointer items-center justify-center rounded-lg bg-gray-200 text-center text-sm"
+        >
+          상세보기
+        </div>
+        <div className="flex h-[35px] w-1/4 cursor-pointer items-center justify-center rounded-lg bg-gray-300 text-center text-sm text-white">
+          거절하기
+        </div>
+      </div>
     </div>
   );
 };

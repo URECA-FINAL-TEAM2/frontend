@@ -57,7 +57,7 @@ const StorePortfolio = () => {
 
 export default StorePortfolio;
 
-export const Modal = ({ isOpen = false, onClose, children, handlePrev }) => {
+const Modal = ({ isOpen = false, onClose, children, handlePrev }) => {
   if (!isOpen) return null;
 
   return (

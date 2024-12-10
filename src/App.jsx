@@ -30,18 +30,10 @@ import CustomerSearchPage from "./pages/Customer/CustomerSearchPage";
 import ShopDetailPage from "./pages/Shop/ShopDetailPage";
 import CustomerSearchLayout from "./pages/Layout/CustomerSearchLayout";
 import CustomerReservationDetail from "./pages/Reservation/Customer/CustomerReservationDetail";
-import PetSelectModal from "./components/QuoteRequest/PetSelectModal";
-import ShopQuoteRequestPage from "./pages/Quote/Customer/ShopQuoteRequestPage";
-import TotalQuoteRequestPage from "./pages/Quote/Customer/TotalQuoteRequestPage";
-import GroomerQuoteDetail from "./components/Quote/GroomerQuoteDetail";
-import GroomerQuoteForm from "./components/Quote/GroomerQuoteForm";
-import ReservationDetail from "./pages/Reservation/ReservationDetail";
 import NotFound from "./pages/NotFound";
 import EditPortfolio from "./components/Mypage/Store/EditPortfolio";
 import PaymentCancel from "./pages/Payment/PaymentCancel";
 import PaymentTestPage from "./pages/Payment/PaymentTestPage";
-import GroomerReservationDetail from "./pages/Reservation/Groomer/GroomerReservationDetail";
-import GroomerReservationMain from "./pages/Reservation/Groomer/GroomerReservationMain";
 
 function App() {
   return (

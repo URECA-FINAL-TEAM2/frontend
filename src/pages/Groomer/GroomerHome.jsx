@@ -26,7 +26,7 @@ const GroomerHome = () => {
   useEffect(() => {
     const getMain = async () => {
       try {
-        const response = await getGroomerMain(1);
+        const response = await getGroomerMain(11);
         setTotalRequest(response.totalRequest);
         updatePreview(response);
       } catch (error) {

@@ -21,10 +21,7 @@ export const registerUser = async (userData, role) => {
 
   console.log(jsonData);
 
-  // JSON 데이터 직렬화 후 FormData에 추가
   formData.append("requestDto", JSON.stringify(jsonData));
-
-  // 파일 데이터 추가
   if (profileImage) {
     formData.append("profileImage", profileImage);
   } else {

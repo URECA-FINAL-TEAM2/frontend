@@ -5,10 +5,10 @@ import { ImScissors } from "react-icons/im";
 import { BiSolidDog } from "react-icons/bi";
 import { GrDocumentText, GrDocumentUser } from "react-icons/gr";
 import { TbPhoto, TbCreditCard } from "react-icons/tb";
-import BottomButton from "../../components/common/button/BottomButton";
-import Modal from "../../components/common/modal/modal";
+import BottomButton from "@/components/common/button/BottomButton";
+import Modal from "@/components/common/modal/modal";
 
-const ReservationDetail = ({ selectedQuoteId = 1 }) => {
+const GroomerReservationDetail = ({ selectedQuoteId = 1 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [cancelReason, setCancelReason] = useState("");
   const [detail, setDetail] = useState(null);
@@ -221,4 +221,4 @@ const ReservationDetail = ({ selectedQuoteId = 1 }) => {
   );
 };
 
-export default ReservationDetail;
+export default GroomerReservationDetail;

@@ -1,8 +1,4 @@
 import { useEffect, useState } from "react";
-import testImg from "/Test/dog.jpg";
-import testImg1 from "/Test/dog2.avif";
-import testImg2 from "/Test/dog3.jpeg";
-import { IoMdArrowDropright, IoMdArrowDropleft } from "react-icons/io";
 import { MdOutlineArrowBackIosNew, MdOutlineArrowForwardIos } from "react-icons/md";
 const StorePortfolio = ({ portfolioImg }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);

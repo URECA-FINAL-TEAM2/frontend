@@ -24,3 +24,20 @@ export const deleteReview = async (reviewId) => {
     }
   }
 };
+
+export const insertReview = async (reviewData) => {
+  console.log(reviewData, "review");
+  const { images, previewImages, ...jsonData } = reviewData;
+
+  const formData = new FormData();
+  formData.append("requestDto", JSON.stringify(jsonData));
+  if (images) {
+    formData.append("images", images);
+  }
+  try {
+    const response = await axiosInstance.post("/reviews", formData);
+    console.log("리뷰 작성 성공:", response.data);
+  } catch (error) {
+    console.error("리뷰 작성 실패:", error);
+  }
+};

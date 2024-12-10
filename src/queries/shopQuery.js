@@ -422,7 +422,7 @@ export const insertGroomerPortfolio = async (images, groomerId) => {
 
   // 이미지 배열 추가
   images.forEach((image) => {
-    formData.append("images[]", image); // 키 이름을 배열 형태로 지정
+    formData.append("images", image); // 키 이름을 배열 형태로 지정
   });
 
   try {

@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import SubHeader from "../../../components/common/SubHeader";
-import Summary from "../../../components/common/Summary";
 import DefaultStore from "/Icons/DefaultStoreProfile.svg";
 import StoreInfo from "../../../components/Mypage/Store/StoreInfo";
 import StorePortfolio from "../../../components/Mypage/Store/StorePortfolio";

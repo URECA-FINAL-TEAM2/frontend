@@ -25,15 +25,23 @@ import MyReviews from "./pages/Mypage/Reviews/MyReviews";
 import WriteReviews from "./pages/Mypage/Reviews/WriteReviews";
 import MyStore from "./pages/Mypage/GroomerStore.jsx/MyStore";
 import CreateStore from "./pages/Mypage/GroomerStore.jsx/CreateStore";
-import ReservationMain from "./pages/Reservation/ReservationMain";
+import CustomerReservationMain from "./pages/Reservation/Customer/CustomerReservationMain";
 import CustomerSearchPage from "./pages/Customer/CustomerSearchPage";
 import ShopDetailPage from "./pages/Shop/ShopDetailPage";
 import CustomerSearchLayout from "./pages/Layout/CustomerSearchLayout";
+import CustomerReservationDetail from "./pages/Reservation/Customer/CustomerReservationDetail";
+import PetSelectModal from "./components/QuoteRequest/PetSelectModal";
+import ShopQuoteRequestPage from "./pages/Quote/Customer/ShopQuoteRequestPage";
+import TotalQuoteRequestPage from "./pages/Quote/Customer/TotalQuoteRequestPage";
+import GroomerQuoteDetail from "./components/Quote/GroomerQuoteDetail";
+import GroomerQuoteForm from "./components/Quote/GroomerQuoteForm";
 import ReservationDetail from "./pages/Reservation/ReservationDetail";
 import NotFound from "./pages/NotFound";
 import EditPortfolio from "./components/Mypage/Store/EditPortfolio";
 import PaymentCancel from "./pages/Payment/PaymentCancel";
 import PaymentTestPage from "./pages/Payment/PaymentTestPage";
+import GroomerReservationDetail from "./pages/Reservation/Groomer/GroomerReservationDetail";
+import GroomerReservationMain from "./pages/Reservation/Groomer/GroomerReservationMain";
 
 function App() {
   return (
@@ -72,8 +80,8 @@ function App() {
             <Route path="myPet/:id" element={<MyPet />} />
             <Route path="myReviews" element={<MyReviews />} />
             <Route path="writeReviews" element={<WriteReviews />} />
-            <Route path="reservation" element={<ReservationMain />} />
-            <Route path="reservation/detail" element={<ReservationDetail />} />
+            <Route path="reservation" element={<CustomerReservationMain />} />
+            <Route path="reservation/detail" element={<CustomerReservationDetail />} />
             <Route path="payment/complete" element={<PaymentComplete />} />
             <Route path="payment/cancel" element={<PaymentCancel />} />
           </Route>

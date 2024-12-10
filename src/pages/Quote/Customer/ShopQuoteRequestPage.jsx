@@ -1,6 +1,6 @@
 import BottomButton from "@/components/common/button/BottomButton";
 import SubHeader from "@/components/common/SubHeader";
-import ShopQuoteRequestForm from "@/components/QuoteRequest/Customer/ShopQuoteRequestForm";
+import ShopQuoteRequestForm from "@/components/QuoteRequest/ShopQuoteRequestForm";
 import React from "react";
 import { useParams } from "react-router-dom";
 

@@ -37,7 +37,6 @@ import GroomerQuoteDetail from "./components/Quote/GroomerQuoteDetail";
 import GroomerQuoteForm from "./components/Quote/GroomerQuoteForm";
 import NotFound from "./pages/NotFound";
 import EditPortfolio from "./components/Mypage/Store/EditPortfolio";
-import GoogleOAuth2RedirectPage from "./components/Login/GoogleOauth2RedirectPage";
 import PaymentCancel from "./pages/Payment/PaymentCancel";
 import PaymentTestPage from "./pages/Payment/PaymentTestPage";
 

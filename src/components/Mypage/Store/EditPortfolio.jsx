@@ -1,18 +1,24 @@
-import { useState } from "react";
-import testImg from "/Test/dog.jpg";
+import { useEffect, useState } from "react";
 import { CiCirclePlus } from "react-icons/ci";
 import { MdOutlineClose } from "react-icons/md";
 import SubHeader from "@/components/common/SubHeader";
 import { insertGroomerPortfolio } from "@/queries/shopQuery";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import Modal from "@/components/common/modal/modal";
+import toast, { Toaster } from "react-hot-toast";
 
 const EditPortfolio = () => {
+  const location = useLocation();
   const navigate = useNavigate();
-  const [images, setImages] = useState([testImg, testImg, testImg]);
+  const { portfolioImg } = location.state || {};
+  const [images, setImages] = useState([]);
+  const [rawImages, setRawImages] = useState([]); // 원본 파일
   const [selectedImage, setSelectedImage] = useState(null); // 선택된 이미지 상태
 
   const handleImageDelete = (index) => {
     setImages((prevImages) => prevImages.filter((_, i) => i !== index));
+    setRawImages((prevRawImages) => prevRawImages.filter((_, i) => i !== index));
+
     if (index === images.indexOf(selectedImage)) {
       setSelectedImage(null); // 삭제한 이미지가 선택된 이미지라면 초기화
     }
@@ -20,18 +26,42 @@ const EditPortfolio = () => {
 
   const handleImageAdd = (e) => {
     const files = Array.from(e.target.files);
-    const newImages = files.map((file) => URL.createObjectURL(file));
-    setImages((prevImages) => [...prevImages, ...newImages]);
+    // 미리보기 URL 생성
+    const newImageURLs = files.map((file) => URL.createObjectURL(file));
+
+    // 상태 업데이트
+    setImages((prevImages) => [...prevImages, ...newImageURLs]);
+    setRawImages((prevRawImages) => [...prevRawImages, ...files]); // 원본 파일 추가
   };
 
   const handleCompleteImage = async () => {
-    const response = await insertGroomerPortfolio(images, 1);
-    navigate("/groomer/mystore");
+    const response = await insertGroomerPortfolio(rawImages, 11);
+
+    toast("수정이 완료되었습니다.", { icon: "👏🏻" });
+
+    setTimeout(() => {
+      navigate("/groomer/mystore");
+    }, 1500);
   };
 
   const handleImageClick = (img) => {
     setSelectedImage(img); // 클릭된 이미지를 선택
   };
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleOpenModal = (state) => {
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
+
+  useEffect(() => {
+    setImages(portfolioImg);
+    setRawImages(portfolioImg);
+  }, []);
 
   return (
     <>
@@ -80,9 +110,19 @@ const EditPortfolio = () => {
           ))}
         </div>
       </div>
-      <button onClick={handleCompleteImage} className="bottomButtonPink">
+      <button onClick={handleOpenModal} className="bottomButtonPink">
         수정완료
       </button>
+      <Modal
+        isOpen={isModalOpen}
+        onClose={handleCloseModal}
+        onConfirm={handleCompleteImage}
+        closeText="닫기"
+        confirmText="확인"
+      >
+        포트폴리오를 수정하시겠습니까?
+      </Modal>
+      <Toaster />
     </>
   );
 };

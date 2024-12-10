@@ -3,13 +3,16 @@ import SubHeader from "@/components/common/SubHeader";
 import StoreForm from "@/components/Mypage/Store/StoreForm";
 import { getGroomerShop, updateGroomerShop } from "@/queries/shopQuery";
 import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import toast, { Toaster } from "react-hot-toast";
 
 const CreateStore = () => {
+  const navigate = useNavigate();
   const location = useLocation();
-  const { update } = location.state;
+  const { update } = location.state || {};
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isUpdate, setIsUpdate] = useState(update);
+  const [isUpdate, setIsUpdate] = useState(false);
+  const [shopInfo, setShopInfo] = useState({});
   const [formData, setFormData] = useState({
     shopId: 0,
     profileImage: "",
@@ -26,21 +29,26 @@ const CreateStore = () => {
   useEffect(() => {
     const getShop = async () => {
       const response = await getGroomerShop();
+      const shop = response.data;
+      console.log("매장정보", shop);
       setFormData((prevFormData) => ({
         ...prevFormData,
-        shopId: response.shopId,
-        profileImage: response.shopLogo,
-        shopName: response.shopName,
-        description: response.description,
-        businessTime: response.businessTime,
-        address: response.address,
-        sidoName: response.sidoName,
-        sigunguName: response.sigunguName
+        shopId: shop.shopId,
+        profileImage: shop.shopLogo,
+        shopName: shop.shopName,
+        description: shop.description,
+        businessTime: shop.businessTime,
+        address: shop.address,
+        sidoName: shop.sidoName,
+        sigunguName: shop.sigunguName
       }));
     };
 
-    if (isUpdate === "매장수정") getShop();
-  }, []);
+    if (update) {
+      setIsUpdate(true);
+      getShop();
+    }
+  }, [update]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -55,6 +63,11 @@ const CreateStore = () => {
     setIsModalOpen(false);
 
     const response = await updateGroomerShop(formData, isUpdate);
+    toast("수정이 완료되었습니다.", { icon: "👏🏻" });
+
+    setTimeout(() => {
+      navigate(-1);
+    }, 1500);
   };
 
   const handleOpenModal = () => {
@@ -64,12 +77,6 @@ const CreateStore = () => {
   const handleCloseModal = () => {
     setIsModalOpen(false);
   };
-
-  useEffect(() => {
-    if (isUpdate) {
-      setIsUpdate(true);
-    }
-  }, []);
 
   return (
     <>
@@ -92,14 +99,9 @@ const CreateStore = () => {
         closeText="닫기"
         confirmText="확인"
       >
-        {(() => {
-          if (isUpdate) {
-            return <>매장을 수정하시겠습니까?</>;
-          } else {
-            return <>매장을 등록하시겠습니까?</>;
-          }
-        })()}
+        {isUpdate ? "매장을 수정하시겠습니까?" : "매장을 등록하시겠습니까?"}
       </Modal>
+      <Toaster />
     </>
   );
 };

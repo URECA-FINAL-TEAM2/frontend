@@ -4,7 +4,7 @@ import ProfileImage from "../ProfileImage";
 const StoreForm = ({ formData, setFormData, handleChange, handleSubmit, isUpdate, handleOpenModal }) => {
   return (
     <div className="mt-[75px]">
-      <form onSubmit={handleSubmit} className="space-y-6">
+      <form action="" className="space-y-6">
         <ProfileImage formData={formData} setFormData={setFormData} />
 
         {/* Store Name */}
@@ -36,7 +36,7 @@ const StoreForm = ({ formData, setFormData, handleChange, handleSubmit, isUpdate
             onChange={handleChange}
             placeholder="매장 설명을 입력해주세요."
             className="inputStyle"
-            rows="4"
+            rows="3"
             required
           />
         </div>
@@ -62,11 +62,11 @@ const StoreForm = ({ formData, setFormData, handleChange, handleSubmit, isUpdate
         </div>
 
         {isUpdate ? (
-          <button onClick={handleOpenModal} type="submit" className="bottomButtonPink">
+          <button onClick={handleOpenModal} type="button" className="bottomButtonPink">
             수정완료
           </button>
         ) : (
-          <button onClick={handleOpenModal} type="submit" className="bottomButtonPink">
+          <button onClick={handleOpenModal} type="button" className="bottomButtonPink">
             등록하기
           </button>
         )}

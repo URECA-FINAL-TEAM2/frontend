@@ -5,18 +5,18 @@ const StoreForm = ({ formData, setFormData, handleChange, handleSubmit, isUpdate
   return (
     <div className="mt-[75px]">
       <form onSubmit={handleSubmit} className="space-y-6">
-        <ProfileImage setFormData={setFormData} />
+        <ProfileImage formData={formData} setFormData={setFormData} />
 
         {/* Store Name */}
         <div>
-          <label htmlFor="storeName" className="labelStyle">
+          <label htmlFor="shopName" className="labelStyle">
             매장 이름
           </label>
           <input
             type="text"
-            id="storeName"
-            name="storeName"
-            value={formData.storeName}
+            id="shopName"
+            name="shopName"
+            value={formData.shopName}
             onChange={handleChange}
             placeholder="매장 이름을 입력해주세요."
             className="inputStyle"
@@ -42,7 +42,7 @@ const StoreForm = ({ formData, setFormData, handleChange, handleSubmit, isUpdate
         </div>
 
         {/* Address */}
-        <Postcode />
+        <Postcode formData={formData} setFormData={setFormData} handleChange={handleChange} />
 
         {/* Business Time */}
         <div>
@@ -63,7 +63,7 @@ const StoreForm = ({ formData, setFormData, handleChange, handleSubmit, isUpdate
 
         {isUpdate ? (
           <button onClick={handleOpenModal} type="submit" className="bottomButtonPink">
-            수정하기
+            수정완료
           </button>
         ) : (
           <button onClick={handleOpenModal} type="submit" className="bottomButtonPink">

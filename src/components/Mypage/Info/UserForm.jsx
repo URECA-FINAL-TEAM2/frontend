@@ -5,8 +5,9 @@ import { useLocation } from "react-router-dom";
 import SelectRegion from "./SelectRegion";
 import { nicknameCheck } from "@/queries/authQuery";
 import NicknameCheck from "@/components/Login/NicknameCheck";
+import PhoneCheck from "@/components/Login/PhoneCheck";
 
-const UserForm = ({ formData, setFormData, handleSubmit, handleChange, role }) => {
+const UserForm = ({ phoneRef, validPhone, formData, setFormData, handleSubmit, handleChange, role }) => {
   const location = useLocation();
   const [pathname, setPathname] = useState();
   const [nickname, setNickname] = useState();
@@ -15,41 +16,44 @@ const UserForm = ({ formData, setFormData, handleSubmit, handleChange, role }) =
     setPathname(location.pathname);
   }, []);
 
+  // 닉네임 유효성검사, 중복검사
   const handleNicknameCheck = async (nickname) => {
+    const nicknameRegex = /^(?=.*[a-zA-Z가-힣])[a-zA-Z가-힣0-9_-]{2,10}$/;
+
     if (!nickname) {
-      setNickname("required");
-    } else {
-      const response = await nicknameCheck(nickname);
-      if (response.data) {
-        setNickname("possible");
-      } else {
-        setNickname("duplication");
-      }
+      return setNickname("required");
     }
+
+    if (!nicknameRegex.test(nickname)) {
+      return setNickname("impossible");
+    }
+
+    const response = await nicknameCheck(nickname);
+    setNickname(response.data ? "possible" : "duplication");
   };
 
   return (
     <form onSubmit={handleSubmit} className="mt-5 grow">
       {/* Profile Image */}
-      <ProfileImage setFormData={setFormData} />
+      <ProfileImage formData={formData} setFormData={setFormData} />
 
       {/* email */}
       <div>
         <label htmlFor="email" className="labelStyle">
           이메일
         </label>
-        <div className="inputStyle">{formData.email}</div>
+        <div className="inputStyle">{formData?.email}</div>
       </div>
 
       <div>
-        <label htmlFor="name" className="labelStyle">
+        <label htmlFor="username" className="labelStyle">
           이름
         </label>
         <input
           type="text"
-          id="name"
-          name="name"
-          value={formData.name}
+          id="username"
+          name="username"
+          value={formData?.username || formData?.userName}
           onChange={handleChange}
           placeholder="이름을 입력해주세요."
           className="inputStyle"
@@ -66,21 +70,19 @@ const UserForm = ({ formData, setFormData, handleSubmit, handleChange, role }) =
             type="text"
             id="nickname"
             name="nickname"
-            value={formData.nickname}
+            value={formData?.nickname}
             onChange={handleChange}
             placeholder="닉네임을 입력해주세요."
-            className=""
+            className="grow"
             required
           />
-          {pathname === "/infoRequired" && (
-            <button
-              type="button"
-              className="rounded-xl bg-main px-2 text-xs text-white"
-              onClick={() => handleNicknameCheck(formData.nickname)}
-            >
-              중복확인
-            </button>
-          )}
+          <button
+            type="button"
+            className="rounded-xl bg-main px-2 text-xs text-white"
+            onClick={() => handleNicknameCheck(formData.nickname)}
+          >
+            중복확인
+          </button>
         </div>
         <NicknameCheck nickname={nickname} />
       </div>
@@ -90,15 +92,17 @@ const UserForm = ({ formData, setFormData, handleSubmit, handleChange, role }) =
           전화번호
         </label>
         <input
+          ref={phoneRef}
           type="tel"
           id="phone"
           name="phone"
-          value={formData.phone}
+          value={formData?.phone}
           onChange={handleChange}
-          placeholder="전화번호를 입력해주세요."
-          className="inputStyle"
+          placeholder="010-1234-5678"
+          className={`inputStyle ${validPhone === "yet" ? "mb-8" : "mb-2"}`}
           required
         />
+        <PhoneCheck validPhone={validPhone} />
       </div>
       {/* 고객 - 우리동네 선택 */}
       {role === "customer" && (
@@ -119,7 +123,7 @@ const UserForm = ({ formData, setFormData, handleSubmit, handleChange, role }) =
             type="text"
             id="skills"
             name="skills"
-            value={formData.skills}
+            value={formData?.skills}
             onChange={handleChange}
             placeholder="미용사 스킬을 입력해주세요."
             className="inputStyle"

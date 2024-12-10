@@ -38,9 +38,16 @@ const petInfo = [
 ];
 
 // 반려견 정보 조회
-export const getPetInfo = async (id) => {
+export const getPetInfo = async (dogId) => {
   try {
-    // const response = await axiosInstance.get(`/profile/customer/pets/${id}`);
+    const dogId = 1;
+    const customerId = 1;
+
+    const response = await axiosInstance.get(`/profile/customer/dogs/${dogId}`, {
+      params: { customerId }
+    });
+    console.log(response);
+    // const res = response.data;
     const res = petInfo[0].data;
 
     const transformedData = {
@@ -66,16 +73,12 @@ export const updatePetInfo = async (id, dogData) => {
     dogBirth: reformatDogBirth(dogData.dogBirth) // "2024-11-11"
   };
 
-  // FormData 생성
   const formData = new FormData();
 
-  // profileImage를 dogData에서 추출
   const { profileImage, ...jsonData } = formatedData;
 
-  // JSON 데이터 직렬화 후 FormData에 추가
   formData.append("requestDTO", JSON.stringify(jsonData));
 
-  // 파일 데이터 추가
   if (profileImage) {
     formData.append("profileImage", profileImage);
   } else {
@@ -88,16 +91,16 @@ export const updatePetInfo = async (id, dogData) => {
   }
 
   try {
-    // const response = await axiosInstance({
-    //   method,
-    //   url: endPoint,
-    //   data: formData,
-    //   headers: {
-    //     "Content-Type": "multipart/form-data"
-    //   }
-    // });
-    // return response.data;
-    return successResponse;
+    const customerId = 1;
+    const response = await axiosInstance({
+      method,
+      url: endPoint,
+      data: formData,
+      params: { customerId }
+    });
+
+    console.log(response.data);
+    return response.data;
   } catch (error) {
     console.error("반려견 정보 업데이트 요청 실패:", error);
     throw error;
@@ -105,9 +108,11 @@ export const updatePetInfo = async (id, dogData) => {
 };
 
 // 반려견 정보 삭제
-export const deletePetInfo = async (id) => {
+export const deletePetInfo = async (dogId) => {
   try {
-    const response = await axiosInstance.delete(`/profile/customer/pets/${id}`);
+    const dogId = 1;
+    const customerId = 1;
+    const response = await axiosInstance.delete(`/profile/customer/dogs/${dogId}/delete`, { params: { customerId } });
     return response.data;
   } catch (error) {
     console.error("반려견 정보 삭제 요청 실패:", error);

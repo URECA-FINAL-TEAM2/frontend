@@ -1,7 +1,7 @@
 import { useState } from "react";
 import PropTypes from "prop-types";
 
-const Postcode = ({ setFormData, handleChange }) => {
+const Postcode = ({ formData, setFormData, handleChange }) => {
   const [address, setAddress] = useState(""); // 주소
   const [detailAddress, setDetailAddress] = useState(""); // 상세주소
 
@@ -22,9 +22,6 @@ const Postcode = ({ setFormData, handleChange }) => {
       height: popupHeight,
 
       oncomplete: (data) => {
-        console.log(data);
-        console.log(data.sido); // 시,도
-        console.log(data.sigungu); // 시,군,구
         let addr = "";
 
         if (data.userSelectedType === "R") {
@@ -33,7 +30,7 @@ const Postcode = ({ setFormData, handleChange }) => {
           addr = data.jibunAddress; // 지번 주소
         }
         setAddress(addr);
-        setFormData((prev) => ({ ...prev, address: data.roadAddress }));
+        setFormData((prev) => ({ ...prev, address: data.roadAddress, sidoName: data.sido, sigunguName: data.sigungu }));
         document.getElementById("detailAddress").focus();
       }
     }).open({
@@ -64,7 +61,14 @@ const Postcode = ({ setFormData, handleChange }) => {
       </div>
 
       <div>
-        <input type="text" id="address" className="inputStyle mb-2" placeholder="주소" value={address} readOnly />
+        <input
+          type="text"
+          id="address"
+          className="inputStyle mb-2"
+          placeholder="주소"
+          value={formData.address}
+          readOnly
+        />
         <input
           type="text"
           id="detailAddress"

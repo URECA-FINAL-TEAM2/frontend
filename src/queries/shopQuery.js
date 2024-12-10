@@ -1,3 +1,5 @@
+import axiosInstance from "@/api/axiosInstance";
+
 const shopDetail = {
   groomerId: 1,
   shopId: 1,
@@ -345,5 +347,87 @@ export const getShopDetail = async (shopId) => {
     return shopDetail;
   } catch (error) {
     throw new Error("Failed to fetch shop data");
+  }
+};
+
+export const getGroomerShop = async (shopId) => {
+  try {
+    const shopId = 1;
+    const groomerId = 1;
+    const response = await axiosInstance.get(`/profile/groomer/shop/${shopId}`, {
+      params: { groomerId }
+    });
+
+    return response.data.data;
+  } catch (error) {
+    throw new Error("Failed to fetch shop data");
+  }
+};
+
+export const updateGroomerShop = async (data, isUpdate) => {
+  const { profileImage, ...jsonData } = data;
+  const formData = new FormData();
+
+  delete jsonData.shopId;
+
+  formData.append("requestDto", JSON.stringify(jsonData));
+  if (profileImage) {
+    formData.append("shopLogo", profileImage);
+  }
+
+  const shopId = 1; // Shop ID
+  const groomerId = 3; // Groomer ID
+
+  const method = isUpdate ? "put" : "post";
+  const endpoint = isUpdate ? `/profile/groomer/shop/${shopId}` : `/profile/groomer/shop`;
+
+  try {
+    const response = await axiosInstance({
+      method,
+      url: endpoint,
+      data: formData,
+      params: { groomerId }
+    });
+    console.log("응답 데이터:", response.data);
+    return response.data;
+  } catch (error) {
+    console.error("API 요청 에러:", error);
+    throw error;
+  }
+};
+
+export const deleteGroomerShop = async (shopId) => {
+  try {
+    const groomerId = 3;
+    const response = await axiosInstance.put(
+      `/profile/groomer/shop/${shopId}/delete`,
+      {},
+      {
+        params: { groomerId }
+      }
+    );
+
+    console.log("매장삭제", response);
+
+    return response.data.data;
+  } catch (error) {
+    throw new Error("Failed to delete shop data");
+  }
+};
+
+export const insertGroomerPortfolio = async (images, groomerId) => {
+  const formData = new FormData();
+  const jsonData = { groomerId: groomerId };
+  formData.append("requestDto", JSON.stringify(jsonData));
+
+  images.forEach((image, index) => {
+    formData.append(`images`, image);
+  });
+
+  try {
+    const response = await axiosInstance.put("/profile/groomer/portfolio", formData);
+    console.log(response);
+  } catch (error) {
+    throw new Error("Failed to delete shop data");
   }
 };

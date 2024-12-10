@@ -1,6 +1,7 @@
 import Modal from "@/components/common/modal/modal";
 import SubHeader from "@/components/common/SubHeader";
 import StoreForm from "@/components/Mypage/Store/StoreForm";
+import { getGroomerShop, updateGroomerShop } from "@/queries/shopQuery";
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 
@@ -9,16 +10,37 @@ const CreateStore = () => {
   const { update } = location.state;
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isUpdate, setIsUpdate] = useState(update);
-
   const [formData, setFormData] = useState({
-    profile_image: "",
-    storeName: "",
+    shopId: 0,
+    profileImage: "",
+    shopName: "",
     description: "",
-    address: "",
     businessTime: "",
-    sido: "",
-    sigungo: ""
+    address: "",
+    sidoName: "",
+    sigunguName: "",
+    latitude: 0,
+    longitude: 0
   });
+
+  useEffect(() => {
+    const getShop = async () => {
+      const response = await getGroomerShop();
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        shopId: response.shopId,
+        profileImage: response.shopLogo,
+        shopName: response.shopName,
+        description: response.description,
+        businessTime: response.businessTime,
+        address: response.address,
+        sidoName: response.sidoName,
+        sigunguName: response.sigunguName
+      }));
+    };
+
+    if (isUpdate === "매장수정") getShop();
+  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -28,9 +50,11 @@ const CreateStore = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Form Data Submitted:", formData);
+    setIsModalOpen(false);
+
+    const response = await updateGroomerShop(formData, isUpdate);
   };
 
   const handleOpenModal = () => {
@@ -38,10 +62,6 @@ const CreateStore = () => {
   };
 
   const handleCloseModal = () => {
-    setIsModalOpen(false);
-  };
-
-  const handleConfirmModal = () => {
     setIsModalOpen(false);
   };
 
@@ -68,7 +88,7 @@ const CreateStore = () => {
       <Modal
         isOpen={isModalOpen}
         onClose={handleCloseModal}
-        onConfirm={handleConfirmModal}
+        onConfirm={handleSubmit}
         closeText="닫기"
         confirmText="확인"
       >

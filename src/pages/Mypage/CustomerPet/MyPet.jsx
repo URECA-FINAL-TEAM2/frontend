@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 import SubHeader from "../../../components/common/SubHeader";
 import Modal from "../../../components/common/modal/modal";
 import PetForm from "@/components/Mypage/Pet/PetForm";
-import { getPetInfo, updatePetInfo } from "@/queries/petQuery";
+import { deletePetInfo, getPetInfo, updatePetInfo } from "@/queries/petQuery";
 
 // 반려견 등록, 조회, 수정, 삭제(CRUD)
 const MyPet = () => {
@@ -13,9 +13,9 @@ const MyPet = () => {
   const [onlyRead, setOnlyRead] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [formData, setFormData] = useState({
-    dogIg: 0,
-    dogName: "멍멍",
-    breed: "",
+    dogId: 0,
+    dogName: "",
+    dogBreedCodeId: "",
     dogWeight: "",
     dogBirth: { year: "년", month: "월", day: "일" },
     dogGender: "",
@@ -44,7 +44,8 @@ const MyPet = () => {
       const response = await updatePetInfo(null, formData);
       console.log("반려견 등록 완료:", response);
     } else {
-      console.log("삭제완료");
+      const response = await deletePetInfo(2);
+      console.log(response);
     }
     setOnlyRead(true);
   };

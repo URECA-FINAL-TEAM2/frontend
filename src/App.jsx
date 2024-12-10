@@ -7,11 +7,11 @@ import InfoRequired from "./pages/Main/InfoRequired";
 import CustomerLayout from "./pages/Layout/CustomerLayout";
 import GroomerLayout from "./pages/Layout/GroomerLayout";
 import CustomerHome from "./pages/Customer/CustomerHome";
-import CustomerQuote from "./pages/Customer/CustomerQuote";
+// import CustomerQuote from "./pages/Customer/CustomerQuote";
 import CustomerChat from "./pages/Customer/CustomerChat";
 import CustomerMypage from "./pages/Customer/CustomerMypage";
 import GroomerHome from "./pages/Groomer/GroomerHome";
-import GroomerQuote from "./pages/Groomer/GroomerQuote";
+// import GroomerQuote from "./pages/Groomer/GroomerQuote";
 import GroomerStore from "./pages/Groomer/GroomerStore";
 import GroomerChat from "./pages/Groomer/GroomerChat";
 import GroomerMypage from "./pages/Groomer/GroomerMypage";
@@ -35,8 +35,9 @@ import ShopQuoteRequestPage from "./pages/Quote/Customer/ShopQuoteRequestPage";
 import TotalQuoteRequestPage from "./pages/Quote/Customer/TotalQuoteRequestPage";
 import GroomerQuoteDetail from "./components/Quote/GroomerQuoteDetail";
 import GroomerQuoteForm from "./components/Quote/GroomerQuoteForm";
+import ReservationDetail from "./pages/Reservation/ReservationDetail";
 import NotFound from "./pages/NotFound";
-import GoogleOAuth2RedirectPage from "./components/Login/GoogleOauth2RedirectPage";
+import EditPortfolio from "./components/Mypage/Store/EditPortfolio";
 import PaymentCancel from "./pages/Payment/PaymentCancel";
 import PaymentTestPage from "./pages/Payment/PaymentTestPage";
 import GroomerReservationDetail from "./pages/Reservation/Groomer/GroomerReservationDetail";
@@ -51,7 +52,7 @@ function App() {
           <Route path="/" element={<Onboarding />} />
           <Route path="/login" element={<Login />} />
           <Route path="/login/oauth2/code/kakao" element={<OAuth2RedirectPage />} />
-          <Route path="/login/oauth2/code/google" element={<GoogleOAuth2RedirectPage />} />
+          <Route path="/login/oauth2/code/google" element={<OAuth2RedirectPage />} />
 
           <Route path="/selectRole" element={<SelectRole />} />
           <Route path="/infoRequired" element={<InfoRequired />} />
@@ -66,13 +67,11 @@ function App() {
 
           {/* customer/ -none */}
           <Route path="/customer">
-            <Route path="quotes" element={<CustomerQuote />} />
+            {/* <Route path="quotes" element={<CustomerQuote />} /> */}
             <Route path="shop" element={<CustomerSearchLayout />}>
               <Route index element={<CustomerSearchPage />} />
               <Route path=":shopId" element={<ShopDetailPage />} />
             </Route>
-            <Route path="shop/quotes/:shopId" element={<ShopQuoteRequestPage />} />
-            <Route path="quotes/request" element={<TotalQuoteRequestPage />} />
             <Route path="mypage" element={<CustomerMypage />} />
             <Route path="info" element={<UserInfo />} />
             <Route path="bookmarkedStore" element={<BookmarkedStore />} />
@@ -96,13 +95,12 @@ function App() {
 
           {/* groomer/ -none */}
           <Route path="/groomer">
-            <Route path="quotes" element={<GroomerQuote />} />
+            {/* <Route path="quotes" element={<GroomerQuote />} /> */}
             <Route path="mypage" element={<GroomerMypage />} />
             <Route path="info" element={<UserInfo />} />
             <Route path="mystore" element={<MyStore />} />
             <Route path="createstore" element={<CreateStore />} />
-            <Route path="reservation" element={<GroomerReservationMain />} />
-            <Route path="reservation/detail" element={<GroomerReservationDetail />} />
+            <Route path="editportfolio" element={<EditPortfolio />} />
           </Route>
 
           <Route path="*" element={<NotFound />} />

@@ -65,7 +65,7 @@ export const getPaymentDetail = async (paymentKey) => {
 
     const response = await axiosInstance.get(`/payments/${paymentKey}`, {
       params: {
-        selectedQuoteId: pKey
+        paymentKey: pKey
       },
       headers: {
         Accept: "application/json"
@@ -77,47 +77,3 @@ export const getPaymentDetail = async (paymentKey) => {
     throw new Error("Failed to fetch reservation data");
   }
 };
-
-//더미
-// export const examplePaymentDetails = {
-//   paymentTitle: "댕댕살롱",
-//   paymentKey: "tviva20241126165731QzZY2",
-//   message: "결제 내역 조회 성공",
-//   status: "결제 완료",
-//   method: "간편결제",
-//   approvedAt: "2024-11-26T16:59:06+09:00",
-//   amount: 10000,
-//   selectedQuoteId: 1,
-//   orderId: "18_XR8395y-HtJQb7dsds55hwfqjuefew",
-//   cancelReason: "단순변심"
-// };
-
-// export const exampleFailedPayment = {
-//   code: "PAYMENT-001",
-//   message: "유효하지 않은 결제 키입니다."
-// };
-
-// export const exampleNotFoundPayment = {
-//   code: "PAYMENT-002",
-//   message: "요청한 결제 내역을 찾을 수 없습니다.",
-//   details: "paymentKey: 5EnNZRJGvaBX7zk2"
-// };
-
-// export const exampleUnauthorized = {
-//   code: "AUTH-001",
-//   message: "인증이 필요합니다. 로그인 후 다시 시도하세요."
-// };
-
-// export const exampleForbidden = {
-//   code: "AUTH-002",
-//   message: "해당 결제 내역에 접근할 권한이 없습니다."
-// };
-
-// export const fetchPaymentDetails = async (paymentKey = "tviva20241126165731QzZY2") => {
-//   try {
-//     console.log(`Requested paymentKey: ${paymentKey}`);
-//     return examplePaymentDetails;
-//   } catch (error) {
-//     throw new Error("결제 내역 조회 실패");
-//   }
-// };

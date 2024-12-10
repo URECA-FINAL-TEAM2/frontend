@@ -30,12 +30,6 @@ import CustomerSearchPage from "./pages/Customer/CustomerSearchPage";
 import ShopDetailPage from "./pages/Shop/ShopDetailPage";
 import CustomerSearchLayout from "./pages/Layout/CustomerSearchLayout";
 import CustomerReservationDetail from "./pages/Reservation/Customer/CustomerReservationDetail";
-import PetSelectModal from "./components/QuoteRequest/PetSelectModal";
-import ShopQuoteRequestPage from "./pages/Quote/Customer/ShopQuoteRequestPage";
-import TotalQuoteRequestPage from "./pages/Quote/Customer/TotalQuoteRequestPage";
-import GroomerQuoteDetail from "./components/Quote/GroomerQuoteDetail";
-import GroomerQuoteForm from "./components/Quote/GroomerQuoteForm";
-import ReservationDetail from "./pages/Reservation/ReservationDetail";
 import NotFound from "./pages/NotFound";
 import EditPortfolio from "./components/Mypage/Store/EditPortfolio";
 import PaymentCancel from "./pages/Payment/PaymentCancel";
@@ -101,6 +95,8 @@ function App() {
             <Route path="mystore" element={<MyStore />} />
             <Route path="createstore" element={<CreateStore />} />
             <Route path="editportfolio" element={<EditPortfolio />} />
+            <Route path="reservation" element={<GroomerReservationMain />} />
+            <Route path="reservation/detail" element={<GroomerReservationDetail />} />
           </Route>
 
           <Route path="*" element={<NotFound />} />

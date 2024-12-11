@@ -1,4 +1,3 @@
-import BottomButton from "@/components/common/button/BottomButton";
 import ProfileImage from "../ProfileImage";
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
@@ -6,7 +5,6 @@ import SelectRegion from "./SelectRegion";
 import { nicknameCheck } from "@/queries/authQuery";
 import NicknameCheck from "@/components/Login/NicknameCheck";
 import PhoneCheck from "@/components/Login/PhoneCheck";
-import { deleteUserInfo } from "@/queries/userQuery";
 import useAuthStore from "@/store/authStore";
 
 const UserForm = ({ handleOpenModal, phoneRef, validPhone, formData, setFormData, handleChange, role }) => {
@@ -124,13 +122,17 @@ const UserForm = ({ handleOpenModal, phoneRef, validPhone, formData, setFormData
           </div>
         )}
 
-        <button
-          className="mx-auto mb-20 flex text-xs text-gray-300 underline"
-          type="button"
-          onClick={() => handleOpenModal("delete")}
-        >
-          <span>{role === "customer" ? "고객 프로필 삭제" : "미용사 프로필 삭제"}</span>
-        </button>
+        {pathname === "/infoRequired" ? (
+          ""
+        ) : (
+          <button
+            className="mx-auto mb-20 flex text-xs text-gray-300 underline"
+            type="button"
+            onClick={() => handleOpenModal("delete")}
+          >
+            <span>{role === "customer" ? "고객 프로필 삭제" : "미용사 프로필 삭제"}</span>
+          </button>
+        )}
 
         <button type="button" onClick={() => handleOpenModal("update")} className="bottomButtonPink">
           내 정보 저장하기

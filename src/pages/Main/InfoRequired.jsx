@@ -5,6 +5,7 @@ import SubHeader from "../../components/common/SubHeader";
 import UserForm from "@/components/Mypage/Info/UserForm";
 import { registerUser, validatePhoneNumber } from "@/queries/authQuery";
 import useAuthStore from "@/store/authStore";
+import Modal from "@/components/common/modal/modal";
 
 const InfoRequired = () => {
   const navigate = useNavigate();
@@ -23,6 +24,17 @@ const InfoRequired = () => {
     sigunguId: "",
     skills: "" // 미용사 필드
   });
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalState, setModalState] = useState("update");
+
+  const handleOpenModal = (state) => {
+    setIsModalOpen(true);
+    setModalState(state);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
 
   const handleChange = (e) => {
     if (e.target.name === "phone") {
@@ -47,11 +59,14 @@ const InfoRequired = () => {
       const responseRole = response[0].data.roles[0];
 
       setLoginStatus(true);
-      // 토큰, id, role, 정보 저장
+      // id, role, 정보 저장
 
+      updateDefaultRole(responseRole);
       if (responseRole === "customer") {
+        updateId({ customerId: response.data.body.data.user.id });
         navigate("/customer/home");
       } else {
+        updateId({ groomerId: response.data.body.data.user.id });
         navigate("/groomer/home");
       }
     } catch (error) {
@@ -68,6 +83,7 @@ const InfoRequired = () => {
       <div className="flex min-h-screen flex-col">
         <SubHeader title={"내 정보를 완성해주세요"} />
         <UserForm
+          handleOpenModal={handleOpenModal}
           phoneRef={phoneRef}
           validPhone={validPhone}
           formData={formData}
@@ -77,6 +93,15 @@ const InfoRequired = () => {
           role={role}
         />
       </div>
+      <Modal
+        isOpen={isModalOpen}
+        onClose={handleCloseModal}
+        onConfirm={handleSubmit}
+        closeText="닫기"
+        confirmText="확인"
+      >
+        내 정보를 저장하시겠습니까?
+      </Modal>
     </>
   );
 };

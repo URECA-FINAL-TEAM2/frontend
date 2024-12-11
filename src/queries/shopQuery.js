@@ -1,3 +1,5 @@
+import axiosInstance from "@/api/axiosInstance";
+
 const shopDetail = {
   groomerId: 2,
   shopId: 2,
@@ -183,10 +185,28 @@ export const insertGroomerPortfolio = async (images, groomerId) => {
     formData.append("images", image); // 키 이름을 배열 형태로 지정
   });
 
+  for (let [key, value] of formData.entries()) {
+    console.log(`${key}:`, value);
+  }
+
   try {
     const response = await axiosInstance.put("/profile/groomer/portfolio", formData);
     console.log(response);
   } catch (error) {
     throw new Error("Failed to insert shop data");
   }
+};
+
+export const parseAddress = (fullAddress) => {
+  if (!fullAddress || typeof fullAddress !== "string") {
+    return { address: "", detailAddress: "" }; // 유효하지 않은 입력 처리
+  }
+
+  const [address, ...detailParts] = fullAddress.split(",");
+  const detailAddress = detailParts.join(",").trim(); // 배열을 문자열로 합치고 공백 제거
+
+  return {
+    address: address.trim(), // 앞뒤 공백 제거
+    detailAddress: detailAddress || "" // 상세 주소 없으면 빈 문자열 반환
+  };
 };

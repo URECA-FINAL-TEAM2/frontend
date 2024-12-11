@@ -20,7 +20,7 @@ const MyReviews = () => {
   }, []);
 
   return (
-    <div className="mx-auto mt-[75px] min-h-screen bg-main-100">
+    <div className="mx-auto mt-[75px] min-h-screen">
       <SubHeader title={"리뷰관리"} />
 
       <ReviewBox />

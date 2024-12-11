@@ -45,7 +45,7 @@ export const updateUserInfo = async (role, preparedData, id) => {
 
 // 유저 프로필 삭제
 export const deleteUserInfo = async (role, id) => {
-  const endpoint = role === "customer" ? `/profile/customer/delete/14` : `/profile/groomer/delete/${id.groomerId}`;
+  const endpoint = role === "customer" ? `/profile/customer/delete/14` : `/profile/groomer/delete/${11}`;
   try {
     const response = await axiosInstance.put(endpoint);
     console.log("프로필 정보 삭제 완료", response);

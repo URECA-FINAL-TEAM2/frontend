@@ -107,8 +107,6 @@ const CustomerMypage = () => {
         </div>
         {/* 반려견 정보 */}
         <div className="mx-auto border-t-2 border-t-main-200 pl-8 pt-6">
-          <h2 className="text-xl">🐾 My Pet</h2>
-
           <div className="flex">
             <Link to={`/customer/myPet/${pet.dogId}`}>
               <div className="flex w-[80px] flex-col p-2 text-center">

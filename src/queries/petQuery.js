@@ -1,23 +1,5 @@
 import axiosInstance from "@/api/axiosInstance";
 
-const successResponse = [
-  {
-    message: "반려견 정보 수정 성공",
-    data: {
-      dogId: 123,
-      dogName: "멍당이",
-      breed: "말티즈",
-      dogWeight: "5.0",
-      dogBirth: "2024-02-29",
-      dogGender: "MALE",
-      neutering: true,
-      experience: true,
-      significant: "목 쪽 피부병 치료 완료."
-    },
-    timestamp: "2024-12-04 00:00:00"
-  }
-];
-
 const petInfo = [
   {
     message: "Get Pet Success",
@@ -40,8 +22,8 @@ const petInfo = [
 // 반려견 정보 조회
 export const getPetInfo = async (dogId, customerId) => {
   try {
-    const dogId = 26;
-    const customerId = 14;
+    const dogId = 1;
+    const customerId = 1;
 
     const response = await axiosInstance.get(`/profile/customer/dogs/${dogId}`, {
       params: { customerId }
@@ -99,11 +81,17 @@ export const updatePetInfo = async (id, dogData) => {
 };
 
 // 반려견 정보 삭제
-export const deletePetInfo = async (dogId) => {
+export const deletePetInfo = async (dogId, customerId) => {
   try {
-    const dogId = 1;
-    const customerId = 1;
-    const response = await axiosInstance.delete(`/profile/customer/dogs/${dogId}/delete`, { params: { customerId } });
+    const dogId = 27;
+    const customerId = 14;
+    const response = await axiosInstance.put(
+      `/profile/customer/dogs/${dogId}/delete`,
+      {},
+      {
+        params: { customerId }
+      }
+    );
     return response.data;
   } catch (error) {
     console.error("반려견 정보 삭제 요청 실패:", error);
@@ -111,6 +99,7 @@ export const deletePetInfo = async (dogId) => {
   }
 };
 
+// 견종 조회
 export const getDogBreed = async () => {
   try {
     const response = await axiosInstance.get(`/profile/customer/dogs/breed`);

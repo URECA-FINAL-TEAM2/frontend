@@ -56,7 +56,7 @@ const MyStore = () => {
               </div>
             </div>
 
-            <div className="relative mt-7 flex items-center">
+            <div className="relative mt-2 flex items-center">
               <button
                 onClick={() => setActiveComponent("info")}
                 className={`w-1/2 border-b border-b-main px-14 py-2 text-lg ${

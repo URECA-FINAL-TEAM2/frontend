@@ -1,12 +1,22 @@
-import { deleteGroomerShop } from "@/queries/shopQuery";
+import { deleteGroomerShop, parseAddress } from "@/queries/shopQuery";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const StoreInfo = ({ shopInfo }) => {
   const navigate = useNavigate();
+  const [address, setAddress] = useState();
+  const [detailAddress, setDetailAddress] = useState();
   const handleDeleteShop = async (shopId) => {
     const response = await deleteGroomerShop(shopId);
     navigate("/groomer/home");
   };
+  useEffect(() => {
+    if (shopInfo?.address) {
+      const { address, detailAddress } = parseAddress(shopInfo.address);
+      setAddress(address);
+      setDetailAddress(detailAddress);
+    }
+  }, [shopInfo]);
 
   return (
     <div className="mb-20 mt-10">
@@ -20,10 +30,8 @@ const StoreInfo = ({ shopInfo }) => {
       </div>
       <div>
         <div className="labelStyle">매장 주소</div>
-        {/* <div className="inputStyle mb-2">
-          {shopInfo.sidoName} {shopInfo.sigunguName}
-        </div> */}
-        <div className="inputStyle">{shopInfo.address}</div>
+        <div className="inputStyle mb-2">{address}</div>
+        <div className="inputStyle">{detailAddress}</div>
       </div>
       <div>
         <div className="labelStyle">운영 시간</div>

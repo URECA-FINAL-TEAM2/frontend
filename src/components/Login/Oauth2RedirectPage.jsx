@@ -9,7 +9,7 @@ function OAuth2RedirectPage() {
   const location = useLocation();
   const code = new URL(window.location.href).searchParams.get("code");
   const socialLogin = location.pathname.includes("kakao") ? "kakao" : "google";
-  const { updateId, updateDefaultRole } = useAuthStore();
+  const { updateId, updateDefaultRole, setLoginStatus } = useAuthStore();
 
   const sendCodeToBackend = async (code) => {
     try {
@@ -20,13 +20,14 @@ function OAuth2RedirectPage() {
       });
       console.log("추가정보입력 성공 후 로그인,", response);
       localStorage.setItem("accessToken", response.data.body.data.accessToken);
+      setLoginStatus(true);
       const role = response.data.body.data.user.roles;
       if (role === "customer") {
-        updateId({ customerId: response.data.body.data.user.id });
+        // updateId({ customerId: response.data.body.data.user.id });
         updateDefaultRole(role);
         navigate("/customer/home");
       } else {
-        updateId({ groomerId: response.data.body.data.user.id });
+        // updateId({ groomerId: response.data.body.data.user.id });
         updateDefaultRole(role);
         navigate("/groomer/home");
       }

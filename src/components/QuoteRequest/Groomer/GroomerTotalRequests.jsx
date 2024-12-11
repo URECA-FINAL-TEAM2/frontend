@@ -46,7 +46,7 @@ const GroomerEstimate = ({ Info }) => {
       </div>
       <div
         onClick={() => {
-          navigate(`/groomer/quotes/${Info.requestId}`);
+          navigate(`/groomer/quotes/request/detail/${Info.requestId}`);
         }}
         className="flex h-[35px] cursor-pointer items-center justify-center rounded-lg bg-gray-200 text-center text-sm"
       >

@@ -13,7 +13,7 @@ const GroomerList = () => {
             <span className="text-lg">매장관리</span>
           </li>
         </Link>
-        <Link to="">
+        <Link to="/groomer/reservation">
           <li className="flex items-center border-b-2 border-gray-200 py-4">
             <VscSymbolFile className="mr-3" size={22} color="#ff8e8e" />
             <span className="text-lg">예약내역</span>

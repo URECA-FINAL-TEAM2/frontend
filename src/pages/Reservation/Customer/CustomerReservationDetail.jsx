@@ -10,6 +10,7 @@ import BottomButton from "@/components/common/button/BottomButton";
 import Modal from "@/components/common/modal/modal";
 import SubHeader from "@/components/common/SubHeader";
 import { getPaymentDetail } from "@/queries/paymentQuery";
+import { RequestCancel } from "@/queries/paymentQuery";
 
 const CustomerReservationDetail = ({ selectedQuoteId = 128 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -54,15 +55,31 @@ const CustomerReservationDetail = ({ selectedQuoteId = 128 }) => {
     setCancelReason("");
   };
 
-  const handleConfirmModal = () => {
+  // 예약 취소 요청
+  const handleConfirmModal = async () => {
     if (cancelReason.trim() === "") {
       alert("취소 사유를 입력해주세요."); // 안쓰면 팝업
       return;
     }
-    console.log("취소 사유:", cancelReason); // API 연동 필요
-    setIsModalOpen(false);
-    setCancelReason("");
-    alert("예약이 취소되었습니다.");
+    if (!detail || !detail.paymentKey) {
+      alert("유효한 결제 키가 없습니다. 예약을 취소할 수 없습니다.");
+      return;
+    }
+
+    try {
+      const cancelData = {
+        paymentKey: detail.paymentKey,
+        cancelReason: `[고객] ${cancelReason}`
+      };
+      const result = await RequestCancel(cancelData);
+      console.log("취소 성공:", result);
+      alert("예약이 성공적으로 취소되었습니다.");
+      setIsModalOpen(false);
+      setCancelReason("");
+    } catch (error) {
+      console.error("취소 실패:", error);
+      alert("예약 취소에 실패했습니다. 다시 시도해주세요.");
+    }
   };
 
   if (error) {
@@ -70,20 +87,20 @@ const CustomerReservationDetail = ({ selectedQuoteId = 128 }) => {
   }
 
   if (!detail) {
-    return <p className="text-center text-gray-500">로딩 중...</p>;
+    return <p className="mt-10 text-center text-gray-500">로딩 중...</p>;
   }
 
   return (
     <div>
       <SubHeader title="예약 정보 및 서비스" />
-      <div className="max-w-lg p-6 mx-auto mt-10 bg-white">
+      <div className="mx-auto mt-10 max-w-lg bg-white p-6">
         {/* 예약자 정보 */}
-        <div className="flex items-center mt-6 mb-2 space-x-2">
+        <div className="mb-2 mt-6 flex items-center space-x-2">
           <BsPersonVcard size={24} color="black" />
           <h2 className="text-xl font-semibold">예약자 정보</h2>
         </div>
 
-        <div className="p-4 mb-6 rounded-lg bg-main-100">
+        <div className="mb-6 rounded-lg bg-main-100 p-4">
           <div className="flex items-center justify-between">
             <div>
               <p className="font-medium">이름</p>
@@ -97,31 +114,31 @@ const CustomerReservationDetail = ({ selectedQuoteId = 128 }) => {
         </div>
 
         {/* 미용 일시 */}
-        <div className="flex items-center mb-2 space-x-2">
+        <div className="mb-2 flex items-center space-x-2">
           <RiCalendarScheduleLine size={24} color="black" />
           <h2 className="text-xl font-semibold">미용 일시</h2>
         </div>
 
         <div className="mb-6 rounded-lg">
           <div className="flex items-center justify-between space-x-4">
-            <div className="flex items-center justify-center flex-1 px-4 py-2 text-sm text-center border rounded-lg border-main-400">
+            <div className="flex flex-1 items-center justify-center rounded-lg border border-main-400 px-4 py-2 text-center text-sm">
               <p>{new Date(detail.beautyDate).toLocaleDateString()}</p>
             </div>
-            <div className="flex items-center justify-center flex-1 px-4 py-2 text-sm text-center border rounded-lg border-main-400">
+            <div className="flex flex-1 items-center justify-center rounded-lg border border-main-400 px-4 py-2 text-center text-sm">
               <p>{new Date(detail.beautyDate).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}</p>
             </div>
           </div>
         </div>
 
         {/* 매장 및 디자이너 정보 */}
-        <div className="flex items-center mb-2 space-x-2">
+        <div className="mb-2 flex items-center space-x-2">
           <ImScissors size={24} color="black" />
           <h2 className="text-xl font-semibold">매장 · 디자이너 정보</h2>
         </div>
 
-        <div className="p-4 mb-6 border rounded-lg border-main-400">
+        <div className="mb-6 rounded-lg border border-main-400 p-4">
           <div className="flex items-center">
-            <img src={detail.shopLogo} alt="매장 로고" className="w-24 h-24 mr-4 rounded-lg" />
+            <img src={detail.shopLogo} alt="매장 로고" className="mr-4 h-24 w-24 rounded-lg" />
             <div>
               <p className="text-lg font-bold">{detail.shopName}</p>
               <p className="text-gray-600">{detail.address}</p>
@@ -132,15 +149,15 @@ const CustomerReservationDetail = ({ selectedQuoteId = 128 }) => {
         </div>
 
         {/* 반려견 정보 */}
-        <div className="flex items-center mb-2 space-x-2">
+        <div className="mb-2 flex items-center space-x-2">
           <BiSolidDog size={24} color="black" />
           <h2 className="text-xl font-semibold">반려견 정보</h2>
         </div>
 
-        <div className="p-4 mb-6 border rounded-lg border-main-400">
+        <div className="mb-6 rounded-lg border border-main-400 p-4">
           <div className="flex items-start">
-            <div className="flex flex-col items-center mr-4">
-              <img src={detail.profileImage} alt="반려견 사진" className="w-24 h-24 rounded-lg" />
+            <div className="mr-4 flex flex-col items-center">
+              <img src={detail.profileImage} alt="반려견 사진" className="h-24 w-24 rounded-lg" />
               <p className="mt-4 font-bold">{detail.dogName}</p>
             </div>
             <div>
@@ -155,74 +172,74 @@ const CustomerReservationDetail = ({ selectedQuoteId = 128 }) => {
         </div>
 
         {/* 요청 내용 */}
-        <div className="flex items-center mb-2 space-x-2">
+        <div className="mb-2 flex items-center space-x-2">
           <GrDocumentUser size={24} color="black" />
           <h2 className="text-xl font-semibold">요청 내용</h2>
         </div>
 
-        <div className="p-4 mb-6 border rounded-lg border-main-400">
+        <div className="mb-6 rounded-lg border border-main-400 p-4">
           <p className="text-gray-600">{detail.requestContent}</p>
         </div>
 
         {/* 첨부 사진 */}
-        <div className="flex items-center mb-2 space-x-2">
+        <div className="mb-2 flex items-center space-x-2">
           <TbPhoto size={24} color="black" />
           <h2 className="text-xl font-semibold">첨부 사진</h2>
         </div>
 
-        <div className="mb-6 rounded-lgp-4">
+        <div className="rounded-lgp-4 mb-6">
           <div className="grid grid-cols-3 gap-2">
             {detail.requestImage.map((img, index) => (
               <img
                 key={index}
                 src={img}
                 alt={`첨부 사진 ${index + 1}`}
-                className="w-24 h-24 bg-gray-100 border rounded-lg"
+                className="h-24 w-24 rounded-lg border bg-gray-100"
               />
             ))}
           </div>
         </div>
 
         {/* 견적 설명 */}
-        <div className="flex items-center mb-2 space-x-2">
+        <div className="mb-2 flex items-center space-x-2">
           <GrDocumentText size={24} color="black" />
           <h2 className="text-xl font-semibold">견적 설명</h2>
         </div>
 
-        <div className="p-4 mb-6 border rounded-lg border-main-400">
+        <div className="mb-6 rounded-lg border border-main-400 p-4">
           <p className="text-gray-600">{detail.quoteContent}</p>
         </div>
 
         {/* 결제 정보 */}
-        <div className="flex items-center mb-2 space-x-2">
+        <div className="mb-2 flex items-center space-x-2">
           <TbCreditCard size={24} color="black" />
           <h2 className="text-xl font-semibold">결제 정보</h2>
         </div>
 
         {paymentDetail && (
-          <div className="p-4 mb-6 border rounded-lg border-main-400">
+          <div className="mb-6 rounded-lg border border-main-400 p-4">
             <div>
               <p className="flex justify-between text-gray-600">
-                결제 상태 : <span className="font-medium text-right">{paymentDetail.status}</span>
+                결제 상태 : <span className="text-right font-medium">{paymentDetail.status}</span>
               </p>
               <p className="flex justify-between text-gray-600">
-                예약 번호 : <span className="font-medium text-right">{paymentDetail.orderId}</span>
+                예약 번호 : <span className="text-right font-medium">{paymentDetail.orderId}</span>
               </p>
               <p className="flex justify-between text-gray-600">
-                결제 명 : <span className="font-medium text-right">{paymentDetail.paymentTitle}</span>
+                결제 명 : <span className="text-right font-medium">{paymentDetail.paymentTitle}</span>
               </p>
               <p className="flex justify-between text-gray-600">
-                결제 금액 : <span className="font-medium text-right">{paymentDetail.amount}</span>
+                결제 금액 : <span className="text-right font-medium">{paymentDetail.amount}</span>
               </p>
               <p className="flex justify-between text-gray-600">
-                결제 수단 : <span className="font-medium text-right">{paymentDetail.method}</span>
+                결제 수단 : <span className="text-right font-medium">{paymentDetail.method}</span>
               </p>
               <p className="flex justify-between text-gray-600">
-                결제 승인 일자 : <span className="text-sm font-medium text-right">{paymentDetail.approvedAt}</span>
+                결제 승인 일자 : <span className="text-right text-sm font-medium">{paymentDetail.approvedAt}</span>
               </p>
               {paymentDetail.cancelReason && (
                 <p className="flex justify-between text-gray-600">
-                  취소 사유 : <span className="font-medium text-right">{paymentDetail.cancelReason}</span>
+                  취소 사유 : <span className="text-right font-medium">{paymentDetail.cancelReason}</span>
                 </p>
               )}
             </div>
@@ -249,7 +266,7 @@ const CustomerReservationDetail = ({ selectedQuoteId = 128 }) => {
               value={cancelReason}
               onChange={(e) => setCancelReason(e.target.value)}
               placeholder="취소 사유 입력"
-              className="w-full p-2 text-sm border rounded-md"
+              className="w-full rounded-md border p-2 text-sm"
             />
           </div>
         </Modal>

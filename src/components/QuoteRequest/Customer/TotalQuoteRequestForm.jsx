@@ -115,10 +115,12 @@ const TotalQuoteRequestForm = () => {
   return (
     <div className="mx-auto mb-[var(--bottom-bar-height)] mt-[var(--header-height)] max-w-lg bg-white px-6">
       {/* 지역 */}
-      <div className="mb-2 flex items-center space-x-2">
+      <div className="mb-1.5 flex items-center space-x-2">
         <img src="/public/Icons/Region.svg" alt="Description" className="h-5 w-5" />
-        <h2 className="text-lg font-semibold">지역</h2>
-        {location && <RiEditLine size={20} className="cursor-pointer text-gray-500" onClick={openLocationModal} />}
+        <h2 className="text-lg font-semibold leading-none">지역</h2>
+        {location && (
+          <RiEditLine size={20} className="cursor-pointer py-0.5 text-gray-500" onClick={openLocationModal} />
+        )}
       </div>
 
       <div className="mb-6 rounded-lg border border-main-400 p-4">
@@ -132,9 +134,9 @@ const TotalQuoteRequestForm = () => {
       </div>
 
       {/* 미용 일시 */}
-      <div className="mb-2 flex items-center space-x-2">
+      <div className="mb-1.5 flex items-center space-x-2">
         <img src="/public/Icons/Schedule.svg" alt="Description" className="h-5 w-5" />
-        <h2 className="text-lg font-semibold">미용 일시</h2>
+        <h2 className="text-lg font-semibold leading-none">미용 일시</h2>
       </div>
 
       <div className="mb-6 rounded-lg">
@@ -160,10 +162,10 @@ const TotalQuoteRequestForm = () => {
       </div>
 
       {/* 반려견 정보 */}
-      <div className="mb-2 flex items-center space-x-2">
+      <div className="mb-1.5 flex items-center space-x-2">
         {/* <BiSolidDog size={24} color="black" /> */}
         <img src="/public/Icons/Corgi.svg" alt="Description" className="h-5 w-5" />
-        <h2 className="text-lg font-semibold">반려견 정보</h2>
+        <h2 className="text-lg font-semibold leading-none">반려견 정보</h2>
         {petInfo && <RiEditLine size={20} className="cursor-pointer text-gray-500" onClick={openModal} />}{" "}
       </div>
 
@@ -190,9 +192,9 @@ const TotalQuoteRequestForm = () => {
       </div>
 
       {/* 요청 내용 */}
-      <div className="mb-2 flex items-center space-x-2">
+      <div className="mb-1.5 flex items-center space-x-2">
         <img src="/public/Icons/Note.svg" alt="Description" className="h-5 w-5" />
-        <h2 className="text-lg font-semibold">요청 내용</h2>
+        <h2 className="text-lg font-semibold leading-none">요청 내용</h2>
       </div>
 
       <div className="mb-6 rounded-lg border border-main-400 p-4 leading-tight">
@@ -204,9 +206,9 @@ const TotalQuoteRequestForm = () => {
       </div>
 
       {/* 첨부 사진 */}
-      <div className="mb-2 flex items-center space-x-2">
+      <div className="mb-1.5 flex items-center space-x-2">
         <img src="/public/Icons/Photos.svg" alt="Description" className="h-5 w-5" />
-        <h2 className="text-lg font-semibold">첨부 사진</h2>
+        <h2 className="text-lg font-semibold leading-none">첨부 사진</h2>
       </div>
 
       <div className="rounded-lg">

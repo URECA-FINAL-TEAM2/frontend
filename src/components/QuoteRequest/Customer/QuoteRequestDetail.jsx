@@ -48,13 +48,15 @@ const QuoteRequestDetail = ({ requestId }) => {
   return (
     <div className="mx-auto mb-5 mt-[var(--header-height)] max-w-lg bg-white px-6">
       {/* 지역 또는 매장/디자이너 정보 */}
-      <div className="mb-2 flex items-center space-x-1">
+      <div className="mb-1.5 flex items-center space-x-1">
         <img
           src={requestData.requestType === "010" ? "/public/Icons/Region.svg" : "/public/Icons/Designer.svg"}
           alt="Location or Shop Icon"
           className="h-5 w-5"
         />
-        <h2 className="text-lg font-semibold">{requestData.requestType === "010" ? "지역" : "매장 · 디자이너 정보"}</h2>
+        <h2 className="text-lg font-semibold leading-none">
+          {requestData.requestType === "010" ? "지역" : "매장 · 디자이너 정보"}
+        </h2>
       </div>
 
       <div className="mb-6 rounded-lg border border-main-400 p-4">
@@ -74,9 +76,9 @@ const QuoteRequestDetail = ({ requestId }) => {
       </div>
 
       {/* 미용 일시 */}
-      <div className="mb-2 flex items-center space-x-1">
+      <div className="mb-1.5 flex items-center space-x-1">
         <img src="/public/Icons/Schedule.svg" alt="Schedule Icon" className="h-5 w-5" />
-        <h2 className="text-lg font-semibold">미용 일시</h2>
+        <h2 className="text-lg font-semibold leading-none">미용 일시</h2>
       </div>
 
       <div className="mb-6 rounded-lg border border-main-400 p-4">
@@ -86,9 +88,9 @@ const QuoteRequestDetail = ({ requestId }) => {
       </div>
 
       {/* 반려견 정보 */}
-      <div className="mb-2 flex items-center space-x-1">
+      <div className="mb-1.5 flex items-center space-x-1">
         <img src="/public/Icons/Corgi.svg" alt="Dog Icon" className="h-5 w-5" />
-        <h2 className="text-lg font-semibold">반려견 정보</h2>
+        <h2 className="text-lg font-semibold leading-none">반려견 정보</h2>
       </div>
 
       <div className="mb-6 rounded-lg border border-main-400 p-4">
@@ -110,9 +112,9 @@ const QuoteRequestDetail = ({ requestId }) => {
       </div>
 
       {/* 요청 내용 */}
-      <div className="mb-2 flex items-center space-x-1">
+      <div className="mb-1.5 flex items-center space-x-1">
         <img src="/public/Icons/Note.svg" alt="Note Icon" className="h-5 w-5" />
-        <h2 className="text-lg font-semibold">요청 내용</h2>
+        <h2 className="text-lg font-semibold leading-none">요청 내용</h2>
       </div>
 
       <div className="mb-6 rounded-lg border border-main-400 p-4 leading-tight">
@@ -120,9 +122,9 @@ const QuoteRequestDetail = ({ requestId }) => {
       </div>
 
       {/* 첨부 사진 */}
-      <div className="mb-2 flex items-center space-x-1">
+      <div className="mb-1.5 flex items-center space-x-1">
         <img src="/public/Icons/Photos.svg" alt="Photos Icon" className="h-5 w-5" />
-        <h2 className="text-lg font-semibold">첨부 사진</h2>
+        <h2 className="text-lg font-semibold leading-none">첨부 사진</h2>
       </div>
 
       <div className="rounded-lg">

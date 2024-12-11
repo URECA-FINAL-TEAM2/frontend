@@ -137,13 +137,13 @@ const CustomerEstimate = ({ Info }) => {
             )}
           </div>
           <div className="mb-1 flex items-center text-sm">
-            <img src="/public/Icons/Designer.svg" alt="Description" className="mr-1 h-5 w-5" />
+            <img src="/public/Icons/Designer.svg" alt="Designer" className="mr-1 h-5 w-5" />
             <p>
               {Info.shopName} - {Info.groomerName} 디자이너
             </p>
           </div>
           <div className="mb-1 flex items-center text-sm">
-            <img src="/public/Icons/Schedule.svg" alt="Description" className="mr-1 h-5 w-5" />
+            <img src="/public/Icons/Schedule.svg" alt="Schedule" className="mr-1 h-5 w-5" />
             <p>{formatDate(Info.beautyDate)}</p>
           </div>
           <div className="flex items-center text-sm">

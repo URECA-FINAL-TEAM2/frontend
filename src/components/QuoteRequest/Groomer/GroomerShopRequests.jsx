@@ -45,7 +45,7 @@ const GroomerEstimate = ({ Info }) => {
       <div className="flex w-full gap-2">
         <div
           onClick={() => {
-            navigate(`/groomer/quotes/${Info.requestId}`);
+            navigate(`/groomer/quotes/request/detail/${Info.requestId}`);
           }}
           className="flex h-[35px] w-3/4 cursor-pointer items-center justify-center rounded-lg bg-gray-200 text-center text-sm"
         >

@@ -34,7 +34,7 @@ const GroomerReservationMain = () => {
     ),
     completed: reservations.filter((item) => item.status === "미용 완료"), // 미용 완료
     reserved: reservations.filter((item) => item.status === "예약 완료"), // 예약 완료
-    canceled: reservations.filter((item) => item.status === "취소 완료") // 취소 완료
+    canceled: reservations.filter((item) => item.status === "예약 취소") // 예약 취소
   };
 
   return (

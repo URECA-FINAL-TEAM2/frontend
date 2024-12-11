@@ -1,29 +1,58 @@
 import SubHeader from "../../../components/common/SubHeader";
-import { useEffect, useState } from "react";
-import { ImStarFull, ImStarHalf, ImStarEmpty } from "react-icons/im"; // 아이콘 변경
-import testImg from "/Test/dog.jpg";
+import { useState } from "react";
+import { ImStarFull, ImStarHalf, ImStarEmpty } from "react-icons/im";
 import Modal from "../../../components/common/modal/modal";
 import EditReviewImage from "@/components/Mypage/Review/EditReviewImage";
-import { getCustomerReviewList } from "@/queries/reviewQuery";
+import { useLocation, useNavigate } from "react-router-dom";
+import { insertReview, updateReview } from "@/queries/reviewQuery";
+import toast, { Toaster } from "react-hot-toast";
 
 const WriteReviews = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const { review } = location.state || {}; // location.state에서 리뷰 데이터 가져오기
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [rating, setRating] = useState(4.5);
-  const [reviewContent, setReviewContent] = useState("리뷰 내용입니다.");
-  const [images, setImages] = useState([testImg, testImg, testImg]);
 
-  const handleSelectChange = (e) => {
-    setRating(Number(e.target.value));
+  // 리뷰 상태 변수
+  const [reviewData, setReviewData] = useState({
+    starScore: review?.starScore || 4.5,
+    content: review?.content || "",
+    images: review?.images || [], // 이미지 파일 객체
+    previewImages: review?.images?.map((file) => URL.createObjectURL(file)) || [] // 미리보기용 URL
+  });
+
+  // 별점 변경
+  const handleStarScoreChange = (e) => {
+    const newScore = Number(e.target.value);
+    setReviewData((prev) => ({ ...prev, starScore: newScore }));
   };
 
-  const handleImageDelete = (index) => {
-    setImages((prevImages) => prevImages.filter((_, i) => i !== index));
+  // 리뷰 내용 변경
+  const handleContentChange = (e) => {
+    const newContent = e.target.value;
+    setReviewData((prev) => ({ ...prev, content: newContent }));
   };
 
+  // 이미지 추가
   const handleImageAdd = (e) => {
     const files = Array.from(e.target.files);
-    const newImages = files.map((file) => URL.createObjectURL(file));
-    setImages((prevImages) => [...prevImages, ...newImages]);
+    const newImageFiles = files;
+    const newPreviewUrls = files.map((file) => URL.createObjectURL(file)); // 미리보기 URL 생성
+
+    setReviewData((prev) => ({
+      ...prev,
+      images: [...prev.images, ...newImageFiles], // 원본 파일 저장
+      previewImages: [...prev.previewImages, ...newPreviewUrls] // 미리보기 URL 저장
+    }));
+  };
+
+  // 이미지 삭제
+  const handleImageDelete = (index) => {
+    setReviewData((prev) => ({
+      ...prev,
+      images: prev.images.filter((_, i) => i !== index), // 원본 파일 삭제
+      previewImages: prev.previewImages.filter((_, i) => i !== index) // 미리보기 URL 삭제
+    }));
   };
 
   const handleOpenModal = () => {
@@ -34,23 +63,22 @@ const WriteReviews = () => {
     setIsModalOpen(false);
   };
 
-  const handleConfirmModal = () => {
-    console.log("리뷰 수정완료");
+  const handleConfirmModal = async () => {
+    console.log("수정 완료 데이터:", reviewData);
     setIsModalOpen(false);
-  };
 
-  useEffect(() => {
-    const getReview = async () => {
-      const response = await getCustomerReviewList();
-      console.log(response);
-    };
-    getReview();
-  }, []);
+    await updateReview(review?.reviewId, reviewData);
+    toast("수정이 완료되었습니다.", { icon: "👏🏻" });
+
+    setTimeout(() => {
+      navigate(-1);
+    }, 1500);
+  };
 
   // 별 렌더링 함수
   const renderStars = () => {
-    const fullStars = Math.floor(rating); // 꽉 찬 별 개수
-    const hasHalfStar = rating % 1 >= 0.5; // 반 별 여부
+    const fullStars = Math.floor(reviewData.starScore); // 꽉 찬 별 개수
+    const hasHalfStar = reviewData.starScore % 1 >= 0.5; // 반 별 여부
     const emptyStars = 5 - fullStars - (hasHalfStar ? 1 : 0); // 빈 별 개수
 
     return (
@@ -71,16 +99,17 @@ const WriteReviews = () => {
       <SubHeader title={"리뷰 수정"} />
       <div className="mx-auto min-h-screen bg-main-100 pt-[90px]">
         <div className="mx-auto mb-4 h-auto w-11/12 rounded-xl bg-white p-4">
-          <div className="flex items-center justify-between text-lg">
-            <span>매장명</span>
-            <div className="text-sm">2024.11.14</div>
+          <div className="flex items-center justify-between">
+            <div className="text-lg">매장명</div>
+            <div className="ml-3 text-xs">2024.11.14</div>
           </div>
-
           <div className="mb-2 flex items-center">
-            {/* 별 아이콘 렌더링 */}
             <div className="mr-2 flex items-center space-x-1">{renderStars()}</div>
-            {/* Select Box */}
-            <select value={rating} onChange={handleSelectChange} className="rounded-xl border border-gray-200 px-3">
+            <select
+              value={reviewData.starScore}
+              onChange={handleStarScoreChange}
+              className="rounded-xl border border-gray-200 px-3"
+            >
               {Array.from({ length: 11 }, (_, index) => index * 0.5).map((value) => (
                 <option key={value} value={value}>
                   {value.toFixed(1)}
@@ -89,11 +118,15 @@ const WriteReviews = () => {
             </select>
           </div>
 
-          <EditReviewImage images={images} handleImageDelete={handleImageDelete} handleImageAdd={handleImageAdd} />
+          <EditReviewImage
+            images={reviewData.previewImages} // 미리보기 URL
+            handleImageDelete={handleImageDelete}
+            handleImageAdd={handleImageAdd}
+          />
 
           <textarea
-            value={reviewContent}
-            onChange={(e) => setReviewContent(e.target.value)}
+            value={reviewData.content}
+            onChange={handleContentChange}
             className="w-full rounded-md border border-gray-300 p-2"
             rows="4"
             placeholder="리뷰 내용을 입력하세요."
@@ -113,6 +146,7 @@ const WriteReviews = () => {
         >
           리뷰를 수정하시겠습니까?
         </Modal>
+        <Toaster />
       </div>
     </>
   );

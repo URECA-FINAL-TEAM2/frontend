@@ -139,7 +139,7 @@ const PostReview = () => {
         </div>
 
         <button className="bottomButtonPink" onClick={handleOpenModal}>
-          수정완료
+          작성완료
         </button>
 
         <Modal

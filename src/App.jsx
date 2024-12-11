@@ -7,11 +7,9 @@ import InfoRequired from "./pages/Main/InfoRequired";
 import CustomerLayout from "./pages/Layout/CustomerLayout";
 import GroomerLayout from "./pages/Layout/GroomerLayout";
 import CustomerHome from "./pages/Customer/CustomerHome";
-// import CustomerQuote from "./pages/Customer/CustomerQuote";
 import CustomerChat from "./pages/Customer/CustomerChat";
 import CustomerMypage from "./pages/Customer/CustomerMypage";
 import GroomerHome from "./pages/Groomer/GroomerHome";
-// import GroomerQuote from "./pages/Groomer/GroomerQuote";
 import GroomerStore from "./pages/Groomer/GroomerStore";
 import GroomerChat from "./pages/Groomer/GroomerChat";
 import GroomerMypage from "./pages/Groomer/GroomerMypage";
@@ -35,6 +33,16 @@ import EditPortfolio from "./components/Mypage/Store/EditPortfolio";
 import PaymentCancel from "./pages/Payment/PaymentCancel";
 import PaymentTestPage from "./pages/Payment/PaymentTestPage";
 import PostReview from "./pages/Mypage/Reviews/PostReview";
+import CustomerQuote from "./pages/Customer/CustomerQuote";
+import CustomerQuoteDetailPage from "./pages/Quote/Customer/CustomerQuoteDetailPage";
+import TotalQuoteRequestPage from "./pages/Quote/Customer/TotalQuoteRequestPage";
+import ShopQuoteRequestPage from "./pages/Quote/Customer/ShopQuoteRequestPage";
+import QuoteRequestDetailPage from "./pages/Quote/Customer/QuoteRequestDetailPage";
+import GroomerQuote from "./pages/Groomer/GroomerQuote";
+import GroomerQuoteDetailPage from "./pages/Quote/Groomer/GroomerQuoteDetailPage";
+import GroomerQuoteRequestPage from "./pages/Quote/Groomer/GroomerQuoteRequestPage";
+import GroomerReservationMain from "./pages/Reservation/Groomer/GroomerReservationMain";
+import GroomerReservationDetail from "./pages/Reservation/Groomer/GroomerReservationDetail";
 
 function App() {
   return (
@@ -60,11 +68,15 @@ function App() {
 
           {/* customer/ -none */}
           <Route path="/customer">
-            {/* <Route path="quotes" element={<CustomerQuote />} /> */}
+            <Route path="quotes" element={<CustomerQuote />} />
             <Route path="shop" element={<CustomerSearchLayout />}>
               <Route index element={<CustomerSearchPage />} />
               <Route path=":shopId" element={<ShopDetailPage />} />
             </Route>
+            <Route path="quotes/detail/:quotesId" element={<CustomerQuoteDetailPage />} />
+            <Route path="quotes/request" element={<TotalQuoteRequestPage />} />
+            <Route path="quotes/request/:groomerId" element={<ShopQuoteRequestPage />} />
+            <Route path="quotes/request/detail/:requestId" element={<QuoteRequestDetailPage />} />
             <Route path="mypage" element={<CustomerMypage />} />
             <Route path="info" element={<UserInfo />} />
             <Route path="bookmarkedStore" element={<BookmarkedStore />} />
@@ -89,12 +101,16 @@ function App() {
 
           {/* groomer/ -none */}
           <Route path="/groomer">
-            {/* <Route path="quotes" element={<GroomerQuote />} /> */}
+            <Route path="quotes" element={<GroomerQuote />} />
+            <Route path="quotes/request/detail/:requestId" element={<GroomerQuoteRequestPage />} />
+            <Route path="quotes/detail/:requestId" element={<GroomerQuoteDetailPage />} />
             <Route path="mypage" element={<GroomerMypage />} />
             <Route path="info" element={<UserInfo />} />
             <Route path="mystore" element={<MyStore />} />
             <Route path="createstore" element={<CreateStore />} />
             <Route path="editportfolio" element={<EditPortfolio />} />
+            <Route path="reservation" element={<GroomerReservationMain />} />
+            <Route path="reservation/detail" element={<GroomerReservationDetail />} />
           </Route>
 
           <Route path="*" element={<NotFound />} />

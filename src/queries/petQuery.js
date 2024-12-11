@@ -38,10 +38,10 @@ const petInfo = [
 ];
 
 // 반려견 정보 조회
-export const getPetInfo = async (dogId) => {
+export const getPetInfo = async (dogId, customerId) => {
   try {
-    const dogId = 1;
-    const customerId = 1;
+    const dogId = 26;
+    const customerId = 14;
 
     const response = await axiosInstance.get(`/profile/customer/dogs/${dogId}`, {
       params: { customerId }
@@ -66,32 +66,23 @@ export const getPetInfo = async (dogId) => {
 export const updatePetInfo = async (id, dogData) => {
   const method = id ? "put" : "post";
   const endPoint = id ? `/profile/customer/dogs/${id}` : `/profile/customer/dogs`;
-  console.log(id, method, endPoint);
-
   const formatedData = {
     ...dogData,
     dogBirth: reformatDogBirth(dogData.dogBirth) // "2024-11-11"
   };
-
-  const formData = new FormData();
-
   const { profileImage, ...jsonData } = formatedData;
 
-  formData.append("requestDTO", JSON.stringify(jsonData));
+  console.log(jsonData);
+
+  const formData = new FormData();
+  formData.append("requestDto", JSON.stringify(jsonData));
 
   if (profileImage) {
     formData.append("profileImage", profileImage);
-  } else {
-    console.warn("profileImage가 null입니다. 기본값으로 처리됩니다.");
-  }
-
-  // FormData 확인 (디버깅용)
-  for (let [key, value] of formData.entries()) {
-    console.log(`${key}:`, value);
   }
 
   try {
-    const customerId = 1;
+    const customerId = 14;
     const response = await axiosInstance({
       method,
       url: endPoint,
@@ -114,6 +105,16 @@ export const deletePetInfo = async (dogId) => {
     const customerId = 1;
     const response = await axiosInstance.delete(`/profile/customer/dogs/${dogId}/delete`, { params: { customerId } });
     return response.data;
+  } catch (error) {
+    console.error("반려견 정보 삭제 요청 실패:", error);
+    throw error;
+  }
+};
+
+export const getDogBreed = async () => {
+  try {
+    const response = await axiosInstance.get(`/profile/customer/dogs/breed`);
+    return response.data.data;
   } catch (error) {
     console.error("반려견 정보 삭제 요청 실패:", error);
     throw error;

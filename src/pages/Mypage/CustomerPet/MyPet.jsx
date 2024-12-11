@@ -4,16 +4,16 @@ import { useParams } from "react-router-dom";
 import SubHeader from "../../../components/common/SubHeader";
 import Modal from "../../../components/common/modal/modal";
 import PetForm from "@/components/Mypage/Pet/PetForm";
-import { deletePetInfo, getPetInfo, updatePetInfo } from "@/queries/petQuery";
+import { deletePetInfo, getDogBreed, getPetInfo, updatePetInfo } from "@/queries/petQuery";
 
 // 반려견 등록, 조회, 수정, 삭제(CRUD)
 const MyPet = () => {
   const params = useParams();
   const [isState, setIsState] = useState("register");
+  const [breed, setBreed] = useState([]);
   const [onlyRead, setOnlyRead] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [formData, setFormData] = useState({
-    dogId: 0,
     dogName: "",
     dogBreedCodeId: "",
     dogWeight: "",
@@ -71,12 +71,26 @@ const MyPet = () => {
     }
   }, [params]);
 
+  useEffect(() => {
+    const getBreed = async () => {
+      const response = await getDogBreed();
+      setBreed(response);
+    };
+    getBreed();
+  }, []);
+
   return (
     <>
       <div>
         {isState === "register" ? <SubHeader title={"반려견 등록"} /> : <SubHeader title={"반려견 정보"} />}
 
-        <PetForm onlyRead={onlyRead} formData={formData} setFormData={setFormData} handleChange={handleChange} />
+        <PetForm
+          breed={breed}
+          onlyRead={onlyRead}
+          formData={formData}
+          setFormData={setFormData}
+          handleChange={handleChange}
+        />
 
         {isState != "register" && (
           <div className="mb-28 mt-12 text-center text-sm">

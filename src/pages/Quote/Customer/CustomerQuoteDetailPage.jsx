@@ -21,7 +21,7 @@ function CustomerQuoteDetailPage(props) {
   });
 
   const handleDataLoad = (data) => {
-    setAmount(data.amount);
+    setAmount(Math.floor(data.amount * 0.2));
     setShopName(data.shopName);
   };
 

@@ -33,7 +33,7 @@ const CustomerQuote = () => {
         + 새 견적 요청
       </button>
       {/* Menu Bar */}
-      <div className="fixed top-[--header-height] flex h-10 w-[400px] border-b bg-white">
+      <div className="fixed top-[--header-height] z-50 flex h-10 w-[400px] border-b bg-white">
         <button
           onClick={() => setActiveSection("section2")}
           className={`flex-1 ${activeSection === "section2" ? "border-b-2 border-solid border-black font-semibold text-black" : "text-gray-300 hover:bg-gray-100"} text-[15px] transition-colors`}

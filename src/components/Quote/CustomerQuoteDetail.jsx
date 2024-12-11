@@ -118,18 +118,21 @@ function CustomerQuoteDetail({ quotesId, onDataLoad }) {
       </div>
 
       {/* 첨부 사진 */}
-      <div className="mb-2 flex items-center space-x-1">
-        <img src="/public/Icons/Photos.svg" alt="Photos Icon" className="h-5 w-5" />
-        <h2 className="text-lg font-semibold">첨부 사진</h2>
-      </div>
       <div className="mb-6 rounded-lg">
         <div className="grid grid-cols-3 gap-3">
           {quoteData.quoteRequest.requestImage.length > 0 ? (
-            quoteData.quote.requestImage.map((image, index) => (
-              <div key={index} className="relative">
-                <img src={image} alt={`Uploaded ${index}`} className="h-28 w-28 rounded-lg object-cover" />
-              </div>
-            ))
+            quoteData.quoteRequest.requestImage.map((image, index) => {
+              console.log("Image URL:", image); // 로그를 찍어서 이미지 URL 확인
+              return (
+                <div key={index} className="relative">
+                  <img
+                    src={encodeURI(image)} // URL 인코딩
+                    alt={`Uploaded ${index}`}
+                    className="h-28 w-28 rounded-lg object-cover"
+                  />
+                </div>
+              );
+            })
           ) : (
             <p className="col-span-3 text-center text-gray-500">첨부된 사진이 없습니다.</p>
           )}
@@ -140,7 +143,7 @@ function CustomerQuoteDetail({ quotesId, onDataLoad }) {
 
       {/* 견적 설명 */}
       <div className="mb-2 flex items-center space-x-1">
-        <img src="/public/Icons/Description.svg" alt="Photos Icon" className="h-5 w-5" />
+        <img src="/public/Icons/Description.svg" alt="Description Icon" className="h-5 w-5" />
         <h2 className="text-lg font-semibold">견적 설명</h2>
       </div>
       <div className="mb-6 rounded-lg border border-main-400 p-4 leading-tight">
@@ -148,12 +151,27 @@ function CustomerQuoteDetail({ quotesId, onDataLoad }) {
       </div>
 
       {/* 금액 */}
-      <div className="mb-6 flex justify-between">
+      <div className="mb-3 flex justify-between">
         <div className="flex items-center space-x-1">
           <BiWon className="text-lg" />
           <h2 className="text-lg font-semibold">금액</h2>
         </div>
         <p className="mt-1 text-lg font-semibold leading-none">{Number(quoteData.quote.cost).toLocaleString()} 원</p>
+      </div>
+
+      {/* 예약금 */}
+      <div className="mb-1 flex justify-between">
+        <div className="flex items-center space-x-1 pt-1">
+          <img src="/public/Icons/BankNotes.svg" alt="Banknotes Icon" className="h-5 w-5" />
+          <h2 className="text-lg font-semibold">예약금</h2>
+        </div>
+        <p className="mt-1 rounded-lg bg-main-200 px-1 pt-1 text-lg font-semibold leading-none">
+          {Math.floor(Number(quoteData.quote.cost) * 0.2).toLocaleString()} 원
+        </p>
+      </div>
+      <div className="rounded-lg bg-main-100 p-2 text-center text-sm leading-tight">
+        <p>예약금만 결제하면 예약이 확정됩니다.</p>
+        <p>남은 금액은 현장에서 결제할 수 있습니다.</p>
       </div>
     </div>
   );

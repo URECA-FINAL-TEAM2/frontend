@@ -16,8 +16,8 @@ const customerQuoteDetail = {
     experience: false,
     significant: "산책을 좋아해요",
     requestContent: "전체 미용 부탁드립니다",
-    dogBreed: null,
-    requestImage: []
+    dogBreed: "null",
+    requestImage: ["https://picsum.photos/200", "https://picsum.photos/200", "https://picsum.photos/200"]
   },
   quote: {
     quoteId: 66,

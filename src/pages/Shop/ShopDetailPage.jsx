@@ -12,25 +12,30 @@ import ShopReviewList from "@/components/Shop/ShopReviewList";
 
 const ShopDetailPage = () => {
   const shopId = useParams().shopId;
-  const [shopDetail, setShopDetail] = useState({});
+  const customerId = 47; // TODO: 실제 사용자 ID로 대체
+  const [shopDetail, setShopDetail] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
 
   useEffect(() => {
     const fetchShopDetail = async () => {
       try {
-        const response = await getShopDetail(shopId);
+        const response = await getShopDetail(shopId, customerId);
         setShopDetail(response);
       } catch (error) {
         console.error("매장 상세 로드 실패:", error);
+      } finally {
+        setIsLoading(false);
       }
     };
 
     fetchShopDetail();
-  }, []);
+  }, [shopId, customerId]);
 
   const portfolioRef = useRef(null);
   const groomerRef = useRef(null);
   const reviewsRef = useRef(null);
+
   const scrollToSection = (section) => {
     const refs = {
       portfolio: portfolioRef,
@@ -41,30 +46,51 @@ const ShopDetailPage = () => {
     refs[section]?.current?.scrollIntoView({ behavior: "smooth" });
   };
 
+  if (isLoading) {
+    return (
+      <div className="absolute inset-0 flex items-center justify-center bg-white">
+        <p>로딩 중...</p>
+      </div>
+    );
+  }
+
+  if (!shopDetail) {
+    return (
+      <div className="absolute inset-0 flex items-center justify-center bg-white">
+        <p>데이터를 불러올 수 없습니다.</p>
+      </div>
+    );
+  }
+
   return (
-    <div className="absolute inset-0 z-30 overflow-y-scroll bg-white pt-[--header-height] scrollbar-hide">
-      {shopDetail.shopName && <SubHeader title={shopDetail.shopName} navigate={-1} />}
+    <div className="absolute inset-0 z-30 mt-[--header-height] overflow-y-scroll bg-white scrollbar-hide">
+      <SubHeader title={shopDetail.shopName} navigate={-1} />
 
       <div>
-        <ShopIntro />
+        <ShopIntro shopDetail={shopDetail} />
       </div>
 
-      <ShopMenuBar shopDetail={shopDetail} scrollToSection={scrollToSection} />
+      <ShopMenuBar
+        shopId={shopId}
+        isFavorite={shopDetail.isFavorite}
+        favoriteCount={shopDetail.favoriteCount}
+        scrollToSection={scrollToSection}
+      />
 
       <div>
-        <ShopInfo />
+        <ShopInfo shopDetail={shopDetail} />
       </div>
 
       <div ref={portfolioRef}>
-        <ShopPortfolio />
+        <ShopPortfolio portfolios={shopDetail.groomerPortfolioImages} />
       </div>
 
       <div ref={groomerRef}>
-        <ShopGroomer />
+        <ShopGroomer shopDetail={shopDetail} />
       </div>
 
       <div ref={reviewsRef}>
-        <ShopReviewList />
+        <ShopReviewList reviewList={shopDetail.reviews} />
       </div>
 
       <div className="h-[55px]">{/* BottomButton과 겹치지 않게 공간 확보 */}</div>

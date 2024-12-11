@@ -1,42 +1,42 @@
 import axiosInstance from "@/api/axiosInstance";
 
-const shopDetail = {
-  groomerId: 2,
-  shopId: 2,
-  shopLogo: "https://s3-beauty-meongdang.s3.ap-northeast-2.amazonaws.com/매장+로고+이미지/멍브라운.jpg",
-  shopName: "멍브라운",
-  starScoreAvg: 0,
-  starCount: 0,
-  address: "서울특별시 강남구 선릉로 162길",
-  businessTime: "09:00-19:00",
-  skills: "애견 미용, 목욕 서비스",
-  latitude: 37.523265,
-  longitude: 127.033964,
-  favoriteCount: 3,
-  isFavorite: false,
-  description: "10년 경력 수석 미용사가 직접 케어해드립니다.",
-  groomerPortfolioImages: [
-    "https://s3-beauty-meongdang.s3.ap-northeast-2.amazonaws.com/%EB%AF%B8%EC%9A%A9%EC%82%AC+%ED%8F%AC%ED%8A%B8%ED%8F%B4%EB%A6%AC%EC%98%A4+%EC%9D%B4%EB%AF%B8%EC%A7%80/5-1.jpg",
-    "https://s3-beauty-meongdang.s3.ap-northeast-2.amazonaws.com/%EB%AF%B8%EC%9A%A9%EC%82%AC+%ED%8F%AC%ED%8A%B8%ED%8F%B4%EB%A6%AC%EC%98%A4+%EC%9D%B4%EB%AF%B8%EC%A7%80/5-2.jpg",
-    "https://s3-beauty-meongdang.s3.ap-northeast-2.amazonaws.com/%EB%AF%B8%EC%9A%A9%EC%82%AC+%ED%8F%AC%ED%8A%B8%ED%8F%B4%EB%A6%AC%EC%98%A4+%EC%9D%B4%EB%AF%B8%EC%A7%80/5-3.jpg",
-    "https://s3-beauty-meongdang.s3.ap-northeast-2.amazonaws.com/%EB%AF%B8%EC%9A%A9%EC%82%AC+%ED%8F%AC%ED%8A%B8%ED%8F%B4%EB%A6%AC%EC%98%A4+%EC%9D%B4%EB%AF%B8%EC%A7%80/5-4.jpg",
-    "https://s3-beauty-meongdang.s3.ap-northeast-2.amazonaws.com/%EB%AF%B8%EC%9A%A9%EC%82%AC+%ED%8F%AC%ED%8A%B8%ED%8F%B4%EB%A6%AC%EC%98%A4+%EC%9D%B4%EB%AF%B8%EC%A7%80/5-5.jpg"
-  ],
-  groomerUsername: "도리도림",
-  groomerProfileImage: "profile2.jpg",
-  reviews: [
-    {
-      reviewId: 0,
-      customerNickname: "string",
-      starScore: 0,
-      content: "string",
-      recommendCount: 0,
-      reviewsImage: ["string"],
-      createdAt: "2024-12-11T05:12:11.773Z",
-      isRecommended: true
-    }
-  ]
-};
+// const shopDetail = {
+//   groomerId: 2,
+//   shopId: 2,
+//   shopLogo: "https://s3-beauty-meongdang.s3.ap-northeast-2.amazonaws.com/매장+로고+이미지/멍브라운.jpg",
+//   shopName: "멍브라운",
+//   starScoreAvg: 0,
+//   starCount: 0,
+//   address: "서울특별시 강남구 선릉로 162길",
+//   businessTime: "09:00-19:00",
+//   skills: "애견 미용, 목욕 서비스",
+//   latitude: 37.523265,
+//   longitude: 127.033964,
+//   favoriteCount: 3,
+//   isFavorite: false,
+//   description: "10년 경력 수석 미용사가 직접 케어해드립니다.",
+//   groomerPortfolioImages: [
+//     "https://s3-beauty-meongdang.s3.ap-northeast-2.amazonaws.com/%EB%AF%B8%EC%9A%A9%EC%82%AC+%ED%8F%AC%ED%8A%B8%ED%8F%B4%EB%A6%AC%EC%98%A4+%EC%9D%B4%EB%AF%B8%EC%A7%80/5-1.jpg",
+//     "https://s3-beauty-meongdang.s3.ap-northeast-2.amazonaws.com/%EB%AF%B8%EC%9A%A9%EC%82%AC+%ED%8F%AC%ED%8A%B8%ED%8F%B4%EB%A6%AC%EC%98%A4+%EC%9D%B4%EB%AF%B8%EC%A7%80/5-2.jpg",
+//     "https://s3-beauty-meongdang.s3.ap-northeast-2.amazonaws.com/%EB%AF%B8%EC%9A%A9%EC%82%AC+%ED%8F%AC%ED%8A%B8%ED%8F%B4%EB%A6%AC%EC%98%A4+%EC%9D%B4%EB%AF%B8%EC%A7%80/5-3.jpg",
+//     "https://s3-beauty-meongdang.s3.ap-northeast-2.amazonaws.com/%EB%AF%B8%EC%9A%A9%EC%82%AC+%ED%8F%AC%ED%8A%B8%ED%8F%B4%EB%A6%AC%EC%98%A4+%EC%9D%B4%EB%AF%B8%EC%A7%80/5-4.jpg",
+//     "https://s3-beauty-meongdang.s3.ap-northeast-2.amazonaws.com/%EB%AF%B8%EC%9A%A9%EC%82%AC+%ED%8F%AC%ED%8A%B8%ED%8F%B4%EB%A6%AC%EC%98%A4+%EC%9D%B4%EB%AF%B8%EC%A7%80/5-5.jpg"
+//   ],
+//   groomerUsername: "도리도림",
+//   groomerProfileImage: "profile2.jpg",
+//   reviews: [
+//     {
+//       reviewId: 0,
+//       customerNickname: "string",
+//       starScore: 0,
+//       content: "string",
+//       recommendCount: 0,
+//       reviewsImage: ["string"],
+//       createdAt: "2024-12-11T05:12:11.773Z",
+//       isRecommended: true
+//     }
+//   ]
+// };
 
 const myShopDetail = {
   groomerId: 2,
@@ -76,69 +76,10 @@ const myShopDetail = {
   ]
 };
 
-const shopList = [
-  {
-    groomerId: 2,
-    shopId: 2,
-    shopLogo: "https://s3-beauty-meongdang.s3.ap-northeast-2.amazonaws.com/매장+로고+이미지/멍브라운.jpg",
-    shopName: "멍브라운",
-    starScoreAvg: 0,
-    reviewCount: 0,
-    address: "서울특별시 강남구 선릉로 162길",
-    businessTime: "09:00-19:00",
-    skills: "애견 미용, 목욕 서비스",
-    latitude: 37.523265,
-    longitude: 127.033964,
-    favoriteCount: 3
-  },
-  {
-    groomerId: 3,
-    shopId: 3,
-    shopLogo: "https://s3-beauty-meongdang.s3.ap-northeast-2.amazonaws.com/매장+로고+이미지/포도독.jpg",
-    shopName: "포도독",
-    starScoreAvg: 0,
-    reviewCount: 0,
-    address: "서울특별시 강남구 압구정로 232",
-    businessTime: "11:00-21:00",
-    skills: "털 다듬기, 위생 미용",
-    latitude: 37.538912,
-    longitude: 127.049578,
-    favoriteCount: 3
-  },
-  {
-    groomerId: 4,
-    shopId: 4,
-    shopLogo: "https://s3-beauty-meongdang.s3.ap-northeast-2.amazonaws.com/매장+로고+이미지/두루몽실.jpg",
-    shopName: "두루몽실",
-    starScoreAvg: 0,
-    reviewCount: 0,
-    address: "서울특별시 강남구 언주로 123",
-    businessTime: "10:30-20:30",
-    skills: "전체 미용, 샴푸 서비스",
-    latitude: 37.542634,
-    longitude: 127.057932,
-    favoriteCount: 3
-  },
-  {
-    groomerId: 5,
-    shopId: 5,
-    shopLogo: "https://s3-beauty-meongdang.s3.ap-northeast-2.amazonaws.com/매장+로고+이미지/도도한몽이네.jpg",
-    shopName: "도도한몽이네",
-    starScoreAvg: 0,
-    reviewCount: 0,
-    address: "서울특별시 강남구 삼성로 456",
-    businessTime: "09:30-19:30",
-    skills: "발톱 손질, 귀 청소",
-    latitude: 37.513189,
-    longitude: 127.062276,
-    favoriteCount: 2
-  }
-];
-
 export const getShopList = async (customerId) => {
   try {
     // return shopList;
-    const response = await axiosInstance.get("/profile/groomer/shop", {
+    const response = await axiosInstance.get("/profile/groomer/shop/list", {
       params: { customerId }
     });
     return response.data.data.shopLists;
@@ -147,13 +88,10 @@ export const getShopList = async (customerId) => {
   }
 };
 
-export const getShopDetail = async (shopId) => {
-  const customerId = 1;
-  // TODO : customerId 를 컴포넌트에서 꺼내서 인자로 보내도록 수정
-
+export const getShopDetail = async (shopId, customerId) => {
   try {
     // return shopDetail;
-    const response = await axiosInstance.get("/profile/groomer/shop/detail", {
+    const response = await axiosInstance.get("/profile/groomer/shop/detail/customer", {
       params: { shopId, customerId }
     });
     return response.data.data;
@@ -255,6 +193,34 @@ export const insertGroomerPortfolio = async (images, id) => {
     console.log(response);
   } catch (error) {
     throw new Error("Failed to insert shop data");
+  }
+};
+
+export const postFavorite = async (customerId, shopId) => {
+  try {
+    const response = await axiosInstance.post("/profile/groomer/shop/favorite", {
+      shopId,
+      customerId
+    });
+
+    console.log(response.status === 200 ? "요청 성공" : `요청 실패: ${response.status}`);
+  } catch (error) {
+    console.error("요청 실패:", error);
+  }
+};
+
+export const deleteFavorite = async (customerId, shopId) => {
+  try {
+    const response = await axiosInstance.delete("/profile/groomer/shop/favorite", {
+      params: {
+        customerId,
+        shopId
+      }
+    });
+
+    console.log(response.status === 200 ? "요청 성공" : `요청 실패: ${response.status}`);
+  } catch (error) {
+    console.error("요청 실패:", error);
   }
 };
 

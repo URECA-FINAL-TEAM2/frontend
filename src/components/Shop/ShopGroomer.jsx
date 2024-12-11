@@ -1,23 +1,7 @@
-import { getShopDetail } from "@/queries/shopQuery";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Button from "../common/button/Button";
 
-function ShopGroomer(props) {
-  const [shopDetail, setShopDetail] = useState(null);
-
-  useEffect(() => {
-    const fetchShopDetail = async () => {
-      try {
-        const detail = await getShopDetail(1);
-        setShopDetail(detail);
-      } catch (error) {
-        console.error("Failed to fetch shop detail:", error);
-      }
-    };
-
-    fetchShopDetail();
-  }, []);
-
+function ShopGroomer({ shopDetail }) {
   return (
     <div className="mx-5 my-3">
       <p className="mb-1 font-semibold">미용사</p>

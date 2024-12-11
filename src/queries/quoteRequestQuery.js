@@ -1,3 +1,5 @@
+import axiosInstance from "@/api/axiosInstance";
+
 const dogList = [
   {
     dogId: 1,
@@ -118,7 +120,61 @@ const getDogInfo = async (dogId) => {
 };
 
 const getGroomerDetail = async (groomerId) => {
-  return groomerDetail;
+  const response = await axiosInstance.get(`/requests/groomer/${groomerId}/shop`);
+  return response.data.data;
+  // return groomerDetail;
+};
+
+const sendAllQuote = async (customerId, requestDto, images) => {
+  const formData = new FormData();
+
+  // requestDto를 JSON 문자열로 변환하여 추가
+  formData.append(
+    "requestDto",
+    new Blob([JSON.stringify(requestDto)], {
+      type: "application/json"
+    })
+  );
+
+  // 이미지 추가 (여러 이미지인 경우)
+  images.forEach((image, index) => {
+    formData.append("images", image, `image_${index}`);
+  });
+
+  const response = await axiosInstance.post(`/requests/all`, formData, {
+    params: { customerId },
+    headers: {
+      "Content-Type": "multipart/form-data"
+    }
+  });
+
+  return response;
+};
+
+const sendGroomerQuote = async (customerId, requestDto, images) => {
+  const formData = new FormData();
+
+  // requestDto를 JSON 문자열로 변환하여 추가
+  formData.append(
+    "requestDto",
+    new Blob([JSON.stringify(requestDto)], {
+      type: "application/json"
+    })
+  );
+
+  // 이미지 추가 (여러 이미지인 경우)
+  images.forEach((image, index) => {
+    formData.append("images", image, `image_${index}`);
+  });
+
+  const response = await axiosInstance.post(`/requests/groomer`, formData, {
+    params: { customerId },
+    headers: {
+      "Content-Type": "multipart/form-data"
+    }
+  });
+
+  return response;
 };
 
 const getCustomerRequestDetail = async (requestId) => {

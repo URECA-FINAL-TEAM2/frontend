@@ -1,16 +1,34 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { GoHeart, GoHeartFill } from "react-icons/go";
 import { FaFolderOpen } from "react-icons/fa6";
 import { MdReviews } from "react-icons/md";
 import { RiScissors2Fill } from "react-icons/ri";
 import { IoChatbubbles } from "react-icons/io5";
+import { deleteFavorite, postFavorite } from "@/queries/shopQuery";
 
-const ShopMenuBar = ({ shopDetail, scrollToSection }) => {
-  const [isFavorite, setIsFavorite] = useState(shopDetail.isFavorite);
+const ShopMenuBar = ({ shopId, isFavorite, favoriteCount, scrollToSection }) => {
+  const [isFill, setIsFill] = useState(false);
+  const [favCnt, setFavCnt] = useState(0);
+  const customerId = 47; // TODO
+
+  useEffect(() => {
+    setIsFill(isFavorite);
+    setFavCnt(favoriteCount);
+  }, []);
+
   const handleFavoriteClick = () => {
-    setIsFavorite(!isFavorite);
     // isFavorite 변경, favorite(찜 개수) 변경
-    // 매장 찜 or 찜 취소 API 호출
+    if (isFill) {
+      // 찜 취소
+      setFavCnt(favCnt - 1);
+      setIsFill(false);
+      deleteFavorite(customerId, shopId);
+    } else {
+      // 찜 등록
+      setFavCnt(favCnt + 1);
+      setIsFill(true);
+      postFavorite(customerId, shopId);
+    }
   };
 
   return (
@@ -18,9 +36,9 @@ const ShopMenuBar = ({ shopDetail, scrollToSection }) => {
       <div className="flex divide-x divide-gray-200">
         <div className="flex flex-1 flex-col items-center py-3">
           <div className="cursor-pointer text-[25px]" onClick={handleFavoriteClick}>
-            {isFavorite ? <GoHeartFill className="text-main" /> : <GoHeart className="text-main" />}
+            {isFill ? <GoHeartFill className="text-main" /> : <GoHeart className="text-main" />}
           </div>
-          <div className="mt-1 select-none text-[12px]">{shopDetail.favorite}</div>
+          <div className="mt-1 select-none text-[12px]">{favCnt}</div>
         </div>
 
         <div

@@ -1,18 +1,19 @@
 import React, { useEffect, useState } from "react";
-import { getDogInfo, getDogList } from "@/queries/quoteRequestQuery";
 import { IoCloseCircleOutline } from "react-icons/io5";
 import Button from "../common/button/Button";
+import { getQuotePetList, getQuotePetInfo } from "@/queries/petQuery";
 
 const PetSelectModal = ({ isOpen = false, onClose, onConfirm }) => {
   if (!isOpen) return null;
 
+  const customerId = 2;
   const [dogList, setDogList] = useState(null);
   const [dogInfo, setDogInfo] = useState(null);
 
   useEffect(() => {
     const fetchDogList = async () => {
       try {
-        const data = await getDogList();
+        const data = await getQuotePetList(customerId);
         setDogList(data);
       } catch (error) {
         console.error("Error fetching dog list:", error);
@@ -22,8 +23,6 @@ const PetSelectModal = ({ isOpen = false, onClose, onConfirm }) => {
 
     fetchDogList();
   }, []);
-
-  const onSubmit = () => {};
 
   console.log(typeof dogList);
   console.log(dogList);
@@ -79,19 +78,17 @@ const PetSelectModal = ({ isOpen = false, onClose, onConfirm }) => {
               onClick={() => {
                 const fetchDogInfo = async () => {
                   try {
-                    const data = await getDogInfo();
-                    setDogInfo(data);
+                    const data = await getQuotePetInfo(dog.dogId);
+                    onConfirm(data);
                   } catch (error) {
                     console.error("Error fetching dog info:", error);
-                    setDogInfo({});
                   }
                 };
 
                 fetchDogInfo();
-                onConfirm(dogInfo);
               }}
             >
-              <img src={dog.profileImage} alt={dog.dogName} className="h-14 w-14 rounded-sm" />
+              <img src={dog.profileImage} alt={dog.dogName} className="h-14 w-14 rounded-sm object-cover" />
               <div className="text-center">{dog.dogName}</div>
             </div>
           ))}

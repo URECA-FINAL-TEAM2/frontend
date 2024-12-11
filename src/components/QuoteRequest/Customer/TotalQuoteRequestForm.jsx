@@ -77,11 +77,13 @@ const TotalQuoteRequestForm = () => {
   };
 
   const handlePetSelect = (selectedDog) => {
+    if (!selectedDog) return;
     console.log("selectedDog", selectedDog);
 
     setPetInfo({
+      id: selectedDog.dogId,
       name: selectedDog.dogName,
-      image: selectedDog.image,
+      image: selectedDog.dogProfileImage,
       breed: selectedDog.dogBreed,
       weight: selectedDog.dogWeight,
       age: selectedDog.dogAge,
@@ -173,7 +175,7 @@ const TotalQuoteRequestForm = () => {
         {petInfo ? (
           <div className="flex items-start">
             <div className="mr-4 self-center">
-              <img src={petInfo?.image} alt="반려견 사진" className="h-28 w-28 rounded-lg" />
+              <img src={petInfo?.image} alt="반려견 사진" className="h-28 w-28 rounded-lg object-cover" />
               <p className="mt-1 text-center font-semibold">{petInfo?.name}</p>
             </div>
             <div className="text-sm leading-normal">

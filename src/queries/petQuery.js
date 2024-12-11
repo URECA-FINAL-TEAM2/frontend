@@ -62,6 +62,44 @@ export const getPetInfo = async (dogId) => {
   }
 };
 
+// 견적서에서 반려견 정보 조회
+export const getQuotePetInfo = async (dogId) => {
+  try {
+    const customerId = 2; // TODO
+
+    const response = await axiosInstance.get(`/profile/customer/dogs/${dogId}`, {
+      params: { customerId }
+    });
+    console.log(response);
+    const res = response.data.data;
+    // const res = petInfo[0].data;
+
+    const transformedData = {
+      ...res, // 기존 데이터 유지
+      dogAge: calculateDogAge(res.dogBirth) // dogBirth 변환
+    };
+
+    return transformedData;
+  } catch (error) {
+    console.error("반려견 정보 조회 요청 실패:", error);
+    throw error;
+  }
+};
+
+// requestQuery하 api긴 한데 내용이 너무 pet이라 여기 추가함
+export const getQuotePetList = async (customerId) => {
+  try {
+    const response = await axiosInstance.get(`/requests/dog`, {
+      params: { customerId }
+    });
+    console.log(response);
+    return response.data.data;
+  } catch (error) {
+    console.error("반려견 목록 조회 요청 실패:", error);
+    throw error;
+  }
+};
+
 // 반려견 정보 업데이트(등록, 수정)
 export const updatePetInfo = async (id, dogData) => {
   const method = id ? "put" : "post";
@@ -137,3 +175,18 @@ function reformatDogBirth(dogBirth) {
   const day = String(dogBirth.day).padStart(2, "0"); // "11" (앞에 0 추가)
   return `${year}-${month}-${day}`; // "2024-11-11"
 }
+
+const calculateDogAge = (birthDate) => {
+  const birth = new Date(birthDate);
+  const today = new Date();
+
+  let age = today.getFullYear() - birth.getFullYear();
+  const monthDifference = today.getMonth() - birth.getMonth();
+
+  // Adjust the age if the dog's birthday hasn't occurred yet this year
+  if (monthDifference < 0 || (monthDifference === 0 && today.getDate() < birth.getDate())) {
+    age--;
+  }
+
+  return age;
+};

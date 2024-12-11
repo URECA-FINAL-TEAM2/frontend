@@ -9,7 +9,7 @@ import { deleteFavorite, postFavorite } from "@/queries/shopQuery";
 const ShopMenuBar = ({ shopId, isFavorite, favoriteCount, scrollToSection }) => {
   const [isFill, setIsFill] = useState(false);
   const [favCnt, setFavCnt] = useState(0);
-  const customerId = 47; // TODO
+  const customerId = 46; // TODO
 
   useEffect(() => {
     setIsFill(isFavorite);

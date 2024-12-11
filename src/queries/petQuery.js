@@ -1,47 +1,15 @@
 import axiosInstance from "@/api/axiosInstance";
 
-const successResponse = [
-  {
-    message: "반려견 정보 수정 성공",
-    data: {
-      dogId: 123,
-      dogName: "멍당이",
-      breed: "말티즈",
-      dogWeight: "5.0",
-      dogBirth: "2024-02-29",
-      dogGender: "MALE",
-      neutering: true,
-      experience: true,
-      significant: "목 쪽 피부병 치료 완료."
-    },
-    timestamp: "2024-12-04 00:00:00"
-  }
-];
-
-const petInfo = [
-  {
-    message: "Get Pet Success",
-    data: {
-      dogId: "1",
-      dogName: "고양이",
-      breed: "시바견",
-      dogWeight: "4.8",
-      dogBirth: "2020-02-29",
-      dogGender: "남아",
-      neutering: "O",
-      experience: "X",
-      significant: "특이함",
-      profileImage: null
-    },
-    timestamp: "2024-10-17 00:00:00"
-  }
-];
-
 // 반려견 정보 조회
-export const getPetInfo = async (id) => {
+export const getPetInfo = async (dogId, id) => {
   try {
-    // const response = await axiosInstance.get(`/profile/customer/pets/${id}`);
-    const res = petInfo[0].data;
+    const customerId = id.customerId;
+
+    const response = await axiosInstance.get(`/profile/customer/dogs/${dogId}`, {
+      params: { customerId }
+    });
+    console.log(response.data.data);
+    const res = response.data.data;
 
     const transformedData = {
       ...res, // 기존 데이터 유지
@@ -55,49 +23,72 @@ export const getPetInfo = async (id) => {
   }
 };
 
-// 반려견 정보 업데이트(등록, 수정)
-export const updatePetInfo = async (id, dogData) => {
-  const method = id ? "put" : "post";
-  const endPoint = id ? `/profile/customer/dogs/${id}` : `/profile/customer/dogs`;
-  console.log(id, method, endPoint);
+// 견적서에서 반려견 정보 조회
+export const getQuotePetInfo = async (dogId) => {
+  try {
+    const customerId = 2; // TODO
 
+    const response = await axiosInstance.get(`/profile/customer/dogs/${dogId}`, {
+      params: { customerId }
+    });
+    console.log(response);
+    const res = response.data.data;
+    // const res = petInfo[0].data;
+
+    const transformedData = {
+      ...res, // 기존 데이터 유지
+      dogAge: calculateDogAge(res.dogBirth) // dogBirth 변환
+    };
+
+    return transformedData;
+  } catch (error) {
+    console.error("반려견 정보 조회 요청 실패:", error);
+    throw error;
+  }
+};
+
+// requestQuery하 api긴 한데 내용이 너무 pet이라 여기 추가함
+export const getQuotePetList = async (customerId) => {
+  try {
+    const response = await axiosInstance.get(`/requests/dog`, {
+      params: { customerId }
+    });
+    console.log(response);
+    return response.data.data;
+  } catch (error) {
+    console.error("반려견 목록 조회 요청 실패:", error);
+    throw error;
+  }
+};
+
+// 반려견 정보 업데이트(등록, 수정)
+export const updatePetInfo = async (id, dogId, dogData, state) => {
+  const method = state === "update" ? "put" : "post";
+  const endPoint = state === "update" ? `/profile/customer/dogs/${dogId}` : `/profile/customer/dogs`;
   const formatedData = {
     ...dogData,
-    dogBirth: reformatDogBirth(dogData.dogBirth) // "2024-11-11"
+    dogBirth: reformatDogBirth(dogData.dogBirth)
   };
-
-  // FormData 생성
-  const formData = new FormData();
-
-  // profileImage를 dogData에서 추출
   const { profileImage, ...jsonData } = formatedData;
 
-  // JSON 데이터 직렬화 후 FormData에 추가
-  formData.append("requestDTO", JSON.stringify(jsonData));
+  const formData = new FormData();
+  formData.append("requestDto", JSON.stringify(jsonData));
 
-  // 파일 데이터 추가
   if (profileImage) {
-    formData.append("profileImage", profileImage);
-  } else {
-    console.warn("profileImage가 null입니다. 기본값으로 처리됩니다.");
+    formData.append("dogProfile", profileImage);
   }
 
-  // FormData 확인 (디버깅용)
-  for (let [key, value] of formData.entries()) {
-    console.log(`${key}:`, value);
-  }
-
+  const customerId = id.customerId;
   try {
-    // const response = await axiosInstance({
-    //   method,
-    //   url: endPoint,
-    //   data: formData,
-    //   headers: {
-    //     "Content-Type": "multipart/form-data"
-    //   }
-    // });
-    // return response.data;
-    return successResponse;
+    const response = await axiosInstance({
+      method,
+      url: endPoint,
+      data: formData,
+      params: { customerId }
+    });
+
+    console.log(response.data);
+    return response.data;
   } catch (error) {
     console.error("반려견 정보 업데이트 요청 실패:", error);
     throw error;
@@ -105,10 +96,28 @@ export const updatePetInfo = async (id, dogData) => {
 };
 
 // 반려견 정보 삭제
-export const deletePetInfo = async (id) => {
+export const deletePetInfo = async (dogId, id) => {
   try {
-    const response = await axiosInstance.delete(`/profile/customer/pets/${id}`);
+    const customerId = id.customerId;
+    const response = await axiosInstance.put(
+      `/profile/customer/dogs/${dogId}/delete`,
+      {},
+      {
+        params: { customerId }
+      }
+    );
     return response.data;
+  } catch (error) {
+    console.error("반려견 정보 삭제 요청 실패:", error);
+    throw error;
+  }
+};
+
+// 견종 조회
+export const getDogBreed = async () => {
+  try {
+    const response = await axiosInstance.get(`/profile/customer/dogs/breed`);
+    return response.data.data;
   } catch (error) {
     console.error("반려견 정보 삭제 요청 실패:", error);
     throw error;
@@ -132,3 +141,18 @@ function reformatDogBirth(dogBirth) {
   const day = String(dogBirth.day).padStart(2, "0"); // "11" (앞에 0 추가)
   return `${year}-${month}-${day}`; // "2024-11-11"
 }
+
+const calculateDogAge = (birthDate) => {
+  const birth = new Date(birthDate);
+  const today = new Date();
+
+  let age = today.getFullYear() - birth.getFullYear();
+  const monthDifference = today.getMonth() - birth.getMonth();
+
+  // Adjust the age if the dog's birthday hasn't occurred yet this year
+  if (monthDifference < 0 || (monthDifference === 0 && today.getDate() < birth.getDate())) {
+    age--;
+  }
+
+  return age;
+};

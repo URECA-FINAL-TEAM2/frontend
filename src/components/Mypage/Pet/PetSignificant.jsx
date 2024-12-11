@@ -13,6 +13,7 @@ const PetSignificant = ({ onlyRead, formData, handleChange }) => {
           name="significant"
           value={formData.significant}
           onChange={handleChange}
+          placeholder="특이사항을 입력해주세요"
         />
       )}
     </div>

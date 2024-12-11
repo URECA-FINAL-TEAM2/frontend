@@ -2,11 +2,18 @@ import { useState } from "react";
 import testImg from "/Test/dog.jpg";
 import { GoStarFill } from "react-icons/go";
 import Modal from "../../common/modal/modal";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { deleteReview } from "@/queries/reviewQuery";
 
-const ReviewBox = () => {
+const ReviewBox = ({ review }) => {
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleDelete = async () => {
+    setIsModalOpen(false);
+    const response = await deleteReview();
+    console.log(response);
+  };
 
   const handleOpenModal = () => {
     setIsModalOpen(true);
@@ -16,13 +23,9 @@ const ReviewBox = () => {
     setIsModalOpen(false);
   };
 
-  const handleConfirmModal = () => {
-    setIsModalOpen(false);
-  };
-
   return (
     <>
-      <div className="mx-auto mb-4 w-11/12 rounded-xl bg-white p-4">
+      <div className="mx-auto mb-4 w-11/12 rounded-xl bg-white p-4 shadow-md">
         <div className="text-lg">매장명</div>
         <div className="flex items-center text-sm">
           <div className="flex items-center">
@@ -31,11 +34,10 @@ const ReviewBox = () => {
           </div>
           <div className="ml-3 text-xs">2024.11.14</div>
         </div>
-        <div className="flex overflow-x-scroll">
-          <img className="my-2 mr-2 w-1/3 rounded-xl" src={testImg} alt="dog Img" />
-          <img className="my-2 mr-2 w-1/3 rounded-xl" src={testImg} alt="dog Img" />
-          <img className="my-2 mr-2 w-1/3 rounded-xl" src={testImg} alt="dog Img" />
-          <img className="my-2 mr-2 w-1/3 rounded-xl" src={testImg} alt="dog Img" />
+        <div className="grid grid-cols-3">
+          <img className="my-2 rounded-xl px-1" src={testImg} alt="dog Img" />
+          <img className="my-2 rounded-xl px-1" src={testImg} alt="dog Img" />
+          <img className="my-2 rounded-xl px-1" src={testImg} alt="dog Img" />
         </div>
         <div className="py-2 text-sm">
           리뷰 내용입니다. 리뷰 내용입니다. 리뷰 내용입니다. 리뷰 내용입니다. 리뷰 내용입니다. 리뷰 내용입니다.
@@ -44,7 +46,10 @@ const ReviewBox = () => {
           <button onClick={handleOpenModal} className="buttonInBox-main">
             리뷰 삭제하기
           </button>
-          <button onClick={() => navigate("/customer/writeReviews")} className="buttonInBox-sub">
+          <button
+            onClick={() => navigate("/customer/writeReviews", { state: { review: review } })}
+            className="buttonInBox-sub"
+          >
             리뷰 수정하기
           </button>
         </div>
@@ -53,7 +58,7 @@ const ReviewBox = () => {
       <Modal
         isOpen={isModalOpen}
         onClose={handleCloseModal}
-        onConfirm={handleConfirmModal}
+        onConfirm={handleDelete}
         closeText="닫기"
         confirmText="확인"
       >

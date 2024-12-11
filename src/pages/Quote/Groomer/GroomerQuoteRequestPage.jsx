@@ -5,12 +5,14 @@ import BottomButton from "@/components/common/button/BottomButton";
 import SubHeader from "@/components/common/SubHeader";
 import GroomerQuoteForm from "@/components/Quote/GroomerQuoteForm";
 import React from "react";
+import { useParams } from "react-router-dom";
 
 function GroomerQuoteRequestPage(props) {
+  const requestId = useParams().requestId;
   return (
     <div>
       <SubHeader title="견적서 보내기" navigate={-1} />
-      <GroomerQuoteForm />
+      <GroomerQuoteForm requestId={requestId} />
       <BottomButton>견적서 보내기</BottomButton>
     </div>
   );

@@ -1,7 +1,8 @@
 import React from "react";
 import ShopReview from "./ShopReview";
 
-function ShopReviewList(props) {
+function ShopReviewList({ reviewList }) {
+  // TODO: 정렬 추가
   return (
     <div className="mx-5 mt-3">
       <div className="mb-1 flex w-full justify-between">

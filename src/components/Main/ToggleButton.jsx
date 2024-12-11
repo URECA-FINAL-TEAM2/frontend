@@ -2,18 +2,28 @@ import useRoleStore from "@/store/RoleStore";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Modal from "../common/modal/modal";
+import useAuthStore from "@/store/authStore";
+import { PiArrowsInCardinalThin } from "react-icons/pi";
+import { getUserId } from "@/queries/authQuery";
 const ToggleButton = () => {
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { role, setRole } = useRoleStore();
+  const { updateDefaultRole, updateId, id } = useAuthStore();
 
-  const handleToggle = () => {
+  const handleToggle = async () => {
+    setIsModalOpen(false);
     const newRole = role === "customer" ? "groomer" : "customer";
     setRole(newRole);
+    updateDefaultRole(newRole);
+
+    // const response = await getUserId(role, id);
 
     if (newRole === "groomer") {
+      updateId({ groomerId: 31 });
       navigate("/groomer/mypage");
     } else {
+      updateId({ customerId: 46 });
       navigate("/customer/mypage");
     }
   };
@@ -23,11 +33,6 @@ const ToggleButton = () => {
   };
 
   const handleCloseModal = () => {
-    setIsModalOpen(false);
-  };
-
-  const handleConfirmModal = () => {
-    handleToggle();
     setIsModalOpen(false);
   };
 
@@ -44,7 +49,7 @@ const ToggleButton = () => {
       <Modal
         isOpen={isModalOpen}
         onClose={handleCloseModal}
-        onConfirm={handleConfirmModal}
+        onConfirm={handleToggle}
         closeText="닫기"
         confirmText="확인"
       >

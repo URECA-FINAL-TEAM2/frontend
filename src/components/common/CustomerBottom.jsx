@@ -1,10 +1,10 @@
-import { PiUserCircleLight } from "react-icons/pi";
+import { PiUserCircleFill } from "react-icons/pi";
 import { VscSymbolFile } from "react-icons/vsc";
-import { TfiHome } from "react-icons/tfi";
 import { PiChatCircle } from "react-icons/pi";
 import { TbPawFilled } from "react-icons/tb";
 import { Link, useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { IoHomeSharp } from "react-icons/io5";
 
 const CustomerBottom = () => {
   const location = useLocation();
@@ -12,7 +12,7 @@ const CustomerBottom = () => {
 
   const routes = [
     { path: "/customer/home", name: "home" },
-    { path: "/customer/docs", name: "docs" },
+    { path: "/customer/quotes", name: "quotes" },
     { path: "/customer/shop", name: "shop" },
     { path: "/customer/chat", name: "chat" },
     { path: "/customer/mypage", name: "mypage" }
@@ -29,32 +29,32 @@ const CustomerBottom = () => {
       <div className="grid h-full grid-cols-5 items-center justify-items-center">
         <Link to="/customer/home">
           <div className={`bottom ${active === "home" && "bottom-active"}`}>
-            <TfiHome size={25} />
-            <span className="mt-1 text-xs">홈</span>
+            <IoHomeSharp size={25} />
+            <span className="text-[10px]">홈</span>
           </div>
         </Link>
-        <Link to="/customer/quote">
-          <div className={`bottom ${active === "docs" && "bottom-active"}`}>
+        <Link to="/customer/quotes">
+          <div className={`bottom ${active === "quotes" && "bottom-active"}`}>
             <VscSymbolFile size={25} />
-            <span className="mt-1 text-xs">견적서</span>
+            <span className="text-[10px]">견적서</span>
           </div>
         </Link>
         <Link to="/customer/shop">
           <div className={`bottom ${active === "shop" && "bottom-active"}`}>
             <TbPawFilled size={30} />
-            <span className="mt-1 text-xs">미용사 찾기</span>
+            <span className="text-[10px]">미용사 찾기</span>
           </div>
         </Link>
         <Link to="/customer/chat">
           <div className={`bottom ${active === "chat" && "bottom-active"}`}>
             <PiChatCircle size={27} />
-            <span className="mt-1 text-xs">채팅</span>
+            <span className="text-[10px]">채팅</span>
           </div>
         </Link>
         <Link to="/customer/mypage">
           <div className={`bottom ${active === "mypage" && "bottom-active"}`}>
-            <PiUserCircleLight size={30} />
-            <span className="mt-1 text-xs">마이</span>
+            <PiUserCircleFill size={30} />
+            <span className="text-[10px]">마이</span>
           </div>
         </Link>
       </div>

@@ -8,7 +8,7 @@ const PetNeutering = ({ onlyRead, formData, setFormData }) => {
         <button
           type="button"
           className={`rounded-lg border py-1 ${
-            formData.neutering === "O"
+            formData.neutering === true
               ? onlyRead
                 ? "btn-selected-readonly"
                 : "btn-selected-editable"
@@ -16,7 +16,7 @@ const PetNeutering = ({ onlyRead, formData, setFormData }) => {
                 ? "btn-unselected-readonly"
                 : "btn-unselected-editable"
           }`}
-          onClick={() => !onlyRead && setFormData({ ...formData, neutering: "O" })}
+          onClick={() => !onlyRead && setFormData({ ...formData, neutering: true })}
           disabled={onlyRead}
         >
           O
@@ -24,7 +24,7 @@ const PetNeutering = ({ onlyRead, formData, setFormData }) => {
         <button
           type="button"
           className={`rounded-lg border py-1 ${
-            formData.neutering === "X"
+            formData.neutering === false
               ? onlyRead
                 ? "btn-selected-readonly"
                 : "btn-selected-editable"
@@ -32,7 +32,7 @@ const PetNeutering = ({ onlyRead, formData, setFormData }) => {
                 ? "btn-unselected-readonly"
                 : "btn-unselected-editable"
           } `}
-          onClick={() => !onlyRead && setFormData({ ...formData, neutering: "X" })}
+          onClick={() => !onlyRead && setFormData({ ...formData, neutering: false })}
           disabled={onlyRead}
         >
           X
@@ -40,14 +40,6 @@ const PetNeutering = ({ onlyRead, formData, setFormData }) => {
       </div>
     </div>
   );
-};
-
-PetNeutering.propTypes = {
-  onlyRead: PropTypes.bool.isRequired,
-  formData: PropTypes.shape({
-    neutering: PropTypes.string
-  }),
-  setFormData: PropTypes.func.isRequired
 };
 
 export default PetNeutering;

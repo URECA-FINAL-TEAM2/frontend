@@ -9,15 +9,15 @@ const PetGender = ({ onlyRead, formData, setFormData }) => {
         <button
           type="button"
           className={`rounded-lg border py-1 ${
-            formData.dogGender === "남아"
+            formData.dogGender === "MALE"
               ? onlyRead
                 ? "btn-selected-readonly"
                 : "btn-selected-editable"
               : onlyRead
                 ? "btn-unselected-readonly"
                 : "btn-unselected-editable"
-          } }`}
-          onClick={() => !onlyRead && setFormData({ ...formData, dogGender: "남아" })}
+          }`}
+          onClick={() => !onlyRead && setFormData({ ...formData, dogGender: "MALE" })}
           disabled={onlyRead}
         >
           남아
@@ -25,15 +25,15 @@ const PetGender = ({ onlyRead, formData, setFormData }) => {
         <button
           type="button"
           className={`rounded-lg border py-1 ${
-            formData.dogGender === "여아"
+            formData.dogGender === "FEMALE"
               ? onlyRead
                 ? "btn-selected-readonly"
                 : "btn-selected-editable"
               : onlyRead
                 ? "btn-unselected-readonly"
                 : "btn-unselected-editable"
-          } }`}
-          onClick={() => !onlyRead && setFormData({ ...formData, dogGender: "여아" })}
+          }`}
+          onClick={() => !onlyRead && setFormData({ ...formData, dogGender: "FEMALE" })}
           disabled={onlyRead}
         >
           여아
@@ -47,7 +47,7 @@ PetGender.propTypes = {
   onlyRead: PropTypes.bool.isRequired,
   formData: PropTypes.shape({
     dogGender: PropTypes.string
-  }),
+  }).isRequired,
   setFormData: PropTypes.func.isRequired
 };
 

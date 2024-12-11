@@ -3,19 +3,19 @@ import DefaultCustomerProfile from "/Icons/DefaultCustomerProfile.svg";
 import DefaultPetProfile from "/Icons/DefaultPetProfile.svg";
 import DefaultStoreProfile from "/Icons/DefaultStoreProfile.svg";
 
-const ProfileImage = ({ setFormData, onlyRead = false }) => {
+const ProfileImage = ({ formData, setFormData, onlyRead = false }) => {
   const [imagePreview, setImagePreview] = useState(DefaultCustomerProfile);
   const [isDefault, setIsDefault] = useState(true);
 
   useEffect(() => {
     if (location.pathname.includes("store")) {
-      setImagePreview(DefaultStoreProfile);
+      setImagePreview(formData?.profileImage ? formData?.profileImage : DefaultStoreProfile);
     } else if (location.pathname.includes("info")) {
-      setImagePreview(DefaultCustomerProfile);
+      setImagePreview(formData?.profileImage ? formData?.profileImage : DefaultCustomerProfile);
     } else {
-      setImagePreview(DefaultPetProfile);
+      setImagePreview(formData?.profileImage ? formData?.profileImage : DefaultPetProfile);
     }
-  }, []);
+  }, [formData?.profileImage]);
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
@@ -53,7 +53,7 @@ const ProfileImage = ({ setFormData, onlyRead = false }) => {
           className="hidden"
         />
       )}
-      <div className="mx-auto mb-12 mt-20 flex flex-col items-center justify-center">
+      <div className="mx-auto mb-10 mt-20 flex flex-col items-center justify-center">
         <img src={imagePreview} alt="Default Image" onClick={handleImageClick} className="img-border h-[100px] w-1/4" />
 
         {!isDefault && (

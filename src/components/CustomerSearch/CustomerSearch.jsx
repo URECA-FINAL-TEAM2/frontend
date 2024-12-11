@@ -5,6 +5,7 @@ import { getShopList } from "../../queries/shopQuery";
 import useDragPosition from "../../hooks/CustomerSearch/useDragPosition";
 
 const CustomerSearch = () => {
+  const [customerId, setCustomerId] = useState(1); // TODO
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const setShops = useShopStore((state) => state.setShops);
@@ -14,7 +15,8 @@ const CustomerSearch = () => {
     const loadShops = async () => {
       try {
         setIsLoading(true);
-        const shopList = await getShopList();
+        const shopList = await getShopList(customerId);
+        console.log(shopList);
         if (shopList) {
           setShops(shopList);
           setError(null);
@@ -59,7 +61,7 @@ const CustomerSearch = () => {
           <div className="h-1.5 w-16 rounded-full bg-gray-300" />
         </div>
 
-        <div className="scrollbar-hide h-[calc(100%-2.5rem)] overflow-y-scroll">
+        <div className="h-[calc(100%-2.5rem)] overflow-y-scroll scrollbar-hide">
           {isLoading ? (
             <div className="flex h-full items-center justify-center">
               <div className="h-8 w-8 animate-spin rounded-full border-4 border-gray-200 border-t-blue-500" />

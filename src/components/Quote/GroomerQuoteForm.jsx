@@ -1,118 +1,137 @@
-import { getDogInfo } from "@/queries/quoteRequestQuery";
+import { getGroomerRequestDetail } from "@/queries/quoteRequestQuery";
+import { formatDate } from "@/utils/formatDate";
 import React, { useEffect, useState } from "react";
-import { BiSolidDog, BiWon } from "react-icons/bi";
-import { GrDocumentText, GrDocumentUser } from "react-icons/gr";
-import { ImScissors } from "react-icons/im";
-import { RiCalendarScheduleLine } from "react-icons/ri";
-import { TbPhoto, TbCash } from "react-icons/tb";
+import { BiWon } from "react-icons/bi";
 
-function GroomerQuoteForm(quotesId) {
-  const [dogInfo, setDogInfo] = useState(null);
+function GroomerQuoteForm({ requestId }) {
+  const [requestInfo, setRequestInfo] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    const fetchDogInfo = async () => {
+    const fetchRequestInfo = async () => {
       try {
-        const data = await getDogInfo();
-        setDogInfo(data);
+        setIsLoading(true);
+        const data = await getGroomerRequestDetail(requestId);
+        setRequestInfo(data);
       } catch (error) {
-        console.error("Error fetching dog Info:", error);
-        setDogInfo([]);
+        console.error("Error fetching requestInfo:", error);
+        setError(err);
+      } finally {
+        setIsLoading(false);
       }
     };
 
-    fetchDogInfo();
-  }, []);
+    fetchRequestInfo();
+  }, [requestId]);
+
+  if (isLoading) {
+    return <div className="py-10 text-center">Loading...</div>;
+  }
+
+  if (error) {
+    return <div className="py-10 text-center text-red-500">Error loading request details</div>;
+  }
+
+  if (!requestInfo) {
+    return <div className="py-10 text-center">No request details found</div>;
+  }
+
+  // Format date and time
+  const formattedDate = new Date(requestInfo.beautyDate).toLocaleDateString("ko-KR", {
+    year: "numeric",
+    month: "long",
+    day: "numeric"
+  });
+
+  const formattedTime = new Date(requestInfo.beautyDate).toLocaleTimeString("ko-KR", {
+    hour: "2-digit",
+    minute: "2-digit"
+  });
 
   return (
-    <div className="mx-auto max-w-lg bg-white p-6">
-      {/* 미용 일시 */}
-
-      <div className="mb-2 flex items-center space-x-2">
-        <RiCalendarScheduleLine size={24} color="black" />
-        <h2 className="text-xl font-semibold">미용 일시</h2>
-      </div>
-
-      <div className="mb-6 rounded-lg">
-        <div className="flex items-center justify-between space-x-4">
-          <div className="flex flex-1 items-center justify-center rounded-lg border border-main-400 px-4 py-2 text-center text-sm">
-            <p>2024년 11월 24일</p>
-          </div>
-          <div className="flex flex-1 items-center justify-center rounded-lg border border-main-400 px-4 py-2 text-center text-sm">
-            <p>오후 3:00</p>
-          </div>
+    <div className="mx-auto mb-[79px] mt-[--header-height] max-w-lg bg-white px-6">
+      {/* 55px : Bottom Button height + 24px (mb-6) */}
+      {/* 고객 정보 */}
+      {/* <div className="mb-1.5 flex items-center space-x-1">
+        <img src="/public/Icons/User.svg" alt="Schedule Icon" className="h-5 w-5" />
+        <h2 className="leading-none text-lg font-semibold">고객 정보</h2>
+      </div> */}
+      <div className="mb-6 flex rounded-lg border border-main-400 p-4 pb-3.5">
+        <img src={requestInfo.userProfileImage} alt="고객 프로필" className="mr-3 h-10 w-10 rounded-lg object-cover" />
+        <div>
+          <p className="px-0.5 font-semibold leading-[1.1]">{requestInfo.userName} 고객님</p>
+          <span className="rounded-md bg-main-100 px-1 py-[1px] text-xs text-main">
+            {formatDate(requestInfo.expiryDate)}까지
+          </span>
         </div>
       </div>
-
-      {/* 매장 및 디자이너 정보 */}
-      <div className="mb-2 flex items-center space-x-2">
-        <ImScissors size={24} color="black" />
-        <h2 className="text-xl font-semibold">매장 · 디자이너 정보</h2>
+      {/* 미용 일시 */}
+      <div className="mb-1.5 flex items-center space-x-1">
+        <img src="/public/Icons/Schedule.svg" alt="Schedule Icon" className="h-5 w-5" />
+        <h2 className="text-lg font-semibold leading-none">미용 일시</h2>
       </div>
-
+      <div className="mb-6 rounded-lg border border-main-400 p-4">
+        <p>
+          {formattedDate} {formattedTime}
+        </p>
+      </div>
+      {/* 반려견 정보 */}
+      <div className="mb-1.5 flex items-center space-x-1">
+        <img src="/public/Icons/Corgi.svg" alt="Dog Icon" className="h-5 w-5" />
+        <h2 className="text-lg font-semibold leading-none">반려견 정보</h2>
+      </div>
       <div className="mb-6 rounded-lg border border-main-400 p-4">
         <div className="flex items-center">
-          <img src="https://picsum.photos/200" alt="매장 로고" className="mr-4 h-20 w-20 rounded-lg" />
-          <div>
-            <p className="text-[15px] font-semibold">멍댕살롱</p>
-            <p className="mb-0.5 text-[13px] text-gray-600">경기 안양시 만안구 만안로 96 1층 140호</p>
-            <p className="text-[15px] font-semibold">가영 디자이너</p>
-            <p className="text-[13px] text-gray-600">010-1234-5678</p>
+          <div className="mr-4 self-center">
+            <img src={requestInfo.dogProfileImage} alt="반려견 사진" className="h-28 w-28 rounded-lg object-cover" />
+            <p className="mt-1 text-center font-semibold">{requestInfo.dogName}</p>
+          </div>
+          <div className="text-sm leading-normal">
+            <p>견종: {requestInfo.dogBreed}</p>
+            <p>무게: {requestInfo.dogWeight}</p>
+            <p>나이: {requestInfo.dogAge}</p>
+            <p>성별: {requestInfo.dogGender === "MALE" ? "남아" : "여아"}</p>
+            <p>중성화 여부: {requestInfo.neutering ? "Y" : "N"}</p>
+            <p>미용 신청 여부: {requestInfo.experience ? "Y" : "N"}</p>
+            <p>특이사항: {requestInfo.significant}</p>
           </div>
         </div>
       </div>
-
-      {/* 반려견 정보 */}
-      <div className="mb-2 flex items-center space-x-2">
-        <BiSolidDog size={24} color="black" />
-        <h2 className="text-xl font-semibold">반려견 정보</h2>
-      </div>
-
-      <div className="mb-6 flex items-start rounded-lg border border-main-400 p-4">
-        <div className="mr-4 flex flex-col self-center">
-          <img src={dogInfo?.image} alt="반려견 사진" className="h-28 w-28 rounded-lg" />
-          <p className="mt-1 text-center font-medium">{dogInfo?.name}</p>
-        </div>
-        <div className="leading-snug">
-          <p>견종: {dogInfo?.breed}</p>
-          <p>무게: {dogInfo?.weight}</p>
-          <p>나이: {dogInfo?.age}</p>
-          <p>성별: {dogInfo?.dogGender == "MALE" ? "남아" : "여아"}</p>
-          <p>중성화 여부: {dogInfo?.neutering ? "Y" : "N"}</p>
-          <p>미용 신청 여부: {dogInfo?.experience ? "Y" : "N"}</p>
-          <p>특이사항: {dogInfo?.significant}</p>
-        </div>
-      </div>
-
       {/* 요청 내용 */}
-      <div className="mb-2 flex items-center space-x-2">
-        <GrDocumentUser size={24} color="black" />
-        <h2 className="text-xl font-semibold">요청 내용</h2>
+      <div className="mb-1.5 flex items-center space-x-1">
+        <img src="/public/Icons/Note.svg" alt="Note Icon" className="h-5 w-5" />
+        <h2 className="text-lg font-semibold leading-none">요청 내용</h2>
       </div>
-
-      <div className="mb-6 rounded-lg border border-main-400 p-4">
-        <p className="leading-snug">목욕 + 식빵컷 원합니다. 첨부한 사진들처럼 빵실하게요.</p>
+      <div className="mb-6 rounded-lg border border-main-400 p-4 leading-tight">
+        <p>{requestInfo.requestContent}</p>
       </div>
-
       {/* 첨부 사진 */}
-      <div className="mb-2 flex items-center space-x-2">
-        <TbPhoto size={24} color="black" />
-        <h2 className="text-xl font-semibold">첨부 사진</h2>
+      <div className="mb-1.5 flex items-center space-x-1">
+        <img src="/public/Icons/Photos.svg" alt="Photos Icon" className="h-5 w-5" />
+        <h2 className="text-lg font-semibold leading-none">첨부 사진</h2>
       </div>
-
-      <div className="rounded-lgp-4 mb-6">
-        <div className="grid grid-cols-3 gap-2">
-          <div className="h-24 w-24 rounded-lg border bg-gray-100"></div>
-          <div className="h-24 w-24 rounded-lg border bg-gray-100"></div>
-          <div className="h-24 w-24 rounded-lg border bg-gray-100"></div>
+      <div className="mb-6 rounded-lg">
+        <div className="grid grid-cols-3 gap-3">
+          {requestInfo.requestImages.length > 0 ? (
+            requestInfo.requestImages.map((image, index) => (
+              <div key={index} className="relative">
+                <img src={image} alt={`Uploaded Request Img ${index}`} className="h-28 w-28 rounded-lg object-cover" />
+              </div>
+            ))
+          ) : (
+            <p className="col-span-3 text-center text-gray-500">첨부된 사진이 없습니다.</p>
+          )}
         </div>
       </div>
+
+      <hr className="mb-6 border-2 border-gray-200" />
 
       {/* 견적 설명 */}
-      <div className="mb-2 flex items-center space-x-2">
-        <GrDocumentText size={24} color="black" />
-        <h2 className="text-xl font-semibold">견적 설명</h2>
+      <div className="mb-1.5 flex items-center space-x-1">
+        <img src="/public/Icons/Description.svg" alt="Description Icon" className="h-5 w-5" />
+        <h2 className="text-lg font-semibold leading-none">견적 설명</h2>
       </div>
-
       <div className="mb-6 rounded-lg border border-main-400 p-4 leading-tight">
         <textarea
           placeholder="서비스 진행 방식, 가격 책정 방식 등을 상세하게 작성해주세요."
@@ -122,20 +141,21 @@ function GroomerQuoteForm(quotesId) {
       </div>
 
       {/* 금액 */}
-      <div className="mb-2 flex justify-between">
-        <div className="flex items-center space-x-2">
-          <BiWon size={24} color="black" />
-          <h2 className="text-xl font-semibold leading-none">금액</h2>
+      <div className="flex justify-between">
+        <div className="flex items-center space-x-1">
+          <img src="/public/Icons/Won.svg" alt="Won Icon" className="h-5 w-5" />
+
+          <h2 className="text-lg font-semibold leading-none">금액</h2>
         </div>
         <div className="flex">
           <div className="mr-1 w-48 rounded-lg border border-main-400 leading-tight">
             <input
               type="number"
-              className="w-full resize-none rounded-lg border-none text-end focus:outline-none"
+              className="w-full resize-none rounded-lg border-none px-0.5 pb-0 pt-1 text-end focus:outline-none"
               rows={1}
             />
           </div>
-          <p className="text-xl font-semibold leading-none">원</p>
+          <p className="mt-1 text-xl font-semibold leading-none">원</p>
         </div>
       </div>
     </div>

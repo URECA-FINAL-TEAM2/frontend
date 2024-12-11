@@ -1,59 +1,22 @@
-const customerData = [
-  // 고객일 때
-  {
-    message: "Get Customer MyPage Success",
-    data: {
-      customerId: "1",
-      nickname: "홍길동",
-      email: "email@kakao.com",
-      phoneNumber: "010-1111-1111",
-      profileImage: "https://example.com/profile.jpg",
-      counts: {
-        completedServices: 10, // 미용완료 건수
-        confirmedReservations: 5, // 확정된 예약 건수
-        myReviews: 25 // 내 매장 리뷰 수
-      },
-      MyPet: {
-        dogId: "1",
-        dogname: "멍당이",
-        profileImage: "https://example.com/profile.jpg"
-      }
-    },
-    timestamp: "2024-10-17 00:00:00"
-  }
-];
+import axiosInstance from "@/api/axiosInstance";
 
-const groomerData = [
-  // 미용사일 때
-  {
-    message: "Get Goomer MyPage Success",
-    data: {
-      GroomerId: "1",
-      nickname: "묭묭사",
-      email: "email@kakao.com",
-      phoneNumber: "010-1111-1111",
-      profileImage: "https://example.com/profile.jpg",
-      counts: {
-        completedServices: 120, // 미용완료 건수
-        confirmedReservations: 5, // 확정된 예약 건수
-        myReviews: 252 // 내 매장 리뷰 수
-      }
-    },
-    timestamp: "2024-10-17 00:00:00"
-  }
-];
-
-export const getCustomerMypage = async () => {
+export const getCustomerMypage = async (id) => {
   try {
-    return customerData;
+    const customerId = id.customerId; // 수정 필요
+    const response = await axiosInstance.get(`/mypage/customer/${customerId}`);
+    console.log(response);
+    return response.data.data;
   } catch (error) {
     throw new Error("Failed to fetch customer mypage data");
   }
 };
 
-export const getGroomerMypage = async () => {
+// 미용사 마이페이지 조회
+export const getGroomerMypage = async (groomerId) => {
   try {
-    return groomerData;
+    const response = await axiosInstance.get(`/mypage/groomer/${groomerId}`);
+    console.log("미용사 마이페이지 조회:", response);
+    return response.data.data;
   } catch (error) {
     throw new Error("Failed to fetch customer mypage data");
   }

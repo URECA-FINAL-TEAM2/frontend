@@ -12,6 +12,7 @@ const PetName = ({ onlyRead, formData, handleChange }) => {
           type="text"
           id="dogName"
           name="dogName"
+          placeholder="반려견 이름을 입력해주세요"
           value={formData.dogName}
           onChange={handleChange}
           required

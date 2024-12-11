@@ -1,130 +1,94 @@
 import axiosInstance from "@/api/axiosInstance";
 
-const getCustomerData = [
-  {
-    message: "get Customer Success",
-    data: {
-      profileImage: "이미지",
-      name: "노승희",
-      nickname: "수정된닉네임",
-      phoneNumber: "010-2222-2222",
-      sido: "", // 고객 필드
-      sigungu: "" // 고객 필드
-    },
-    timestamp: "2024-10-17 00:00:00"
-  }
-];
-
-const getGroomerData = [
-  {
-    message: "get Groomer Success",
-    data: {
-      profileImage: "이미지",
-      name: "노승희",
-      nickname: "받아온닉네임",
-      phoneNumber: "010-2222-2222",
-      skills: "특수견/소형견 미용"
-    },
-    timestamp: "2024-10-17 00:00:00"
-  }
-];
-
-const updateCustomerData = [
-  {
-    message: "Update Customer Success",
-    data: {
-      profileImage: "이미지",
-      nickname: "수정된닉네임",
-      phoneNumber: "010-2222-2222",
-      sido: "", // 고객 필드
-      sigungu: "" // 고객 필드
-    },
-    timestamp: "2024-10-17 00:00:00"
-  }
-];
-
-const updateGroomerData = [
-  {
-    message: "Update groomer Success",
-    data: {
-      profileImage: "이미지",
-      nickname: "수정된닉네임",
-      phoneNumber: "010-2222-2222",
-      skills: "소형견/대형견 특수 미용"
-    },
-    timestamp: "2024-10-17 00:00:00"
-  }
-];
-
-// 고객, 미용사 정보 조회
+// 고객, 미용사 프로필 정보 조회
 export const getUserInfo = async (role, id) => {
-  const endpoint = role === "customer" ? `/profile/customer/${id}` : `/profile/groomer/${id}`;
+  const endpoint = role === "customer" ? `/profile/customer/${id.customerId}` : `/profile/groomer/${id.groomerId}`;
 
   try {
-    // const response = await axiosInstance.get(endpoint);
-    // return response.data; // 요청 성공 시 데이터 반환
-
-    if (role === "customer") {
-      return getCustomerData;
-    } else {
-      return getGroomerData;
-    }
+    const response = await axiosInstance.get(endpoint);
+    console.log("정보조회", response);
+    return response.data.data;
   } catch (error) {
     console.error("요청 실패:", error);
     throw error;
   }
 };
 
-// 고객, 미용사 정보 수정
+// 고객, 미용사 프로필 정보 수정
 export const updateUserInfo = async (role, preparedData, id) => {
-  const data = prepareDataForBackend(role, preparedData);
+  ["email", "username", "userName", "sidoId", "sigunguId", "sidoName", "sigunguName"].forEach((key) => {
+    delete preparedData[key];
+  });
 
-  // FormData 생성
+  if (role === "customer") {
+    preparedData.customerId = id.customerId;
+  }
+
+  const { profileImage, ...jsonData } = preparedData;
   const formData = new FormData();
-
-  // profileImage를 dogData에서 추출
-  const { profileImage, ...jsonData } = data;
-
-  // JSON 데이터 직렬화 후 FormData에 추가
-  formData.append("requestDTO", JSON.stringify(jsonData));
-
-  // 파일 추가
-  if (preparedData.profileImage) {
+  formData.append("requestDto", JSON.stringify(jsonData));
+  if (profileImage) {
     formData.append("profileImage", profileImage);
   }
 
-  const endpoint = role === "customer" ? `/profile/customer/${id}` : `/profile/groomer/${id}`;
+  const endpoint = role === "customer" ? `/profile/customer` : `/profile/groomer`;
 
   try {
-    // const response = await axiosInstance.put(endpoint, formDataToSend, {
-    //   headers: {
-    //     "Content-Type": "multipart/form-data"
-    //   }
-    // });
-    // return response.data; // 요청 성공 시 데이터 반환
-
-    if (role === "customer") {
-      return updateCustomerData;
-    } else {
-      return updateGroomerData;
-    }
+    const response = await axiosInstance.put(endpoint, formData);
+    console.log("프로필 정보 수정 완료", response);
+    return response.data.data;
   } catch (error) {
-    console.error("요청 실패:", error);
-    throw error; // 에러 발생 시 호출한 곳에서 처리
+    console.error("프로필 정보 수정 실패:", error);
+    throw error;
   }
 };
 
-const prepareDataForBackend = (role, data) => {
-  const filteredData = { ...data };
-  delete filteredData.name;
-  delete filteredData.email;
-
-  if (role === "customer") {
-    delete filteredData.skills; // 고객은 skills 필드 제거
-  } else if (role === "groomer") {
-    delete filteredData.sido; // 미용사는 sido 필드 제거
-    delete filteredData.sigungu; // 미용사는 sigungu 필드 제거
+// 유저 프로필 삭제
+export const deleteUserInfo = async (role, id) => {
+  const endpoint =
+    role === "customer" ? `/profile/customer/delete/${id.customerId}` : `/profile/groomer/delete/${id.groomerId}`;
+  try {
+    const response = await axiosInstance.put(endpoint);
+    console.log("프로필 정보 삭제 완료", response);
+    return response;
+  } catch (error) {
+    console.error("프로필 정보 수정 실패:", error);
+    throw error;
   }
+};
 
-  return filteredData;
+// 고객 프로필 주소 수정
+export const updateAddress = async (data, id) => {
+  const { sidoName, sigunguName } = data;
+
+  const addressData = {
+    sidoName: sidoName.sidoName,
+    sigunguName: sigunguName.sigunguName
+  };
+
+  try {
+    const response = await axiosInstance.put(`/profile/customer/${id.customerId}/address`, addressData);
+    console.log("고객 주소 수정", response);
+  } catch (error) {
+    console.error("고객 주소 수정 실패:", error);
+    throw error;
+  }
+};
+
+// 단골샵 조회
+export const getFavoriteShop = async (id) => {
+  try {
+    const customerId = id.customerId;
+    const response = await axiosInstance.get(`/profile/${customerId}/favorites`);
+    return response.data.data;
+  } catch (error) {
+    throw new Error("Failed to fetch favorite shop");
+  }
+};
+
+// 고객 주소 조회
+export const getUserAddress = async () => {
+  const customerId = 47; // TODO: 이건 빼고 사용처에서 보낼것
+  const response = await axiosInstance.get(`/profile/${customerId}/address`);
+  return response.data.data;
 };

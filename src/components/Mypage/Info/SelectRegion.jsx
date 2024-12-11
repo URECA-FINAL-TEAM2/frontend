@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { getSidoList, getSigunguList } from "../../../queries/regionQuery";
 
 const SelectRegion = ({ formData, setFormData }) => {
@@ -10,7 +10,7 @@ const SelectRegion = ({ formData, setFormData }) => {
     const fetchSidoList = async () => {
       try {
         const response = await getSidoList();
-        setSidoList(response.data.sidoList);
+        setSidoList(response);
       } catch (error) {
         console.error("시도 목록 로드 실패:", error);
       }
@@ -22,34 +22,45 @@ const SelectRegion = ({ formData, setFormData }) => {
   // 시군구 목록 로드
   useEffect(() => {
     const fetchSigunguList = async () => {
-      if (!formData.sido) {
+      if (!formData.sidoId) {
         setSigunguList([]);
         return;
       }
 
       try {
-        const response = await getSigunguList(formData.sido);
-        setSigunguList(response.data.sigunguList);
+        const response = await getSigunguList(formData.sidoId);
+        setSigunguList(response);
       } catch (error) {
         console.error("시군구 목록 로드 실패:", error);
       }
     };
 
     fetchSigunguList();
-  }, [formData.sido]);
+  }, [formData.sidoId]);
 
   const handleSidoChange = (e) => {
+    const sidoName = sidoList.find((sido) => sido.sidoId === Number(e.target.value));
     setFormData((prevFormData) => ({
       ...prevFormData,
-      sido: Number(e.target.value),
-      sigungu: ""
+      sidoId: Number(e.target.value),
+      sidoName: sidoName,
+      sigunguId: ""
+    }));
+  };
+
+  const handleSigunguChange = (e) => {
+    const sigunguName = sigunguList.find((sido) => sido.sigunguId === Number(e.target.value));
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      sigunguId: Number(e.target.value),
+      sigunguName: sigunguName
     }));
   };
 
   return (
-    <div className="mx-auto mt-2 flex w-3/4 gap-4">
+    <div className="mx-auto mb-6 mt-2 flex w-3/4 gap-4">
       <select
-        value={formData.sido}
+        value={formData.sidoId || ""}
         onChange={handleSidoChange}
         className="h-[30px] w-[152px] rounded-md border border-main-300 px-2"
       >
@@ -62,14 +73,9 @@ const SelectRegion = ({ formData, setFormData }) => {
       </select>
 
       <select
-        value={formData.sigungu}
-        onChange={(e) =>
-          setFormData((prevFormData) => ({
-            ...prevFormData,
-            sigungu: Number(e.target.value)
-          }))
-        }
-        disabled={!formData.sido}
+        value={formData.sigunguId || ""}
+        onChange={handleSigunguChange}
+        disabled={!formData.sidoId}
         className="h-[30px] w-[152px] rounded-md border border-main-300 px-2 disabled:bg-gray-100"
       >
         <option value="">시/군/구 선택</option>

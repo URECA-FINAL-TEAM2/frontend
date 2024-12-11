@@ -3,17 +3,20 @@ import BestReviewBox from "../../components/Main/BestReviewBox";
 import { useEffect, useState } from "react";
 import { getCustomerMain } from "@/queries/mainQuery";
 import ShopItem from "@/components/CustomerSearch/ShopItem";
+import useAuthStore from "@/store/authStore";
 
 const CustomerHome = () => {
+  const { id } = useAuthStore();
   const [bestReviews, setBestReviews] = useState([]);
   const [localGroomers, setLocalGroomers] = useState([]);
 
   useEffect(() => {
     const getMain = async () => {
       try {
-        const response = await getCustomerMain();
-        setBestReviews(response[0].data.bestReviews);
-        setLocalGroomers(response[0].data.localGroomers);
+        const response = await getCustomerMain(id);
+        console.log(response);
+        setBestReviews(response.bestReviews);
+        setLocalGroomers(response.localGroomers);
       } catch (error) {
         console.error("Error: Customer Main", error);
       }
@@ -35,18 +38,8 @@ const CustomerHome = () => {
             <h2 className="text-lg">BEST 미용 후기 추천</h2>
           </div>
 
-          {bestReviews.map((items) => {
-            return (
-              <BestReviewBox
-                key={items.reviewId}
-                reviewImage={items.reviewImage}
-                shopName={items.shopName}
-                starScore={items.starScore}
-                timestamp={items.timestamp}
-                content={items.content}
-                recommendCount={items.recommendCount}
-              />
-            );
+          {bestReviews.map((bestReview) => {
+            return <BestReviewBox key={bestReview.reviewId} bestReview={bestReview} />;
           })}
         </section>
 

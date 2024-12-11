@@ -20,7 +20,7 @@ const Onboarding = () => {
   }, [navigate]);
 
   return (
-    <div className="bg-main-300 flex min-h-screen items-center justify-center text-white">
+    <div className="flex min-h-screen items-center justify-center bg-main-300 text-white">
       {showLogo && (
         <img
           src={Logo}

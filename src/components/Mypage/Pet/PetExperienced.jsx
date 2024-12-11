@@ -8,7 +8,7 @@ const PetExperienced = ({ onlyRead, formData, setFormData }) => {
         <button
           type="button"
           className={`rounded-lg border py-1 ${
-            formData.experience === "O"
+            formData.experience === true
               ? onlyRead
                 ? "btn-selected-readonly"
                 : "btn-selected-editable"
@@ -16,7 +16,7 @@ const PetExperienced = ({ onlyRead, formData, setFormData }) => {
                 ? "btn-unselected-readonly"
                 : "btn-unselected-editable"
           }`}
-          onClick={() => !onlyRead && setFormData({ ...formData, experience: "O" })}
+          onClick={() => !onlyRead && setFormData({ ...formData, experience: true })}
           disabled={onlyRead}
         >
           O
@@ -24,7 +24,7 @@ const PetExperienced = ({ onlyRead, formData, setFormData }) => {
         <button
           type="button"
           className={`rounded-lg border py-1 ${
-            formData.experience === "X"
+            formData.experience === false
               ? onlyRead
                 ? "btn-selected-readonly"
                 : "btn-selected-editable"
@@ -32,7 +32,7 @@ const PetExperienced = ({ onlyRead, formData, setFormData }) => {
                 ? "btn-unselected-readonly"
                 : "btn-unselected-editable"
           }`}
-          onClick={() => !onlyRead && setFormData({ ...formData, experience: "X" })}
+          onClick={() => !onlyRead && setFormData({ ...formData, experience: false })}
           disabled={onlyRead}
         >
           X
@@ -40,14 +40,6 @@ const PetExperienced = ({ onlyRead, formData, setFormData }) => {
       </div>
     </div>
   );
-};
-
-PetExperienced.propTypes = {
-  onlyRead: PropTypes.bool.isRequired,
-  formData: PropTypes.shape({
-    experience: PropTypes.string
-  }),
-  setFormData: PropTypes.func.isRequired
 };
 
 export default PetExperienced;

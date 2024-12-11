@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { BsShop } from "react-icons/bs";
 import { VscSymbolFile } from "react-icons/vsc";
 import { MdOutlineRateReview } from "react-icons/md";
+import Logout from "../Login/Logout";
 
 const CustomerList = () => {
   return (
@@ -25,9 +26,7 @@ const CustomerList = () => {
             <span className="text-lg">리뷰관리</span>
           </li>
         </Link>
-        <button className="mx-auto flex py-4 text-sm text-gray-300 underline" onClick={() => console.log("로그아웃")}>
-          <li>로그아웃</li>
-        </button>
+        <Logout />
       </ul>
     </div>
   );

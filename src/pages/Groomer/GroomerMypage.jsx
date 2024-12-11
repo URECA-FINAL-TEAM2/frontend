@@ -8,8 +8,10 @@ import GroomerList from "@/components/Mypage/GroomerList";
 import ToggleButton from "@/components/Main/ToggleButton";
 import { useEffect, useState } from "react";
 import { getGroomerMypage } from "@/queries/mypageQuery";
+import useAuthStore from "@/store/authStore";
 
 const GroomerMypage = () => {
+  const { id } = useAuthStore();
   const navigate = useNavigate();
   const [counts, setCounts] = useState({
     completedServices: 0,
@@ -26,9 +28,9 @@ const GroomerMypage = () => {
   useEffect(() => {
     const getMypage = async () => {
       try {
-        const response = await getGroomerMypage();
-        const counts = response[0].data.counts;
-        const info = response[0].data;
+        const response = await getGroomerMypage(id.groomerId);
+        const counts = response.counts;
+        const info = response;
 
         setCounts((prev) => ({
           ...prev,
@@ -40,7 +42,7 @@ const GroomerMypage = () => {
         setUserInfo((prev) => ({
           ...prev,
           id: info.GroomerId,
-          nickname: info.nickname,
+          userName: info.userName,
           email: info.email,
           profileImage: info.profileImage
         }));
@@ -65,14 +67,14 @@ const GroomerMypage = () => {
         <div className="flex items-center justify-around p-6 px-10">
           <div className="aspect-w-1 aspect-h-1">
             <img
-              src={DefaultProfile}
+              src={userInfo.profileImage ? userInfo.profileImage : DefaultProfile}
               alt="Default"
-              className="h-full w-full rounded-[50%] border-[2px] border-main object-cover"
+              className="h-[80px] w-[80px] rounded-[50%] border border-main object-cover"
             />
           </div>
           <div className="ml-5 flex grow flex-col">
             <div>
-              <span className="text-lg">{userInfo.nickname}</span>
+              <span className="text-lg">{userInfo.userName}</span>
               <span> 미용사</span>
             </div>
             <span className="underline">{userInfo.email}</span>

@@ -1,7 +1,7 @@
-import { useState } from "react";
-import PropTypes from "prop-types";
+import { parseAddress } from "@/queries/shopQuery";
+import { useEffect, useState } from "react";
 
-const Postcode = ({ setFormData, handleChange }) => {
+const Postcode = ({ formData, setFormData, handleChange }) => {
   const [address, setAddress] = useState(""); // 주소
   const [detailAddress, setDetailAddress] = useState(""); // 상세주소
 
@@ -22,9 +22,6 @@ const Postcode = ({ setFormData, handleChange }) => {
       height: popupHeight,
 
       oncomplete: (data) => {
-        console.log(data);
-        console.log(data.sido); // 시,도
-        console.log(data.sigungu); // 시,군,구
         let addr = "";
 
         if (data.userSelectedType === "R") {
@@ -33,7 +30,7 @@ const Postcode = ({ setFormData, handleChange }) => {
           addr = data.jibunAddress; // 지번 주소
         }
         setAddress(addr);
-        setFormData((prev) => ({ ...prev, address: data.roadAddress }));
+        setFormData((prev) => ({ ...prev, address: data.roadAddress, sidoName: data.sido, sigunguName: data.sigungu }));
         document.getElementById("detailAddress").focus();
       }
     }).open({
@@ -48,8 +45,16 @@ const Postcode = ({ setFormData, handleChange }) => {
     setDetailAddress(detail);
 
     // address : 도로명 주소 + 상세 주소 저장
-    setFormData((prev) => ({ ...prev, address: `${address} ${detail}` }));
+    setFormData((prev) => ({ ...prev, address: `${address}, ${detail}` }));
   };
+
+  useEffect(() => {
+    if (formData?.address) {
+      const { address, detailAddress } = parseAddress(formData?.address);
+      setAddress(address);
+      setDetailAddress(detailAddress);
+    }
+  }, [formData?.address]); // formData.address 변경 시 실행
 
   return (
     <>
@@ -58,7 +63,7 @@ const Postcode = ({ setFormData, handleChange }) => {
           주소
         </label>
 
-        <button className="rounded-lg bg-main px-3 text-xs text-white" onClick={handleAddressSearch}>
+        <button type="button" className="rounded-lg bg-main px-3 text-xs text-white" onClick={handleAddressSearch}>
           주소 찾기
         </button>
       </div>

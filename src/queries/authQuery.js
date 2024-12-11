@@ -1,19 +1,15 @@
 import axiosInstance from "@/api/axiosInstance";
 
-const successCustomer = [
-  {
-    code: 201,
-    message: "고객 회원가입 성공",
-    data: {
-      access_token:
-        "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOiIyIiwibmlja25hbWUiOiLrp57slYTsmqkiLCJyb2xlcyI6IuuvuOyaqeyCrCzqs6DqsJ0iLCJpYXQiOjE3MzI3NTkyNzYsImV4cCI6MTczMjc3NzI3Nn0.oJhW1xC-g0X6HQoKT_KG9wnjuxjP5jpCFMFUyW0H1ek",
-      roles: ["customer"],
-      nickname: "맞아용",
-      userId: 2
-    },
-    timestamp: "2024-11-28T11:01:16.2661044"
+export const getUserId = async (role, userId) => {
+  const endpoint = role === "customer" ? `/mypage/customer/toggle/${userId}` : `/mypage/groomer/toggle/${userId}`;
+  try {
+    const response = await axiosInstance.get(endpoint);
+    return response.data;
+  } catch (error) {
+    console.error("고객 정보 등록 실패:", error);
+    throw error;
   }
-];
+};
 
 // 유저 정보 등록(고객, 미용사)
 export const registerUser = async (userData, role) => {
@@ -23,36 +19,39 @@ export const registerUser = async (userData, role) => {
   const { profileImage, ...jsonData } = userData;
 
   delete jsonData.email;
+  delete jsonData.username;
+  delete jsonData.role;
+  delete jsonData.sidoName;
+  delete jsonData.sigunguName;
   if (role === "customer") {
-    delete jsonData.skills;
+    delete jsonData.skill;
   } else {
-    delete jsonData.sido;
-    delete jsonData.sigungu;
+    delete jsonData.sidoId;
+    delete jsonData.sigunguId;
   }
 
-  // JSON 데이터 직렬화 후 FormData에 추가
-  formData.append("requestDTO", JSON.stringify(jsonData));
-
-  // 파일 데이터 추가
+  console.log(jsonData, "보내는 데이터");
+  formData.append("requestDto", JSON.stringify(jsonData));
   if (profileImage) {
     formData.append("profileImage", profileImage);
-  } else {
-    console.warn("profileImage: null");
-  }
-
-  // FormData 확인 (디버깅용)
-  for (let [key, value] of formData.entries()) {
-    console.log(`테스트콘솔 ${key}:`, value);
   }
 
   try {
-    console.log(endPoint, formData);
     const response = await axiosInstance.post(endPoint, formData);
-    return response.data;
-    // return successCustomer;
+    return response.data.data;
   } catch (error) {
     console.error("고객 정보 등록 실패:", error);
     throw error;
+  }
+};
+
+// 로그아웃
+export const authLogout = async () => {
+  try {
+    const response = await axiosInstance.post("/api/users/logout");
+    return response.data.code;
+  } catch (error) {
+    console.error("로그아웃 실패");
   }
 };
 
@@ -62,7 +61,17 @@ export const nicknameCheck = async (nickname) => {
     const response = await axiosInstance.get(`api/users/nickname/${nickname}/check`);
     return response.data;
   } catch (error) {
-    console.error("닉네임 중복 체크 실패:", error);
-    throw error;
+    if (error.response?.status === 400) {
+      return false;
+    } else {
+      console.error("닉네임 중복 체크 실패:", error);
+      throw error;
+    }
   }
+};
+
+// 전화번호 유효성 검사
+export const validatePhoneNumber = (phoneNumber) => {
+  const phoneRegex = /^01[016789]-\d{3,4}-\d{4}$/;
+  return phoneRegex.test(phoneNumber);
 };

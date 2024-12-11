@@ -85,3 +85,10 @@ export const getFavoriteShop = async (customerId) => {
     throw new Error("Failed to fetch favorite shop");
   }
 };
+
+// 고객 주소 조회
+export const getUserAddress = async () => {
+  const customerId = 47; // TODO: 이건 빼고 사용처에서 보낼것
+  const response = await axiosInstance.get(`/profile/${customerId}/address`);
+  return response.data.data;
+};

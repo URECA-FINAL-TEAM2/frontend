@@ -1,6 +1,7 @@
 import { formatDate } from "@/utils/formatDate";
 import React from "react";
 import { MdExpandMore, MdExpandLess } from "react-icons/md";
+import { useNavigate } from "react-router-dom";
 
 function TotalQuoteRequestList({ Infos }) {
   const quoteRequests = [
@@ -61,6 +62,8 @@ function TotalQuoteRequestList({ Infos }) {
 }
 
 const CustomerEstimate = ({ Info }) => {
+  const navigate = useNavigate();
+
   const getStatusProps = () => {
     switch (Info.requestStatus) {
       case "요청":
@@ -109,7 +112,12 @@ const CustomerEstimate = ({ Info }) => {
         </div>
       </div>
       <div className="flex justify-between gap-2">
-        <div className="flex h-[35px] w-full cursor-pointer items-center justify-center rounded-lg bg-gray-200 text-center text-sm">
+        <div
+          onClick={() => {
+            navigate(`/customer/quotes/request/detail/${0}`); // TODO: quoteRequestId
+          }}
+          className="flex h-[35px] w-full cursor-pointer items-center justify-center rounded-lg bg-gray-200 text-center text-sm"
+        >
           견적 요청 보기
         </div>
         <div className="flex h-[35px] w-full cursor-pointer items-center justify-center rounded-lg bg-gray-200 text-center text-sm">

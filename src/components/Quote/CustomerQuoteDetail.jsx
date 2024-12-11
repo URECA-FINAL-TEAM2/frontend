@@ -1,5 +1,6 @@
 import { getCustomerQuoteDetail } from "@/queries/quoteQuery";
 import React, { useEffect, useState } from "react";
+import { Designer, Schedule, Corgi, Note, Photos, Description, Won, Banknotes } from "/public/Icons";
 
 function CustomerQuoteDetail({ quotesId, onDataLoad }) {
   const [quoteData, setQuoteData] = useState(null);
@@ -52,7 +53,7 @@ function CustomerQuoteDetail({ quotesId, onDataLoad }) {
     <div className="mx-auto mb-[70px] mt-[--header-height] max-w-lg bg-white px-6">
       {/* 매장 및 디자이너 정보 */}
       <div className="mb-1.5 flex items-center space-x-1">
-        <img src="/public/Icons/Designer.svg" alt="Description" className="h-5 w-5" />
+        <img src={Designer} alt="Description" className="h-5 w-5" />
         <h2 className="text-lg font-semibold leading-none">매장 · 디자이너 정보</h2>
       </div>
 
@@ -70,7 +71,7 @@ function CustomerQuoteDetail({ quotesId, onDataLoad }) {
 
       {/* 미용 일시 */}
       <div className="mb-1.5 flex items-center space-x-1">
-        <img src="/public/Icons/Schedule.svg" alt="Schedule Icon" className="h-5 w-5" />
+        <img src={Schedule} alt="Schedule Icon" className="h-5 w-5" />
         <h2 className="text-lg font-semibold leading-none">미용 일시</h2>
       </div>
       <div className="mb-6 rounded-lg border border-main-400 p-4">
@@ -81,7 +82,7 @@ function CustomerQuoteDetail({ quotesId, onDataLoad }) {
 
       {/* 반려견 정보 */}
       <div className="mb-1.5 flex items-center space-x-1">
-        <img src="/public/Icons/Corgi.svg" alt="Dog Icon" className="h-5 w-5" />
+        <img src={Corgi} alt="Dog Icon" className="h-5 w-5" />
         <h2 className="text-lg font-semibold leading-none">반려견 정보</h2>
       </div>
       <div className="mb-6 rounded-lg border border-main-400 p-4">
@@ -109,7 +110,7 @@ function CustomerQuoteDetail({ quotesId, onDataLoad }) {
 
       {/* 요청 내용 */}
       <div className="mb-1.5 flex items-center space-x-1">
-        <img src="/public/Icons/Note.svg" alt="Note Icon" className="h-5 w-5" />
+        <img src={Note} alt="Note Icon" className="h-5 w-5" />
         <h2 className="text-lg font-semibold leading-none">요청 내용</h2>
       </div>
       <div className="mb-6 rounded-lg border border-main-400 p-4 leading-tight">
@@ -117,6 +118,10 @@ function CustomerQuoteDetail({ quotesId, onDataLoad }) {
       </div>
 
       {/* 첨부 사진 */}
+      <div className="mb-1.5 flex items-center space-x-1">
+        <img src={Photos} alt="Photos Icon" className="h-5 w-5" />
+        <h2 className="text-lg font-semibold leading-none">첨부 사진</h2>
+      </div>
       <div className="mb-6 rounded-lg">
         <div className="grid grid-cols-3 gap-3">
           {quoteData.quoteRequest.requestImage.length > 0 ? (
@@ -142,7 +147,7 @@ function CustomerQuoteDetail({ quotesId, onDataLoad }) {
 
       {/* 견적 설명 */}
       <div className="mb-1.5 flex items-center space-x-1">
-        <img src="/public/Icons/Description.svg" alt="Description Icon" className="h-5 w-5" />
+        <img src={Description} alt="Description Icon" className="h-5 w-5" />
         <h2 className="text-lg font-semibold leading-none">견적 설명</h2>
       </div>
       <div className="mb-6 rounded-lg border border-main-400 p-4 leading-tight">
@@ -152,7 +157,7 @@ function CustomerQuoteDetail({ quotesId, onDataLoad }) {
       {/* 금액 */}
       <div className="mb-1 flex justify-between">
         <div className="flex items-center space-x-1">
-          <img src="/public/Icons/Won.svg" alt="Won Icon" className="h-5 w-5" />
+          <img src={Won} alt="Won Icon" className="h-5 w-5" />
           <h2 className="text-lg font-semibold leading-none">금액</h2>
         </div>
         <p className="mt-1 px-0.5 text-lg font-semibold leading-none">
@@ -163,7 +168,7 @@ function CustomerQuoteDetail({ quotesId, onDataLoad }) {
       {/* 예약금 */}
       <div className="mb-3 flex justify-between">
         <div className="flex items-center space-x-1 pt-1">
-          <img src="/public/Icons/BankNotes.svg" alt="Banknotes Icon" className="h-5 w-5" />
+          <img src={Banknotes} alt="Banknotes Icon" className="h-5 w-5" />
           <h2 className="text-lg font-semibold leading-none">예약금 (20%)</h2>
         </div>
         <p className="mt-1 rounded-lg bg-main-200 px-0.5 pb-[1px] pt-[2px] text-lg font-semibold leading-none">

@@ -175,11 +175,10 @@ export const getMyShopDetail = async (groomerId) => {
 };
 
 // 미용사 매장 조회
-export const getGroomerShop = async (shopId) => {
+export const getGroomerShop = async (id) => {
   try {
-    const shopId = 20;
-    const groomerId = 11;
-    const response = await axiosInstance.get(`/profile/groomer/shop/${shopId}`, {
+    const groomerId = id.groomerId;
+    const response = await axiosInstance.get(`/profile/groomer/shop`, {
       params: { groomerId }
     });
 
@@ -190,7 +189,8 @@ export const getGroomerShop = async (shopId) => {
 };
 
 // 미용사 매장 수정
-export const updateGroomerShop = async (data, isUpdate) => {
+export const updateGroomerShop = async (id, data, isUpdate) => {
+  const groomerId = id.groomerId;
   const { profileImage, shopId, ...jsonData } = data;
   const formData = new FormData();
 
@@ -198,8 +198,6 @@ export const updateGroomerShop = async (data, isUpdate) => {
   if (profileImage) {
     formData.append("shopLogo", profileImage);
   }
-
-  const groomerId = 11; // Groomer ID
 
   const method = isUpdate ? "put" : "post";
   const endpoint = isUpdate ? `/profile/groomer/shop/${shopId}` : `/profile/groomer/shop`;
@@ -219,9 +217,9 @@ export const updateGroomerShop = async (data, isUpdate) => {
   }
 };
 
-export const deleteGroomerShop = async (shopId) => {
+export const deleteGroomerShop = async (shopId, id) => {
   try {
-    const groomerId = 11;
+    const groomerId = id.groomerId;
     const response = await axiosInstance.put(
       `/profile/groomer/shop/${shopId}/delete`,
       {},
@@ -230,8 +228,6 @@ export const deleteGroomerShop = async (shopId) => {
       }
     );
 
-    console.log("매장삭제", response);
-
     return response.data.data;
   } catch (error) {
     throw new Error("Failed to delete shop data");
@@ -239,9 +235,10 @@ export const deleteGroomerShop = async (shopId) => {
 };
 
 // 미용사 포트폴리오 이미지 추가
-export const insertGroomerPortfolio = async (images, groomerId) => {
+export const insertGroomerPortfolio = async (images, id) => {
+  const groomerId = id.groomerId;
   const formData = new FormData();
-  const jsonData = { groomerId: 11 };
+  const jsonData = { groomerId: groomerId };
   formData.append("requestDto", JSON.stringify(jsonData));
 
   // 이미지 배열 추가
@@ -249,10 +246,28 @@ export const insertGroomerPortfolio = async (images, groomerId) => {
     formData.append("images", image); // 키 이름을 배열 형태로 지정
   });
 
+  for (let [key, value] of formData.entries()) {
+    console.log(`${key}:`, value);
+  }
+
   try {
     const response = await axiosInstance.put("/profile/groomer/portfolio", formData);
     console.log(response);
   } catch (error) {
     throw new Error("Failed to insert shop data");
   }
+};
+
+export const parseAddress = (fullAddress) => {
+  if (!fullAddress || typeof fullAddress !== "string") {
+    return { address: "", detailAddress: "" }; // 유효하지 않은 입력 처리
+  }
+
+  const [address, ...detailParts] = fullAddress.split(",");
+  const detailAddress = detailParts.join(",").trim(); // 배열을 문자열로 합치고 공백 제거
+
+  return {
+    address: address.trim(), // 앞뒤 공백 제거
+    detailAddress: detailAddress || "" // 상세 주소 없으면 빈 문자열 반환
+  };
 };

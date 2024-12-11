@@ -7,9 +7,11 @@ import NotFoundStore from "./NotFoundStore";
 import { useNavigate } from "react-router-dom";
 import { getGroomerShop } from "@/queries/shopQuery";
 import { MdOutlineRateReview } from "react-icons/md";
-
 import { GoHeartFill } from "react-icons/go";
+import useAuthStore from "@/store/authStore";
+
 const MyStore = () => {
+  const { id } = useAuthStore();
   const navigate = useNavigate();
   const [activeComponent, setActiveComponent] = useState("info");
   const [storeExists, setStoreExists] = useState(true);
@@ -18,9 +20,14 @@ const MyStore = () => {
 
   useEffect(() => {
     const getShop = async () => {
-      const response = await getGroomerShop();
-      setPortfolioImg(response.data.groomerPortfolioImages);
-      setShopInfo(response.data);
+      try {
+        const response = await getGroomerShop(id);
+
+        setPortfolioImg(response.data.groomerPortfolioImages);
+        setShopInfo(response.data);
+      } catch (error) {
+        setStoreExists(false);
+      }
     };
     getShop();
   }, []);
@@ -37,7 +44,7 @@ const MyStore = () => {
                 <img
                   src={shopInfo.shopLogo ? shopInfo.shopLogo : DefaultStore}
                   alt="default store img"
-                  className="img-border my-8 w-full"
+                  className="img-border my-8 aspect-square w-full"
                 />
               </div>
               <div>
@@ -56,7 +63,7 @@ const MyStore = () => {
               </div>
             </div>
 
-            <div className="relative mt-7 flex items-center">
+            <div className="relative mt-2 flex items-center">
               <button
                 onClick={() => setActiveComponent("info")}
                 className={`w-1/2 border-b border-b-main px-14 py-2 text-lg ${
@@ -80,7 +87,7 @@ const MyStore = () => {
             </div>
 
             <div>
-              {activeComponent === "info" && <StoreInfo shopInfo={shopInfo} />}
+              {activeComponent === "info" && <StoreInfo shopInfo={shopInfo} id={id} />}
               {activeComponent === "portfolio" && <StorePortfolio portfolioImg={portfolioImg} />}
             </div>
 

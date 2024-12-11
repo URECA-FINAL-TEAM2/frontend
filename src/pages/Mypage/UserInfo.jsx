@@ -18,13 +18,13 @@ const UserInfo = () => {
     profileImage: null,
     username: "",
     email: "",
-    nickname: "",
+    nickName: "",
     phone: "",
     sidoId: 0,
     sigunguId: 0,
     sidoName: 0,
     sigunguName: 0,
-    skills: ""
+    skill: ""
   });
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalState, setModalState] = useState("update");

@@ -14,6 +14,7 @@ const PetWeight = ({ onlyRead, formData, handleChange }) => {
           name="dogWeight"
           value={formData.dogWeight}
           onChange={handleChange}
+          placeholder="몸무게를 입력해주세요"
           required
         />
       )}

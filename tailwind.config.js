@@ -52,11 +52,14 @@ export default {
           "flex-direction": "column",
           "align-items": "center",
           "justify-content": "space-between",
-          height: "50px"
+          height: "45px",
+          color: "#c3c3c3",
+          padding: "2px"
         },
         ".bottom-active": {
           color: "#FF8E8E",
-          "font-weight": "bold"
+          "font-weight": "bold",
+          padding: 0
         },
         // form style
         ".labelStyle": {

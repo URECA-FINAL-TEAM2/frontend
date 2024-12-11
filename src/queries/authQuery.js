@@ -1,5 +1,16 @@
 import axiosInstance from "@/api/axiosInstance";
 
+export const getUserId = async (role, userId) => {
+  const endpoint = role === "customer" ? `/mypage/customer/toggle/${userId}` : `/mypage/groomer/toggle/${userId}`;
+  try {
+    const response = await axiosInstance.get(endpoint);
+    return response.data;
+  } catch (error) {
+    console.error("고객 정보 등록 실패:", error);
+    throw error;
+  }
+};
+
 // 유저 정보 등록(고객, 미용사)
 export const registerUser = async (userData, role) => {
   const endPoint = role === "customer" ? "/api/users/register/customer" : "/api/users/register/groomer";
@@ -13,30 +24,21 @@ export const registerUser = async (userData, role) => {
   delete jsonData.sidoName;
   delete jsonData.sigunguName;
   if (role === "customer") {
-    delete jsonData.skills;
+    delete jsonData.skill;
   } else {
     delete jsonData.sidoId;
     delete jsonData.sigunguId;
   }
 
-  console.log(jsonData);
-
+  console.log(jsonData, "보내는 데이터");
   formData.append("requestDto", JSON.stringify(jsonData));
   if (profileImage) {
     formData.append("profileImage", profileImage);
-  } else {
-    console.warn("profileImage: null");
-  }
-
-  // FormData 확인 (디버깅용)
-  for (let [key, value] of formData.entries()) {
-    console.log(`테스트콘솔 ${key}:`, value);
   }
 
   try {
     const response = await axiosInstance.post(endPoint, formData);
-    console.log("제발 ㅜ", response);
-    return response.data;
+    return response.data.data;
   } catch (error) {
     console.error("고객 정보 등록 실패:", error);
     throw error;

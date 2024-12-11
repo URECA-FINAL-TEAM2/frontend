@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { parseAddress } from "@/queries/shopQuery";
+import { useEffect, useState } from "react";
 
 const Postcode = ({ formData, setFormData, handleChange }) => {
   const [address, setAddress] = useState(""); // 주소
@@ -44,8 +45,16 @@ const Postcode = ({ formData, setFormData, handleChange }) => {
     setDetailAddress(detail);
 
     // address : 도로명 주소 + 상세 주소 저장
-    setFormData((prev) => ({ ...prev, address: `${address} ${detail}` }));
+    setFormData((prev) => ({ ...prev, address: `${address}, ${detail}` }));
   };
+
+  useEffect(() => {
+    if (formData?.address) {
+      const { address, detailAddress } = parseAddress(formData?.address);
+      setAddress(address);
+      setDetailAddress(detailAddress);
+    }
+  }, [formData?.address]); // formData.address 변경 시 실행
 
   return (
     <>
@@ -60,14 +69,7 @@ const Postcode = ({ formData, setFormData, handleChange }) => {
       </div>
 
       <div>
-        <input
-          type="text"
-          id="address"
-          className="inputStyle mb-2"
-          placeholder="주소"
-          value={address || formData.address}
-          readOnly
-        />
+        <input type="text" id="address" className="inputStyle mb-2" placeholder="주소" value={address} readOnly />
         <input
           type="text"
           id="detailAddress"

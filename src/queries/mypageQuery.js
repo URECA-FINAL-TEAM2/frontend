@@ -1,11 +1,11 @@
 import axiosInstance from "@/api/axiosInstance";
 
-export const getCustomerMypage = async () => {
+export const getCustomerMypage = async (id) => {
   try {
-    const customerId = 1; // 수정 필요
-    // const response = await axiosInstance.get(`/mypage/customer/${customerId}`);
-    // console.log(response);
-    // return response.data.data;
+    const customerId = id.customerId; // 수정 필요
+    const response = await axiosInstance.get(`/mypage/customer/${customerId}`);
+    console.log(response);
+    return response.data.data;
   } catch (error) {
     throw new Error("Failed to fetch customer mypage data");
   }

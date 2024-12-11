@@ -1,4 +1,3 @@
-import BottomButton from "@/components/common/button/BottomButton";
 import ProfileImage from "../ProfileImage";
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
@@ -6,18 +5,15 @@ import SelectRegion from "./SelectRegion";
 import { nicknameCheck } from "@/queries/authQuery";
 import NicknameCheck from "@/components/Login/NicknameCheck";
 import PhoneCheck from "@/components/Login/PhoneCheck";
-import { deleteUserInfo } from "@/queries/userQuery";
-import useAuthStore from "@/store/authStore";
 
 const UserForm = ({ handleOpenModal, phoneRef, validPhone, formData, setFormData, handleChange, role }) => {
-  const { id } = useAuthStore();
   const location = useLocation();
   const [pathname, setPathname] = useState();
   const [nickname, setNickname] = useState();
 
   useEffect(() => {
     setPathname(location.pathname);
-  }, []);
+  }, [location]);
 
   // 닉네임 유효성검사, 중복검사
   const handleNicknameCheck = async (nickname) => {
@@ -55,15 +51,15 @@ const UserForm = ({ handleOpenModal, phoneRef, validPhone, formData, setFormData
         </div>
         {/* Nickname */}
         <div>
-          <label htmlFor="nickname" className="labelStyle">
+          <label htmlFor="nickName" className="labelStyle">
             닉네임
           </label>
           <div className={`inputStyle ${nickname ? "mb-2" : "mb-8"} flex justify-between text-gray-400`}>
             <input
               type="text"
-              id="nickname"
-              name="nickname"
-              value={formData?.nickname}
+              id="nickName"
+              name="nickName"
+              value={formData?.nickName || formData?.nickname}
               onChange={handleChange}
               placeholder="닉네임을 입력해주세요."
               className="grow"
@@ -72,7 +68,7 @@ const UserForm = ({ handleOpenModal, phoneRef, validPhone, formData, setFormData
             <button
               type="button"
               className="rounded-xl bg-main px-2 text-xs text-white"
-              onClick={() => handleNicknameCheck(formData.nickname)}
+              onClick={() => handleNicknameCheck(formData.nickName)}
             >
               중복확인
             </button>
@@ -109,14 +105,14 @@ const UserForm = ({ handleOpenModal, phoneRef, validPhone, formData, setFormData
         {/* 미용사 - 스킬 */}
         {role === "groomer" && (
           <div>
-            <label htmlFor="skills" className="labelStyle">
+            <label htmlFor="skill" className="labelStyle">
               미용사 스킬
             </label>
             <input
               type="text"
-              id="skills"
-              name="skills"
-              value={formData?.skills}
+              id="skill"
+              name="skill"
+              value={formData?.skill || formData?.skills}
               onChange={handleChange}
               placeholder="미용사 스킬을 입력해주세요."
               className="inputStyle text-gray-400"
@@ -124,13 +120,17 @@ const UserForm = ({ handleOpenModal, phoneRef, validPhone, formData, setFormData
           </div>
         )}
 
-        <button
-          className="mx-auto mb-20 flex text-xs text-gray-300 underline"
-          type="button"
-          onClick={() => handleOpenModal("delete")}
-        >
-          <span>{role === "customer" ? "고객 프로필 삭제" : "미용사 프로필 삭제"}</span>
-        </button>
+        {pathname === "/infoRequired" ? (
+          ""
+        ) : (
+          <button
+            className="mx-auto mb-20 flex text-xs text-gray-300 underline"
+            type="button"
+            onClick={() => handleOpenModal("delete")}
+          >
+            <span>{role === "customer" ? "고객 프로필 삭제" : "미용사 프로필 삭제"}</span>
+          </button>
+        )}
 
         <button type="button" onClick={() => handleOpenModal("update")} className="bottomButtonPink">
           내 정보 저장하기

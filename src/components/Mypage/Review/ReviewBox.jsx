@@ -25,7 +25,7 @@ const ReviewBox = ({ review }) => {
 
   return (
     <>
-      <div className="mx-auto mb-4 w-11/12 rounded-xl bg-white p-4">
+      <div className="mx-auto mb-4 w-11/12 rounded-xl bg-white p-4 shadow-md">
         <div className="text-lg">매장명</div>
         <div className="flex items-center text-sm">
           <div className="flex items-center">

@@ -111,11 +111,10 @@ export const getShopDetail = async (shopId) => {
 };
 
 // 미용사 매장 조회
-export const getGroomerShop = async (shopId) => {
+export const getGroomerShop = async (id) => {
   try {
-    const shopId = 20;
-    const groomerId = 11;
-    const response = await axiosInstance.get(`/profile/groomer/shop/${shopId}`, {
+    const groomerId = id.groomerId;
+    const response = await axiosInstance.get(`/profile/groomer/shop`, {
       params: { groomerId }
     });
 
@@ -126,7 +125,8 @@ export const getGroomerShop = async (shopId) => {
 };
 
 // 미용사 매장 수정
-export const updateGroomerShop = async (data, isUpdate) => {
+export const updateGroomerShop = async (id, data, isUpdate) => {
+  const groomerId = id.groomerId;
   const { profileImage, shopId, ...jsonData } = data;
   const formData = new FormData();
 
@@ -134,8 +134,6 @@ export const updateGroomerShop = async (data, isUpdate) => {
   if (profileImage) {
     formData.append("shopLogo", profileImage);
   }
-
-  const groomerId = 11; // Groomer ID
 
   const method = isUpdate ? "put" : "post";
   const endpoint = isUpdate ? `/profile/groomer/shop/${shopId}` : `/profile/groomer/shop`;
@@ -155,9 +153,9 @@ export const updateGroomerShop = async (data, isUpdate) => {
   }
 };
 
-export const deleteGroomerShop = async (shopId) => {
+export const deleteGroomerShop = async (shopId, id) => {
   try {
-    const groomerId = 11;
+    const groomerId = id.groomerId;
     const response = await axiosInstance.put(
       `/profile/groomer/shop/${shopId}/delete`,
       {},
@@ -166,8 +164,6 @@ export const deleteGroomerShop = async (shopId) => {
       }
     );
 
-    console.log("매장삭제", response);
-
     return response.data.data;
   } catch (error) {
     throw new Error("Failed to delete shop data");
@@ -175,9 +171,10 @@ export const deleteGroomerShop = async (shopId) => {
 };
 
 // 미용사 포트폴리오 이미지 추가
-export const insertGroomerPortfolio = async (images, groomerId) => {
+export const insertGroomerPortfolio = async (images, id) => {
+  const groomerId = id.groomerId;
   const formData = new FormData();
-  const jsonData = { groomerId: 11 };
+  const jsonData = { groomerId: groomerId };
   formData.append("requestDto", JSON.stringify(jsonData));
 
   // 이미지 배열 추가

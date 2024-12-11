@@ -3,8 +3,10 @@ import GrommerTotalRequest from "../../components/Main/GrommerTotalRequest";
 import { useEffect, useState } from "react";
 import Summary from "../../components/common/Summary";
 import { getGroomerMain } from "@/queries/mainQuery";
+import useAuthStore from "@/store/authStore";
 
 const GroomerHome = () => {
+  const { id } = useAuthStore();
   const [totalRequest, setTotalRequest] = useState([]);
   const [preview, setPreview] = useState({
     todayReservation: 0, // 오늘의 예약
@@ -26,7 +28,7 @@ const GroomerHome = () => {
   useEffect(() => {
     const getMain = async () => {
       try {
-        const response = await getGroomerMain(11);
+        const response = await getGroomerMain(id.groomerId);
         setTotalRequest(response.totalRequest);
         updatePreview(response);
       } catch (error) {

@@ -5,8 +5,10 @@ import { getGroomerShop, updateGroomerShop } from "@/queries/shopQuery";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import toast, { Toaster } from "react-hot-toast";
+import useAuthStore from "@/store/authStore";
 
 const CreateStore = () => {
+  const { id } = useAuthStore();
   const navigate = useNavigate();
   const location = useLocation();
   const { update } = location.state || {};
@@ -28,7 +30,7 @@ const CreateStore = () => {
 
   useEffect(() => {
     const getShop = async () => {
-      const response = await getGroomerShop();
+      const response = await getGroomerShop(id);
       const shop = response.data;
       console.log("매장정보", shop);
       setFormData((prevFormData) => ({
@@ -62,8 +64,8 @@ const CreateStore = () => {
     e.preventDefault();
     setIsModalOpen(false);
 
-    const response = await updateGroomerShop(formData, isUpdate);
-    toast("수정이 완료되었습니다.", { icon: "👏🏻" });
+    const response = await updateGroomerShop(id, formData, isUpdate);
+    toast("완료되었습니다.", { icon: "👏🏻" });
 
     setTimeout(() => {
       navigate(-1);

@@ -22,15 +22,14 @@ const petInfo = [
 // 반려견 정보 조회
 export const getPetInfo = async (dogId, customerId) => {
   try {
-    const dogId = 1;
-    const customerId = 1;
+    const dogId = 28;
+    const customerId = 14;
 
     const response = await axiosInstance.get(`/profile/customer/dogs/${dogId}`, {
       params: { customerId }
     });
-    console.log(response);
-    // const res = response.data;
-    const res = petInfo[0].data;
+    console.log(response.data.data);
+    const res = response.data.data;
 
     const transformedData = {
       ...res, // 기존 데이터 유지
@@ -47,7 +46,7 @@ export const getPetInfo = async (dogId, customerId) => {
 // 반려견 정보 업데이트(등록, 수정)
 export const updatePetInfo = async (id, dogData) => {
   const method = id ? "put" : "post";
-  const endPoint = id ? `/profile/customer/dogs/${id}` : `/profile/customer/dogs`;
+  const endPoint = id ? `/profile/customer/dogs/${28}` : `/profile/customer/dogs`;
   const formatedData = {
     ...dogData,
     dogBirth: reformatDogBirth(dogData.dogBirth) // "2024-11-11"
@@ -60,7 +59,7 @@ export const updatePetInfo = async (id, dogData) => {
   formData.append("requestDto", JSON.stringify(jsonData));
 
   if (profileImage) {
-    formData.append("profileImage", profileImage);
+    formData.append("dogProfile", profileImage);
   }
 
   try {

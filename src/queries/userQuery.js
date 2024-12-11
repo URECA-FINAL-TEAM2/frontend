@@ -2,7 +2,7 @@ import axiosInstance from "@/api/axiosInstance";
 
 // 고객, 미용사 프로필 정보 조회
 export const getUserInfo = async (role, id) => {
-  const endpoint = role === "customer" ? `/profile/customer/14` : `/profile/groomer/${id.groomerId}`;
+  const endpoint = role === "customer" ? `/profile/customer/${id.customerId}` : `/profile/groomer/${id.groomerId}`;
 
   try {
     const response = await axiosInstance.get(endpoint);

@@ -53,7 +53,11 @@ const MyPet = () => {
   const getPet = async (id) => {
     try {
       const response = await getPetInfo(id);
-      setFormData(response);
+      setFormData((prev) => ({
+        ...prev, // 이전 상태 유지
+        profileImage: response.dogProfileImage, // profileImage 업데이트
+        ...response // response의 나머지 데이터 추가 또는 덮어쓰기
+      }));
     } catch (error) {
       console.error(error);
     }

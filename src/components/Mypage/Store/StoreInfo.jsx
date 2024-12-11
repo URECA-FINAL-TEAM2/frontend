@@ -2,12 +2,13 @@ import { deleteGroomerShop, parseAddress } from "@/queries/shopQuery";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-const StoreInfo = ({ shopInfo }) => {
+const StoreInfo = ({ shopInfo, id }) => {
   const navigate = useNavigate();
   const [address, setAddress] = useState();
   const [detailAddress, setDetailAddress] = useState();
-  const handleDeleteShop = async (shopId) => {
-    const response = await deleteGroomerShop(shopId);
+
+  const handleDeleteShop = async (shopId, id) => {
+    await deleteGroomerShop(shopId, id);
     navigate("/groomer/home");
   };
   useEffect(() => {
@@ -39,7 +40,7 @@ const StoreInfo = ({ shopInfo }) => {
       </div>
 
       <div className="mt-12 text-center text-sm">
-        <button type="button" onClick={() => handleDeleteShop(shopInfo.shopId)} className="text-gray-300 underline">
+        <button type="button" onClick={() => handleDeleteShop(shopInfo.shopId, id)} className="text-gray-300 underline">
           매장 삭제하기
         </button>
       </div>

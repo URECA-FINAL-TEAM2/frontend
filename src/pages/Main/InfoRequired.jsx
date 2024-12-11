@@ -18,11 +18,11 @@ const InfoRequired = () => {
     email: email,
     profileImage: null,
     username: username,
-    nickname: "",
+    nickName: "",
     phone: "",
     sidoId: "",
     sigunguId: "",
-    skills: "" // 미용사 필드
+    skill: "" // 미용사 필드
   });
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalState, setModalState] = useState("update");
@@ -56,17 +56,16 @@ const InfoRequired = () => {
 
     try {
       const response = await registerUser(formData, role);
-      const responseRole = response[0].data.roles[0];
+      const responseRole = response.roles[0] === "고객" ? "customer" : "groomer";
 
       setLoginStatus(true);
-      // id, role, 정보 저장
 
       updateDefaultRole(responseRole);
       if (responseRole === "customer") {
-        updateId({ customerId: response.data.body.data.user.id });
+        updateId({ customerId: 46 });
         navigate("/customer/home");
       } else {
-        updateId({ groomerId: response.data.body.data.user.id });
+        updateId({ groomerId: 31 });
         navigate("/groomer/home");
       }
     } catch (error) {

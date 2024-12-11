@@ -23,11 +23,11 @@ function OAuth2RedirectPage() {
       setLoginStatus(true);
       const role = response.data.body.data.user.roles;
       if (role === "customer") {
-        // updateId({ customerId: response.data.body.data.user.id });
+        updateId({ customerId: 46 });
         updateDefaultRole(role);
         navigate("/customer/home");
       } else {
-        // updateId({ groomerId: response.data.body.data.user.id });
+        updateId({ groomerId: 31 });
         updateDefaultRole(role);
         navigate("/groomer/home");
       }

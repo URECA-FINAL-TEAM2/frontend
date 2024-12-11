@@ -1,16 +1,21 @@
 import SubHeader from "@/components/common/SubHeader";
 import CustomerQuoteDetail from "@/components/Quote/CustomerQuoteDetail";
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { MdExpandMore } from "react-icons/md";
 import { RequestPayment } from "@/queries/paymentQuery";
+import { ArrowDown } from "/public/Icons";
 
 function CustomerQuoteDetailPage(props) {
-  const quotesId = useParams().quotesId;
-  const [isHovered, setIsHovered] = useState(false);
+  const quotesId = Number(useParams().quotesId);
+  const customerId = 7; // TODO
+  const [isExpanded, setIsExpanded] = useState(false);
   const [amount, setAmount] = useState(null);
   const [shopName, setShopName] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+
+  // Create a ref for the expandable div
+  const expandableRef = useRef(null);
 
   const [agreements, setAgreements] = useState({
     all: false,
@@ -19,6 +24,24 @@ function CustomerQuoteDetailPage(props) {
     personalInfoConsent: false,
     thirdPartyConsent: false
   });
+
+  // Add an effect to handle clicks outside the expandable div
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      // Check if the expandable div is open and the click is outside of it
+      if (isExpanded && expandableRef.current && !expandableRef.current.contains(event.target)) {
+        setIsExpanded(false);
+      }
+    };
+
+    // Add event listener when component mounts
+    document.addEventListener("mousedown", handleClickOutside);
+
+    // Clean up the event listener when component unmounts
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isExpanded]);
 
   const handleDataLoad = (data) => {
     setAmount(Math.floor(data.amount * 0.2));
@@ -37,19 +60,18 @@ function CustomerQuoteDetailPage(props) {
     }
     setErrorMessage("");
     console.log("결제 진행:", { amount, shopName });
-
+    const requestData = {
+      amount: amount,
+      shopName: shopName,
+      quoteId: quotesId,
+      customerId: customerId
+    };
     try {
-      const result = RequestPayment({
-        amount: amount,
-        shopName: shopName,
-        quoteId: quotesId,
-        customerId: 1 // TODO: localStorage에서 clientId 가져오기
-      });
-      console.log("결제 성공:", result);
-      alert("결제가 성공적으로 완료되었습니다.");
+      const result = RequestPayment(requestData);
+      console.log("결제 요청 성공:", result);
+      console.log(requestData);
     } catch (error) {
-      console.error("결제 실패:", error);
-      alert("결제 처리 중 오류가 발생했습니다.");
+      console.error("결제 요청 실패:", error);
     }
   };
 
@@ -80,24 +102,34 @@ function CustomerQuoteDetailPage(props) {
     });
   };
 
+  const toggleExpand = () => {
+    setIsExpanded(!isExpanded);
+  };
+
   return (
     <div>
       <SubHeader title="견적서 상세보기" navigate={-1} />
       <CustomerQuoteDetail quotesId={quotesId} onDataLoad={handleDataLoad} />
       <div
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
-        className={`fixed bottom-0 left-0 right-0 mx-auto flex max-w-[400px] transition-all duration-300 ease-in-out ${
-          isHovered ? "h-[300px] bg-main-200" : "h-[55px] bg-main-400 text-[20px] text-white"
+        ref={expandableRef}
+        className={`fixed bottom-0 left-0 right-0 mx-auto flex max-w-[400px] transition-all duration-200 ease-in-out ${
+          isExpanded ? "h-[300px] bg-main-200" : "h-[55px] bg-main-400 text-[20px] text-white"
         } w-full items-center justify-center rounded-t-[10px] shadow-md`}
       >
-        {!isHovered ? (
-          <button onClick={payHandle} className="flex h-full w-full items-center justify-center hover:bg-main-300">
+        {!isExpanded ? (
+          <button onClick={toggleExpand} className="flex h-full w-full items-center justify-center hover:bg-main-300">
             결제해서 예약하기
           </button>
         ) : (
-          <div className="flex w-full flex-col items-center justify-center px-8">
-            <div className="flex w-full justify-between text-lg font-bold">
+          <div className="relative flex w-full flex-col items-center justify-center px-8">
+            <div
+              onClick={toggleExpand}
+              className="absolute left-0 right-0 top-0 flex h-3 cursor-pointer items-center justify-center"
+            >
+              <img src={ArrowDown} className="h-3" />
+            </div>
+
+            <div className="mt-4 flex w-full justify-between text-lg font-bold">
               <p>최종 결제 금액</p>
               <p>{Number(amount).toLocaleString()} 원</p>
             </div>
@@ -157,7 +189,8 @@ function CustomerQuoteDetailPage(props) {
                 </label>
               </div>
             </div>
-            {errorMessage && <p className="mt-2 text-sm text-red-500">{errorMessage}</p>}
+            <div className="h-4 text-xs text-red-500">{errorMessage && <p>{errorMessage}</p>}</div>
+
             <button
               onClick={payHandle}
               className="mt-2 w-full rounded bg-white p-2 text-lg font-semibold text-main-400 hover:bg-gray-100"

@@ -8,5 +8,7 @@ import Region from "./Region.svg";
 import Schedule from "./Schedule.svg";
 import User from "./User.svg";
 import Won from "./Won.svg";
+import ArrowDown from "./ArrowDown.svg";
+import ArrowUp from "./ArrowUp.svg";
 
-export { Banknotes, Corgi, Description, Designer, Note, Photos, Region, Schedule, User, Won };
+export { Banknotes, Corgi, Description, Designer, Note, Photos, Region, Schedule, User, Won, ArrowDown, ArrowUp };

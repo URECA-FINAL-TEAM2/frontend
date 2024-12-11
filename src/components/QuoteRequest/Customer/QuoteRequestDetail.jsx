@@ -127,19 +127,20 @@ const QuoteRequestDetail = ({ requestId }) => {
         <img src={Photos} alt="Photos Icon" className="h-5 w-5" />
         <h2 className="text-lg font-semibold leading-none">첨부 사진</h2>
       </div>
-
       <div className="rounded-lg">
-        <div className="grid grid-cols-3 gap-3">
-          {requestData.requestImages.length > 0 ? (
-            requestData.requestImages.map((image, index) => (
+        {requestData.requestImages.length > 0 ? (
+          <div className="grid grid-cols-3 gap-3">
+            {requestData.requestImages.map((image, index) => (
               <div key={index} className="relative">
                 <img src={image} alt={`Uploaded ${index}`} className="h-28 w-28 rounded-lg object-cover" />
               </div>
-            ))
-          ) : (
-            <p className="col-span-3 text-center text-gray-500">첨부된 사진이 없습니다.</p>
-          )}
-        </div>
+            ))}
+          </div>
+        ) : (
+          <div className="flex h-28 w-full items-center justify-center">
+            <p className="text-center text-gray-500">첨부된 사진이 없습니다.</p>
+          </div>
+        )}
       </div>
     </div>
   );

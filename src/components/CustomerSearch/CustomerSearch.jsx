@@ -59,7 +59,7 @@ const CustomerSearch = () => {
           <div className="h-1.5 w-16 rounded-full bg-gray-300" />
         </div>
 
-        <div className="scrollbar-hide h-[calc(100%-2.5rem)] overflow-y-scroll">
+        <div className="h-[calc(100%-2.5rem)] overflow-y-scroll scrollbar-hide">
           {isLoading ? (
             <div className="flex h-full items-center justify-center">
               <div className="h-8 w-8 animate-spin rounded-full border-4 border-gray-200 border-t-blue-500" />

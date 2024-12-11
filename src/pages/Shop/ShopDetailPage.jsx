@@ -71,7 +71,7 @@ const ShopDetailPage = () => {
       <BottomButton
         styleType="pink"
         onClick={() => {
-          navigate(`/customer/shop/quotes/${shopId}`);
+          navigate(`/customer/quotes/request/${shopDetail.groomerId}`);
         }}
       >
         견적서 요청하기

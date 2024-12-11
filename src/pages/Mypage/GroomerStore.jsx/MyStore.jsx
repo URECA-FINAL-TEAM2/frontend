@@ -1,23 +1,26 @@
 import { useEffect, useState } from "react";
 import SubHeader from "../../../components/common/SubHeader";
-import Summary from "../../../components/common/Summary";
 import DefaultStore from "/Icons/DefaultStoreProfile.svg";
 import StoreInfo from "../../../components/Mypage/Store/StoreInfo";
 import StorePortfolio from "../../../components/Mypage/Store/StorePortfolio";
 import NotFoundStore from "./NotFoundStore";
 import { useNavigate } from "react-router-dom";
 import { getGroomerShop } from "@/queries/shopQuery";
+import { MdOutlineRateReview } from "react-icons/md";
 
+import { GoHeartFill } from "react-icons/go";
 const MyStore = () => {
   const navigate = useNavigate();
   const [activeComponent, setActiveComponent] = useState("info");
   const [storeExists, setStoreExists] = useState(true);
   const [shopInfo, setShopInfo] = useState({});
+  const [portfolioImg, setPortfolioImg] = useState([]);
 
   useEffect(() => {
     const getShop = async () => {
       const response = await getGroomerShop();
-      setShopInfo(response);
+      setPortfolioImg(response.data.groomerPortfolioImages);
+      setShopInfo(response.data);
     };
     getShop();
   }, []);
@@ -29,16 +32,31 @@ const MyStore = () => {
 
         {storeExists ? (
           <div className="mt-[75px]">
-            <img
-              src={shopInfo.shopLogo ? shopInfo.shopLogo : DefaultStore}
-              alt="default store img"
-              className="img-border mx-auto mb-8 mt-24 aspect-square w-1/3"
-            />
-            <div className="mx-auto px-6">
-              <Summary firstName={"매장 찜 수"} firstValue={40} secondName={"내 매장 리뷰"} secondValue={3} />
+            <div className="flex items-center justify-evenly">
+              <div className="mr-3 w-[40%]">
+                <img
+                  src={shopInfo.shopLogo ? shopInfo.shopLogo : DefaultStore}
+                  alt="default store img"
+                  className="img-border my-8 w-full"
+                />
+              </div>
+              <div>
+                <p className="flex">
+                  <span className="mr-5 flex items-center">
+                    <GoHeartFill color="#ff8e8e" className="mr-1" /> 매장 찜
+                  </span>
+                  <span className="grow text-end text-main">{shopInfo.favoriteCount}</span>
+                </p>
+                <p className="flex justify-between">
+                  <span className="mr-5 flex items-center">
+                    <MdOutlineRateReview color="#ff8e8e" className="mr-1" /> 매장 리뷰
+                  </span>
+                  <span className="text-end text-main">{shopInfo.reviewCount}</span>
+                </p>
+              </div>
             </div>
 
-            <div className="relative mt-14 flex items-center">
+            <div className="relative mt-7 flex items-center">
               <button
                 onClick={() => setActiveComponent("info")}
                 className={`w-1/2 border-b border-b-main px-14 py-2 text-lg ${
@@ -63,7 +81,7 @@ const MyStore = () => {
 
             <div>
               {activeComponent === "info" && <StoreInfo shopInfo={shopInfo} />}
-              {activeComponent === "portfolio" && <StorePortfolio />}
+              {activeComponent === "portfolio" && <StorePortfolio portfolioImg={portfolioImg} />}
             </div>
 
             {activeComponent === "info" && (
@@ -75,7 +93,10 @@ const MyStore = () => {
               </button>
             )}
             {activeComponent === "portfolio" && (
-              <button onClick={() => navigate("/groomer/editportfolio")} className="bottomButtonPink">
+              <button
+                onClick={() => navigate("/groomer/editportfolio", { state: { portfolioImg: portfolioImg } })}
+                className="bottomButtonPink"
+              >
                 포트폴리오 수정
               </button>
             )}

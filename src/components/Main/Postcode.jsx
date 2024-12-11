@@ -1,5 +1,4 @@
 import { useState } from "react";
-import PropTypes from "prop-types";
 
 const Postcode = ({ formData, setFormData, handleChange }) => {
   const [address, setAddress] = useState(""); // 주소
@@ -55,7 +54,7 @@ const Postcode = ({ formData, setFormData, handleChange }) => {
           주소
         </label>
 
-        <button className="rounded-lg bg-main px-3 text-xs text-white" onClick={handleAddressSearch}>
+        <button type="button" className="rounded-lg bg-main px-3 text-xs text-white" onClick={handleAddressSearch}>
           주소 찾기
         </button>
       </div>
@@ -66,7 +65,7 @@ const Postcode = ({ formData, setFormData, handleChange }) => {
           id="address"
           className="inputStyle mb-2"
           placeholder="주소"
-          value={formData.address}
+          value={address || formData.address}
           readOnly
         />
         <input

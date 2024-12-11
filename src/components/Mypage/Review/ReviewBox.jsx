@@ -5,7 +5,7 @@ import Modal from "../../common/modal/modal";
 import { useNavigate } from "react-router-dom";
 import { deleteReview } from "@/queries/reviewQuery";
 
-const ReviewBox = () => {
+const ReviewBox = ({ review }) => {
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -46,7 +46,10 @@ const ReviewBox = () => {
           <button onClick={handleOpenModal} className="buttonInBox-main">
             리뷰 삭제하기
           </button>
-          <button onClick={() => navigate("/customer/writeReviews")} className="buttonInBox-sub">
+          <button
+            onClick={() => navigate("/customer/writeReviews", { state: { review: review } })}
+            className="buttonInBox-sub"
+          >
             리뷰 수정하기
           </button>
         </div>

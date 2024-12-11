@@ -4,27 +4,32 @@ import { ImStarFull, ImStarHalf, ImStarEmpty } from "react-icons/im";
 import Modal from "../../../components/common/modal/modal";
 import EditReviewImage from "@/components/Mypage/Review/EditReviewImage";
 import { useLocation, useNavigate } from "react-router-dom";
-import { insertReview, updateReview } from "@/queries/reviewQuery";
+import useAuthStore from "@/store/authStore";
+import { insertReview } from "@/queries/reviewQuery";
 import toast, { Toaster } from "react-hot-toast";
 
-const WriteReviews = () => {
+const PostReview = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { review } = location.state || {}; // location.state에서 리뷰 데이터 가져오기
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const { id } = useAuthStore(); // id.customerId
+  const { groomerId, customerId, selectedQuoteId } = location.state || {};
 
-  // 리뷰 상태 변수
   const [reviewData, setReviewData] = useState({
-    starScore: review?.starScore || 4.5,
-    content: review?.content || "",
-    images: review?.images || [], // 이미지 파일 객체
-    previewImages: review?.images?.map((file) => URL.createObjectURL(file)) || [] // 미리보기용 URL
+    groomerId: groomerId || null,
+    customerId: customerId || id.customerId,
+    selectedQuoteId: selectedQuoteId || null,
+    starScore: 4.5,
+    content: "",
+    images: [], // 원본 파일
+    previewImages: [] // 미리보기 URL
   });
 
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   // 별점 변경
-  const handleStarScoreChange = (e) => {
-    const newScore = Number(e.target.value);
-    setReviewData((prev) => ({ ...prev, starScore: newScore }));
+  const handleSelectChange = (e) => {
+    const newRating = Number(e.target.value);
+    setReviewData((prev) => ({ ...prev, starScore: newRating }));
   };
 
   // 리뷰 내용 변경
@@ -36,13 +41,12 @@ const WriteReviews = () => {
   // 이미지 추가
   const handleImageAdd = (e) => {
     const files = Array.from(e.target.files);
-    const newImageFiles = files;
-    const newPreviewUrls = files.map((file) => URL.createObjectURL(file)); // 미리보기 URL 생성
 
+    const newPreviewUrls = files.map((file) => URL.createObjectURL(file)); // 미리보기 URL 생성
     setReviewData((prev) => ({
       ...prev,
-      images: [...prev.images, ...newImageFiles], // 원본 파일 저장
-      previewImages: [...prev.previewImages, ...newPreviewUrls] // 미리보기 URL 저장
+      images: [...prev.images, ...files], // 원본 파일 추가
+      previewImages: [...prev.previewImages, ...newPreviewUrls] // 미리보기 URL 추가
     }));
   };
 
@@ -64,10 +68,10 @@ const WriteReviews = () => {
   };
 
   const handleConfirmModal = async () => {
-    console.log("수정 완료 데이터:", reviewData);
+    console.log("리뷰 작성 완료", reviewData);
     setIsModalOpen(false);
 
-    await updateReview(review?.reviewId, reviewData);
+    await insertReview(reviewData);
     toast("수정이 완료되었습니다.", { icon: "👏🏻" });
 
     setTimeout(() => {
@@ -96,18 +100,19 @@ const WriteReviews = () => {
 
   return (
     <>
-      <SubHeader title={"리뷰 수정"} />
+      <SubHeader title={"리뷰 작성"} />
       <div className="mx-auto min-h-screen bg-main-100 pt-[90px]">
         <div className="mx-auto mb-4 h-auto w-11/12 rounded-xl bg-white p-4">
-          <div className="flex items-center justify-between">
-            <div className="text-lg">매장명</div>
-            <div className="ml-3 text-xs">2024.11.14</div>
+          <div className="flex items-center justify-between text-lg">
+            <span>매장명</span>
+            <div className="text-sm">2024.11.14</div>
           </div>
+
           <div className="mb-2 flex items-center">
             <div className="mr-2 flex items-center space-x-1">{renderStars()}</div>
             <select
               value={reviewData.starScore}
-              onChange={handleStarScoreChange}
+              onChange={handleSelectChange}
               className="rounded-xl border border-gray-200 px-3"
             >
               {Array.from({ length: 11 }, (_, index) => index * 0.5).map((value) => (
@@ -119,7 +124,7 @@ const WriteReviews = () => {
           </div>
 
           <EditReviewImage
-            images={reviewData.previewImages} // 미리보기 URL
+            images={reviewData.previewImages} // 미리보기 URL 전달
             handleImageDelete={handleImageDelete}
             handleImageAdd={handleImageAdd}
           />
@@ -134,7 +139,7 @@ const WriteReviews = () => {
         </div>
 
         <button className="bottomButtonPink" onClick={handleOpenModal}>
-          수정완료
+          작성완료
         </button>
 
         <Modal
@@ -144,7 +149,7 @@ const WriteReviews = () => {
           closeText="닫기"
           confirmText="확인"
         >
-          리뷰를 수정하시겠습니까?
+          리뷰를 작성하시겠습니까?
         </Modal>
         <Toaster />
       </div>
@@ -152,4 +157,4 @@ const WriteReviews = () => {
   );
 };
 
-export default WriteReviews;
+export default PostReview;

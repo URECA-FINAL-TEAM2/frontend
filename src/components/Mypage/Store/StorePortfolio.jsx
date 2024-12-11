@@ -1,12 +1,8 @@
-import { useState } from "react";
-import testImg from "/Test/dog.jpg";
-import testImg1 from "/Test/dog2.avif";
-import testImg2 from "/Test/dog3.jpeg";
-import { IoMdArrowDropright, IoMdArrowDropleft } from "react-icons/io";
+import { useEffect, useState } from "react";
 import { MdOutlineArrowBackIosNew, MdOutlineArrowForwardIos } from "react-icons/md";
-const StorePortfolio = () => {
+const StorePortfolio = ({ portfolioImg }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [images, setImages] = useState([testImg, testImg1, testImg2]); // 이미지 배열
+  const [images, setImages] = useState([]); // 이미지 배열
   const [currentIndex, setCurrentIndex] = useState(0); // 현재 선택된 이미지 인덱스
 
   const handleOpenModal = (index) => {
@@ -26,6 +22,10 @@ const StorePortfolio = () => {
     setCurrentIndex((prevIndex) => (prevIndex - 1 + images.length) % images.length); // 이전 이미지로 이동
   };
 
+  useEffect(() => {
+    setImages(portfolioImg);
+  }, []);
+
   return (
     <>
       <div className="mx-auto mb-20 mt-5 grid w-10/12 grid-cols-3">
@@ -35,7 +35,7 @@ const StorePortfolio = () => {
             key={index}
             className="relative mx-auto my-2 w-[100px] cursor-pointer"
           >
-            <img className="mx-auto h-[100px] w-[100px] rounded-md text-center" src={img} alt={`review-${index}`} />
+            <img className="mx-auto h-[100px] w-[100px] rounded-md text-center" src={img} alt={`review${index}`} />
           </div>
         ))}
       </div>

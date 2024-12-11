@@ -1,5 +1,4 @@
 import { deleteGroomerShop } from "@/queries/shopQuery";
-import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 const StoreInfo = ({ shopInfo }) => {
@@ -21,9 +20,9 @@ const StoreInfo = ({ shopInfo }) => {
       </div>
       <div>
         <div className="labelStyle">매장 주소</div>
-        <div className="inputStyle mb-2">
+        {/* <div className="inputStyle mb-2">
           {shopInfo.sidoName} {shopInfo.sigunguName}
-        </div>
+        </div> */}
         <div className="inputStyle">{shopInfo.address}</div>
       </div>
       <div>

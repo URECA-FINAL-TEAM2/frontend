@@ -32,6 +32,7 @@ import NotFound from "./pages/NotFound";
 import EditPortfolio from "./components/Mypage/Store/EditPortfolio";
 import PaymentCancel from "./pages/Payment/PaymentCancel";
 import PaymentTestPage from "./pages/Payment/PaymentTestPage";
+import PostReview from "./pages/Mypage/Reviews/PostReview";
 import CustomerQuote from "./pages/Customer/CustomerQuote";
 import CustomerQuoteDetailPage from "./pages/Quote/Customer/CustomerQuoteDetailPage";
 import TotalQuoteRequestPage from "./pages/Quote/Customer/TotalQuoteRequestPage";
@@ -88,6 +89,7 @@ function App() {
             <Route path="reservation/detail" element={<CustomerReservationDetail />} />
             <Route path="payment/complete" element={<PaymentComplete />} />
             <Route path="payment/cancel" element={<PaymentCancel />} />
+            <Route path="postreview" element={<PostReview />} />
           </Route>
 
           {/* groomer/ -layout */}

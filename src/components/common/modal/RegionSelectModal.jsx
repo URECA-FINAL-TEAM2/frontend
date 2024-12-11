@@ -15,7 +15,7 @@ const RegionSelectModal = ({ isOpen, onClose, onConfirm, initialRegion = { sido:
     const fetchSidoList = async () => {
       try {
         const response = await getSidoList();
-        setSidoList(response.data.sidoList);
+        setSidoList(response);
       } catch (error) {
         console.error("시도 목록 로드 실패:", error);
       }
@@ -35,7 +35,7 @@ const RegionSelectModal = ({ isOpen, onClose, onConfirm, initialRegion = { sido:
       setIsLoading(true);
       try {
         const response = await getSigunguList(selectedSido);
-        setSigunguList(response.data.sigunguList);
+        setSigunguList(response);
       } catch (error) {
         console.error("시군구 목록 로드 실패:", error);
       } finally {

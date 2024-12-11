@@ -5,6 +5,7 @@ import { getShopList } from "../../queries/shopQuery";
 import useDragPosition from "../../hooks/CustomerSearch/useDragPosition";
 
 const CustomerSearch = () => {
+  const [customerId, setCustomerId] = useState(1); // TODO
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const setShops = useShopStore((state) => state.setShops);
@@ -14,7 +15,8 @@ const CustomerSearch = () => {
     const loadShops = async () => {
       try {
         setIsLoading(true);
-        const shopList = await getShopList();
+        const shopList = await getShopList(customerId);
+        console.log(shopList);
         if (shopList) {
           setShops(shopList);
           setError(null);

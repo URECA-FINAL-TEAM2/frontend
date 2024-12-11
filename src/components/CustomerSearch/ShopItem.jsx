@@ -29,7 +29,7 @@ const ShopItem = ({ shopInfo }) => {
         <div className="my-[-1px] flex items-center gap-1">
           <div className="flex items-center gap-0.5">
             <GoHeartFill className="h-[12px] fill-main" />
-            <p className="w-3 text-[12px] font-normal">{shopInfo.favorite}</p>
+            <p className="w-3 text-[12px] font-normal">{shopInfo.favoriteCount}</p>
           </div>
           <div className="flex items-center gap-0.5">
             <FaStar className="h-[12px] fill-yellow-400" />

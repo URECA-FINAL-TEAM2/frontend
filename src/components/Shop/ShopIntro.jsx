@@ -3,6 +3,7 @@ import StarRating from "@/utils/StarRating";
 import React, { useState, useEffect } from "react";
 
 const ShopIntro = () => {
+  // TODO : starScore -> starScoreAvg
   const [shopDetail, setShopDetail] = useState(null);
 
   useEffect(() => {

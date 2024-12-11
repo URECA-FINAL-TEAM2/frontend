@@ -1,8 +1,7 @@
-//GroomerSentRequests.jsx
-
 import { formatDate } from "@/utils/formatDate";
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { Schedule, Corgi, Note } from "/public/Icons";
 
 function GroomerSentRequests({ Infos }) {
   return (
@@ -32,17 +31,17 @@ const GroomerEstimate = ({ Info }) => {
       </div>
       <div className="mb-2 text-sm">
         <div className="mb-1 flex items-center">
-          <img src="/public/Icons/Schedule.svg" alt="Description" className="mr-2 h-5 w-5" />
+          <img src={Schedule} alt="Description" className="mr-2 h-5 w-5" />
           <p>{formatDate(Info.beautyDate)}</p>
         </div>
         <div className="mb-1 flex items-center">
-          <img src="/public/Icons/Corgi.svg" alt="Description" className="mr-2 h-5 w-5" />
+          <img src={Corgi} alt="Description" className="mr-2 h-5 w-5" />
           <p>
             {Info.dogBreed} • {Info.dogGender == "MALE" ? "남아" : "여아"} • {Info.dogWeight}kg
           </p>
         </div>
         <div className="flex items-center">
-          <img src="/public/Icons/Note.svg" alt="Description" className="mr-2 h-5 w-5" />
+          <img src={Note} alt="Description" className="mr-2 h-5 w-5" />
           <p className="line-clamp-1">{Info.requestContent}</p>
         </div>
       </div>

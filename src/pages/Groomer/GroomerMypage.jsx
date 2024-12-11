@@ -59,12 +59,16 @@ const GroomerMypage = () => {
       <SubHeader title={"마이페이지"} navigate="/customer/home" />
       <main className="mt-[75px]">
         {/* 전환 토글 */}
-        <div className="flex items-center justify-between bg-main-200 px-6 py-4">
-          <span className="text-md">고객으로 전환</span>
+        <div className="flex items-center justify-end bg-main-200 px-6 py-3">
+          <span className="mr-3 text-sm">미용사로 전환</span>
           <ToggleButton />
+          {/* <Toggle /> */}
         </div>
         {/* 프로필 수정 메인  */}
-        <div className="flex items-center justify-around p-6 px-10">
+        <button
+          onClick={() => navigate("/groomer/info", { state: { role: "groomer" } })}
+          className="flex items-center justify-around p-6 px-10 text-start"
+        >
           <div className="aspect-w-1 aspect-h-1">
             <img
               src={userInfo.profileImage ? userInfo.profileImage : DefaultProfile}
@@ -80,11 +84,11 @@ const GroomerMypage = () => {
             <span className="underline">{userInfo.email}</span>
           </div>
           <div className="ml-2">
-            <button onClick={() => navigate("/groomer/info", { state: { role: "groomer" } })}>
+            <div>
               <VscChevronRight />
-            </button>
+            </div>
           </div>
-        </div>
+        </button>
         {/* 요약 */}
         <div className="mx-auto px-6 pb-6">
           <Summary

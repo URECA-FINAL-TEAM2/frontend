@@ -6,7 +6,16 @@ import { nicknameCheck } from "@/queries/authQuery";
 import NicknameCheck from "@/components/Login/NicknameCheck";
 import PhoneCheck from "@/components/Login/PhoneCheck";
 
-const UserForm = ({ handleOpenModal, phoneRef, validPhone, formData, setFormData, handleChange, role }) => {
+const UserForm = ({
+  handlePhoneChange,
+  handleOpenModal,
+  phoneRef,
+  validPhone,
+  formData,
+  setFormData,
+  handleChange,
+  role
+}) => {
   const location = useLocation();
   const [pathname, setPathname] = useState();
   const [nickname, setNickname] = useState();
@@ -86,7 +95,7 @@ const UserForm = ({ handleOpenModal, phoneRef, validPhone, formData, setFormData
             id="phone"
             name="phone"
             value={formData?.phone}
-            onChange={handleChange}
+            onChange={handlePhoneChange}
             placeholder="010-1234-5678"
             className={`inputStyle ${validPhone === "yet" ? "mb-8" : "mb-2"} text-gray-400`}
             required

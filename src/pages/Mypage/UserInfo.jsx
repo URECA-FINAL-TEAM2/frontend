@@ -37,6 +37,31 @@ const UserInfo = () => {
   const handleCloseModal = () => {
     setIsModalOpen(false);
   };
+  const handlePhoneChange = (e) => {
+    const input = e.target.value.replace(/\D/g, ""); // 숫자 이외의 문자 제거
+    let formatted = "";
+
+    if (input.length < 4) {
+      formatted = input;
+    } else if (input.length < 7) {
+      formatted = `${input.slice(0, 3)}-${input.slice(3)}`;
+    } else if (input.length < 11) {
+      formatted = `${input.slice(0, 3)}-${input.slice(3, 6)}-${input.slice(6)}`;
+    } else {
+      formatted = `${input.slice(0, 3)}-${input.slice(3, 7)}-${input.slice(7, 11)}`;
+    }
+
+    setFormData((prev) => ({ ...prev, phone: formatted }));
+
+    // 유효성 검사 업데이트
+    if (!formatted.trim()) {
+      setValidPhone("required");
+    } else if (validatePhoneNumber(formatted)) {
+      setValidPhone("possible");
+    } else {
+      setValidPhone("impossible");
+    }
+  };
 
   const handleChange = (e) => {
     if (e.target.name === "phone") {
@@ -110,6 +135,7 @@ const UserInfo = () => {
     <div className="flex min-h-screen flex-col">
       <SubHeader title={"내 정보 수정"} />
       <UserForm
+        handlePhoneChange={handlePhoneChange}
         handleOpenModal={handleOpenModal}
         validPhone={validPhone}
         formData={formData}

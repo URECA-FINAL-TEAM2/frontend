@@ -34,7 +34,6 @@ const EditPortfolio = () => {
       setImages((prevImages) => [...prevImages, imageURL]);
       setRawImages((prevRawImages) => [...prevRawImages, file]);
 
-      // 동일한 파일을 다시 선택할 수 있도록 입력 필드 값 초기화
       e.target.value = "";
     }
   };

@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { getCustomerList } from "@/queries/reservationQuery";
 import SubHeader from "@/components/common/SubHeader";
+import { useNavigate } from "react-router-dom";
 
 const CustomerReservationMain = () => {
   const [reservations, setReservations] = useState([]);
   const [activeTab, setActiveTab] = useState("completed");
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchReservations = async () => {
@@ -27,7 +29,7 @@ const CustomerReservationMain = () => {
   const tabs = {
     completed: reservations.filter((item) => item.status === "미용 완료"), // 미용 완료
     reserved: reservations.filter((item) => item.status === "예약 완료"), // 예약 완료
-    canceled: reservations.filter((item) => item.status === "취소 완료") // 취소 완료
+    canceled: reservations.filter((item) => item.status === "예약 취소") // 예약 취소
   };
 
   return (
@@ -75,8 +77,8 @@ const CustomerReservationMain = () => {
               <div className="flex w-full items-center">
                 <img src={item.profileImage} alt={item.shopName} className="mr-6 h-24 w-24 rounded-lg" />
                 <div className="flex w-full flex-col">
-                  <p className="mb-2 text-lg font-bold">
-                    {item.shopName} - {item.groomerName}
+                  <p className="mb-1 font-bold">
+                    {item.shopName} - {item.groomerName} 디자이너
                   </p>
                   <div className="flex justify-between text-sm text-gray-500">
                     <div>
@@ -93,17 +95,29 @@ const CustomerReservationMain = () => {
 
               {/* 리뷰 쓰기 버튼 */}
               {activeTab === "completed" && (
-                <button className="w-full rounded-full bg-main-200 py-1 font-medium text-main-400">리뷰 쓰기</button>
+                <button className="mt-4 w-full rounded-full bg-main-200 py-1 font-medium text-main-400">
+                  리뷰 쓰기
+                </button>
               )}
 
               {/* 예약 상세 버튼 */}
               {activeTab === "reserved" && (
-                <button className="w-full rounded-full bg-main-200 py-1 font-medium text-main-400">예약 상세</button>
+                <button
+                  className="mt-4 w-full rounded-full bg-main-200 py-1 font-medium text-main-400"
+                  onClick={() => navigate("detail")}
+                >
+                  예약 상세
+                </button>
               )}
 
               {/* 취소 예약 상세 버튼 */}
               {activeTab === "canceled" && (
-                <button className="w-full rounded-full bg-gray-300 py-1 font-medium text-white">예약 상세</button>
+                <button
+                  className="mt-4 w-full rounded-full bg-gray-300 py-1 font-medium text-white"
+                  onClick={() => navigate("detail")}
+                >
+                  예약 상세
+                </button>
               )}
             </div>
           ))}

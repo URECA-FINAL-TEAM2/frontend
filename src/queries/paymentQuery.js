@@ -77,3 +77,27 @@ export const getPaymentDetail = async (paymentKey) => {
     throw new Error("Failed to fetch reservation data");
   }
 };
+
+// 결제 취소 요청
+export const RequestCancel = async (cancelData) => {
+  try {
+    const { paymentKey, cancelReason } = cancelData;
+
+    const response = await axiosInstance.post(
+      `/payments/${paymentKey}/cancel`,
+      {
+        paymentKey,
+        cancelReason
+      },
+      {
+        headers: {
+          Accept: "application/json"
+        }
+      }
+    );
+    console.log(response.data);
+    return response.data;
+  } catch (error) {
+    throw new Error("Failed to fetch reservation data");
+  }
+};

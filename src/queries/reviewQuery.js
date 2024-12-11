@@ -1,8 +1,8 @@
 import axiosInstance from "@/api/axiosInstance";
 
-export const getCustomerReviewList = async () => {
+export const getCustomerReviewList = async (id) => {
   try {
-    const customerId = 1;
+    const customerId = id.customerId;
     const response = await axiosInstance.get(`/reviews/customer/${customerId}`);
     return response;
   } catch (error) {
@@ -12,7 +12,7 @@ export const getCustomerReviewList = async () => {
 
 export const deleteReview = async (reviewId) => {
   try {
-    const reviewId = 1;
+    const reviewId = reviewId;
     const response = await axiosInstance.put(`/reviews/delete/${reviewId}`);
     console.log(response);
   } catch (error) {
@@ -33,7 +33,7 @@ export const insertReview = async (reviewData) => {
   formData.append("requestDto", JSON.stringify(jsonData));
   if (images && images.length > 0) {
     images.forEach((image) => {
-      formData.append("images", image); // 키를 동일하게 추가하여 배열처럼 전송
+      formData.append("images", image);
     });
   }
 

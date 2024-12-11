@@ -9,22 +9,19 @@ import CustomerList from "@/components/Mypage/CustomerList";
 import ToggleButton from "@/components/Main/ToggleButton";
 import { useEffect, useState } from "react";
 import { getCustomerMypage } from "@/queries/mypageQuery";
+import useAuthStore from "@/store/authStore";
 
 const CustomerMypage = () => {
+  const { id } = useAuthStore();
   const navigate = useNavigate();
-  const [pet, setPet] = useState({
-    dogId: 0,
-    dogname: "",
-    profileImage: ""
-  });
+  const [myPets, setMyPets] = useState([]);
   const [counts, setCounts] = useState({
     completedServices: 0,
     confirmedReservations: 0,
     myReviews: 0
   });
   const [userInfo, setUserInfo] = useState({
-    id: 0,
-    nickname: "",
+    userName: "",
     email: "",
     profileImage: ""
   });
@@ -32,32 +29,14 @@ const CustomerMypage = () => {
   useEffect(() => {
     const getMypage = async () => {
       try {
-        const response = await getCustomerMypage();
-        const dogInfo = response[0].data.MyPet;
-        const counts = response[0].data.counts;
-        const info = response[0].data;
-
-        setPet((prev) => ({
-          ...prev,
-          dogId: dogInfo.dogId,
-          dogName: dogInfo.dogname,
-          profileImage: dogInfo.profileImage
-        }));
-
-        setCounts((prev) => ({
-          ...prev,
-          completedServices: counts.completedServices,
-          confirmedReservations: counts.confirmedReservations,
-          myReviews: counts.myReviews
-        }));
-
-        setUserInfo((prev) => ({
-          ...prev,
-          id: info.customerId,
-          nickname: info.nickname,
-          email: info.email,
-          profileImage: info.profileImage
-        }));
+        const response = await getCustomerMypage(id);
+        console.log("고객 마이페이지 ", response);
+        const myPets = response.myPets;
+        const counts = response.counts;
+        const userInfo = response.userInfo;
+        setMyPets(myPets);
+        setCounts(counts);
+        setUserInfo(userInfo);
       } catch (error) {
         console.error("Error: Customer Mypage", error);
       }
@@ -78,11 +57,15 @@ const CustomerMypage = () => {
         {/* 프로필 수정 메인  */}
         <div className="flex items-center justify-around p-6 px-10">
           <div>
-            <img src={DefaultProfile} alt="Default Image" className="rounded-[50%] border border-main" />
+            <img
+              src={userInfo.profileImage}
+              alt="Default Image"
+              className="aspect-square rounded-[50%] border border-main"
+            />
           </div>
           <div className="ml-5 flex grow flex-col">
             <div>
-              <span className="text-lg">{userInfo.nickname}</span>
+              <span className="text-lg">{userInfo.userName}</span>
               <span> 고객님</span>
             </div>
             <span className="underline">{userInfo.email}</span>
@@ -106,26 +89,33 @@ const CustomerMypage = () => {
           />
         </div>
         {/* 반려견 정보 */}
-        <div className="mx-auto border-t-2 border-t-main-200 pl-8 pt-6">
-          <h2 className="text-xl">🐾 My Pet</h2>
+        <div className="mx-auto overflow-x-scroll border-t-2 border-t-main-200 pb-4 pt-6">
+          <div className="grid grid-cols-5 px-4">
+            {myPets.map((pet) => (
+              <Link key={pet.petId} to={`/customer/myPet/${pet.petId}`}>
+                <div className="flex w-[70px] flex-col p-2 text-center">
+                  <img
+                    src={pet.profileImage}
+                    alt={`${pet.petName}`}
+                    className="mx-auto mb-2 h-[60px] w-[60px] rounded-full drop-shadow-xl"
+                  />
+                  <span className="text-xs">{pet.petName}</span>
+                </div>
+              </Link>
+            ))}
 
-          <div className="flex">
-            <Link to={`/customer/myPet/${pet.dogId}`}>
-              <div className="flex w-[80px] flex-col p-2 text-center">
-                <img
-                  src={pet.profileImage}
-                  alt="Pet Image"
-                  className="mx-auto mb-2 h-[70px] w-[70px] rounded-[50%] drop-shadow-xl"
-                />
-                <span className="text-xs">{pet.dogName}</span>
-              </div>
-            </Link>
-            <Link to="/customer/mypet">
-              <div className="flex w-[80px] flex-col p-2 text-center">
-                <img src={addPetIcons} alt="" className="mx-auto mb-2 h-[70px] w-[70px] rounded-[50%] drop-shadow-md" />
-                <span className="text-xs">추가</span>
-              </div>
-            </Link>
+            {myPets.length < 5 && (
+              <Link to="/customer/mypet">
+                <div className="flex w-[70px] flex-col p-2 text-center">
+                  <img
+                    src={addPetIcons}
+                    alt=""
+                    className="mx-auto mb-2 h-[60px] w-[60px] rounded-[50%] drop-shadow-md"
+                  />
+                  <span className="text-xs">추가</span>
+                </div>
+              </Link>
+            )}
           </div>
         </div>
         {/* 목록 */}

@@ -6,8 +6,10 @@ import { insertGroomerPortfolio } from "@/queries/shopQuery";
 import { useLocation, useNavigate } from "react-router-dom";
 import Modal from "@/components/common/modal/modal";
 import toast, { Toaster } from "react-hot-toast";
+import useAuthStore from "@/store/authStore";
 
 const EditPortfolio = () => {
+  const { id } = useAuthStore();
   const location = useLocation();
   const navigate = useNavigate();
   const { portfolioImg } = location.state || {};
@@ -23,19 +25,22 @@ const EditPortfolio = () => {
       setSelectedImage(null);
     }
   };
-
   const handleImageAdd = (e) => {
-    const files = Array.from(e.target.files);
-    // 미리보기 URL 생성
-    const newImageURLs = files.map((file) => URL.createObjectURL(file));
+    const file = e.target.files[0]; // 선택한 첫 번째 파일 가져오기
+    if (file) {
+      const imageURL = URL.createObjectURL(file); // 미리보기 URL 생성
 
-    // 상태 업데이트
-    setImages((prevImages) => [...prevImages, ...newImageURLs]);
-    setRawImages((prevRawImages) => [...prevRawImages, ...files]); // 원본 파일 추가
+      // 상태 업데이트
+      setImages((prevImages) => [...prevImages, imageURL]);
+      setRawImages((prevRawImages) => [...prevRawImages, file]);
+
+      // 동일한 파일을 다시 선택할 수 있도록 입력 필드 값 초기화
+      e.target.value = "";
+    }
   };
 
   const handleCompleteImage = async () => {
-    const response = await insertGroomerPortfolio(rawImages, 11);
+    const response = await insertGroomerPortfolio(rawImages, id);
 
     toast("수정이 완료되었습니다.", { icon: "👏🏻" });
 

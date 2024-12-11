@@ -3,15 +3,17 @@ import BestReviewBox from "../../components/Main/BestReviewBox";
 import { useEffect, useState } from "react";
 import { getCustomerMain } from "@/queries/mainQuery";
 import ShopItem from "@/components/CustomerSearch/ShopItem";
+import useAuthStore from "@/store/authStore";
 
 const CustomerHome = () => {
+  const { id } = useAuthStore();
   const [bestReviews, setBestReviews] = useState([]);
   const [localGroomers, setLocalGroomers] = useState([]);
 
   useEffect(() => {
     const getMain = async () => {
       try {
-        const response = await getCustomerMain();
+        const response = await getCustomerMain(id);
         console.log(response);
         setBestReviews(response.bestReviews);
         setLocalGroomers(response.localGroomers);

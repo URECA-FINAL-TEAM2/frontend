@@ -64,7 +64,7 @@ const CreateStore = () => {
     e.preventDefault();
     setIsModalOpen(false);
 
-    const response = await updateGroomerShop(id, formData, isUpdate);
+    await updateGroomerShop(id, formData, isUpdate);
     toast("완료되었습니다.", { icon: "👏🏻" });
 
     setTimeout(() => {

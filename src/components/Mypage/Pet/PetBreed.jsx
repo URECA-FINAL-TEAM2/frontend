@@ -20,7 +20,9 @@ const PetBreed = ({ breed, onlyRead, formData, handleChange }) => {
           onChange={handleChange}
           required
         >
-          <option value="">품종 선택</option>
+          <option value="" className="text-gray-300">
+            품종을 선택해주세요.
+          </option>
           {breed.map((breed) => (
             <option key={breed.breedId} value={breed.breedId}>
               {breed.breedName}

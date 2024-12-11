@@ -12,7 +12,7 @@ const PetForm = ({ breed, onlyRead, formData, setFormData, handleChange }) => {
   return (
     <form>
       {/* 반려견 프로필 사진 */}
-      <ProfileImage onlyRead={onlyRead} setFormData={setFormData} />
+      <ProfileImage formData={formData} onlyRead={onlyRead} setFormData={setFormData} />
       {/* 이름 */}
       <PetName onlyRead={onlyRead} formData={formData} handleChange={handleChange} />
       {/* 품종 */}

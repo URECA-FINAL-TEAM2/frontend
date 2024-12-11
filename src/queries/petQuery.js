@@ -1,29 +1,9 @@
 import axiosInstance from "@/api/axiosInstance";
 
-const petInfo = [
-  {
-    message: "Get Pet Success",
-    data: {
-      dogId: "1",
-      dogName: "고양이",
-      breed: "시바견",
-      dogWeight: "4.8",
-      dogBirth: "2020-02-29",
-      dogGender: "남아",
-      neutering: "O",
-      experience: "X",
-      significant: "특이함",
-      profileImage: null
-    },
-    timestamp: "2024-10-17 00:00:00"
-  }
-];
-
 // 반려견 정보 조회
-export const getPetInfo = async (dogId, customerId) => {
+export const getPetInfo = async (dogId, id) => {
   try {
-    const dogId = 28;
-    const customerId = 14;
+    const customerId = id.customerId;
 
     const response = await axiosInstance.get(`/profile/customer/dogs/${dogId}`, {
       params: { customerId }
@@ -44,16 +24,14 @@ export const getPetInfo = async (dogId, customerId) => {
 };
 
 // 반려견 정보 업데이트(등록, 수정)
-export const updatePetInfo = async (id, dogData) => {
-  const method = id ? "put" : "post";
-  const endPoint = id ? `/profile/customer/dogs/${28}` : `/profile/customer/dogs`;
+export const updatePetInfo = async (id, dogId, dogData, state) => {
+  const method = state === "update" ? "put" : "post";
+  const endPoint = state === "update" ? `/profile/customer/dogs/${dogId}` : `/profile/customer/dogs`;
   const formatedData = {
     ...dogData,
-    dogBirth: reformatDogBirth(dogData.dogBirth) // "2024-11-11"
+    dogBirth: reformatDogBirth(dogData.dogBirth)
   };
   const { profileImage, ...jsonData } = formatedData;
-
-  console.log(jsonData);
 
   const formData = new FormData();
   formData.append("requestDto", JSON.stringify(jsonData));
@@ -62,8 +40,8 @@ export const updatePetInfo = async (id, dogData) => {
     formData.append("dogProfile", profileImage);
   }
 
+  const customerId = id.customerId;
   try {
-    const customerId = 14;
     const response = await axiosInstance({
       method,
       url: endPoint,
@@ -80,10 +58,9 @@ export const updatePetInfo = async (id, dogData) => {
 };
 
 // 반려견 정보 삭제
-export const deletePetInfo = async (dogId, customerId) => {
+export const deletePetInfo = async (dogId, id) => {
   try {
-    const dogId = 27;
-    const customerId = 14;
+    const customerId = id.customerId;
     const response = await axiosInstance.put(
       `/profile/customer/dogs/${dogId}/delete`,
       {},

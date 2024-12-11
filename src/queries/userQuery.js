@@ -21,7 +21,7 @@ export const updateUserInfo = async (role, preparedData, id) => {
   });
 
   if (role === "customer") {
-    preparedData.customerId = 14;
+    preparedData.customerId = id.customerId;
   }
 
   const { profileImage, ...jsonData } = preparedData;
@@ -45,7 +45,8 @@ export const updateUserInfo = async (role, preparedData, id) => {
 
 // 유저 프로필 삭제
 export const deleteUserInfo = async (role, id) => {
-  const endpoint = role === "customer" ? `/profile/customer/delete/14` : `/profile/groomer/delete/${11}`;
+  const endpoint =
+    role === "customer" ? `/profile/customer/delete/${id.customerId}` : `/profile/groomer/delete/${id.groomerId}`;
   try {
     const response = await axiosInstance.put(endpoint);
     console.log("프로필 정보 삭제 완료", response);
@@ -66,7 +67,6 @@ export const updateAddress = async (data, id) => {
   };
 
   try {
-    const id = { customerId: 14 }; // testcode
     const response = await axiosInstance.put(`/profile/customer/${id.customerId}/address`, addressData);
     console.log("고객 주소 수정", response);
   } catch (error) {
@@ -76,9 +76,9 @@ export const updateAddress = async (data, id) => {
 };
 
 // 단골샵 조회
-export const getFavoriteShop = async (customerId) => {
+export const getFavoriteShop = async (id) => {
   try {
-    const customerId = 1;
+    const customerId = id.customerId;
     const response = await axiosInstance.get(`/profile/${customerId}/favorites`);
     return response.data.data;
   } catch (error) {

@@ -20,8 +20,10 @@ const ToggleButton = () => {
     // const response = await getUserId(role, id);
 
     if (newRole === "groomer") {
+      updateId({ groomerId: 31 });
       navigate("/groomer/mypage");
     } else {
+      updateId({ customerId: 46 });
       navigate("/customer/mypage");
     }
   };

@@ -5,10 +5,15 @@ import SubHeader from "../../../components/common/SubHeader";
 import Modal from "../../../components/common/modal/modal";
 import PetForm from "@/components/Mypage/Pet/PetForm";
 import { deletePetInfo, getDogBreed, getPetInfo, updatePetInfo } from "@/queries/petQuery";
+import useAuthStore from "@/store/authStore";
+import useToastAndNavigate from "@/hooks/CustomerSearch/useToastAndNavigate";
 
 // 반려견 등록, 조회, 수정, 삭제(CRUD)
 const MyPet = () => {
+  const showToastAndNavigate = useToastAndNavigate();
+  const { id } = useAuthStore();
   const params = useParams();
+  const [dogId, setDogId] = useState();
   const [isState, setIsState] = useState("register");
   const [breed, setBreed] = useState([]);
   const [onlyRead, setOnlyRead] = useState(true);
@@ -38,25 +43,25 @@ const MyPet = () => {
   const handleConfirmModal = async () => {
     setIsModalOpen(false);
     if (isState === "update") {
-      const response = await updatePetInfo(2, formData);
-      console.log("반려견 수정 완료", response);
+      await updatePetInfo(id, dogId, formData, "update");
+      showToastAndNavigate("수정이 완료되었습니다.", "👏🏻");
     } else if (isState === "register") {
-      const response = await updatePetInfo(null, formData);
-      console.log("반려견 등록 완료:", response);
+      await updatePetInfo(id, dogId, formData, "register");
+      showToastAndNavigate("등록 완료되었습니다.", "👏🏻");
     } else {
-      const response = await deletePetInfo(2);
-      console.log(response);
+      await deletePetInfo(dogId, id);
+      showToastAndNavigate("삭제 완료되었습니다.", "👏🏻");
     }
     setOnlyRead(true);
   };
 
-  const getPet = async (id) => {
+  const getPet = async (dogId) => {
     try {
-      const response = await getPetInfo(id);
+      const response = await getPetInfo(dogId, id);
       setFormData((prev) => ({
-        ...prev, // 이전 상태 유지
-        profileImage: response.dogProfileImage, // profileImage 업데이트
-        ...response // response의 나머지 데이터 추가 또는 덮어쓰기
+        ...prev,
+        profileImage: response.dogProfileImage,
+        ...response
       }));
     } catch (error) {
       console.error(error);
@@ -64,12 +69,11 @@ const MyPet = () => {
   };
 
   useEffect(() => {
+    setDogId(params.id);
     if (params.id != null) {
-      // 정보 조회 페이지
       setIsState("update");
       getPet(params.id);
     } else {
-      // 정보 등록 페이지
       setIsState("register");
       setOnlyRead(false);
     }
@@ -97,7 +101,7 @@ const MyPet = () => {
         />
 
         {isState != "register" && (
-          <div className="mb-28 mt-12 text-center text-sm">
+          <div className="mb-28 mt-3 text-center text-xs">
             <button type="button" onClick={() => handleOpenModal("delete")} className="text-gray-300 underline">
               반려견 삭제하기
             </button>

@@ -108,9 +108,9 @@ const groomerData = [
   }
 ];
 
-export const getCustomerMain = async () => {
+export const getCustomerMain = async (id) => {
   try {
-    const customerId = 1;
+    const customerId = id.customerId;
     const response = await axiosInstance.get("/main/customer", {
       params: { customerId }
     });

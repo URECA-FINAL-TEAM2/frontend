@@ -17,7 +17,7 @@ const ToggleButton = () => {
     setRole(newRole);
     updateDefaultRole(newRole);
 
-    const response = await getUserId(role, id);
+    // const response = await getUserId(role, id);
 
     if (newRole === "groomer") {
       navigate("/groomer/mypage");

@@ -1,11 +1,11 @@
-import { PiUserCircleLight } from "react-icons/pi";
+import { PiUserCircleFill } from "react-icons/pi";
 import { BsShop } from "react-icons/bs";
 import { VscSymbolFile } from "react-icons/vsc";
-import { TfiHome } from "react-icons/tfi";
 import { PiChatCircle } from "react-icons/pi";
 import { Link, useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 
+import { IoHomeSharp } from "react-icons/io5";
 const GroomerBottom = () => {
   const location = useLocation();
   const [active, setActive] = useState("");
@@ -29,7 +29,7 @@ const GroomerBottom = () => {
       <div className="grid h-full grid-cols-5 items-center justify-items-center">
         <Link to="/groomer/home">
           <div className={`bottom ${active === "home" && "bottom-active"}`}>
-            <TfiHome size={25} />
+            <IoHomeSharp size={25} />
             <span className="mt-1 text-xs">홈</span>
           </div>
         </Link>
@@ -53,7 +53,7 @@ const GroomerBottom = () => {
         </Link>
         <Link to="/groomer/mypage">
           <div className={`bottom ${active === "mypage" && "bottom-active"}`}>
-            <PiUserCircleLight size={30} />
+            <PiUserCircleFill size={30} />
             <span className="mt-1 text-xs">마이</span>
           </div>
         </Link>

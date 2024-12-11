@@ -11,13 +11,17 @@ import Modal from "@/components/common/modal/modal";
 import SubHeader from "@/components/common/SubHeader";
 import { getPaymentDetail } from "@/queries/paymentQuery";
 import { RequestCancel } from "@/queries/paymentQuery";
+import { useLocation, useNavigate } from "react-router-dom";
 
-const CustomerReservationDetail = ({ selectedQuoteId = 128 }) => {
+const CustomerReservationDetail = () => {
+  const location = useLocation();
+  const { selectedQuoteId, status } = location.state || {};
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [cancelReason, setCancelReason] = useState("");
   const [detail, setDetail] = useState(null);
   const [paymentDetail, setPaymentDetail] = useState(null);
   const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchReservationAndPayment = async () => {
@@ -76,6 +80,7 @@ const CustomerReservationDetail = ({ selectedQuoteId = 128 }) => {
       alert("예약이 성공적으로 취소되었습니다.");
       setIsModalOpen(false);
       setCancelReason("");
+      navigate("/customer/reservation");
     } catch (error) {
       console.error("취소 실패:", error);
       alert("예약 취소에 실패했습니다. 다시 시도해주세요.");
@@ -90,6 +95,9 @@ const CustomerReservationDetail = ({ selectedQuoteId = 128 }) => {
     return <p className="mt-10 text-center text-gray-500">로딩 중...</p>;
   }
 
+  const borderColor = status === "예약 취소" ? "" : "border-main-400";
+  const bgColor = status === "예약 취소" ? "bg-gray-200" : "";
+
   return (
     <div>
       <SubHeader title="예약 정보 및 서비스" />
@@ -100,7 +108,7 @@ const CustomerReservationDetail = ({ selectedQuoteId = 128 }) => {
           <h2 className="text-xl font-semibold">예약자 정보</h2>
         </div>
 
-        <div className="mb-6 rounded-lg bg-main-100 p-4">
+        <div className={`mb-6 rounded-lg p-4 ${status === "예약 취소" ? "bg-gray-200" : "bg-main-100"}`}>
           <div className="flex items-center justify-between">
             <div>
               <p className="font-medium">이름</p>
@@ -121,10 +129,14 @@ const CustomerReservationDetail = ({ selectedQuoteId = 128 }) => {
 
         <div className="mb-6 rounded-lg">
           <div className="flex items-center justify-between space-x-4">
-            <div className="flex flex-1 items-center justify-center rounded-lg border border-main-400 px-4 py-2 text-center text-sm">
+            <div
+              className={`${borderColor} ${bgColor} bgflex flex-1 items-center justify-center rounded-lg border px-4 py-2 text-center text-sm`}
+            >
               <p>{new Date(detail.beautyDate).toLocaleDateString()}</p>
             </div>
-            <div className="flex flex-1 items-center justify-center rounded-lg border border-main-400 px-4 py-2 text-center text-sm">
+            <div
+              className={`${borderColor} ${bgColor} flex flex-1 items-center justify-center rounded-lg border px-4 py-2 text-center text-sm`}
+            >
               <p>{new Date(detail.beautyDate).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}</p>
             </div>
           </div>
@@ -136,7 +148,7 @@ const CustomerReservationDetail = ({ selectedQuoteId = 128 }) => {
           <h2 className="text-xl font-semibold">매장 · 디자이너 정보</h2>
         </div>
 
-        <div className="mb-6 rounded-lg border border-main-400 p-4">
+        <div className={`mb-6 rounded-lg border ${bgColor} ${borderColor} p-4`}>
           <div className="flex items-center">
             <img src={detail.shopLogo} alt="매장 로고" className="mr-4 h-24 w-24 rounded-lg" />
             <div>
@@ -154,7 +166,7 @@ const CustomerReservationDetail = ({ selectedQuoteId = 128 }) => {
           <h2 className="text-xl font-semibold">반려견 정보</h2>
         </div>
 
-        <div className="mb-6 rounded-lg border border-main-400 p-4">
+        <div className={`mb-6 rounded-lg border ${bgColor} ${borderColor} p-4`}>
           <div className="flex items-start">
             <div className="mr-4 flex flex-col items-center">
               <img src={detail.profileImage} alt="반려견 사진" className="h-24 w-24 rounded-lg" />
@@ -177,7 +189,7 @@ const CustomerReservationDetail = ({ selectedQuoteId = 128 }) => {
           <h2 className="text-xl font-semibold">요청 내용</h2>
         </div>
 
-        <div className="mb-6 rounded-lg border border-main-400 p-4">
+        <div className={`mb-6 rounded-lg border ${bgColor} ${borderColor} p-4`}>
           <p className="text-gray-600">{detail.requestContent}</p>
         </div>
 
@@ -206,7 +218,7 @@ const CustomerReservationDetail = ({ selectedQuoteId = 128 }) => {
           <h2 className="text-xl font-semibold">견적 설명</h2>
         </div>
 
-        <div className="mb-6 rounded-lg border border-main-400 p-4">
+        <div className={`mb-6 rounded-lg border ${bgColor} ${borderColor} p-4`}>
           <p className="text-gray-600">{detail.quoteContent}</p>
         </div>
 
@@ -217,7 +229,7 @@ const CustomerReservationDetail = ({ selectedQuoteId = 128 }) => {
         </div>
 
         {paymentDetail && (
-          <div className="mb-6 rounded-lg border border-main-400 p-4">
+          <div className={`mb-6 rounded-lg border ${bgColor} ${borderColor} p-4`}>
             <div>
               <p className="flex justify-between text-gray-600">
                 결제 상태 : <span className="text-right font-medium">{paymentDetail.status}</span>
@@ -246,9 +258,11 @@ const CustomerReservationDetail = ({ selectedQuoteId = 128 }) => {
           </div>
         )}
         <div className="mt-14">
-          <BottomButton styleType="lightPink" onClick={() => setIsModalOpen(true)}>
-            예약 취소하기
-          </BottomButton>
+          {status !== "미용 완료" && status !== "예약 취소" && (
+            <BottomButton styleType="lightPink" onClick={() => setIsModalOpen(true)}>
+              예약 취소하기
+            </BottomButton>
+          )}
         </div>
 
         {/* 모달 */}

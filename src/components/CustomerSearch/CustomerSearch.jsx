@@ -43,13 +43,13 @@ const CustomerSearch = () => {
   return (
     <div className="pointer-events-none absolute inset-x-0 bottom-[--var(--bottom-bar-height)] h-[calc(100vh-var(--bottom-bar-height)-var(--header-height))] w-full">
       <div
-        className={`pointer-events-auto absolute bottom-0 left-0 right-0 z-10 bg-white transition-transform duration-200 ease-in-out ${
+        className={`pointer-events-auto absolute bottom-0 left-0 right-0 z-10 rounded-t-lg bg-white transition-transform duration-200 ease-in-out ${
           isDragging ? "transition-none" : ""
         }`}
         style={{
           transform: `translateY(${100 - listPosition}%)`,
           height: "100%",
-          boxShadow: "0 -4px 6px -1px rgba(0, 0, 0, 0.1)"
+          boxShadow: "0 -4px 3px -1px rgba(0, 0, 0, 0.1)"
         }}
       >
         {/* 드래그 핸들러 div를 pointer-events-auto로 명시적 설정 */}

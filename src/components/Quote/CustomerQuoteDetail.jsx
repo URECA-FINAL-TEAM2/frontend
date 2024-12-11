@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { Designer, Schedule, Corgi, Note, Photos, Description, Won, Banknotes } from "/public/Icons";
 
 function CustomerQuoteDetail({ quotesId, onDataLoad }) {
+  const customerId = 7; // TODO
   const [quoteData, setQuoteData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -96,8 +97,7 @@ function CustomerQuoteDetail({ quotesId, onDataLoad }) {
             <p className="mt-1 text-center font-semibold">{quoteData.quoteRequest.dogName}</p>
           </div>
           <div className="self-center text-sm leading-normal">
-            {/* [ ] 견종 업데이트 (API 수정 or API 두 개 사용) */}
-            {/* <p>견종: {quoteData.quoteRequest.dogBreed}</p> */}
+            <p>견종: {quoteData.quoteRequest.dogBreed}</p>
             <p>무게: {quoteData.quoteRequest.dogWeight}</p>
             <p>나이: {quoteData.quoteRequest.dogAge}</p>
             <p>성별: {quoteData.quoteRequest.dogGender === "MALE" ? "남아" : "여아"}</p>
@@ -123,9 +123,9 @@ function CustomerQuoteDetail({ quotesId, onDataLoad }) {
         <h2 className="text-lg font-semibold leading-none">첨부 사진</h2>
       </div>
       <div className="mb-6 rounded-lg">
-        <div className="grid grid-cols-3 gap-3">
-          {quoteData.quoteRequest.requestImage.length > 0 ? (
-            quoteData.quoteRequest.requestImage.map((image, index) => {
+        {quoteData.quoteRequest.requestImage.length > 0 ? (
+          <div className="grid grid-cols-3 gap-3">
+            {quoteData.quoteRequest.requestImage.map((image, index) => {
               console.log("Image URL:", image); // 로그를 찍어서 이미지 URL 확인
               return (
                 <div key={index} className="relative">
@@ -136,11 +136,13 @@ function CustomerQuoteDetail({ quotesId, onDataLoad }) {
                   />
                 </div>
               );
-            })
-          ) : (
-            <p className="col-span-3 text-center text-gray-500">첨부된 사진이 없습니다.</p>
-          )}
-        </div>
+            })}
+          </div>
+        ) : (
+          <div className="flex h-28 w-full items-center justify-center">
+            <p className="text-center text-gray-500">첨부된 사진이 없습니다.</p>
+          </div>
+        )}
       </div>
 
       <hr className="mb-6 border-2 border-gray-200" />

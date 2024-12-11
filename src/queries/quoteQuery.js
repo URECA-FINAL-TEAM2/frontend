@@ -1,29 +1,29 @@
 const customerQuoteDetail = {
   groomer: {
-    shopLogo: "https://s3-beauty-meongdang.s3.ap-northeast-2.amazonaws.com/매장+로고+이미지/두루몽실.jpg",
-    groomerName: "써윤기",
-    shopName: "두루몽실",
-    address: "서울특별시 강남구 언주로 123",
-    phone: "010-4567-8901"
+    shopLogo: "https://s3-beauty-meongdang.s3.ap-northeast-2.amazonaws.com/매장+로고+이미지/언니네강아지.jpg",
+    groomerName: "반장핑",
+    shopName: "언니네 강아지",
+    address: "부산광역시 해운대구 마린시티3로 456",
+    phone: "010-5678-9012"
   },
   quoteRequest: {
-    dogName: "닥스",
-    dogImage: "https://s3-beauty-meongdang.s3.ap-northeast-2.amazonaws.com/반려견+프로필+이미지/닥스훈트.jpg",
-    dogWeight: "5.5",
-    dogAge: "1",
-    dogGender: "MALE",
-    neutering: true,
-    experience: false,
-    significant: "산책을 좋아해요",
-    requestContent: "전체 미용 부탁드립니다",
-    dogBreed: "null",
-    requestImage: ["https://picsum.photos/200", "https://picsum.photos/200", "https://picsum.photos/200"]
+    dogName: "비숑이",
+    dogImage: "https://s3-beauty-meongdang.s3.ap-northeast-2.amazonaws.com/반려견+프로필+이미지/비숑.jpg",
+    dogWeight: "4.0",
+    dogAge: "2",
+    dogGender: "FEMALE",
+    dogBreed: "비숑프리제",
+    neutering: false,
+    experience: true,
+    significant: "털이 잘 엉켜요",
+    requestContent: "기본 미용 예약 원해요",
+    requestImage: []
   },
   quote: {
-    quoteId: 66,
-    beautyDate: "2024-02-18T14:00:00",
-    cost: 75000,
-    quoteContent: "전체 미용 패키지"
+    quoteId: 75,
+    beautyDate: "2024-02-25T15:00:00",
+    cost: 1000,
+    quoteContent: "프리미엄 케어"
   }
 };
 
@@ -49,7 +49,7 @@ const groomerQuoteDetail = {
     beautyDate: "2024-12-03T15:00:00",
     quoteCost: 150000,
     quoteContent: "공지 미용 설명1",
-    requestImageUrl: ["https://picsum.photos/200"]
+    requestImageUrl: []
   }
 };
 

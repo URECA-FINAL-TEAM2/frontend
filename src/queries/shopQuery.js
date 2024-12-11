@@ -222,7 +222,8 @@ export const deleteFavorite = async (customerId, shopId) => {
   } catch (error) {
     console.error("요청 실패:", error);
   }
-  
+};
+
 export const parseAddress = (fullAddress) => {
   if (!fullAddress || typeof fullAddress !== "string") {
     return { address: "", detailAddress: "" }; // 유효하지 않은 입력 처리

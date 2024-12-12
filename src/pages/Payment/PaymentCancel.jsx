@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Lottie from "lottie-react";
 import animationData from "./PaymentCancelAnimation.json";
 import SubHeader from "@/components/common/SubHeader";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import CustomerBottom from "@/components/common/CustomerBottom";
 import { getPaymentDetail } from "@/queries/paymentQuery";
 
@@ -11,6 +11,7 @@ const PaymentCancel = () => {
   const [paymentDetail, setPaymentDetail] = useState(null);
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  const location = useLocation();
   const { paymentKey } = location.state || {};
 
   useEffect(() => {
@@ -83,6 +84,10 @@ const PaymentCancel = () => {
           <div className="mb-2 flex justify-between text-sm text-gray-700">
             <span>예약 번호</span>
             <span className="font-medium">{paymentDetail?.orderId || "알 수 없음"}</span>
+          </div>
+          <div className="mb-2 flex justify-between text-sm text-gray-700">
+            <span>결제 번호</span>
+            <span className="font-medium">{paymentDetail?.paymentKey || "알 수 없음"}</span>
           </div>
           <div className="mb-2 flex justify-between text-sm text-gray-700">
             <span>예약 샵</span>

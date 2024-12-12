@@ -81,7 +81,7 @@ const CustomerReservationDetail = () => {
       setIsModalOpen(false);
       setCancelReason("");
       navigate("/customer/payment/cancel", {
-        state: { paymentKey: detail.paymentKey }
+        state: { paymentKey: cancelData.paymentKey }
       });
     } catch (error) {
       console.error("취소 실패:", error);

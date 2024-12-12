@@ -92,3 +92,19 @@ export const getUserAddress = async () => {
   const response = await axiosInstance.get(`/profile/${customerId}/address`);
   return response.data.data;
 };
+
+// 미용사 찾기에서 고객 주소 수정
+export const updateUserAddress = async (sidoName, sigunguName, customerId) => {
+  const addressData = {
+    sidoName: sidoName,
+    sigunguName: sigunguName
+  };
+
+  try {
+    const response = await axiosInstance.put(`/profile/customer/${customerId}/address`, addressData);
+    console.log("고객 주소 수정", response);
+  } catch (error) {
+    console.error("고객 주소 수정 실패:", error);
+    throw error;
+  }
+};

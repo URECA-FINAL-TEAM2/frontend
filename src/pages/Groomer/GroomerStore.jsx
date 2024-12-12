@@ -91,7 +91,11 @@ const GroomerStore = () => {
       </div>
 
       <div ref={reviewsRef}>
-        <ShopReviewList isCustomer={false} reviewList={shopDetail.reviews} />
+        <ShopReviewList
+          groomerUsername={shopDetail.groomerUsername}
+          isCustomer={false}
+          reviewList={shopDetail.reviews}
+        />
       </div>
     </div>
   );

@@ -32,7 +32,6 @@ const CreateStore = () => {
     const getShop = async () => {
       const response = await getGroomerShop(id);
       const shop = response.data;
-      console.log("매장정보", shop);
       setFormData((prevFormData) => ({
         ...prevFormData,
         shopId: shop.shopId,

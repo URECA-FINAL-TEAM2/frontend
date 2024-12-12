@@ -82,7 +82,7 @@ const EditPortfolio = () => {
           )}
         </div>
 
-        <div className="mx-auto mb-20 grid grid-cols-3">
+        <div className="mx-auto mb-20 grid grid-cols-3 gap-x-2">
           {images.map((img, index) => (
             <div key={index} className="relative mx-auto my-2 w-[100px]">
               <img

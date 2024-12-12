@@ -1,7 +1,6 @@
 import axiosInstance from "@/api/axiosInstance";
 
 export const getUserMypage = async (role, id) => {
-  console.log("요청", role, id);
   const endpoint = role === "customer" ? `/mypage/customer/${id.customerId}` : `/mypage/groomer/${id.groomerId}`;
 
   try {

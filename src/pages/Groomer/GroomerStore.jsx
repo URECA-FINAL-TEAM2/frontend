@@ -38,7 +38,16 @@ const GroomerStore = () => {
       reviews: reviewsRef
     };
 
-    refs[section]?.current?.scrollIntoView({ behavior: "smooth" });
+    const targetRef = refs[section]?.current;
+    if (targetRef) {
+      targetRef.scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+      });
+
+      // Optional: Adjust scroll position manually
+      window.scrollBy(0, -75);
+    }
   };
 
   if (isLoading) {
@@ -63,9 +72,8 @@ const GroomerStore = () => {
         <ShopIntro shopDetail={shopDetail} />
       </div>
 
-      <ShopMenuBar
-        shopId={shopDetail.shopId}
-        isFavorite={shopDetail.isFavorite}
+      <ShopMenuBar // shopId, isFavorite 안 보냄
+        isCustomer={false}
         favoriteCount={shopDetail.favoriteCount}
         scrollToSection={scrollToSection}
       />
@@ -79,11 +87,11 @@ const GroomerStore = () => {
       </div>
 
       <div ref={groomerRef}>
-        <ShopGroomer shopDetail={shopDetail} />
+        <ShopGroomer isCustomer={false} shopDetail={shopDetail} />
       </div>
 
       <div ref={reviewsRef}>
-        <ShopReviewList reviewList={shopDetail.reviews} />
+        <ShopReviewList isCustomer={false} reviewList={shopDetail.reviews} />
       </div>
     </div>
   );

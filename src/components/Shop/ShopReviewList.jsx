@@ -1,7 +1,11 @@
 import React from "react";
 import ShopReview from "./ShopReview";
 
-function ShopReviewList({ reviewList }) {
+function ShopReviewList({ reviewList, isCustomer }) {
+  // TODO
+  const customerId = 46;
+  const groomerId = 4;
+
   // TODO: 정렬 추가
   return (
     <div className="mx-5 mt-3">

@@ -80,7 +80,9 @@ const CustomerReservationDetail = () => {
       alert("예약이 성공적으로 취소되었습니다.");
       setIsModalOpen(false);
       setCancelReason("");
-      navigate("/customer/reservation");
+      navigate("/customer/payment/cancel", {
+        state: { paymentKey: detail.paymentKey }
+      });
     } catch (error) {
       console.error("취소 실패:", error);
       alert("예약 취소에 실패했습니다. 다시 시도해주세요.");

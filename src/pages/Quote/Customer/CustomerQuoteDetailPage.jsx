@@ -1,7 +1,7 @@
 import SubHeader from "@/components/common/SubHeader";
 import CustomerQuoteDetail from "@/components/Quote/CustomerQuoteDetail";
 import React, { useState, useRef, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { MdExpandMore } from "react-icons/md";
 import { RequestPayment } from "@/queries/paymentQuery";
 import { ArrowDown } from "/public/Icons";
@@ -9,6 +9,8 @@ import { ArrowDown } from "/public/Icons";
 function CustomerQuoteDetailPage(props) {
   const quotesId = Number(useParams().quotesId);
   const customerId = 7; // TODO
+  const navigate = useNavigate();
+
   const [isExpanded, setIsExpanded] = useState(false);
   const [amount, setAmount] = useState(null);
   const [shopName, setShopName] = useState("");
@@ -48,7 +50,7 @@ function CustomerQuoteDetailPage(props) {
     setShopName(data.shopName);
   };
 
-  const payHandle = () => {
+  const payHandle = async () => {
     if (
       !agreements.noCancelRefund ||
       !agreements.orderConfirmation ||
@@ -67,9 +69,13 @@ function CustomerQuoteDetailPage(props) {
       customerId: customerId
     };
     try {
-      const result = RequestPayment(requestData);
+      const result = await RequestPayment(requestData);
       console.log("결제 요청 성공:", result);
       console.log(requestData);
+
+      navigate("/customer/payment/complete", {
+        state: { selectedQuoteId: result.data.selectedQuoteId }
+      });
     } catch (error) {
       console.error("결제 요청 실패:", error);
     }

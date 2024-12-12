@@ -32,13 +32,14 @@ import axiosInstance from "@/api/axiosInstance";
 //       content: "string",
 //       recommendCount: 0,
 //       reviewsImage: ["string"],
-//       createdAt: "2024-12-11T05:12:11.773Z",
+//       createdAt: "2024-12-11T05:12:11.773Z", // 날짜까지만 사용
 //       isRecommended: true
 //     }
 //   ]
 // };
 
 const myShopDetail = {
+  // isFavorite, review의 isRecommended 두 컬럼 제외
   groomerId: 4,
   shopId: 4,
   shopLogo: "https://s3-beauty-meongdang.s3.ap-northeast-2.amazonaws.com/매장+로고+이미지/두루몽실.jpg",
@@ -58,7 +59,17 @@ const myShopDetail = {
   ],
   groomerUsername: "써윤기",
   groomerProfileImage: "profile4.jpg",
-  reviews: []
+  reviews: [
+    {
+      reviewId: 0,
+      customerNickname: "string",
+      starScore: 0,
+      content: "string",
+      recommendCount: 0,
+      reviewsImage: ["string"],
+      createdAt: "2024-12-11T05:12:11.773Z"
+    }
+  ]
 };
 
 export const getShopList = async (customerId) => {

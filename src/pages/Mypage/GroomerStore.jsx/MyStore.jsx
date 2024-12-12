@@ -51,7 +51,7 @@ const MyStore = () => {
         )}
 
         {storeExists ? (
-          <div className="mt-[70px]">
+          <div className="mt-[150px]">
             <div>
               {activeComponent === "info" && <EditShop shopInfo={shopInfo} id={id} />}
               {activeComponent === "portfolio" && <StorePortfolio portfolioImg={portfolioImg} />}

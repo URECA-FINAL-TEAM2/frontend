@@ -7,22 +7,37 @@ import { useNavigate } from "react-router-dom";
 
 const EditShop = ({ shopInfo, id }) => {
   const { update } = location.state || {};
-  // const { id } = useAuthStore();
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isUpdate, setIsUpdate] = useState(false);
   const [formData, setFormData] = useState({
-    shopId: shopInfo.shopId,
-    profileImage: shopInfo.shopLogo,
-    shopName: shopInfo.shopName,
-    description: shopInfo.description,
-    businessTime: shopInfo.businessTime,
-    address: shopInfo.address,
-    sidoName: shopInfo.sidoName,
-    sigunguName: shopInfo.sigunguName,
-    latitude: 0,
-    longitude: 0
+    shopId: shopInfo?.shopId || "",
+    profileImage: shopInfo?.shopLogo || "",
+    shopName: shopInfo?.shopName || "",
+    description: shopInfo?.description || "",
+    businessTime: shopInfo?.businessTime || "",
+    address: shopInfo?.address || "",
+    sidoName: shopInfo?.sidoName || "",
+    sigunguName: shopInfo?.sigunguName || "",
+    latitude: shopInfo?.latitude || 0,
+    longitude: shopInfo?.longitude || 0
   });
+
+  useEffect(() => {
+    setIsUpdate(true);
+    setFormData({
+      shopId: shopInfo?.shopId || "",
+      profileImage: shopInfo?.shopLogo || "",
+      shopName: shopInfo?.shopName || "",
+      description: shopInfo?.description || "",
+      businessTime: shopInfo?.businessTime || "",
+      address: shopInfo?.address || "",
+      sidoName: shopInfo?.sidoName || "",
+      sigunguName: shopInfo?.sigunguName || "",
+      latitude: shopInfo?.latitude || 0,
+      longitude: shopInfo?.longitude || 0
+    });
+  }, [shopInfo]);
 
   const handleOpenModal = () => {
     setIsModalOpen(true);
@@ -48,8 +63,8 @@ const EditShop = ({ shopInfo, id }) => {
     toast("완료되었습니다.", { icon: "👏🏻" });
 
     setTimeout(() => {
-      navigate(-1);
-    }, 1500);
+      navigate("/groomer/mypage");
+    }, 500);
   };
 
   return (

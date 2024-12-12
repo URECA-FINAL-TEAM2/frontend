@@ -1,5 +1,16 @@
 import axiosInstance from "@/api/axiosInstance";
 
+export const requestRefreshToken = async () => {
+  // 리프레시토큰으로 토큰 재발급 요청 api
+  try {
+    const response = await axiosInstance.get("/auth/refreshToken");
+    return response.data;
+  } catch (error) {
+    console.error("고객 정보 등록 실패:", error);
+    throw error;
+  }
+};
+
 export const getUserId = async (role, userId) => {
   const endpoint = role === "customer" ? `/mypage/customer/toggle/${userId}` : `/mypage/groomer/toggle/${userId}`;
   try {

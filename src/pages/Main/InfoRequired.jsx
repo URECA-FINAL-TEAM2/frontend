@@ -10,18 +10,18 @@ import toast, { Toaster } from "react-hot-toast";
 
 const InfoRequired = () => {
   const navigate = useNavigate();
-  const [nickname, setNickname] = useState();
   const location = useLocation();
   const phoneRef = useRef();
   const nicknameRef = useRef();
-  const { updateId, updateDefaultRole, setLoginStatus } = useAuthStore();
+  const { updateId, updateDefaultRole, setLoginStatus, userInfo } = useAuthStore();
   const [validPhone, setValidPhone] = useState("yet");
-  const { role, email, username } = location.state || {};
+  const [nickname, setNickname] = useState("yet");
+  const { role } = location.state || {};
   const [formData, setFormData] = useState({
-    email: email,
+    email: userInfo.email,
     profileImage: null,
-    username: username,
-    nickName: "",
+    username: userInfo.username,
+    nickName: userInfo.nickName,
     phone: "",
     sidoId: "",
     sigunguId: "",
@@ -29,6 +29,8 @@ const InfoRequired = () => {
   });
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalState, setModalState] = useState("update");
+
+  console.log(role);
 
   const handleOpenModal = (state) => {
     setIsModalOpen(true);
@@ -51,13 +53,13 @@ const InfoRequired = () => {
     if (validPhone === "possible" && nickname === "possible") {
       try {
         const response = await registerUser(formData, role);
-        const responseRole = response.roles[0] === "고객" ? "customer" : "groomer";
+
         const customerId = response?.customerId;
         const groomerId = response?.groomerId;
 
         setLoginStatus(true);
-        updateDefaultRole(responseRole);
-        if (responseRole === "customer") {
+        updateDefaultRole(role);
+        if (role === "customer") {
           updateId({ customerId: customerId });
           navigate("/customer/home");
         } else {

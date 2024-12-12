@@ -7,6 +7,8 @@ import useAuthStore from "@/store/authStore";
 import toast, { Toaster } from "react-hot-toast";
 import Modal from "@/components/common/modal/modal";
 import useToastAndNavigate from "@/hooks/CustomerSearch/useToastAndNavigate";
+import Logout from "@/components/Login/Logout";
+import { authLogout } from "@/queries/authQuery";
 
 const UserInfo = () => {
   const nicknameRef = useRef();
@@ -15,7 +17,7 @@ const UserInfo = () => {
   const showToastAndNavigate = useToastAndNavigate();
   const [nickname, setNickname] = useState("yet");
   const location = useLocation();
-  const { id } = useAuthStore();
+  const { id, logout } = useAuthStore();
   const { role } = location.state || {};
   const [validPhone, setValidPhone] = useState("yet");
   const [formData, setFormData] = useState({
@@ -48,9 +50,28 @@ const UserInfo = () => {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = async (e) => {
+  const handleDelete = async () => {
+    try {
+      console.log(role, "삭제");
+      await deleteUserInfo(role, id);
+      toast("정보가 삭제되었습니다.\n 자동 로그아웃 처리됩니다.", {
+        icon: "👋🏻"
+      });
+      logout();
+      navigate("/");
+    } catch (error) {
+      console.error("정보 삭제를 실패했습니다.");
+    }
+  };
+
+  const handleSubmit = async (e, state) => {
     e.preventDefault();
     setIsModalOpen(false);
+
+    if (modalState === "delete") {
+      console.log("삭제요청");
+      handleDelete();
+    }
 
     if ((validPhone === "possible" || validPhone === "yet") && (nickname === "possible" || nickname === "yet")) {
       if (modalState === "update") {
@@ -68,13 +89,6 @@ const UserInfo = () => {
           showToastAndNavigate("수정 완료되었습니다.", "👏🏻");
         } catch (error) {
           showToastAndNavigate("담당자에게 문의하세요.", "❌");
-        }
-      } else {
-        try {
-          await deleteUserInfo(role, id);
-          showToastAndNavigate("정보가 삭제되었습니다.\n 자동 로그아웃 처리됩니다.", "👋🏻");
-        } catch (error) {
-          console.error("고객 주소 수정을 실패했습니다.");
         }
       }
     } else {
@@ -104,6 +118,7 @@ const UserInfo = () => {
     <div className="flex min-h-screen flex-col">
       <SubHeader title={"내 정보 수정"} />
       <UserForm
+        handleDelete={handleDelete}
         nicknameRef={nicknameRef}
         phoneRef={phoneRef}
         handleOpenModal={handleOpenModal}

@@ -37,20 +37,20 @@ const UserForm = ({
           <label htmlFor="email" className="labelStyle">
             이메일
           </label>
-          <div className="inputStyle">{formData?.email}</div>
+          <div className="inputStyle border-main-400 text-gray-300">{formData?.email}</div>
         </div>
         <div>
           <label htmlFor="username" className="labelStyle">
             이름
           </label>
-          <div className="inputStyle">{formData?.userName || formData?.username}</div>
+          <div className="inputStyle border-main-400 text-gray-300">{formData?.userName || formData?.username}</div>
         </div>
         {/* Nickname */}
         <div>
           <label htmlFor="nickName" className="labelStyle">
             닉네임
           </label>
-          <div className={`inputStyle ${nickname === "yet" ? "mb-8" : "mb-2"} flex justify-between bg-gray-200`}>
+          <div className={`inputStyle relative ${nickname === "yet" ? "mb-8" : "mb-2"} flex justify-between`}>
             <input
               ref={nicknameRef}
               type="text"
@@ -59,7 +59,7 @@ const UserForm = ({
               value={formData?.nickName || formData?.nickname}
               onChange={handleChange}
               placeholder="닉네임을 입력해주세요."
-              className="bg-gray-200"
+              className=""
               required
             />
             <button
@@ -85,7 +85,7 @@ const UserForm = ({
             value={formData?.phone}
             onChange={() => handlePhoneChange(event, setFormData, setValidPhone)}
             placeholder="010-1234-5678"
-            className={`inputStyle ${validPhone === "yet" ? "mb-8" : "mb-2"} mb-1 bg-gray-200`}
+            className={`inputStyle ${validPhone === "yet" ? "mb-8" : "mb-2"} mb-1`}
             required
           />
           <PhoneCheck validPhone={validPhone} />
@@ -112,7 +112,7 @@ const UserForm = ({
               value={formData?.skill || formData?.skills}
               onChange={handleChange}
               placeholder="미용사 스킬을 입력해주세요."
-              className="inputStyle bg-gray-200"
+              className="inputStyle"
             />
           </div>
         )}

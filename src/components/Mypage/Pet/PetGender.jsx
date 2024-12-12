@@ -4,7 +4,7 @@ import "../../../css/styles.css";
 const PetGender = ({ onlyRead, formData, setFormData }) => {
   return (
     <div>
-      <label className="labelStyle">성별</label>
+      <label className="labelStyle">성별*</label>
       <div className="mx-auto grid w-3/4 grid-cols-2 gap-4 pb-6 pt-2 text-center">
         <button
           type="button"

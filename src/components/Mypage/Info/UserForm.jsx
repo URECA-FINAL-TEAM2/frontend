@@ -2,34 +2,30 @@ import ProfileImage from "../ProfileImage";
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import SelectRegion from "./SelectRegion";
-import { nicknameCheck } from "@/queries/authQuery";
 import NicknameCheck from "@/components/Login/NicknameCheck";
 import PhoneCheck from "@/components/Login/PhoneCheck";
+import { handleNicknameCheck, handlePhoneChange } from "@/queries/authQuery";
 
-const UserForm = ({ handleOpenModal, phoneRef, validPhone, formData, setFormData, handleChange, role }) => {
+const UserForm = ({
+  nickname,
+  setNickname,
+  nicknameRef,
+  setValidPhone,
+  handleOpenModal,
+  phoneRef,
+  validPhone,
+  formData,
+  setFormData,
+  handleChange,
+  role
+}) => {
   const location = useLocation();
   const [pathname, setPathname] = useState();
-  const [nickname, setNickname] = useState();
 
   useEffect(() => {
     setPathname(location.pathname);
+    console.log(nickname);
   }, [location]);
-
-  // 닉네임 유효성검사, 중복검사
-  const handleNicknameCheck = async (nickname) => {
-    const nicknameRegex = /^(?=.*[a-zA-Z가-힣])[a-zA-Z가-힣0-9_-]{2,10}$/;
-
-    if (!nickname) {
-      return setNickname("required");
-    }
-
-    if (!nicknameRegex.test(nickname)) {
-      return setNickname("impossible");
-    }
-
-    const response = await nicknameCheck(nickname);
-    setNickname(response.data ? "possible" : "duplication");
-  };
 
   return (
     <>
@@ -41,34 +37,35 @@ const UserForm = ({ handleOpenModal, phoneRef, validPhone, formData, setFormData
           <label htmlFor="email" className="labelStyle">
             이메일
           </label>
-          <div className="inputStyle">{formData?.email}</div>
+          <div className="inputStyle border-main-400 text-gray-300">{formData?.email}</div>
         </div>
         <div>
           <label htmlFor="username" className="labelStyle">
             이름
           </label>
-          <div className="inputStyle">{formData?.userName || formData?.username}</div>
+          <div className="inputStyle border-main-400 text-gray-300">{formData?.userName || formData?.username}</div>
         </div>
         {/* Nickname */}
         <div>
           <label htmlFor="nickName" className="labelStyle">
             닉네임
           </label>
-          <div className={`inputStyle ${nickname ? "mb-2" : "mb-8"} flex justify-between text-gray-400`}>
+          <div className={`inputStyle relative ${nickname === "yet" ? "mb-8" : "mb-2"} flex justify-between`}>
             <input
+              ref={nicknameRef}
               type="text"
               id="nickName"
               name="nickName"
               value={formData?.nickName || formData?.nickname}
               onChange={handleChange}
               placeholder="닉네임을 입력해주세요."
-              className="grow"
+              className=""
               required
             />
             <button
               type="button"
               className="rounded-xl bg-main px-2 text-xs text-white"
-              onClick={() => handleNicknameCheck(formData.nickName)}
+              onClick={() => handleNicknameCheck(formData?.nickName || formData?.nickname, setNickname)}
             >
               중복확인
             </button>
@@ -86,9 +83,9 @@ const UserForm = ({ handleOpenModal, phoneRef, validPhone, formData, setFormData
             id="phone"
             name="phone"
             value={formData?.phone}
-            onChange={handleChange}
+            onChange={() => handlePhoneChange(event, setFormData, setValidPhone)}
             placeholder="010-1234-5678"
-            className={`inputStyle ${validPhone === "yet" ? "mb-8" : "mb-2"} text-gray-400`}
+            className={`inputStyle ${validPhone === "yet" ? "mb-8" : "mb-2"} mb-1`}
             required
           />
           <PhoneCheck validPhone={validPhone} />
@@ -115,7 +112,7 @@ const UserForm = ({ handleOpenModal, phoneRef, validPhone, formData, setFormData
               value={formData?.skill || formData?.skills}
               onChange={handleChange}
               placeholder="미용사 스킬을 입력해주세요."
-              className="inputStyle text-gray-400"
+              className="inputStyle"
             />
           </div>
         )}

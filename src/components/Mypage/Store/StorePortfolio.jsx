@@ -62,7 +62,7 @@ const Modal = ({ isOpen = false, onClose, children, handlePrev }) => {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-30">
-      <div className="relative w-[360px] rounded-lg bg-white p-5 shadow-md">
+      <div className="relative w-[360px] rounded-lg bg-white shadow-md">
         <button onClick={onClose} className="absolute right-3 top-3 mb-5 text-xl font-bold text-gray-600">
           ✕
         </button>

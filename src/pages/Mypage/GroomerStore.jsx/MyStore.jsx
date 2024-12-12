@@ -3,12 +3,12 @@ import SubHeader from "../../../components/common/SubHeader";
 import DefaultStore from "/Icons/DefaultStoreProfile.svg";
 import StoreInfo from "../../../components/Mypage/Store/StoreInfo";
 import StorePortfolio from "../../../components/Mypage/Store/StorePortfolio";
-import NotFoundStore from "./NotFoundStore";
 import { useNavigate } from "react-router-dom";
 import { getGroomerShop } from "@/queries/shopQuery";
 import { MdOutlineRateReview } from "react-icons/md";
 import { GoHeartFill } from "react-icons/go";
 import useAuthStore from "@/store/authStore";
+import EmptyPage from "@/components/common/EmptyPage";
 
 const MyStore = () => {
   const { id } = useAuthStore();
@@ -40,11 +40,11 @@ const MyStore = () => {
         {storeExists ? (
           <div className="mt-[75px]">
             <div className="flex items-center justify-evenly">
-              <div className="mr-3 w-[40%]">
+              <div className="w-[30%]">
                 <img
                   src={shopInfo.shopLogo ? shopInfo.shopLogo : DefaultStore}
                   alt="default store img"
-                  className="img-border my-8 aspect-square w-full"
+                  className="img-border aspect-square w-full"
                 />
               </div>
               <div>
@@ -63,7 +63,7 @@ const MyStore = () => {
               </div>
             </div>
 
-            <div className="relative mt-2 flex items-center">
+            <div className="relative mt-7 flex items-center">
               <button
                 onClick={() => setActiveComponent("info")}
                 className={`w-1/2 border-b border-b-main px-14 py-2 text-lg ${
@@ -109,7 +109,15 @@ const MyStore = () => {
             )}
           </div>
         ) : (
-          <NotFoundStore />
+          <div>
+            <EmptyPage content={"등록된 매장이 없습니다."} />
+            <button
+              onClick={() => navigate("/groomer/createstore", { state: { update: false } })}
+              className="bottomButtonPink"
+            >
+              매장 등록하기
+            </button>
+          </div>
         )}
       </div>
     </>

@@ -9,7 +9,7 @@ function OAuth2RedirectPage() {
   const location = useLocation();
   const code = new URL(window.location.href).searchParams.get("code");
   const socialLogin = location.pathname.includes("kakao") ? "kakao" : "google";
-  const { updateId, updateDefaultRole, setLoginStatus } = useAuthStore();
+  const { updateUserInfo, updateId, updateDefaultRole, setLoginStatus } = useAuthStore();
 
   const sendCodeToBackend = async (code) => {
     try {
@@ -21,15 +21,22 @@ function OAuth2RedirectPage() {
       console.log("추가정보입력 성공 후 로그인,", response);
       localStorage.setItem("accessToken", response.data.body.data.accessToken);
       setLoginStatus(true);
-      const role = response.data.body.data.user.roles;
-      if (role === "customer") {
-        updateId({ customerId: 46 });
-        updateDefaultRole(role);
-        navigate("/customer/home");
-      } else {
-        updateId({ groomerId: 31 });
-        updateDefaultRole(role);
+      const roles = response.data.body.data.user.roles;
+      const customerId = response.data.body.data?.customerId || null;
+      const groomerId = response.data.body.data?.groomerId || null;
+      const email = response.data.body.data.email;
+      const username = response.data.body.data.user.username;
+      const nickName = response.data.body.data.user.nickname;
+
+      updateUserInfo({ email: email, username: username, nickName: nickName });
+      updateId({ customerId: customerId, groomerId: groomerId });
+
+      if (roles.includes("미용사")) {
+        updateDefaultRole("groomer");
         navigate("/groomer/home");
+      } else {
+        updateDefaultRole("customer");
+        navigate("/customer/home");
       }
     } catch (error) {
       if (error.response?.status === 400) {
@@ -38,6 +45,7 @@ function OAuth2RedirectPage() {
         const email = error.response.data.body.data.email;
         const username = error.response.data.body.data.user.username;
         localStorage.setItem("accessToken", accessToken);
+        updateUserInfo({ email: email, username: username });
         navigate("/selectRole", { state: { email: email, username: username } });
       } else {
         console.error("Error sending code to backend:", error);

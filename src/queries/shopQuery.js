@@ -170,19 +170,24 @@ export const deleteGroomerShop = async (shopId, id) => {
 
 // 미용사 포트폴리오 이미지 추가
 export const insertGroomerPortfolio = async (images, id) => {
+  console.log(images);
   const groomerId = id.groomerId;
   const formData = new FormData();
-  const jsonData = { groomerId: groomerId };
-  formData.append("requestDto", JSON.stringify(jsonData));
 
-  // 이미지 배열 추가
-  images.forEach((image) => {
-    formData.append("images", image); // 키 이름을 배열 형태로 지정
-  });
+  const imageUrls = images.filter((image) => typeof image === "string");
+  const jsonData = {
+    groomerId,
+    images: imageUrls
+  };
+  const jsonBlob = new Blob([JSON.stringify(jsonData)], { type: "application/json" });
+  formData.append("requestDto", jsonBlob);
 
-  for (let [key, value] of formData.entries()) {
-    console.log(`${key}:`, value);
-  }
+  // 파일 객체만 추출하여 FormData에 추가
+  images
+    .filter((image) => image instanceof File)
+    .forEach((file) => {
+      formData.append("images", file);
+    });
 
   try {
     const response = await axiosInstance.put("/profile/groomer/portfolio", formData);

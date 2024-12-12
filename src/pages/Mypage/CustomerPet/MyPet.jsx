@@ -7,6 +7,7 @@ import PetForm from "@/components/Mypage/Pet/PetForm";
 import { deletePetInfo, getDogBreed, getPetInfo, updatePetInfo } from "@/queries/petQuery";
 import useAuthStore from "@/store/authStore";
 import useToastAndNavigate from "@/hooks/CustomerSearch/useToastAndNavigate";
+import { Toaster } from "react-hot-toast";
 
 // 반려견 등록, 조회, 수정, 삭제(CRUD)
 const MyPet = () => {
@@ -16,7 +17,7 @@ const MyPet = () => {
   const [dogId, setDogId] = useState();
   const [isState, setIsState] = useState("register");
   const [breed, setBreed] = useState([]);
-  const [onlyRead, setOnlyRead] = useState(true);
+  const [onlyRead, setOnlyRead] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [formData, setFormData] = useState({
     dogName: "",
@@ -140,6 +141,7 @@ const MyPet = () => {
           }
         })()}
       </Modal>
+      <Toaster />
     </>
   );
 };

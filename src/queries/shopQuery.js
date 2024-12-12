@@ -39,41 +39,26 @@ import axiosInstance from "@/api/axiosInstance";
 // };
 
 const myShopDetail = {
-  groomerId: 2,
-  shopId: 2,
-  shopLogo: "https://s3-beauty-meongdang.s3.ap-northeast-2.amazonaws.com/매장+로고+이미지/멍브라운.jpg",
-  shopName: "멍브라운",
+  groomerId: 4,
+  shopId: 4,
+  shopLogo: "https://s3-beauty-meongdang.s3.ap-northeast-2.amazonaws.com/매장+로고+이미지/두루몽실.jpg",
+  shopName: "두루몽실",
   starScoreAvg: 0,
   starCount: 0,
-  address: "서울특별시 강남구 선릉로 162길",
-  businessTime: "09:00-19:00",
-  skills: "애견 미용, 목욕 서비스",
-  latitude: 37.523265,
-  longitude: 127.033964,
-  favoriteCount: 3,
-  // isFavorite: false,
-  description: "10년 경력 수석 미용사가 직접 케어해드립니다.",
+  address: "서울특별시 강남구 언주로 123",
+  businessTime: "10:30-20:30",
+  skills: "전체 미용, 샴푸 서비스",
+  latitude: 37.542634,
+  longitude: 127.057932,
+  favoriteCount: 5,
+  description: "친환경 샴푸만 사용하는 프리미엄 살롱입니다.",
   groomerPortfolioImages: [
-    "https://s3-beauty-meongdang.s3.ap-northeast-2.amazonaws.com/%EB%AF%B8%EC%9A%A9%EC%82%AC+%ED%8F%AC%ED%8A%B8%ED%8F%B4%EB%A6%AC%EC%98%A4+%EC%9D%B4%EB%AF%B8%EC%A7%80/5-1.jpg",
-    "https://s3-beauty-meongdang.s3.ap-northeast-2.amazonaws.com/%EB%AF%B8%EC%9A%A9%EC%82%AC+%ED%8F%AC%ED%8A%B8%ED%8F%B4%EB%A6%AC%EC%98%A4+%EC%9D%B4%EB%AF%B8%EC%A7%80/5-2.jpg",
-    "https://s3-beauty-meongdang.s3.ap-northeast-2.amazonaws.com/%EB%AF%B8%EC%9A%A9%EC%82%AC+%ED%8F%AC%ED%8A%B8%ED%8F%B4%EB%A6%AC%EC%98%A4+%EC%9D%B4%EB%AF%B8%EC%A7%80/5-3.jpg",
-    "https://s3-beauty-meongdang.s3.ap-northeast-2.amazonaws.com/%EB%AF%B8%EC%9A%A9%EC%82%AC+%ED%8F%AC%ED%8A%B8%ED%8F%B4%EB%A6%AC%EC%98%A4+%EC%9D%B4%EB%AF%B8%EC%A7%80/5-4.jpg",
-    "https://s3-beauty-meongdang.s3.ap-northeast-2.amazonaws.com/%EB%AF%B8%EC%9A%A9%EC%82%AC+%ED%8F%AC%ED%8A%B8%ED%8F%B4%EB%A6%AC%EC%98%A4+%EC%9D%B4%EB%AF%B8%EC%A7%80/5-5.jpg"
+    "https://s3-beauty-meongdang.s3.ap-northeast-2.amazonaws.com/%EB%AF%B8%EC%9A%A9%EC%82%AC+%ED%8F%AC%ED%8A%B8%ED%8F%B4%EB%A6%AC%EC%98%A4+%EC%9D%B4%EB%AF%B8%EC%A7%80/2-1.jpg",
+    "https://s3-beauty-meongdang.s3.ap-northeast-2.amazonaws.com/%EB%AF%B8%EC%9A%A9%EC%82%AC+%ED%8F%AC%ED%8A%B8%ED%8F%B4%EB%A6%AC%EC%98%A4+%EC%9D%B4%EB%AF%B8%EC%A7%80/2-2.jpg"
   ],
-  groomerUsername: "도리도림",
-  groomerProfileImage: "profile2.jpg",
-  reviews: [
-    {
-      reviewId: 0,
-      customerNickname: "string",
-      starScore: 0,
-      content: "string",
-      recommendCount: 0,
-      reviewsImage: ["string"],
-      createdAt: "2024-12-11T05:12:11.773Z"
-      // isRecommended: true
-    }
-  ]
+  groomerUsername: "써윤기",
+  groomerProfileImage: "profile4.jpg",
+  reviews: []
 };
 
 export const getShopList = async (customerId) => {
@@ -102,11 +87,11 @@ export const getShopDetail = async (shopId, customerId) => {
 
 export const getMyShopDetail = async (groomerId) => {
   try {
-    return myShopDetail;
-    // const response = await axiosInstance.get("/profile/groomer/shop/detail/groomer", {
-    //   params: { groomerId }
-    // });
-    // return response.data.data;
+    // return myShopDetail;
+    const response = await axiosInstance.get("/profile/groomer/shop/detail/groomer", {
+      params: { groomerId }
+    });
+    return response.data.data;
   } catch (error) {
     throw new Error("Failed to fetch shop detail data");
   }

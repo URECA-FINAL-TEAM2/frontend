@@ -1,7 +1,9 @@
 import { getCustomerQuoteDetail } from "@/queries/quoteQuery";
 import React, { useEffect, useState } from "react";
+import { Designer, Schedule, Corgi, Note, Photos, Description, Won, Banknotes } from "/public/Icons";
 
 function CustomerQuoteDetail({ quotesId, onDataLoad }) {
+  const customerId = 7; // TODO
   const [quoteData, setQuoteData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -52,7 +54,7 @@ function CustomerQuoteDetail({ quotesId, onDataLoad }) {
     <div className="mx-auto mb-[70px] mt-[--header-height] max-w-lg bg-white px-6">
       {/* 매장 및 디자이너 정보 */}
       <div className="mb-1.5 flex items-center space-x-1">
-        <img src="/public/Icons/Designer.svg" alt="Description" className="h-5 w-5" />
+        <img src={Designer} alt="Description" className="h-5 w-5" />
         <h2 className="text-lg font-semibold leading-none">매장 · 디자이너 정보</h2>
       </div>
 
@@ -70,7 +72,7 @@ function CustomerQuoteDetail({ quotesId, onDataLoad }) {
 
       {/* 미용 일시 */}
       <div className="mb-1.5 flex items-center space-x-1">
-        <img src="/public/Icons/Schedule.svg" alt="Schedule Icon" className="h-5 w-5" />
+        <img src={Schedule} alt="Schedule Icon" className="h-5 w-5" />
         <h2 className="text-lg font-semibold leading-none">미용 일시</h2>
       </div>
       <div className="mb-6 rounded-lg border border-main-400 p-4">
@@ -81,7 +83,7 @@ function CustomerQuoteDetail({ quotesId, onDataLoad }) {
 
       {/* 반려견 정보 */}
       <div className="mb-1.5 flex items-center space-x-1">
-        <img src="/public/Icons/Corgi.svg" alt="Dog Icon" className="h-5 w-5" />
+        <img src={Corgi} alt="Dog Icon" className="h-5 w-5" />
         <h2 className="text-lg font-semibold leading-none">반려견 정보</h2>
       </div>
       <div className="mb-6 rounded-lg border border-main-400 p-4">
@@ -95,8 +97,7 @@ function CustomerQuoteDetail({ quotesId, onDataLoad }) {
             <p className="mt-1 text-center font-semibold">{quoteData.quoteRequest.dogName}</p>
           </div>
           <div className="self-center text-sm leading-normal">
-            {/* [ ] 견종 업데이트 (API 수정 or API 두 개 사용) */}
-            {/* <p>견종: {quoteData.quoteRequest.dogBreed}</p> */}
+            <p>견종: {quoteData.quoteRequest.dogBreed}</p>
             <p>무게: {quoteData.quoteRequest.dogWeight}</p>
             <p>나이: {quoteData.quoteRequest.dogAge}</p>
             <p>성별: {quoteData.quoteRequest.dogGender === "MALE" ? "남아" : "여아"}</p>
@@ -109,7 +110,7 @@ function CustomerQuoteDetail({ quotesId, onDataLoad }) {
 
       {/* 요청 내용 */}
       <div className="mb-1.5 flex items-center space-x-1">
-        <img src="/public/Icons/Note.svg" alt="Note Icon" className="h-5 w-5" />
+        <img src={Note} alt="Note Icon" className="h-5 w-5" />
         <h2 className="text-lg font-semibold leading-none">요청 내용</h2>
       </div>
       <div className="mb-6 rounded-lg border border-main-400 p-4 leading-tight">
@@ -117,10 +118,14 @@ function CustomerQuoteDetail({ quotesId, onDataLoad }) {
       </div>
 
       {/* 첨부 사진 */}
+      <div className="mb-1.5 flex items-center space-x-1">
+        <img src={Photos} alt="Photos Icon" className="h-5 w-5" />
+        <h2 className="text-lg font-semibold leading-none">첨부 사진</h2>
+      </div>
       <div className="mb-6 rounded-lg">
-        <div className="grid grid-cols-3 gap-3">
-          {quoteData.quoteRequest.requestImage.length > 0 ? (
-            quoteData.quoteRequest.requestImage.map((image, index) => {
+        {quoteData.quoteRequest.requestImage.length > 0 ? (
+          <div className="grid grid-cols-3 gap-3">
+            {quoteData.quoteRequest.requestImage.map((image, index) => {
               console.log("Image URL:", image); // 로그를 찍어서 이미지 URL 확인
               return (
                 <div key={index} className="relative">
@@ -131,18 +136,20 @@ function CustomerQuoteDetail({ quotesId, onDataLoad }) {
                   />
                 </div>
               );
-            })
-          ) : (
-            <p className="col-span-3 text-center text-gray-500">첨부된 사진이 없습니다.</p>
-          )}
-        </div>
+            })}
+          </div>
+        ) : (
+          <div className="flex h-28 w-full items-center justify-center">
+            <p className="text-center text-gray-500">첨부된 사진이 없습니다.</p>
+          </div>
+        )}
       </div>
 
       <hr className="mb-6 border-2 border-gray-200" />
 
       {/* 견적 설명 */}
       <div className="mb-1.5 flex items-center space-x-1">
-        <img src="/public/Icons/Description.svg" alt="Description Icon" className="h-5 w-5" />
+        <img src={Description} alt="Description Icon" className="h-5 w-5" />
         <h2 className="text-lg font-semibold leading-none">견적 설명</h2>
       </div>
       <div className="mb-6 rounded-lg border border-main-400 p-4 leading-tight">
@@ -152,7 +159,7 @@ function CustomerQuoteDetail({ quotesId, onDataLoad }) {
       {/* 금액 */}
       <div className="mb-1 flex justify-between">
         <div className="flex items-center space-x-1">
-          <img src="/public/Icons/Won.svg" alt="Won Icon" className="h-5 w-5" />
+          <img src={Won} alt="Won Icon" className="h-5 w-5" />
           <h2 className="text-lg font-semibold leading-none">금액</h2>
         </div>
         <p className="mt-1 px-0.5 text-lg font-semibold leading-none">
@@ -163,7 +170,7 @@ function CustomerQuoteDetail({ quotesId, onDataLoad }) {
       {/* 예약금 */}
       <div className="mb-3 flex justify-between">
         <div className="flex items-center space-x-1 pt-1">
-          <img src="/public/Icons/BankNotes.svg" alt="Banknotes Icon" className="h-5 w-5" />
+          <img src={Banknotes} alt="Banknotes Icon" className="h-5 w-5" />
           <h2 className="text-lg font-semibold leading-none">예약금 (20%)</h2>
         </div>
         <p className="mt-1 rounded-lg bg-main-200 px-0.5 pb-[1px] pt-[2px] text-lg font-semibold leading-none">

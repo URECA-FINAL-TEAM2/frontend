@@ -3,6 +3,7 @@ import { RiEditLine } from "react-icons/ri";
 import { IoIosAddCircle, IoIosCloseCircle } from "react-icons/io";
 import RegionSelectModal from "../../common/modal/RegionSelectModal";
 import PetSelectModal from "../PetSelectModal";
+import { Region, Schedule, Corgi, Note, Photos } from "/public/Icons";
 
 const TotalQuoteRequestForm = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -118,7 +119,7 @@ const TotalQuoteRequestForm = () => {
     <div className="mx-auto mb-[var(--bottom-bar-height)] mt-[var(--header-height)] max-w-lg bg-white px-6">
       {/* 지역 */}
       <div className="mb-1.5 flex items-center space-x-2">
-        <img src="/public/Icons/Region.svg" alt="Description" className="h-5 w-5" />
+        <img src={Region} alt="Description" className="h-5 w-5" />
         <h2 className="text-lg font-semibold leading-none">지역</h2>
         {location && (
           <RiEditLine size={20} className="cursor-pointer py-0.5 text-gray-500" onClick={openLocationModal} />
@@ -137,7 +138,7 @@ const TotalQuoteRequestForm = () => {
 
       {/* 미용 일시 */}
       <div className="mb-1.5 flex items-center space-x-2">
-        <img src="/public/Icons/Schedule.svg" alt="Description" className="h-5 w-5" />
+        <img src={Schedule} alt="Description" className="h-5 w-5" />
         <h2 className="text-lg font-semibold leading-none">미용 일시</h2>
       </div>
 
@@ -166,7 +167,7 @@ const TotalQuoteRequestForm = () => {
       {/* 반려견 정보 */}
       <div className="mb-1.5 flex items-center space-x-2">
         {/* <BiSolidDog size={24} color="black" /> */}
-        <img src="/public/Icons/Corgi.svg" alt="Description" className="h-5 w-5" />
+        <img src={Corgi} alt="Description" className="h-5 w-5" />
         <h2 className="text-lg font-semibold leading-none">반려견 정보</h2>
         {petInfo && <RiEditLine size={20} className="cursor-pointer text-gray-500" onClick={openModal} />}{" "}
       </div>
@@ -195,7 +196,7 @@ const TotalQuoteRequestForm = () => {
 
       {/* 요청 내용 */}
       <div className="mb-1.5 flex items-center space-x-2">
-        <img src="/public/Icons/Note.svg" alt="Description" className="h-5 w-5" />
+        <img src={Note} alt="Description" className="h-5 w-5" />
         <h2 className="text-lg font-semibold leading-none">요청 내용</h2>
       </div>
 
@@ -209,7 +210,7 @@ const TotalQuoteRequestForm = () => {
 
       {/* 첨부 사진 */}
       <div className="mb-1.5 flex items-center space-x-2">
-        <img src="/public/Icons/Photos.svg" alt="Description" className="h-5 w-5" />
+        <img src={Photos} alt="Description" className="h-5 w-5" />
         <h2 className="text-lg font-semibold leading-none">첨부 사진</h2>
       </div>
 

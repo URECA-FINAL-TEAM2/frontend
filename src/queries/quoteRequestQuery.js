@@ -108,7 +108,7 @@ const groomerRequestDetail = {
   neutering: true,
   experience: false,
   significant: "특이사항",
-  requestImages: ["https://blog.kakaocdn.net/dn/bh3xaW/btrd04olbd6/HkQMeUpJsB6D3GcVdXfrc1/img.jpg"]
+  requestImages: []
 };
 
 const getDogList = async () => {

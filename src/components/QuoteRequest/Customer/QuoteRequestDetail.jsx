@@ -1,5 +1,6 @@
 import { getCustomerRequestDetail } from "@/queries/quoteRequestQuery";
 import React, { useState, useEffect } from "react";
+import { Designer, Region, Schedule, Corgi, Note, Photos } from "/public/Icons";
 
 const QuoteRequestDetail = ({ requestId }) => {
   const [requestData, setRequestData] = useState(null);
@@ -50,7 +51,7 @@ const QuoteRequestDetail = ({ requestId }) => {
       {/* 지역 또는 매장/디자이너 정보 */}
       <div className="mb-1.5 flex items-center space-x-1">
         <img
-          src={requestData.requestType === "010" ? "/public/Icons/Region.svg" : "/public/Icons/Designer.svg"}
+          src={requestData.requestType === "010" ? Region : Designer}
           alt="Location or Shop Icon"
           className="h-5 w-5"
         />
@@ -77,7 +78,7 @@ const QuoteRequestDetail = ({ requestId }) => {
 
       {/* 미용 일시 */}
       <div className="mb-1.5 flex items-center space-x-1">
-        <img src="/public/Icons/Schedule.svg" alt="Schedule Icon" className="h-5 w-5" />
+        <img src={Schedule} alt="Schedule Icon" className="h-5 w-5" />
         <h2 className="text-lg font-semibold leading-none">미용 일시</h2>
       </div>
 
@@ -89,7 +90,7 @@ const QuoteRequestDetail = ({ requestId }) => {
 
       {/* 반려견 정보 */}
       <div className="mb-1.5 flex items-center space-x-1">
-        <img src="/public/Icons/Corgi.svg" alt="Dog Icon" className="h-5 w-5" />
+        <img src={Corgi} alt="Dog Icon" className="h-5 w-5" />
         <h2 className="text-lg font-semibold leading-none">반려견 정보</h2>
       </div>
 
@@ -113,7 +114,7 @@ const QuoteRequestDetail = ({ requestId }) => {
 
       {/* 요청 내용 */}
       <div className="mb-1.5 flex items-center space-x-1">
-        <img src="/public/Icons/Note.svg" alt="Note Icon" className="h-5 w-5" />
+        <img src={Note} alt="Note Icon" className="h-5 w-5" />
         <h2 className="text-lg font-semibold leading-none">요청 내용</h2>
       </div>
 
@@ -123,22 +124,23 @@ const QuoteRequestDetail = ({ requestId }) => {
 
       {/* 첨부 사진 */}
       <div className="mb-1.5 flex items-center space-x-1">
-        <img src="/public/Icons/Photos.svg" alt="Photos Icon" className="h-5 w-5" />
+        <img src={Photos} alt="Photos Icon" className="h-5 w-5" />
         <h2 className="text-lg font-semibold leading-none">첨부 사진</h2>
       </div>
-
       <div className="rounded-lg">
-        <div className="grid grid-cols-3 gap-3">
-          {requestData.requestImages.length > 0 ? (
-            requestData.requestImages.map((image, index) => (
+        {requestData.requestImages.length > 0 ? (
+          <div className="grid grid-cols-3 gap-3">
+            {requestData.requestImages.map((image, index) => (
               <div key={index} className="relative">
                 <img src={image} alt={`Uploaded ${index}`} className="h-28 w-28 rounded-lg object-cover" />
               </div>
-            ))
-          ) : (
-            <p className="col-span-3 text-center text-gray-500">첨부된 사진이 없습니다.</p>
-          )}
-        </div>
+            ))}
+          </div>
+        ) : (
+          <div className="flex h-28 w-full items-center justify-center">
+            <p className="text-center text-gray-500">첨부된 사진이 없습니다.</p>
+          </div>
+        )}
       </div>
     </div>
   );

@@ -43,15 +43,16 @@ const quoteRequests = [
   },
   {
     quoteRequestId: 4,
-    petName: "두부",
-    petImage: "https://picsum.photos/200",
+    petName: "비숑이",
+    petImage:
+      "https://s3-beauty-meongdang.s3.ap-northeast-2.amazonaws.com/%EB%B0%98%EB%A0%A4%EA%B2%AC+%ED%94%84%EB%A1%9C%ED%95%84+%EC%9D%B4%EB%AF%B8%EC%A7%80/%EB%B9%84%EC%88%91.jpg",
     status: "제안 완료",
-    shopName: "댕댕살롱",
-    groomerName: "가영",
+    shopName: "언니네 강아지",
+    groomerName: "반장핑",
     beautyDate: "2024-12-09T19:48:20.404Z",
     requestContent: "식빵컷",
     rejectionReason: null,
-    quotesId: 1
+    quotesId: 75
   }
 ];
 

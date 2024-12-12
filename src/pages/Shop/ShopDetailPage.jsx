@@ -22,6 +22,8 @@ const ShopDetailPage = () => {
       try {
         const response = await getShopDetail(shopId, customerId);
         setShopDetail(response);
+        // console.log("찜 개수: " + shopDetail.favoriteCount);
+        // console.log("찜 여부: " + shopDetail.isFavorite);
       } catch (error) {
         console.error("매장 상세 로드 실패:", error);
       } finally {
@@ -72,6 +74,7 @@ const ShopDetailPage = () => {
 
       <ShopMenuBar
         shopId={shopId}
+        isCustomer={true}
         isFavorite={shopDetail.isFavorite}
         favoriteCount={shopDetail.favoriteCount}
         scrollToSection={scrollToSection}
@@ -86,11 +89,11 @@ const ShopDetailPage = () => {
       </div>
 
       <div ref={groomerRef}>
-        <ShopGroomer shopDetail={shopDetail} />
+        <ShopGroomer isCustomer={true} shopDetail={shopDetail} />
       </div>
 
       <div ref={reviewsRef}>
-        <ShopReviewList reviewList={shopDetail.reviews} />
+        <ShopReviewList isCustomer={true} reviewList={shopDetail.reviews} />
       </div>
 
       <div className="h-[55px]">{/* BottomButton과 겹치지 않게 공간 확보 */}</div>

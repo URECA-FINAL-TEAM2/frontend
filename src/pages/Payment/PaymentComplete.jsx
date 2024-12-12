@@ -3,10 +3,12 @@ import Lottie from "lottie-react";
 import PaymentCompleteAnimation from "./PaymentCompleteAnimation.json";
 import SubHeader from "@/components/common/SubHeader";
 import CustomerBottom from "@/components/common/CustomerBottom";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { getReservationDetail } from "@/queries/reservationQuery";
 
-function PaymentComplete({ selectedQuoteId }) {
+function PaymentComplete() {
+  const location = useLocation();
+  const { selectedQuoteId } = location.state || {};
   const [reservationDetail, setReservationDetail] = useState(null);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
@@ -14,7 +16,7 @@ function PaymentComplete({ selectedQuoteId }) {
   useEffect(() => {
     const fetchReservationDetail = async () => {
       try {
-        const selectedQuoteId = 1;
+        console.log(selectedQuoteId);
         const response = await getReservationDetail(selectedQuoteId);
         if (response.code === 200) {
           setReservationDetail(response.data);
@@ -96,7 +98,7 @@ function PaymentComplete({ selectedQuoteId }) {
         {/* 결제금액 */}
         <div className="flex justify-between">
           <span className="font-bold text-gray-700">결제된 금액</span>
-          <span className="text-red-500">{(reservationDetail.cost * 0.2)?.toLocaleString()}원</span>
+          <span className="text-red-500">{(reservationDetail.amount * 0.2)?.toLocaleString()}원</span>
         </div>
       </div>
 

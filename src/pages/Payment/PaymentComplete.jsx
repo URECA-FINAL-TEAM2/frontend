@@ -44,7 +44,7 @@ function PaymentComplete() {
       <SubHeader title="결제 완료" />
       <div className="my-6 mt-20 flex flex-col items-center">
         <Lottie animationData={PaymentCompleteAnimation} loop style={{ height: "180px", width: "180px" }} />
-        <p className="mt-4 text-center text-sm">
+        <p className="mt-4 text-center font-bold">
           예약 완료! <br />
           <span className="font-bold text-red-500">{reservationDetail.dogName}</span>이(가) 더욱 아름다워질 거예요!
         </p>
@@ -97,8 +97,12 @@ function PaymentComplete() {
 
         {/* 결제금액 */}
         <div className="flex justify-between">
+          <span className="font-bold text-gray-700">결제 번호</span>
+          <span className="text-gray-500">{reservationDetail.paymentKey}</span>
+        </div>
+        <div className="mt-2 flex justify-between">
           <span className="font-bold text-gray-700">결제된 금액</span>
-          <span className="text-red-500">{(reservationDetail.amount * 0.2)?.toLocaleString()}원</span>
+          <span className="font-bold text-red-500">{(reservationDetail.amount * 0.2)?.toLocaleString()}원</span>
         </div>
       </div>
 

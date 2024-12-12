@@ -129,7 +129,7 @@ const CustomerReservationMain = () => {
               )}
             </div>
           ))}
-          {tabs[activeTab]?.length === 0 && <p className="text-center text-gray-500">내용이 없습니다.</p>}
+          {tabs[activeTab]?.length === 0 && <p className="mt-10 text-center text-gray-500">내용이 없습니다.</p>}
         </div>
       </div>
     </div>

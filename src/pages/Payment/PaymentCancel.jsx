@@ -4,33 +4,34 @@ import animationData from "./PaymentCancelAnimation.json";
 import SubHeader from "@/components/common/SubHeader";
 import { useNavigate } from "react-router-dom";
 import CustomerBottom from "@/components/common/CustomerBottom";
-// import { fetchPaymentDetails } from "@/queries/paymentQuery";
+import { getPaymentDetail } from "@/queries/paymentQuery";
 
 const PaymentCancel = () => {
   const navigate = useNavigate();
-  const [paymentDetails, setPaymentDetails] = useState(null);
+  const [paymentDetail, setPaymentDetail] = useState(null);
   const [error, setError] = useState(null);
+  const { paymentKey } = location.state || {};
 
-  // useEffect(() => {
-  //   const getPaymentDetails = async () => {
-  //     try {
-  //       const details = await fetchPaymentDetails(); // 기본값 사용
-  //       setPaymentDetails(details);
-  //     } catch (err) {
-  //       setError(err.message);
-  //     }
-  //   };
+  useEffect(() => {
+    const fetchPaymentDetail = async () => {
+      try {
+        if (paymentKey) {
+          const paymentResponse = await getPaymentDetail(paymentKey);
+          if (paymentResponse.code === 200) {
+            setPaymentDetail(paymentResponse.data);
+          } else {
+            setError(paymentResponse.message);
+          }
+        } else {
+          setError("유효한 paymentKey를 찾을 수 없습니다.");
+        }
+      } catch (error) {
+        setError("결제 정보를 가져오는 데 실패했습니다.");
+      }
+    };
 
-  //   getPaymentDetails();
-  // }, []);
-
-  // if (error) {
-  //   return <p className="text-red-500">{error}</p>;
-  // }
-
-  // if (!paymentDetails) {
-  //   return <p className="text-center text-gray-500">로딩 중...</p>;
-  // }
+    fetchPaymentDetail();
+  }, [paymentKey]);
 
   return (
     <div className="my-6 flex flex-col items-center">
@@ -48,39 +49,39 @@ const PaymentCancel = () => {
             />
           </div>
           <h2 className="text-lg font-bold text-gray-800">결제가 취소되었어요</h2>
-          <p className="mt-2 text-sm text-gray-500">예약번호 {paymentDetails.orderId || "알 수 없음"}</p>
+          <p className="mt-2 text-sm text-gray-500">예약번호 {paymentDetail.orderId || "알 수 없음"}</p>
         </div>
 
         {/* 세부 정보 */}
         <div className="mt-7 border-t border-gray-200 py-4">
           <div className="mb-2 mt-4 flex justify-between text-sm text-gray-700">
             <span>결제 상태</span>
-            <span className="font-medium">{paymentDetails.status || "알 수 없음"}</span>
+            <span className="font-medium">{paymentDetail.status || "알 수 없음"}</span>
           </div>
           <div className="mb-2 flex justify-between text-sm text-gray-700">
             <span>주문 날짜</span>
-            <span className="font-medium">{new Date(paymentDetails.approvedAt).toLocaleString() || "알 수 없음"}</span>
+            <span className="font-medium">{new Date(paymentDetail.approvedAt).toLocaleString() || "알 수 없음"}</span>
           </div>
           <div className="mb-2 flex justify-between text-sm text-gray-700">
             <span>예약 번호</span>
-            <span className="font-medium">{paymentDetails.orderId || "알 수 없음"}</span>
+            <span className="font-medium">{paymentDetail.orderId || "알 수 없음"}</span>
           </div>
           <div className="mb-2 flex justify-between text-sm text-gray-700">
             <span>예약 샵</span>
-            <span className="font-medium">{paymentDetails.paymentTitle || "알 수 없음"}</span>
+            <span className="font-medium">{paymentDetail.paymentTitle || "알 수 없음"}</span>
           </div>
           <div className="mb-2 flex justify-between text-sm text-gray-700">
             <span>결제 수단</span>
-            <span className="font-medium">{paymentDetails.method || "알 수 없음"}</span>
+            <span className="font-medium">{paymentDetail.method || "알 수 없음"}</span>
           </div>
           <div className="mb-2 flex justify-between text-sm text-gray-700">
             <span>취소된 금액</span>
-            <span className="font-medium">{paymentDetails.amount || "알 수 없음"}원</span>
+            <span className="font-medium">{paymentDetail.amount || "알 수 없음"}원</span>
           </div>
-          {paymentDetails.cancelReason && ( // 취소사유 부분이 null 이면 출력X
+          {paymentDetail.cancelReason && ( // 취소사유 부분이 null 이면 출력X
             <div className="flex justify-between text-sm text-gray-700">
               <span>취소 사유</span>
-              <span className="font-medium">{paymentDetails.cancelReason}</span>
+              <span className="font-medium">{paymentDetail.cancelReason}</span>
             </div>
           )}
         </div>

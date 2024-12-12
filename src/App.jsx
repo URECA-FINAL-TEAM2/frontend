@@ -8,11 +8,9 @@ import CustomerLayout from "./pages/Layout/CustomerLayout";
 import GroomerLayout from "./pages/Layout/GroomerLayout";
 import CustomerHome from "./pages/Customer/CustomerHome";
 import CustomerChat from "./pages/Customer/CustomerChat";
-import CustomerMypage from "./pages/Customer/CustomerMypage";
 import GroomerHome from "./pages/Groomer/GroomerHome";
 import GroomerStore from "./pages/Groomer/GroomerStore";
 import GroomerChat from "./pages/Groomer/GroomerChat";
-import GroomerMypage from "./pages/Groomer/GroomerMypage";
 import BestReviews from "./pages/Main/BestReviews";
 import PaymentComplete from "./pages/Payment/PaymentComplete";
 import OAuth2RedirectPage from "./components/Login/Oauth2RedirectPage";
@@ -44,6 +42,7 @@ import GroomerQuoteRequestPage from "./pages/Quote/Groomer/GroomerQuoteRequestPa
 import GroomerReservationMain from "./pages/Reservation/Groomer/GroomerReservationMain";
 import GroomerReservationDetail from "./pages/Reservation/Groomer/GroomerReservationDetail";
 import TestPage from "./pages/TestPage";
+import MypageBoth from "./pages/MypageBoth";
 
 function App() {
   return (
@@ -79,7 +78,7 @@ function App() {
             <Route path="quotes/request" element={<TotalQuoteRequestPage />} />
             <Route path="quotes/request/:groomerId" element={<ShopQuoteRequestPage />} />
             <Route path="quotes/request/detail/:requestId" element={<QuoteRequestDetailPage />} />
-            <Route path="mypage" element={<CustomerMypage />} />
+            <Route path="mypage" element={<MypageBoth />} />
             <Route path="info" element={<UserInfo />} />
             <Route path="bookmarkedStore" element={<BookmarkedStore />} />
 
@@ -106,7 +105,7 @@ function App() {
             <Route path="quotes" element={<GroomerQuote />} />
             <Route path="quotes/request/detail/:requestId" element={<GroomerQuoteRequestPage />} />
             <Route path="quotes/detail/:requestId" element={<GroomerQuoteDetailPage />} />
-            <Route path="mypage" element={<GroomerMypage />} />
+            <Route path="mypage" element={<MypageBoth />} />
             <Route path="info" element={<UserInfo />} />
             <Route path="mystore" element={<MyStore />} />
             <Route path="createstore" element={<CreateStore />} />

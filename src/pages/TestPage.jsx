@@ -9,6 +9,7 @@ import ImageModal from "@/components/common/modal/ImageModal";
 
 const TestPage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isImgModalOpen, setIsImgModalOpen] = useState(false);
 
   const handleOpenModal = () => {
     setIsModalOpen(true);
@@ -16,6 +17,7 @@ const TestPage = () => {
 
   const handleCloseModal = () => {
     setIsModalOpen(false);
+    setIsImgModalOpen(false);
   };
 
   // const handleConfirmModal = () => {
@@ -86,9 +88,9 @@ const TestPage = () => {
         <StaticMap location={{ lat: 37.5545, lng: 126.978 }} shopName="매장명" />
       </div>
 
-      <button onClick={handleOpenModal}>이미지 모달</button>
+      <button onClick={() => setIsImgModalOpen(true)}>이미지 모달</button>
 
-      <ImageModal isOpen={isModalOpen} onClose={handleCloseModal}>
+      <ImageModal isOpen={isImgModalOpen} onClose={handleCloseModal}>
         <div className="relative flex w-full items-center justify-center">
           <img src={img} alt="Selected" className="h-[280px] rounded-md object-contain" />
         </div>

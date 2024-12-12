@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import SubHeader from "../../components/common/SubHeader";
 import UserForm from "@/components/Mypage/Info/UserForm";
 import { deleteUserInfo, getUserInfo, updateAddress, updateUserInfo } from "@/queries/userQuery";
@@ -11,6 +11,7 @@ import useToastAndNavigate from "@/hooks/CustomerSearch/useToastAndNavigate";
 const UserInfo = () => {
   const nicknameRef = useRef();
   const phoneRef = useRef();
+  const navigate = useNavigate();
   const showToastAndNavigate = useToastAndNavigate();
   const [nickname, setNickname] = useState("yet");
   const location = useLocation();

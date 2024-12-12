@@ -4,6 +4,8 @@ import BottomButton from "../components/common/button/BottomButton";
 // import Modal from "../components/common/modal/modal";
 import RegionSelectModal from "../components/common/modal/RegionSelectModal";
 import StaticMap from "../components/Map/StaticMap";
+import img from "/Test/dog.jpg";
+import ImageModal from "@/components/common/modal/ImageModal";
 
 const TestPage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -83,6 +85,14 @@ const TestPage = () => {
       <div className="mx-auto h-[200px] w-[360px]">
         <StaticMap location={{ lat: 37.5545, lng: 126.978 }} shopName="매장명" />
       </div>
+
+      <button onClick={handleOpenModal}>이미지 모달</button>
+
+      <ImageModal isOpen={isModalOpen} onClose={handleCloseModal}>
+        <div className="relative flex w-full items-center justify-center">
+          <img src={img} alt="Selected" className="h-[280px] rounded-md object-contain" />
+        </div>
+      </ImageModal>
     </div>
   );
 };

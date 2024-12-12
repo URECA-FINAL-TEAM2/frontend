@@ -60,14 +60,14 @@ const GroomerMypage = () => {
       <main className="mt-[75px]">
         {/* 전환 토글 */}
         <div className="flex items-center justify-end bg-main-200 px-6 py-3">
-          <span className="mr-3 text-sm">미용사로 전환</span>
+          <span className="mr-3 text-sm">고객으로 전환</span>
           <ToggleButton />
           {/* <Toggle /> */}
         </div>
         {/* 프로필 수정 메인  */}
         <button
           onClick={() => navigate("/groomer/info", { state: { role: "groomer" } })}
-          className="flex items-center justify-around p-6 px-10 text-start"
+          className="mx-auto flex items-center justify-around p-6 px-10 text-start"
         >
           <div className="aspect-w-1 aspect-h-1">
             <img
@@ -81,7 +81,7 @@ const GroomerMypage = () => {
               <span className="text-lg">{userInfo.userName}</span>
               <span> 미용사</span>
             </div>
-            <span className="underline">{userInfo.email}</span>
+            <span className="text-sm underline">{userInfo.email}</span>
           </div>
           <div className="ml-2">
             <div>

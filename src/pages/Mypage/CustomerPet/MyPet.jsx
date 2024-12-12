@@ -7,7 +7,7 @@ import PetForm from "@/components/Mypage/Pet/PetForm";
 import { deletePetInfo, getDogBreed, getPetInfo, updatePetInfo } from "@/queries/petQuery";
 import useAuthStore from "@/store/authStore";
 import useToastAndNavigate from "@/hooks/CustomerSearch/useToastAndNavigate";
-import { Toaster } from "react-hot-toast";
+import toast, { Toaster } from "react-hot-toast";
 
 // 반려견 등록, 조회, 수정, 삭제(CRUD)
 const MyPet = () => {
@@ -44,16 +44,27 @@ const MyPet = () => {
   const handleConfirmModal = async () => {
     setIsModalOpen(false);
     if (isState === "update") {
-      await updatePetInfo(id, dogId, formData, "update");
-      showToastAndNavigate("수정이 완료되었습니다.", "👏🏻");
+      try {
+        await updatePetInfo(id, dogId, formData, "update");
+        showToastAndNavigate("수정이 완료되었습니다.", "👏🏻");
+      } catch {
+        toast("반려견 정보를 확인해주세요.", {
+          icon: "❗️"
+        });
+      }
     } else if (isState === "register") {
-      await updatePetInfo(id, dogId, formData, "register");
-      showToastAndNavigate("등록 완료되었습니다.", "👏🏻");
+      try {
+        await updatePetInfo(id, dogId, formData, "register");
+        showToastAndNavigate("등록 완료되었습니다.", "👏🏻");
+      } catch {
+        toast("반려견 정보를 확인해주세요.", {
+          icon: "❗️"
+        });
+      }
     } else {
       await deletePetInfo(dogId, id);
       showToastAndNavigate("삭제 완료되었습니다.", "👏🏻");
     }
-    setOnlyRead(true);
   };
 
   const getPet = async (dogId) => {

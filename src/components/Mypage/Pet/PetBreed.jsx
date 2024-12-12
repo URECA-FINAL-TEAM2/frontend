@@ -5,7 +5,7 @@ const PetBreed = ({ breed, onlyRead, formData, handleChange }) => {
   return (
     <div>
       <label className="labelStyle" htmlFor="dogBreedCodeId">
-        품종
+        품종*
       </label>
       {onlyRead ? (
         // 읽기 전용 모드에서는 선택된 품종 이름 표시

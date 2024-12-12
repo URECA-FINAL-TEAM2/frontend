@@ -60,7 +60,7 @@ const CustomerMypage = () => {
         {/* 프로필 수정 메인  */}
         <button
           onClick={() => navigate("/customer/info", { state: { role: "customer" } })}
-          className="flex items-center justify-around p-6 px-10"
+          className="mx-auto flex items-center justify-around p-6 px-10"
         >
           <div>
             <img
@@ -74,7 +74,7 @@ const CustomerMypage = () => {
               <span className="text-lg">{userInfo.userName}</span>
               <span> 고객님</span>
             </div>
-            <span className="underline">{userInfo.email}</span>
+            <span className="text-sm underline">{userInfo.email}</span>
           </div>
           <div className="ml-2">
             <div>
@@ -103,7 +103,7 @@ const CustomerMypage = () => {
                   <img
                     src={pet.profileImage}
                     alt={`${pet.petName}`}
-                    className="mx-auto mb-2 aspect-square w-[65px] rounded-[50%] drop-shadow-xl"
+                    className="mx-auto mb-2 aspect-square w-[65px] rounded-[50%] border border-main-200 drop-shadow-xl"
                   />
                   <span className="text-xs">{pet.petName}</span>
                 </div>

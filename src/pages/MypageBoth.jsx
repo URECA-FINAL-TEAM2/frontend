@@ -8,7 +8,7 @@ import GroomerMyPageComponent from "@/components/Mypage/Info/GroomerMyPageCompon
 
 const MypageBoth = () => {
   const { id, DefaultRole } = useAuthStore();
-  const [isChecked, setIsChecked] = useState();
+  const [isChecked, setIsChecked] = useState(DefaultRole === "customer" ? true : false);
   const [myPets, setMyPets] = useState([]);
   const [counts, setCounts] = useState({
     completedServices: 0,
@@ -23,7 +23,6 @@ const MypageBoth = () => {
   });
 
   useEffect(() => {
-    setIsChecked(DefaultRole === "customer" ? true : false);
     const getMypage = async () => {
       try {
         const response = await getUserMypage(DefaultRole, id);

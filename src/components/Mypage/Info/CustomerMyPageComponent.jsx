@@ -8,7 +8,8 @@ import { Toaster } from "react-hot-toast";
 import CustomerBottom from "@/components/common/CustomerBottom";
 
 const CustomerMyPageComponent = ({ userInfo, myPets, counts }) => {
-  const navigate = useNavigate;
+  const navigate = useNavigate();
+
   return (
     <>
       {/* 프로필 수정 메인  */}

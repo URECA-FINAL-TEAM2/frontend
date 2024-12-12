@@ -4,14 +4,24 @@ import { useNavigate } from "react-router-dom";
 
 const Toggle = ({ isChecked, setIsChecked }) => {
   const navigate = useNavigate();
-  const { updateDefaultRole } = useAuthStore();
+  const { updateDefaultRole, DefaultRole, id } = useAuthStore();
   const handleChange = () => {
-    setIsChecked((prev) => !prev);
-    console.log(isChecked ? "고객으로 전환" : "미용사로 전환");
+    if (DefaultRole === "customer") {
+      if (!id.groomerId) alert("미용사 정보가 없습니다. 미용사 정보를 등록하시겠습니까?");
+      else {
+        setIsChecked((prev) => !prev);
+        updateDefaultRole("groomer");
+      }
+    } else {
+      if (!id.customerId) alert("고객 정보가 없습니다. 고객 정보를 등록하시겠습니까?");
+      else {
+        setIsChecked((prev) => !prev);
+        updateDefaultRole("customer");
+      }
+    }
   };
 
   useEffect(() => {
-    // 토글 변경시 DefaultRole 변경
     updateDefaultRole(isChecked ? "customer" : "groomer");
     navigate(isChecked ? "/customer/mypage" : "/groomer/mypage");
   }, [isChecked]);

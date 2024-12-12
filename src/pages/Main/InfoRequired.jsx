@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import SubHeader from "../../components/common/SubHeader";
 import UserForm from "@/components/Mypage/Info/UserForm";
-import { registerUser, validatePhoneNumber } from "@/queries/authQuery";
+import { registerUser } from "@/queries/authQuery";
 import useAuthStore from "@/store/authStore";
 import Modal from "@/components/common/modal/modal";
 import toast, { Toaster } from "react-hot-toast";
@@ -14,7 +14,7 @@ const InfoRequired = () => {
   const location = useLocation();
   const phoneRef = useRef();
   const nicknameRef = useRef();
-  const { updateId, updateUserInfo, updateDefaultRole, setLoginStatus } = useAuthStore();
+  const { updateId, updateDefaultRole, setLoginStatus } = useAuthStore();
   const [validPhone, setValidPhone] = useState("yet");
   const { role, email, username } = location.state || {};
   const [formData, setFormData] = useState({
@@ -52,15 +52,16 @@ const InfoRequired = () => {
       try {
         const response = await registerUser(formData, role);
         const responseRole = response.roles[0] === "고객" ? "customer" : "groomer";
+        const customerId = response?.customerId;
+        const groomerId = response?.groomerId;
 
         setLoginStatus(true);
-
         updateDefaultRole(responseRole);
         if (responseRole === "customer") {
-          updateId({ customerId: 46 });
+          updateId({ customerId: customerId });
           navigate("/customer/home");
         } else {
-          updateId({ groomerId: 31 });
+          updateId({ groomerId: groomerId });
           navigate("/groomer/home");
         }
       } catch (error) {

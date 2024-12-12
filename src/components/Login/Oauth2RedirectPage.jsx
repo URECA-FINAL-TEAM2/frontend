@@ -22,15 +22,18 @@ function OAuth2RedirectPage() {
       localStorage.setItem("accessToken", response.data.body.data.accessToken);
       setLoginStatus(true);
       const role = response.data.body.data.user.roles;
-      if (role === "customer") {
-        updateId({ customerId: 46 });
-        updateDefaultRole(role);
-        navigate("/customer/home");
+      const customerId = response.data.body.data?.customerId || null;
+      const groomerId = response.data.body.data?.groomerId || null;
+      updateDefaultRole(role);
+      const isCustomer = role[0] === "customer" || role[0] === "고객";
+      if (role.length === 2) {
+        updateDefaultRole("groomer");
       } else {
-        updateId({ groomerId: 31 });
-        updateDefaultRole(role);
-        navigate("/groomer/home");
+        updateDefaultRole(isCustomer ? "customer" : "groomer");
       }
+
+      updateId({ customerId: customerId, groomerId: groomerId });
+      navigate(isCustomer ? "/customer/home" : "/groomer/home");
     } catch (error) {
       if (error.response?.status === 400) {
         console.error("등록되지 않은 회원입니다. 추가 정보를 입력해주세요.");

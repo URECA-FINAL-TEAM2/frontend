@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { formatDate } from "@/utils/formatDate";
 import { BsQuestionCircleFill } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
+import { Designer, Schedule, Note } from "/public/Icons";
 
 const quoteRequests = [
   {
@@ -42,15 +43,16 @@ const quoteRequests = [
   },
   {
     quoteRequestId: 4,
-    petName: "두부",
-    petImage: "https://picsum.photos/200",
+    petName: "비숑이",
+    petImage:
+      "https://s3-beauty-meongdang.s3.ap-northeast-2.amazonaws.com/%EB%B0%98%EB%A0%A4%EA%B2%AC+%ED%94%84%EB%A1%9C%ED%95%84+%EC%9D%B4%EB%AF%B8%EC%A7%80/%EB%B9%84%EC%88%91.jpg",
     status: "제안 완료",
-    shopName: "댕댕살롱",
-    groomerName: "가영",
+    shopName: "언니네 강아지",
+    groomerName: "반장핑",
     beautyDate: "2024-12-09T19:48:20.404Z",
     requestContent: "식빵컷",
     rejectionReason: null,
-    quotesId: 1
+    quotesId: 75
   }
 ];
 
@@ -118,9 +120,9 @@ const CustomerEstimate = ({ Info }) => {
                   {statusIcon && <span className="ml-0.5 text-xs">{statusIcon}</span>}
                 </span>
                 {showRejectionReason && (
-                  <div className="absolute right-0 top-full z-10 mt-1 w-64 rounded-lg border border-gray-200 bg-white p-3 shadow-lg">
+                  <div className="absolute right-0 top-full z-10 mt-1 w-56 rounded-lg border border-gray-200 bg-white px-4 py-3 shadow-lg">
                     <div className="mb-2 flex items-center">
-                      <BsQuestionCircleFill className="mr-2 text-gray-500" />
+                      <BsQuestionCircleFill className="mr-1.5 text-sm text-gray-500" />
                       <h3 className="text-sm font-semibold">거절 사유</h3>
                     </div>
                     <p className="text-sm text-gray-600">
@@ -137,17 +139,17 @@ const CustomerEstimate = ({ Info }) => {
             )}
           </div>
           <div className="mb-1 flex items-center text-sm">
-            <img src="/public/Icons/Designer.svg" alt="Designer" className="mr-1 h-5 w-5" />
+            <img src={Designer} alt="Designer" className="mr-1 h-5 w-5" />
             <p>
               {Info.shopName} - {Info.groomerName} 디자이너
             </p>
           </div>
           <div className="mb-1 flex items-center text-sm">
-            <img src="/public/Icons/Schedule.svg" alt="Schedule" className="mr-1 h-5 w-5" />
+            <img src={Schedule} alt="Schedule" className="mr-1 h-5 w-5" />
             <p>{formatDate(Info.beautyDate)}</p>
           </div>
           <div className="flex items-center text-sm">
-            <img src="/public/Icons/Note.svg" alt="Description" className="mr-1 h-5 w-5" />
+            <img src={Note} alt="Description" className="mr-1 h-5 w-5" />
             <p className="line-clamp-1">{Info.requestContent}</p>
           </div>
         </div>

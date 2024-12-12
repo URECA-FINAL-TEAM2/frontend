@@ -1,7 +1,7 @@
 import { getGroomerRequestDetail } from "@/queries/quoteRequestQuery";
 import { formatDate } from "@/utils/formatDate";
 import React, { useEffect, useState } from "react";
-import { BiWon } from "react-icons/bi";
+import { User, Schedule, Corgi, Note, Photos, Description, Won } from "/public/Icons";
 
 function GroomerQuoteForm({ requestId }) {
   const [requestInfo, setRequestInfo] = useState(null);
@@ -54,7 +54,7 @@ function GroomerQuoteForm({ requestId }) {
       {/* 55px : Bottom Button height + 24px (mb-6) */}
       {/* 고객 정보 */}
       {/* <div className="mb-1.5 flex items-center space-x-1">
-        <img src="/public/Icons/User.svg" alt="Schedule Icon" className="h-5 w-5" />
+        <img src={User} alt="Schedule Icon" className="h-5 w-5" />
         <h2 className="leading-none text-lg font-semibold">고객 정보</h2>
       </div> */}
       <div className="mb-6 flex rounded-lg border border-main-400 p-4 pb-3.5">
@@ -66,9 +66,10 @@ function GroomerQuoteForm({ requestId }) {
           </span>
         </div>
       </div>
+
       {/* 미용 일시 */}
       <div className="mb-1.5 flex items-center space-x-1">
-        <img src="/public/Icons/Schedule.svg" alt="Schedule Icon" className="h-5 w-5" />
+        <img src={Schedule} alt="Schedule Icon" className="h-5 w-5" />
         <h2 className="text-lg font-semibold leading-none">미용 일시</h2>
       </div>
       <div className="mb-6 rounded-lg border border-main-400 p-4">
@@ -76,9 +77,10 @@ function GroomerQuoteForm({ requestId }) {
           {formattedDate} {formattedTime}
         </p>
       </div>
+
       {/* 반려견 정보 */}
       <div className="mb-1.5 flex items-center space-x-1">
-        <img src="/public/Icons/Corgi.svg" alt="Dog Icon" className="h-5 w-5" />
+        <img src={Corgi} alt="Dog Icon" className="h-5 w-5" />
         <h2 className="text-lg font-semibold leading-none">반려견 정보</h2>
       </div>
       <div className="mb-6 rounded-lg border border-main-400 p-4">
@@ -98,38 +100,42 @@ function GroomerQuoteForm({ requestId }) {
           </div>
         </div>
       </div>
+
       {/* 요청 내용 */}
       <div className="mb-1.5 flex items-center space-x-1">
-        <img src="/public/Icons/Note.svg" alt="Note Icon" className="h-5 w-5" />
+        <img src={Note} alt="Note Icon" className="h-5 w-5" />
         <h2 className="text-lg font-semibold leading-none">요청 내용</h2>
       </div>
       <div className="mb-6 rounded-lg border border-main-400 p-4 leading-tight">
         <p>{requestInfo.requestContent}</p>
       </div>
+
       {/* 첨부 사진 */}
       <div className="mb-1.5 flex items-center space-x-1">
-        <img src="/public/Icons/Photos.svg" alt="Photos Icon" className="h-5 w-5" />
+        <img src={Photos} alt="Photos Icon" className="h-5 w-5" />
         <h2 className="text-lg font-semibold leading-none">첨부 사진</h2>
       </div>
       <div className="mb-6 rounded-lg">
-        <div className="grid grid-cols-3 gap-3">
-          {requestInfo.requestImages.length > 0 ? (
-            requestInfo.requestImages.map((image, index) => (
+        {requestInfo.requestImages.length > 0 ? (
+          <div className="grid grid-cols-3 gap-3">
+            {requestInfo.requestImages.map((image, index) => (
               <div key={index} className="relative">
                 <img src={image} alt={`Uploaded Request Img ${index}`} className="h-28 w-28 rounded-lg object-cover" />
               </div>
-            ))
-          ) : (
-            <p className="col-span-3 text-center text-gray-500">첨부된 사진이 없습니다.</p>
-          )}
-        </div>
+            ))}
+          </div>
+        ) : (
+          <div className="flex h-28 w-full items-center justify-center">
+            <p className="text-center text-gray-500">첨부된 사진이 없습니다.</p>
+          </div>
+        )}
       </div>
 
       <hr className="mb-6 border-2 border-gray-200" />
 
       {/* 견적 설명 */}
       <div className="mb-1.5 flex items-center space-x-1">
-        <img src="/public/Icons/Description.svg" alt="Description Icon" className="h-5 w-5" />
+        <img src={Description} alt="Description Icon" className="h-5 w-5" />
         <h2 className="text-lg font-semibold leading-none">견적 설명</h2>
       </div>
       <div className="mb-6 rounded-lg border border-main-400 p-4 leading-tight">
@@ -143,7 +149,7 @@ function GroomerQuoteForm({ requestId }) {
       {/* 금액 */}
       <div className="flex justify-between">
         <div className="flex items-center space-x-1">
-          <img src="/public/Icons/Won.svg" alt="Won Icon" className="h-5 w-5" />
+          <img src={Won} alt="Won Icon" className="h-5 w-5" />
 
           <h2 className="text-lg font-semibold leading-none">금액</h2>
         </div>

@@ -11,3 +11,12 @@ export const formatDate = (isoDateString) => {
 
   return `${year}년 ${month}월 ${day}일 ${ampm} ${formattedHours}${minutes > 0 ? `시 ${minutes}분` : "시"}`;
 };
+
+export const formatDateOnly = (isoDateString) => {
+  const date = new Date(isoDateString);
+  const year = date.getFullYear();
+  const month = date.getMonth() + 1;
+  const day = date.getDate();
+
+  return `${year}년 ${month}월 ${day}일`;
+};

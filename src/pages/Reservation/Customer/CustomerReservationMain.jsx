@@ -104,7 +104,11 @@ const CustomerReservationMain = () => {
               {activeTab === "reserved" && (
                 <button
                   className="mt-4 w-full rounded-full bg-main-200 py-1 font-medium text-main-400"
-                  onClick={() => navigate("detail")}
+                  onClick={() =>
+                    navigate("detail", {
+                      state: { selectedQuoteId: item.selectedQuoteId, status: item.status }
+                    })
+                  }
                 >
                   예약 상세
                 </button>
@@ -114,14 +118,18 @@ const CustomerReservationMain = () => {
               {activeTab === "canceled" && (
                 <button
                   className="mt-4 w-full rounded-full bg-gray-300 py-1 font-medium text-white"
-                  onClick={() => navigate("detail")}
+                  onClick={() =>
+                    navigate("detail", {
+                      state: { selectedQuoteId: item.selectedQuoteId, status: item.status }
+                    })
+                  }
                 >
                   예약 상세
                 </button>
               )}
             </div>
           ))}
-          {tabs[activeTab]?.length === 0 && <p className="text-center text-gray-500">내용이 없습니다.</p>}
+          {tabs[activeTab]?.length === 0 && <p className="mt-10 text-center text-gray-500">내용이 없습니다.</p>}
         </div>
       </div>
     </div>

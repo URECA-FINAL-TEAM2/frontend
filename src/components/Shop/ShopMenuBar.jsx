@@ -6,14 +6,17 @@ import { RiScissors2Fill } from "react-icons/ri";
 import { IoChatbubbles } from "react-icons/io5";
 import { deleteFavorite, postFavorite } from "@/queries/shopQuery";
 
-const ShopMenuBar = ({ shopId, isFavorite, favoriteCount, scrollToSection }) => {
+const ShopMenuBar = ({ shopId, isCustomer, isFavorite, favoriteCount, scrollToSection }) => {
+  // TODO
+  const customerId = 47;
+  const groomerId = 4;
+
   const [isFill, setIsFill] = useState(false);
   const [favCnt, setFavCnt] = useState(0);
-  const customerId = 47; // TODO
 
   useEffect(() => {
-    setIsFill(isFavorite);
     setFavCnt(favoriteCount);
+    if (isCustomer) setIsFill(isFavorite);
   }, []);
 
   const handleFavoriteClick = () => {
@@ -31,19 +34,30 @@ const ShopMenuBar = ({ shopId, isFavorite, favoriteCount, scrollToSection }) => 
     }
   };
 
+  const handleSectionClick = (sectionName) => {
+    console.log("Clicked section:", sectionName);
+    scrollToSection(sectionName);
+  };
+
   return (
-    <div className="mx-3 my-3 border-y border-gray-200">
+    <div className="mx-6 my-3 border-y border-gray-200">
       <div className="flex divide-x divide-gray-200">
         <div className="flex flex-1 flex-col items-center py-3">
-          <div className="cursor-pointer text-[25px]" onClick={handleFavoriteClick}>
-            {isFill ? <GoHeartFill className="text-main" /> : <GoHeart className="text-main" />}
-          </div>
+          {isCustomer ? (
+            <div className="cursor-pointer text-[25px]" onClick={handleFavoriteClick}>
+              {isFill ? <GoHeartFill className="text-main" /> : <GoHeart className="text-main" />}
+            </div>
+          ) : (
+            <div className="cursor-default text-[25px]">
+              <GoHeartFill className="text-main" />
+            </div>
+          )}
           <div className="mt-1 select-none text-[12px]">{favCnt}</div>
         </div>
 
         <div
           className="flex flex-1 cursor-pointer flex-col items-center py-3"
-          onClick={() => scrollToSection("portfolio")}
+          onClick={() => handleSectionClick("portfolio")}
         >
           <FaFolderOpen className="text-[25px] text-gray-600" />
           <div className="mt-1 select-none text-[12px]">포트폴리오</div>
@@ -51,7 +65,7 @@ const ShopMenuBar = ({ shopId, isFavorite, favoriteCount, scrollToSection }) => 
 
         <div
           className="flex flex-1 cursor-pointer flex-col items-center py-3"
-          onClick={() => scrollToSection("groomer")}
+          onClick={() => handleSectionClick("groomer")}
         >
           <RiScissors2Fill className="text-[25px] text-gray-600" />
           <div className="mt-1 select-none text-[12px]">미용사</div>
@@ -59,16 +73,18 @@ const ShopMenuBar = ({ shopId, isFavorite, favoriteCount, scrollToSection }) => 
 
         <div
           className="flex flex-1 cursor-pointer flex-col items-center py-3"
-          onClick={() => scrollToSection("reviews")}
+          onClick={() => handleSectionClick("reviews")}
         >
           <MdReviews className="text-[25px] text-gray-600" />
           <div className="mt-1 select-none text-[12px]">후기</div>
         </div>
 
-        <div className="flex flex-1 cursor-pointer flex-col items-center py-3" onClick={() => {}}>
-          <IoChatbubbles className="text-[25px] text-gray-600" />
-          <div className="mt-1 select-none text-[12px]">채팅 문의</div>
-        </div>
+        {isCustomer ? (
+          <div className="flex flex-1 cursor-pointer flex-col items-center py-3" onClick={() => {}}>
+            <IoChatbubbles className="text-[25px] text-gray-600" />
+            <div className="mt-1 select-none text-[12px]">채팅 문의</div>
+          </div>
+        ) : null}
       </div>
     </div>
   );

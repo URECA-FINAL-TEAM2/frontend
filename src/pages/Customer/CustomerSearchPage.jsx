@@ -9,14 +9,14 @@ import { HiMap } from "react-icons/hi2";
 function CustomerSearchPage(props) {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  // TODO: store에서 꺼낼 것
-  const sidoName = "서울특별시";
-  const sigunguName = "강남구";
+  // TODO
+  const [sidoName, setSidoName] = useState("서울특별시");
+  const [sigunguName, setSigunguName] = useState("강남구");
 
   const onModalClose = () => {
     setIsModalOpen(false);
     // [ ] 이 페이지의 sidoName, sigunguName update
-    // [ ] store에 저장
+    // [ ] store에 저장 {sidoName, sigunguName}
     // [ ] 지역 수정 PUT API Request 보내기
     // [ ] 매장 리스트 조회 GET API Request 보내기 -> 리렌더링
   };

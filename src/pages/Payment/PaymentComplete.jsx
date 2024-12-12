@@ -3,10 +3,12 @@ import Lottie from "lottie-react";
 import PaymentCompleteAnimation from "./PaymentCompleteAnimation.json";
 import SubHeader from "@/components/common/SubHeader";
 import CustomerBottom from "@/components/common/CustomerBottom";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { getReservationDetail } from "@/queries/reservationQuery";
 
-function PaymentComplete({ selectedQuoteId }) {
+function PaymentComplete() {
+  const location = useLocation();
+  const { selectedQuoteId } = location.state || {};
   const [reservationDetail, setReservationDetail] = useState(null);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
@@ -14,7 +16,7 @@ function PaymentComplete({ selectedQuoteId }) {
   useEffect(() => {
     const fetchReservationDetail = async () => {
       try {
-        const selectedQuoteId = 1;
+        console.log(selectedQuoteId);
         const response = await getReservationDetail(selectedQuoteId);
         if (response.code === 200) {
           setReservationDetail(response.data);
@@ -42,7 +44,7 @@ function PaymentComplete({ selectedQuoteId }) {
       <SubHeader title="결제 완료" />
       <div className="my-6 mt-20 flex flex-col items-center">
         <Lottie animationData={PaymentCompleteAnimation} loop style={{ height: "180px", width: "180px" }} />
-        <p className="mt-4 text-center text-sm">
+        <p className="mt-4 text-center font-bold">
           예약 완료! <br />
           <span className="font-bold text-red-500">{reservationDetail.dogName}</span>이(가) 더욱 아름다워질 거예요!
         </p>
@@ -95,8 +97,12 @@ function PaymentComplete({ selectedQuoteId }) {
 
         {/* 결제금액 */}
         <div className="flex justify-between">
+          <span className="font-bold text-gray-700">결제 번호</span>
+          <span className="text-gray-500">{reservationDetail.paymentKey}</span>
+        </div>
+        <div className="mt-2 flex justify-between">
           <span className="font-bold text-gray-700">결제된 금액</span>
-          <span className="text-red-500">{(reservationDetail.cost * 0.2)?.toLocaleString()}원</span>
+          <span className="font-bold text-red-500">{(reservationDetail.amount * 0.2)?.toLocaleString()}원</span>
         </div>
       </div>
 

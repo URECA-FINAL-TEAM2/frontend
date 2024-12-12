@@ -111,7 +111,7 @@ const GroomerReservationMain = () => {
               {/* 리뷰 쓰기 버튼 */}
               {activeTab === "completed" && (
                 <button className="mt-4 w-full rounded-full bg-main-200 py-1 font-medium text-main-400">
-                  리뷰 쓰기
+                  리뷰 확인
                 </button>
               )}
 
@@ -119,7 +119,11 @@ const GroomerReservationMain = () => {
               {activeTab === "reserved" && (
                 <button
                   className="mt-4 w-full rounded-full bg-main-200 py-1 font-medium text-main-400"
-                  onClick={() => navigate("detail")}
+                  onClick={() =>
+                    navigate("detail", {
+                      state: { selectedQuoteId: item.selectedQuoteId, status: item.status }
+                    })
+                  }
                 >
                   예약 상세
                 </button>
@@ -129,7 +133,11 @@ const GroomerReservationMain = () => {
               {activeTab === "canceled" && (
                 <button
                   className="mt-4 w-full rounded-full bg-gray-300 py-1 font-medium text-white"
-                  onClick={() => navigate("detail")}
+                  onClick={() =>
+                    navigate("detail", {
+                      state: { selectedQuoteId: item.selectedQuoteId, status: item.status }
+                    })
+                  }
                 >
                   예약 상세
                 </button>

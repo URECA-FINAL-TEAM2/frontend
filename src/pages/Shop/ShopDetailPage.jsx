@@ -93,7 +93,11 @@ const ShopDetailPage = () => {
       </div>
 
       <div ref={reviewsRef}>
-        <ShopReviewList isCustomer={true} reviewList={shopDetail.reviews} />
+        <ShopReviewList
+          groomerUsername={shopDetail.groomerUsername}
+          isCustomer={true}
+          reviewList={shopDetail.reviews}
+        />
       </div>
 
       <div className="h-[55px]">{/* BottomButton과 겹치지 않게 공간 확보 */}</div>

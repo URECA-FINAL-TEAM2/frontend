@@ -58,7 +58,7 @@ const myShopDetail = {
     "https://s3-beauty-meongdang.s3.ap-northeast-2.amazonaws.com/%EB%AF%B8%EC%9A%A9%EC%82%AC+%ED%8F%AC%ED%8A%B8%ED%8F%B4%EB%A6%AC%EC%98%A4+%EC%9D%B4%EB%AF%B8%EC%A7%80/2-2.jpg"
   ],
   groomerUsername: "써윤기",
-  groomerProfileImage: "profile4.jpg",
+  groomerProfileImage: "https://www.yangsanilbo.com/news/photo/202201/84231_51102_1538.jpg",
   reviews: [
     {
       reviewId: 0,

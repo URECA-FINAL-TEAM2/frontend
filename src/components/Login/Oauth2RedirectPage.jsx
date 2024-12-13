@@ -27,9 +27,10 @@ function OAuth2RedirectPage() {
       const email = response.data.body.data.email;
       const username = response.data.body.data.user.username;
       const nickName = response.data.body.data.user.nickname;
+      const userId = response.data.body.data.user.id;
 
       updateUserInfo({ email: email, username: username, nickName: nickName });
-      updateId({ customerId: customerId, groomerId: groomerId });
+      updateId({ customerId: customerId, groomerId: groomerId, userId: userId });
 
       if (roles.includes("미용사")) {
         updateDefaultRole("groomer");
@@ -44,8 +45,10 @@ function OAuth2RedirectPage() {
         const accessToken = error.response.data.body.data.accessToken;
         const email = error.response.data.body.data.email;
         const username = error.response.data.body.data.user.username;
+        const userId = error.response.data.body.data.user.userId;
         localStorage.setItem("accessToken", accessToken);
         updateUserInfo({ email: email, username: username });
+        updateId({ userId: userId });
         navigate("/selectRole", { state: { email: email, username: username } });
       } else {
         console.error("Error sending code to backend:", error);

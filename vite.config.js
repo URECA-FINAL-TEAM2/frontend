@@ -22,5 +22,8 @@ export default {
   },
   server: {
     historyApiFallback: true // SPA 라우팅 지원
+  },
+  define: {
+    global: {} // 브라우저 환경에서 global 변수 정의
   }
 };

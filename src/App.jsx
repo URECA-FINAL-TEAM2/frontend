@@ -43,13 +43,14 @@ import GroomerQuoteDetailPage from "./pages/Quote/Groomer/GroomerQuoteDetailPage
 import GroomerQuoteRequestPage from "./pages/Quote/Groomer/GroomerQuoteRequestPage";
 import GroomerReservationMain from "./pages/Reservation/Groomer/GroomerReservationMain";
 import GroomerReservationDetail from "./pages/Reservation/Groomer/GroomerReservationDetail";
+import ChatClient from "./pages/Chat/ChatClient";
 
 function App() {
   return (
     <div className="App">
       <Router>
         <Routes>
-          <Route path="/testpage" element={<PaymentTestPage />} />
+          <Route path="/testpage" element={<ChatClient />} />
           <Route path="/" element={<Onboarding />} />
           <Route path="/login" element={<Login />} />
           <Route path="/login/oauth2/code/kakao" element={<OAuth2RedirectPage />} />

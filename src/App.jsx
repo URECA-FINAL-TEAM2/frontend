@@ -43,13 +43,14 @@ import GroomerReservationMain from "./pages/Reservation/Groomer/GroomerReservati
 import GroomerReservationDetail from "./pages/Reservation/Groomer/GroomerReservationDetail";
 import TestPage from "./pages/TestPage";
 import MypageBoth from "./pages/MypageBoth";
+import ChatClient from "./pages/Chat/ChatClient";
 
 function App() {
   return (
     <div className="App">
       <Router>
         <Routes>
-          <Route path="/testpage" element={<PaymentTestPage />} />
+          <Route path="/testpage" element={<ChatClient />} />
           <Route path="/testpage1" element={<TestPage />} />
           <Route path="/" element={<Onboarding />} />
           <Route path="/login" element={<Login />} />

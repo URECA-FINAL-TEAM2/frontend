@@ -14,7 +14,7 @@ const PetBirth = ({ onlyRead, formData, setFormData }) => {
 
   return (
     <div>
-      <label className="labelStyle">생년월일</label>
+      <label className="labelStyle">생년월일*</label>
       <div className="mx-auto grid w-3/4 grid-cols-3 gap-3 pb-6 pt-2">
         {/* 반려견 정보 조회 */}
         {onlyRead ? (

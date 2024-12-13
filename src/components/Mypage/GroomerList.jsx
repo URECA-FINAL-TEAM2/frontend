@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { BsShop } from "react-icons/bs";
 import { VscSymbolFile } from "react-icons/vsc";
 import Logout from "../Login/Logout";
+import { PiImagesSquareLight } from "react-icons/pi";
 
 const GroomerList = () => {
   return (
@@ -11,6 +12,12 @@ const GroomerList = () => {
           <li className="flex items-center border-b-2 border-gray-200 py-4">
             <BsShop className="mr-3" size={20} color="#ff8e8e" />
             <span className="text-lg">매장관리</span>
+          </li>
+        </Link>
+        <Link to="/groomer/editportfolio">
+          <li className="flex items-center border-b-2 border-gray-200 py-4">
+            <PiImagesSquareLight className="mr-3" size={25} color="#ff8e8e" />
+            <span className="text-lg">포트폴리오 관리</span>
           </li>
         </Link>
         <Link to="/groomer/reservation">

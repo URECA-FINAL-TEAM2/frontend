@@ -64,14 +64,14 @@ export default {
         // form style
         ".labelStyle": {
           display: "block",
-          fontSize: "1.125rem",
+          fontSize: "0.8rem",
           color: "#FF8E8E",
           width: "75%",
           marginLeft: "auto",
           marginRight: "auto"
         },
         ".inputStyle": {
-          paddingBottom: "7px",
+          paddingBottom: "5px",
           marginLeft: "auto",
           marginRight: "auto",
           marginBottom: "1.5rem",
@@ -113,6 +113,13 @@ export default {
         ".img-border": {
           borderRadius: "50%",
           border: "1px solid #FF8E8E"
+        },
+        ".editInput": {
+          marginRight: "0.25rem",
+          flexGrow: 1,
+          backgroundColor: "#eee",
+          padding: "0.25rem",
+          color: "#000000"
         }
       });
     },

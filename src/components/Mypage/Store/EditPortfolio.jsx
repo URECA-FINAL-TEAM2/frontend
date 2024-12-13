@@ -2,20 +2,18 @@ import { useEffect, useState } from "react";
 import { CiCirclePlus } from "react-icons/ci";
 import { MdOutlineClose } from "react-icons/md";
 import SubHeader from "@/components/common/SubHeader";
-import { insertGroomerPortfolio } from "@/queries/shopQuery";
-import { useLocation, useNavigate } from "react-router-dom";
+import { getGroomerShop, insertGroomerPortfolio } from "@/queries/shopQuery";
 import Modal from "@/components/common/modal/modal";
 import toast, { Toaster } from "react-hot-toast";
 import useAuthStore from "@/store/authStore";
+import { BsInfoCircle } from "react-icons/bs";
 
 const EditPortfolio = () => {
   const { id } = useAuthStore();
-  const location = useLocation();
-  const navigate = useNavigate();
-  const { portfolioImg } = location.state || {};
   const [images, setImages] = useState([]);
   const [rawImages, setRawImages] = useState([]);
   const [selectedImage, setSelectedImage] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleImageDelete = (index) => {
     setImages((prevImages) => prevImages.filter((_, i) => i !== index));
@@ -25,56 +23,46 @@ const EditPortfolio = () => {
       setSelectedImage(null);
     }
   };
+
   const handleImageAdd = (e) => {
     const file = e.target.files[0]; // 선택한 첫 번째 파일 가져오기
     if (file) {
       const imageURL = URL.createObjectURL(file); // 미리보기 URL 생성
 
-      // 상태 업데이트
       setImages((prevImages) => [...prevImages, imageURL]);
       setRawImages((prevRawImages) => [...prevRawImages, file]);
 
-      // 동일한 파일을 다시 선택할 수 있도록 입력 필드 값 초기화
       e.target.value = "";
     }
   };
 
   const handleCompleteImage = async () => {
-    const response = await insertGroomerPortfolio(rawImages, id);
-
-    toast("수정이 완료되었습니다.", { icon: "👏🏻" });
-
-    setTimeout(() => {
-      navigate("/groomer/mystore");
-    }, 1500);
-  };
-
-  const handleImageClick = (img) => {
-    setSelectedImage(img); // 클릭된 이미지를 선택
-  };
-
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const handleOpenModal = (state) => {
-    setIsModalOpen(true);
-  };
-
-  const handleCloseModal = () => {
+    await insertGroomerPortfolio(rawImages, id);
     setIsModalOpen(false);
+    toast("수정이 완료되었습니다.", { icon: "👏🏻" });
   };
 
   useEffect(() => {
-    setImages(portfolioImg);
-    setRawImages(portfolioImg);
+    const getShop = async () => {
+      try {
+        const response = await getGroomerShop(id);
+
+        setImages(response.data.groomerPortfolioImages);
+        setRawImages(response.data.groomerPortfolioImages);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    getShop();
   }, []);
 
   return (
     <>
       <SubHeader title={"포트폴리오 수정"} />
-      <div className="mx-auto mt-[75px] flex min-h-screen w-10/12 flex-col items-center">
-        <div className="my-3 flex h-[300px] w-full items-center justify-center border border-gray-200">
+      <div className="mx-auto mt-[70px] flex min-h-screen w-10/12 flex-col items-center">
+        <div className="flex h-[250px] w-full items-center justify-center border border-gray-200">
           {selectedImage ? (
-            <img src={selectedImage} alt="Selected" className="h-full max-h-[300px] object-contain" />
+            <img src={selectedImage} alt="Selected" className="h-full max-h-[250px] object-contain" />
           ) : (
             <p className="text-center text-gray-400">
               이미지 미리보기
@@ -82,15 +70,18 @@ const EditPortfolio = () => {
             </p>
           )}
         </div>
-
-        <div className="mx-auto mb-20 grid grid-cols-3">
+        <div className="mt-7 flex w-full items-center justify-start text-xs text-gray-300">
+          <BsInfoCircle className="mr-1" />
+          이미지는 최대 9장 선택할 수 있습니다.
+        </div>
+        <div className="mx-auto mb-20 mt-1 grid grid-cols-3 gap-x-2">
           {images.map((img, index) => (
             <div key={index} className="relative mx-auto my-2 w-[100px]">
               <img
                 className="mx-auto h-[100px] w-[100px] cursor-pointer rounded-md text-center"
                 src={img}
                 alt={`review-${index}`}
-                onClick={() => handleImageClick(img)}
+                onClick={() => setSelectedImage(img)}
               />
               <button
                 onClick={() => handleImageDelete(index)}
@@ -103,9 +94,9 @@ const EditPortfolio = () => {
           {Array.from({ length: 9 - images.length }).map((_, index) => (
             <label
               key={index}
-              className="m-2 flex h-[100px] w-[100px] cursor-pointer items-center justify-center rounded-xl border border-gray-200"
+              className="m-2 flex h-[100px] w-[100px] cursor-pointer items-center justify-center rounded-xl border border-[#ccc]"
             >
-              <span className="text-gray-200">
+              <span className="text-[#ccc]">
                 <CiCirclePlus size={30} />
                 <input type="file" multiple accept="image/*" onChange={handleImageAdd} className="hidden" />
               </span>
@@ -113,12 +104,12 @@ const EditPortfolio = () => {
           ))}
         </div>
       </div>
-      <button onClick={handleOpenModal} className="bottomButtonPink">
+      <button onClick={() => setIsModalOpen(true)} className="bottomButtonPink">
         수정완료
       </button>
       <Modal
         isOpen={isModalOpen}
-        onClose={handleCloseModal}
+        onClose={() => setIsModalOpen(false)}
         onConfirm={handleCompleteImage}
         closeText="닫기"
         confirmText="확인"

@@ -75,3 +75,44 @@ export const validatePhoneNumber = (phoneNumber) => {
   const phoneRegex = /^01[016789]-\d{3,4}-\d{4}$/;
   return phoneRegex.test(phoneNumber);
 };
+
+export const handleNicknameCheck = async (nickname, setNickname) => {
+  const nicknameRegex = /^(?=.*[a-zA-Z가-힣])[a-zA-Z가-힣0-9_-]{2,10}$/;
+
+  if (!nickname) {
+    return setNickname("required");
+  }
+
+  if (!nicknameRegex.test(nickname)) {
+    return setNickname("impossible");
+  }
+
+  const response = await nicknameCheck(nickname);
+  setNickname(response.data ? "possible" : "duplication");
+};
+
+export const handlePhoneChange = (e, setFormData, setValidPhone) => {
+  const input = e.target.value.replace(/\D/g, ""); // 숫자 이외의 문자 제거
+  let formatted = "";
+
+  if (input.length < 4) {
+    formatted = input;
+  } else if (input.length < 7) {
+    formatted = `${input.slice(0, 3)}-${input.slice(3)}`;
+  } else if (input.length < 11) {
+    formatted = `${input.slice(0, 3)}-${input.slice(3, 6)}-${input.slice(6)}`;
+  } else {
+    formatted = `${input.slice(0, 3)}-${input.slice(3, 7)}-${input.slice(7, 11)}`;
+  }
+
+  setFormData((prev) => ({ ...prev, phone: formatted }));
+
+  // 유효성 검사 업데이트
+  if (!formatted.trim()) {
+    setValidPhone("required");
+  } else if (validatePhoneNumber(formatted)) {
+    setValidPhone("possible");
+  } else {
+    setValidPhone("impossible");
+  }
+};

@@ -1,4 +1,3 @@
-import React from "react";
 import { FaStar } from "react-icons/fa";
 import { GoHeartFill } from "react-icons/go";
 import { useNavigate } from "react-router-dom";

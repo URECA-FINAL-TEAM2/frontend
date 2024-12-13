@@ -64,11 +64,11 @@ const CreateStore = () => {
     setIsModalOpen(false);
 
     await updateGroomerShop(id, formData, isUpdate);
-    toast("완료되었습니다.", { icon: "👏🏻" });
+    toast("매장등록이 완료되었습니다.", { icon: "👏🏻" });
 
     setTimeout(() => {
-      navigate(-1);
-    }, 1500);
+      navigate("/groomer/mypage");
+    }, 800);
   };
 
   const handleOpenModal = () => {

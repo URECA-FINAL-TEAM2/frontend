@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { getCustomerMain } from "@/queries/mainQuery";
 import ShopItem from "@/components/CustomerSearch/ShopItem";
 import useAuthStore from "@/store/authStore";
+import BannerSwiper from "@/components/Main/BannerSwiper";
 
 const CustomerHome = () => {
   const { id } = useAuthStore();
@@ -27,11 +28,12 @@ const CustomerHome = () => {
 
   return (
     <main className="min-h-screen">
-      <div className="mx-auto w-11/12 pb-24 pt-6">
+      <div className="mx-auto w-11/12 pb-24 pt-2">
         {/* 배너 */}
         <section className="mb-6">
-          <div className="h-[200px] rounded-xl bg-white p-3">배너</div>
+          <BannerSwiper />
         </section>
+
         {/* BEST 미용후기 추천 */}
         <section className="mb-8">
           <div className="flex items-center justify-between px-3">

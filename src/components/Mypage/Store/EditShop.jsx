@@ -2,13 +2,14 @@ import { useEffect, useState } from "react";
 import StoreForm from "./StoreForm";
 import Modal from "@/components/common/modal/modal";
 import toast, { Toaster } from "react-hot-toast";
-import { getGroomerShop, updateGroomerShop } from "@/queries/shopQuery";
+import { deleteGroomerShop, updateGroomerShop } from "@/queries/shopQuery";
 import { useNavigate } from "react-router-dom";
 
 const EditShop = ({ shopInfo, id }) => {
   const { update } = location.state || {};
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [isUpdate, setIsUpdate] = useState(false);
   const [formData, setFormData] = useState({
     shopId: shopInfo?.shopId || "",
@@ -22,6 +23,15 @@ const EditShop = ({ shopInfo, id }) => {
     latitude: shopInfo?.latitude || 0,
     longitude: shopInfo?.longitude || 0
   });
+
+  const handleDeleteShop = async (shopId, id) => {
+    await deleteGroomerShop(shopId, id);
+    toast("매장이 삭제되었습니다.", { icon: "👋🏻" });
+
+    setTimeout(() => {
+      navigate("/groomer/mypage");
+    }, 500);
+  };
 
   useEffect(() => {
     setIsUpdate(true);
@@ -60,7 +70,7 @@ const EditShop = ({ shopInfo, id }) => {
     setIsModalOpen(false);
 
     await updateGroomerShop(id, formData, isUpdate);
-    toast("완료되었습니다.", { icon: "👏🏻" });
+    toast("수정이 완료되었습니다.", { icon: "👏🏻" });
 
     setTimeout(() => {
       navigate("/groomer/mypage");
@@ -78,14 +88,30 @@ const EditShop = ({ shopInfo, id }) => {
         isUpdate={isUpdate}
       />
 
+      <div className="mt-5 text-center text-sm">
+        <button type="button" onClick={() => setIsDeleteModalOpen(true)} className="text-gray-300 underline">
+          매장 삭제하기
+        </button>
+      </div>
+
       <Modal
         isOpen={isModalOpen}
-        onClose={handleCloseModal}
+        onClose={() => setIsModalOpen(false)}
         onConfirm={handleSubmit}
         closeText="닫기"
         confirmText="확인"
       >
-        {isUpdate ? "매장을 수정하시겠습니까?" : "매장을 등록하시겠습니까?"}
+        매장을 수정하시겠습니까?
+      </Modal>
+
+      <Modal
+        isOpen={isDeleteModalOpen}
+        onClose={() => setIsDeleteModalOpen(false)}
+        onConfirm={() => handleDeleteShop(shopInfo.shopId, id)}
+        closeText="닫기"
+        confirmText="확인"
+      >
+        매장을 삭제하시겠습니까?
       </Modal>
       <Toaster />
     </>

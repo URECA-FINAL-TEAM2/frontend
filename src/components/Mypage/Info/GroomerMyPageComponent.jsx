@@ -7,7 +7,7 @@ import { VscChevronRight } from "react-icons/vsc";
 
 const GroomerMyPageComponent = ({ userInfo, counts }) => {
   const navigate = useNavigate();
-  console.log(userInfo);
+
   return (
     <>
       <button

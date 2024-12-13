@@ -3,8 +3,6 @@ import React, { useState, useEffect, useRef } from "react";
 import Stomp from "stompjs";
 
 const ChatClient = () => {
-  // 상태 변수 선언: 사용자 정보 및 채팅 데이터 관리
-  // const [token, setToken] = useState(""); // JWT 토큰 저장
   const [userId, setUserId] = useState(""); // 사용자 ID
   const [userType, setUserType] = useState("true"); // 사용자 유형 (고객/미용사)
   const [customerId, setCustomerId] = useState(""); // 고객 ID
@@ -42,21 +40,23 @@ const ChatClient = () => {
   };
 
   // 서버와 연결 설정
-  const WEBSOCKET_URL = "wss://beautymeongdang.com/ws";
-
   const connect = () => {
-    console.log("Connecting to:", WEBSOCKET_URL);
     console.log("token : ", token);
-    const socket = new WebSocket(WEBSOCKET_URL); // WebSocket 연결
+    console.log("UserId:", userId, "CustomerYn:", userType);
+    const socket = new WebSocket("wss://www.beautymeongdang.com/ws"); // WebSocket 연결
+    console.log(socket);
+
     stompClient.current = Stomp.over(socket); // Stomp 클라이언트 생성
+
+    const header = {
+      Authorization: `Bearer ${token}`,
+      UserId: userId,
+      CustomerYn: userType
+    };
 
     // 연결 시도
     stompClient.current.connect(
-      {
-        Authorization: `Bearer ${token}`,
-        UserId: userId,
-        CustomerYn: userType
-      },
+      header,
       (frame) => {
         setConnectionStatus("Connected"); // 연결 상태 업데이트
         console.log("Connected:", frame);
@@ -107,13 +107,10 @@ const ChatClient = () => {
   // 채팅방 구독 및 이전 메시지 로드
   const subscribeToChat = async () => {
     try {
-      const response = await fetch(`/messages/${chatId}`, {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      });
+      const response = await axiosInstance.get(`/messages/${chatId}`);
 
-      const chatMessages = await response.json();
+      const chatMessages = response.data;
+      console.log(response.data);
       setMessages(chatMessages.data?.messages || []); // 이전 메시지 설정
 
       if (currentSubscription.current) {
@@ -152,13 +149,6 @@ const ChatClient = () => {
     <div className="mx-auto max-w-4xl p-4">
       <div className="mb-6 rounded border p-4">
         <h3 className="text-lg font-semibold">Connection Settings</h3>
-        {/* <input
-          type="text"
-          className="p-2 mr-2 border"
-          placeholder="JWT Token"
-          value={token}
-          onChange={(e) => setToken(e.target.value)}
-        /> */}
         <input
           type="number"
           className="mr-2 border p-2"
@@ -216,6 +206,8 @@ const ChatClient = () => {
         <div className="mb-4 h-80 overflow-y-auto border p-4">
           {messages.map((msg, index) => (
             <div key={index} className={`mb-2 rounded p-2 ${msg.customerYn ? "bg-blue-100" : "bg-gray-100"}`}>
+              {msg.messageContent}
+              <img src={msg.messageImage} alt="" className="mt-2 max-w-full" />
               {msg.content}
               {msg.imageUrl && <img src={msg.imageUrl} alt="" className="mt-2 max-w-full" />}
             </div>

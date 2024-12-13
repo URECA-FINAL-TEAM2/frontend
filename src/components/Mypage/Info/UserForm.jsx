@@ -47,15 +47,15 @@ const UserForm = ({
         </div>
         {/* Nickname */}
         <div>
-          <label htmlFor="nickName" className="labelStyle">
+          <label htmlFor="nickname" className="labelStyle">
             닉네임
           </label>
           <div className={`inputStyle relative ${nickname === "yet" ? "mb-8" : "mb-2"} flex justify-between`}>
             <input
               ref={nicknameRef}
               type="text"
-              id="nickName"
-              name="nickName"
+              id="nickname"
+              name="nickname"
               value={formData?.nickName || formData?.nickname}
               onChange={handleChange}
               placeholder="닉네임을 입력해주세요."

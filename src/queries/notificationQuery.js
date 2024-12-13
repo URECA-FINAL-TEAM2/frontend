@@ -1,18 +1,19 @@
 import axiosInstance from "@/api/axiosInstance";
 
+let sseSource = null;
 // SSE 연결
-export const connectSSE = () => {
-  const token = localStorage.getItem("accessToken"); // 토큰 가져오기
-  console.log("token", token);
-  console.log("Encoded Token:", encodeURIComponent(token));
-  const userId = 28;
-  const roleType = "groomer";
+export const connectSSE = (roleType, userId) => {
+  if (sseSource.current) {
+    sseSource.current.close();
+  }
 
-  // 쿼리 파라미터로 토큰 포함
-  // const url = `https://www.beautymeongdang.com/notifications/connect?userId=${userId}&roleType=${roleType}&token=${encodeURIComponent(token)}`;
-  const url = `https://www.beautymeongdang.com/notifications/connect?userId=${userId}&roleType=${roleType}&token=${token}`;
-  console.log("SSE 연결 URL:", url);
+  const token = localStorage.getItem("accessToken");
+  if (!token) {
+    console.error("토큰이 없습니다.");
+    return;
+  }
 
+  const url = `https://www.beautymeongdang.com/notifications/connect?userId=${userId}&roleType=${roleType}&token=${encodeURIComponent(token)}`;
   const eventSource = new EventSource(url);
 
   // SSE 이벤트 처리

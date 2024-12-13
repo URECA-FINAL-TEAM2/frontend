@@ -33,25 +33,9 @@ const MyStore = () => {
     <>
       <div>
         <SubHeader title="내 매장" />
-        {storeExists && (
-          <div className="fixed top-[--header-height] flex h-10 w-[400px] border-b bg-white">
-            <button
-              onClick={() => setActiveComponent("info")}
-              className={`flex-1 ${activeComponent === "info" ? "border-b-2 border-solid border-main font-semibold text-black" : "text-gray-300 hover:bg-gray-100"} text-[15px] transition-colors`}
-            >
-              매장 정보
-            </button>
-            <button
-              onClick={() => setActiveComponent("portfolio")}
-              className={`flex-1 ${activeComponent === "portfolio" ? "border-b-2 border-solid border-main font-semibold text-black" : "text-gray-300 hover:bg-gray-100"} text-[15px] transition-colors`}
-            >
-              포트폴리오
-            </button>
-          </div>
-        )}
 
         {storeExists ? (
-          <div className="mt-[150px]">
+          <div className="mt-[90px]">
             <div>
               {activeComponent === "info" && <EditShop shopInfo={shopInfo} id={id} />}
               {activeComponent === "portfolio" && <StorePortfolio portfolioImg={portfolioImg} />}

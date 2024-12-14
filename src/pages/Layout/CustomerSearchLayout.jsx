@@ -3,16 +3,17 @@ import InteractiveMap from "../../components/Map/InteractiveMap";
 import { Outlet } from "react-router-dom";
 import useRegionStore from "@/store/regionStore";
 import { getUserAddress } from "@/queries/userQuery";
+import useAuthStore from "@/store/authStore";
 
 const CustomerSearchLayout = () => {
-  const customerId = 47; // TODO
+  const { id } = useAuthStore();
   const { sidoName, sigunguName, setRegion } = useRegionStore();
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchUserAddress = async () => {
       try {
-        const response = await getUserAddress(customerId);
+        const response = await getUserAddress(id.customerId);
         console.log("주소 로드 성공:", response.sidoName, response.sigunguName);
         setRegion(response.sidoName, response.sigunguName);
       } catch (error) {

@@ -8,8 +8,11 @@ import BottomButton from "@/components/common/button/BottomButton";
 import PetSelectModal from "@/components/QuoteRequest/PetSelectModal";
 import { sendGroomerQuote } from "@/queries/quoteRequestQuery";
 import { useNavigate } from "react-router-dom";
+import useAuthStore from "@/store/authStore";
 
 const ShopQuoteRequestForm = ({ groomerId }) => {
+  const { id } = useAuthStore();
+
   // TODO : API 연결
   const groomerInfo = {
     shopImage: "https://picsum.photos/200",
@@ -128,7 +131,6 @@ const ShopQuoteRequestForm = ({ groomerId }) => {
   }
 
   const sendQuote = async () => {
-    const customerId = 47;
     const requestDto = {
       dogId: petInfo.id,
       requestType: "1:1요청",
@@ -144,7 +146,7 @@ const ShopQuoteRequestForm = ({ groomerId }) => {
       attachedImages.map((blobUrl, index) => blobUrlToFile(blobUrl, `image_${index}.jpg`))
     );
 
-    await sendGroomerQuote(customerId, requestDto, fileImages);
+    await sendGroomerQuote(id.customerId, requestDto, fileImages);
     navigate("/customer/quotes");
   };
 

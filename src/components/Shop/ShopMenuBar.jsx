@@ -5,11 +5,10 @@ import { RiScissors2Line } from "react-icons/ri";
 import { IoChatbubblesOutline } from "react-icons/io5";
 import { deleteFavorite, postFavorite } from "@/queries/shopQuery";
 import { PiImagesSquareFill } from "react-icons/pi";
+import useAuthStore from "@/store/authStore";
 
 const ShopMenuBar = ({ shopId, isCustomer, isFavorite, favoriteCount, scrollToSection }) => {
-  // TODO
-  const customerId = 47;
-  const groomerId = 4;
+  const { id } = useAuthStore();
 
   const [isFill, setIsFill] = useState(false);
   const [favCnt, setFavCnt] = useState(0);
@@ -21,16 +20,17 @@ const ShopMenuBar = ({ shopId, isCustomer, isFavorite, favoriteCount, scrollToSe
 
   const handleFavoriteClick = () => {
     // isFavorite 변경, favorite(찜 개수) 변경
+    if (!isCustomer) return;
     if (isFill) {
       // 찜 취소
       setFavCnt(favCnt - 1);
       setIsFill(false);
-      deleteFavorite(customerId, shopId);
+      deleteFavorite(id.customerId, shopId);
     } else {
       // 찜 등록
       setFavCnt(favCnt + 1);
       setIsFill(true);
-      postFavorite(customerId, shopId);
+      postFavorite(id.customerId, shopId);
     }
   };
 

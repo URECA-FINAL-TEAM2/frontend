@@ -4,9 +4,10 @@ import useShopStore from "../../store/shopStore";
 import { getShopList } from "../../queries/shopQuery";
 import useDragPosition from "../../hooks/CustomerSearch/useDragPosition";
 import useRegionStore from "@/store/regionStore";
+import useAuthStore from "@/store/authStore";
 
 const CustomerSearch = () => {
-  const customerId = 47; // TODO
+  const { id } = useAuthStore();
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const setShops = useShopStore((state) => state.setShops);
@@ -17,7 +18,7 @@ const CustomerSearch = () => {
     const loadShops = async () => {
       try {
         setIsLoading(true);
-        const shopList = await getShopList(customerId);
+        const shopList = await getShopList(id.customerId);
         console.log(shopList);
         if (shopList) {
           setShops(shopList);

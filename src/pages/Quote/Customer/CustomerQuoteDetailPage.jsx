@@ -5,10 +5,11 @@ import { useNavigate, useParams } from "react-router-dom";
 import { MdExpandMore } from "react-icons/md";
 import { RequestPayment } from "@/queries/paymentQuery";
 import { ArrowDown } from "/public/Icons";
+import useAuthStore from "@/store/authStore";
 
 function CustomerQuoteDetailPage(props) {
   const quotesId = Number(useParams().quotesId);
-  const customerId = 7; // TODO
+  const { id } = useAuthStore();
   const navigate = useNavigate();
 
   const [isExpanded, setIsExpanded] = useState(false);
@@ -66,7 +67,7 @@ function CustomerQuoteDetailPage(props) {
       amount: amount,
       shopName: shopName,
       quoteId: quotesId,
-      customerId: customerId
+      customerId: id.customerId
     };
     try {
       const result = await RequestPayment(requestData);

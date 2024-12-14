@@ -4,10 +4,12 @@ import SubHeader from "@/components/common/SubHeader";
 import ShopQuoteRequestList from "@/components/QuoteRequest/Customer/ShopQuoteRequestList";
 import TotalQuoteRequestList from "@/components/QuoteRequest/Customer/TotalQuoteRequestList";
 import { getQuotesAll, getQuotesGroomer } from "@/queries/quoteQuery";
+import useAuthStore from "@/store/authStore";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const CustomerQuote = () => {
+  const { id } = useAuthStore();
   const [activeSection, setActiveSection] = useState("section1");
   const [shopRequests, setShopRequests] = useState(null);
   const [totalRequests, setTotalRequests] = useState(null);
@@ -18,7 +20,7 @@ const CustomerQuote = () => {
   useEffect(() => {
     const fetchShopRequests = async () => {
       try {
-        const requests = await getQuotesGroomer();
+        const requests = await getQuotesGroomer(id.customerId);
         setShopRequests(requests.quoteRequests);
       } catch (error) {
         console.error("Failed to fetch shop requests:", error);
@@ -32,7 +34,7 @@ const CustomerQuote = () => {
   useEffect(() => {
     const fetchShopRequests = async () => {
       try {
-        const requests = await getQuotesAll();
+        const requests = await getQuotesAll(id.customerId);
         console.log("requests", requests);
         setTotalRequests(requests.quoteRequests);
       } catch (error) {

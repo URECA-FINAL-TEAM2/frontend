@@ -9,10 +9,11 @@ import ShopIntro from "@/components/Shop/ShopIntro";
 import ShopInfo from "@/components/Shop/ShopInfo";
 import ShopGroomer from "@/components/Shop/ShopGroomer";
 import ShopReviewList from "@/components/Shop/ShopReviewList";
+import useAuthStore from "@/store/authStore";
 
 const ShopDetailPage = () => {
   const shopId = useParams().shopId;
-  const customerId = 47; // TODO: 실제 사용자 ID로 대체
+  const { id } = useAuthStore();
   const [shopDetail, setShopDetail] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
@@ -20,7 +21,7 @@ const ShopDetailPage = () => {
   useEffect(() => {
     const fetchShopDetail = async () => {
       try {
-        const response = await getShopDetail(shopId, customerId);
+        const response = await getShopDetail(shopId, id.customerId);
         setShopDetail(response);
         // console.log("찜 개수: " + shopDetail.favoriteCount);
         // console.log("찜 여부: " + shopDetail.isFavorite);
@@ -32,7 +33,7 @@ const ShopDetailPage = () => {
     };
 
     fetchShopDetail();
-  }, [shopId, customerId]);
+  }, [shopId, id.customerId]);
 
   const portfolioRef = useRef(null);
   const groomerRef = useRef(null);

@@ -72,6 +72,19 @@ const groomerRequestDetail = {
   requestImages: []
 };
 
+const getQuotePetList = async (customerId) => {
+  try {
+    const response = await axiosInstance.get(`/requests/dog`, {
+      params: { customerId }
+    });
+    console.log(response);
+    return response.data.data;
+  } catch (error) {
+    console.error("반려견 목록 조회 요청 실패:", error);
+    throw error;
+  }
+};
+
 const getGroomerDetail = async (groomerId) => {
   const response = await axiosInstance.get(`/requests/groomer/${groomerId}/shop`);
   return response.data.data;
@@ -134,4 +147,11 @@ const getGroomerRequestDetail = async (requestId) => {
   return groomerRequestDetail;
 };
 
-export { getGroomerDetail, getCustomerRequestDetail, getGroomerRequestDetail, sendCustomerQuote, sendGroomerQuote };
+export {
+  getQuotePetList,
+  getGroomerDetail,
+  getCustomerRequestDetail,
+  getGroomerRequestDetail,
+  sendCustomerQuote,
+  sendGroomerQuote
+};

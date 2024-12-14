@@ -1,24 +1,26 @@
 import React, { useEffect, useState } from "react";
 import { IoCloseCircleOutline } from "react-icons/io5";
 import Button from "../common/button/Button";
-import { getQuotePetList, getQuotePetInfo } from "@/queries/petQuery";
+import { getQuotePetInfo } from "@/queries/petQuery";
 import { useNavigate } from "react-router-dom";
+import { getQuotePetList } from "@/queries/quoteRequestQuery";
+import useAuthStore from "@/store/authStore";
 
 const PetSelectModal = ({ isOpen = false, onClose, onConfirm }) => {
   if (!isOpen) return null;
 
-  const customerId = 47;
+  const { id } = useAuthStore();
   const navigate = useNavigate();
   const [dogList, setDogList] = useState(null);
 
   const handleRegister = () => {
-    navigate("/customer/mypet"); // TODO: 반려견 등록 완료 후 다시 견적요청 작성 페이지(PetSelectModal 사용한 페이지지)로 이동
+    navigate("/customer/mypet"); // TODO: 반려견 등록 완료 후 다시 견적요청 작성 페이지(PetSelectModal 사용한 페이지)로 이동
   };
 
   useEffect(() => {
     const fetchDogList = async () => {
       try {
-        const data = await getQuotePetList(customerId);
+        const data = await getQuotePetList(id.customerId);
         setDogList(data);
       } catch (error) {
         console.error("Error fetching dog list:", error);
@@ -85,7 +87,7 @@ const PetSelectModal = ({ isOpen = false, onClose, onConfirm }) => {
               onClick={() => {
                 const fetchDogInfo = async () => {
                   try {
-                    const data = await getQuotePetInfo(dog.dogId);
+                    const data = await getQuotePetInfo(id.customerId, dog.dogId);
                     onConfirm(data);
                   } catch (error) {
                     console.error("Error fetching dog info:", error);

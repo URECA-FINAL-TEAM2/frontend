@@ -36,6 +36,10 @@ const ShopList = () => {
         <ShopItem key={shopInfo.shopId} shopInfo={shopInfo} />
       ))}
 
+      {shops.length === 0 ? (
+        <div className="mx-auto w-[360px] px-3 py-3 text-center text-sm text-gray-600">검색 결과가 없습니다.</div>
+      ) : null}
+
       <div style={{ height: marginBottomHeight }} />
     </>
   );

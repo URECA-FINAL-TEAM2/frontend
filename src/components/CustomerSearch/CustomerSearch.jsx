@@ -14,7 +14,6 @@ const CustomerSearch = () => {
   const { sidoName, sigunguName } = useRegionStore();
 
   useEffect(() => {
-    console.log("지역 바뀜~~~");
     const loadShops = async () => {
       try {
         setIsLoading(true);

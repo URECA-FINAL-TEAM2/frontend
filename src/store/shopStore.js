@@ -6,13 +6,15 @@ const useShopStore = create((set, get) => ({
   originalShops: [], // 원본 데이터 저장용
   selectedShop: null,
   sortType: "favorite", // 'favorite' or 'review'
+  searchQuery: "", // New state to track search query
 
   // Actions
   setShops: (shops) =>
     set({
       shops,
       originalShops: [...shops], // 원본 데이터 저장
-      sortType: "favorite"
+      sortType: "favorite",
+      searchQuery: "" // Reset search query
     }),
 
   setSelectedShop: (shop) =>
@@ -26,20 +28,61 @@ const useShopStore = create((set, get) => ({
 
   // Sort action
   setSortType: (sortType) => {
+    const { originalShops, searchQuery } = get();
+    let shopsToSort = [...originalShops];
+
+    // Apply search filter if there's a search query
+    if (searchQuery) {
+      shopsToSort = shopsToSort.filter(
+        (shop) =>
+          shop.shopName.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          shop.address.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          shop.skills.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+    }
+
     if (sortType === "favorite") {
-      // 저장해둔 원본 데이터(favorite 정렬)로 복원
       set({
         sortType,
-        shops: [...get().originalShops]
+        shops: shopsToSort
       });
     } else if (sortType === "review") {
-      // review 순 정렬
-      const sortedShops = [...get().shops].sort((a, b) => b.starCount - a.starCount);
+      const sortedShops = shopsToSort.sort((a, b) => b.starCount - a.starCount);
       set({
         sortType,
         shops: sortedShops
       });
     }
+  },
+
+  // New search action
+  searchShops: (query) => {
+    const { originalShops, sortType } = get();
+
+    // If query is empty, reset to original shops
+    if (!query) {
+      set({
+        shops: originalShops,
+        searchQuery: ""
+      });
+      return;
+    }
+
+    // Filter shops based on query
+    const filteredShops = originalShops.filter(
+      (shop) =>
+        shop.shopName.toLowerCase().includes(query.toLowerCase()) ||
+        shop.address.toLowerCase().includes(query.toLowerCase()) ||
+        shop.skills.toLowerCase().includes(query.toLowerCase())
+    );
+
+    // If current sort is review, sort filtered shops
+    const shopsToSet = sortType === "review" ? filteredShops.sort((a, b) => b.starCount - a.starCount) : filteredShops;
+
+    set({
+      shops: shopsToSet,
+      searchQuery: query
+    });
   }
 }));
 

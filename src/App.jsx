@@ -44,13 +44,14 @@ import GroomerReservationDetail from "./pages/Reservation/Groomer/GroomerReserva
 import TestPage from "./pages/TestPage";
 import MypageBoth from "./pages/MypageBoth";
 import ChatClient from "./pages/Chat/ChatClient";
+import ChatRoomList from "./pages/Chat/ChatRoomList";
 
 function App() {
   return (
     <div className="App">
       <Router>
         <Routes>
-          <Route path="/testpage" element={<ChatClient />} />
+          <Route path="/testpage" element={<ChatRoomList />} />
           <Route path="/testpage1" element={<TestPage />} />
           <Route path="/" element={<Onboarding />} />
           <Route path="/login" element={<Login />} />
@@ -65,7 +66,7 @@ function App() {
           {/* customer/ -layout */}
           <Route path="/customer" element={<CustomerLayout />}>
             <Route path="home" element={<CustomerHome />} />
-            <Route path="chat" element={<CustomerChat />} />
+            <Route path="chat" element={<ChatRoomList />} />
           </Route>
 
           {/* customer/ -none */}

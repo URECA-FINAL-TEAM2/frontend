@@ -1,6 +1,5 @@
 import { Link, useLocation } from "react-router-dom";
 import logo from "/Logo/logoHori.svg";
-import { VscBell } from "react-icons/vsc";
 import { useEffect, useState } from "react";
 import NotiComponents from "../Main/NotiComponents";
 

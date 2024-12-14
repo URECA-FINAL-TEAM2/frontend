@@ -8,12 +8,13 @@ import ShopReviewList from "@/components/Shop/ShopReviewList";
 import { getMyShopDetail } from "@/queries/shopQuery";
 import { RiImageEditFill } from "react-icons/ri";
 import { EditShop } from "/public/Icons";
+import { useNavigate } from "react-router-dom";
 
 const GroomerStore = () => {
   const groomerId = 4; // TODO
+  const navigate = useNavigate();
   const [shopDetail, setShopDetail] = useState({});
   const [isLoading, setIsLoading] = useState(true);
-  const [isChatOpen, setIsChatOpen] = useState(false);
 
   useEffect(() => {
     const fetchShopDetail = async () => {
@@ -55,11 +56,13 @@ const GroomerStore = () => {
   };
 
   const handleStoreClick = () => {
-    console.log("Chat button clicked");
+    console.log("매장 관리 페이지로");
+    navigate("/groomer/mystore");
   };
 
   const handlePortfolioClick = () => {
-    console.log("Chat button clicked");
+    console.log("포트폴리오 관리 페이지로");
+    navigate("/groomer/editportfolio");
   };
 
   if (isLoading) {
@@ -116,23 +119,8 @@ const EditStoreButton = ({ onClick }) => {
   return (
     <button
       onClick={onClick}
-      className="fixed bottom-20 z-50 ml-[330px] mt-[24px] flex h-14 w-14 transform items-center justify-center rounded-full bg-blue-500 p-3 text-white shadow-lg transition-colors duration-300 hover:bg-blue-600"
+      className="fixed bottom-20 z-50 ml-[330px] mt-[24px] flex h-14 w-14 transform items-center justify-center rounded-full bg-main p-3 text-white shadow-lg transition-colors duration-300 hover:bg-main-300"
     >
-      {/* 채팅 아이콘 (예: Font Awesome 또는 Material Icons 사용) */}
-      {/* <svg
-        xmlns="http://www.w3.org/2000/svg"
-        fill="none"
-        viewBox="0 0 24 24"
-        strokeWidth={2}
-        stroke="currentColor"
-        className="h-6 w-6"
-      >
-        <path
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          d="M8 10h8m-8 4h4m-7.5 6h11a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v11l3.5-3.5z"
-        />
-      </svg> */}
       <img src={EditShop} className="ml-1 h-6 w-6" />
     </button>
   );
@@ -142,9 +130,9 @@ const EditPortfolioButton = ({ onClick }) => {
   return (
     <button
       onClick={onClick}
-      className="fixed bottom-36 z-50 ml-[330px] mt-[24px] flex h-14 w-14 transform items-center justify-center rounded-full bg-blue-500 p-3 text-white shadow-lg transition-colors duration-300 hover:bg-blue-600"
+      className="fixed bottom-36 z-50 ml-[330px] mt-[24px] flex h-14 w-14 transform items-center justify-center rounded-full bg-main p-3 text-white shadow-lg transition-colors duration-300 hover:bg-main-300"
     >
-      <RiImageEditFill size={24} />
+      <RiImageEditFill size={23} />
     </button>
   );
 };

@@ -5,6 +5,7 @@ import CustomerRoutes from "./Routes/CustomerRoutes";
 import GroomerRoutes from "./Routes/GroomerRoutes";
 import NotFound from "./pages/NotFound";
 import PrivateRoute from "./Routes/PrivateRoutes";
+import MypageBoth from "./pages/MypageBoth";
 
 function App() {
   const { isLoggedIn, DefaultRole } = useAuthStore();
@@ -31,6 +32,10 @@ function App() {
               </PrivateRoute>
             }
           />
+
+          <Route path="/customer/mypage" element={<MypageBoth />} />
+          <Route path="/groomer/mypage" element={<MypageBoth />} />
+
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Router>

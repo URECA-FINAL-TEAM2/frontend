@@ -51,7 +51,11 @@ const TestGPT = () => {
 
   // 모델 리스트 조회 /gpt/modelList
   const getModelList = async () => {
-    const response = await axiosInstance.get("/gpt/modelList");
+    const response = await axiosInstance.get("/gpt/modelList", {
+      headers: {
+        "x-api-key": import.meta.env.VITE_GPT_API_KEY
+      }
+    });
     console.log(response);
   };
 

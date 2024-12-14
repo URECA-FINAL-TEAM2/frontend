@@ -8,8 +8,8 @@ const Logout = () => {
   const handleLogout = async () => {
     const response = await authLogout();
     if (response === 201) {
-      navigate("/");
       logout();
+      navigate("/");
     }
   };
 

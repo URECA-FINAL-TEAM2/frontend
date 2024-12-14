@@ -63,12 +63,16 @@ const CreateStore = () => {
     e.preventDefault();
     setIsModalOpen(false);
 
-    await updateGroomerShop(id, formData, isUpdate);
-    toast("매장등록이 완료되었습니다.", { icon: "👏🏻" });
+    try {
+      await updateGroomerShop(id, formData, isUpdate);
+      toast("매장등록이 완료되었습니다.", { icon: "👏🏻" });
 
-    setTimeout(() => {
-      navigate("/groomer/mypage");
-    }, 500);
+      setTimeout(() => {
+        navigate("/groomer/mypage");
+      }, 500);
+    } catch (error) {
+      toast("매장정보가 올바른지 확인하세요.", { icon: "❌" });
+    }
   };
 
   const handleOpenModal = () => {

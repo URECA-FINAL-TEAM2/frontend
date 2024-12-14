@@ -5,7 +5,7 @@ import { formatDate } from "@/queries/mainQuery";
 
 const GrommerTotalRequest = ({ request }) => {
   return (
-    <article className="my-4 rounded-xl bg-white p-5">
+    <article className="my-4 rounded-xl bg-white p-5 shadow-sm">
       <div className="mb-3 flex">
         <div className="mr-2">
           <img src={request.profileImage} alt="customer profile Image" className="h-[60px] w-[60px]" />

@@ -55,7 +55,8 @@ const useAuthStore = create(
           },
           userInfo: {
             email: "",
-            username: ""
+            username: "",
+            nickName: ""
           }
         });
       }

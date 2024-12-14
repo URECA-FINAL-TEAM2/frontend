@@ -5,6 +5,7 @@ import InfoRequired from "@/pages/Main/InfoRequired";
 import Login from "@/pages/Main/Login";
 import Onboarding from "@/pages/Main/Onboarding";
 import SelectRole from "@/pages/Main/SelectRole";
+import NotFound from "@/pages/NotFound";
 import TestGPT from "@/pages/TestGPT";
 import TestPage from "@/pages/TestPage";
 import { Route, Routes } from "react-router-dom";
@@ -23,6 +24,8 @@ const PublicRoutes = () => {
       <Route path="selectRole" element={<SelectRole />} />
       <Route path="infoRequired" element={<InfoRequired />} />
       <Route path="bestReviews" element={<BestReviews />} />
+
+      <Route path="*" element={<NotFound />} />
     </Routes>
   );
 };

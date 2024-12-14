@@ -11,6 +11,7 @@ import PostReview from "@/pages/Mypage/Reviews/PostReview";
 import WriteReviews from "@/pages/Mypage/Reviews/WriteReviews";
 import UserInfo from "@/pages/Mypage/UserInfo";
 import MypageBoth from "@/pages/MypageBoth";
+import NotFound from "@/pages/NotFound";
 import PaymentCancel from "@/pages/Payment/PaymentCancel";
 import PaymentComplete from "@/pages/Payment/PaymentComplete";
 import CustomerQuoteDetailPage from "@/pages/Quote/Customer/CustomerQuoteDetailPage";
@@ -41,7 +42,7 @@ const CustomerRoutes = () => {
       <Route path="quotes/request" element={<TotalQuoteRequestPage />} />
       <Route path="quotes/request/:groomerId" element={<ShopQuoteRequestPage />} />
       <Route path="quotes/request/detail/:requestId" element={<QuoteRequestDetailPage />} />
-      <Route path="mypage" element={<MypageBoth />} />
+      {/* <Route path="mypage" element={<MypageBoth />} /> */}
       <Route path="info" element={<UserInfo />} />
       <Route path="bookmarkedStore" element={<BookmarkedStore />} />
 
@@ -54,6 +55,8 @@ const CustomerRoutes = () => {
       <Route path="payment/complete" element={<PaymentComplete />} />
       <Route path="payment/cancel" element={<PaymentCancel />} />
       <Route path="postreview" element={<PostReview />} />
+
+      <Route path="*" element={<NotFound />} />
     </Routes>
   );
 };

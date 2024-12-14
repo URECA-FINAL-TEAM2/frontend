@@ -5,7 +5,7 @@ import { getShopList } from "../../queries/shopQuery";
 import useDragPosition from "../../hooks/CustomerSearch/useDragPosition";
 
 const CustomerSearch = () => {
-  const [customerId, setCustomerId] = useState(1); // TODO
+  const customerId = 47; // TODO
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const setShops = useShopStore((state) => state.setShops);

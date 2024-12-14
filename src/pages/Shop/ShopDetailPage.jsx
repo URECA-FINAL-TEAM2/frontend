@@ -65,7 +65,7 @@ const ShopDetailPage = () => {
   }
 
   return (
-    <div className="absolute inset-0 z-30 mt-[--header-height] overflow-y-scroll bg-white scrollbar-hide">
+    <div className="absolute inset-0 z-20 mt-[--header-height] w-[400px] overflow-y-scroll bg-white scrollbar-hide">
       <SubHeader title={shopDetail.shopName} navigate={-1} />
 
       <div>

@@ -11,7 +11,7 @@ const ShopList = () => {
     listPosition === 60 ? "calc((100vh - var(--bottom-bar-height) - var(--header-height)) * 0.4)" : "0";
 
   return (
-    <div className="w-full">
+    <>
       <div className="mb-1 flex h-[20px] items-center px-7">
         <span
           onClick={() => setSortType("favorite")}
@@ -37,7 +37,7 @@ const ShopList = () => {
       ))}
 
       <div style={{ height: marginBottomHeight }} />
-    </div>
+    </>
   );
 };
 

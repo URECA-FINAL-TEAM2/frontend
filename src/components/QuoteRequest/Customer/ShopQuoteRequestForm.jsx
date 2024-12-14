@@ -20,7 +20,6 @@ const ShopQuoteRequestForm = ({ groomerId }) => {
   };
 
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [cancelReason, setCancelReason] = useState("");
   const [attachedImages, setAttachedImages] = useState([]);
   const [petInfo, setPetInfo] = useState(null);
   const [requestContent, setRequestContent] = useState("");
@@ -86,7 +85,6 @@ const ShopQuoteRequestForm = ({ groomerId }) => {
 
   const handleCloseModal = () => {
     setIsModalOpen(false);
-    setCancelReason("");
   };
 
   const handlePetSelect = (selectedDog) => {

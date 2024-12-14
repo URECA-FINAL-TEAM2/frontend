@@ -4,6 +4,7 @@ import useShopStore from "../../store/shopStore";
 import { useMapSetup } from "./MapBase";
 import useListPositionStore from "../../store/listPositionStore";
 import { useNavigate } from "react-router-dom";
+import useRegionStore from "@/store/regionStore";
 
 const InteractiveMap = () => {
   const listPosition = useListPositionStore((state) => state.listPosition);
@@ -11,10 +12,7 @@ const InteractiveMap = () => {
   const setSelectedShop = useShopStore((state) => state.setSelectedShop);
   const selectedShop = useShopStore((state) => state.selectedShop);
 
-  // TODO: store에서 꺼낼 것
-  // TODO: store에 저장된 값이 바뀔 경우, 여기도 바로 반영되도록
-  const sidoName = "서울특별시";
-  const sigunguName = "강남구";
+  const { sidoName, sigunguName } = useRegionStore();
   const address = sidoName + " " + sigunguName;
 
   const mapRef = useRef(null);

@@ -39,6 +39,7 @@
     "react-kakao-login": "^2.1.1",
     "react-modal": "^3.16.1",
     "react-spinners": "^0.14.1",
+    "slick-carousel": "^1.8.1",
     "sockjs": "^0.3.24",
     "sockjs-client": "^1.6.1",
     "stompjs": "^2.3.3",

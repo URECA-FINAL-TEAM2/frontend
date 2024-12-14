@@ -1,3 +1,4 @@
+//quoteRequestQuery.js
 import axiosInstance from "@/api/axiosInstance";
 
 const dogList = [
@@ -158,6 +159,8 @@ const sendGroomerQuote = async (customerId, requestDto, images) => {
   images.forEach((image, index) => {
     formData.append("images", image, `image_${index}.jpg`);
   });
+
+  console.log("form", formData);
 
   const response = await axiosInstance.post(`/requests/groomer`, formData, {
     params: { customerId },

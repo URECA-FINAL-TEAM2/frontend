@@ -13,6 +13,7 @@ const GroomerStore = () => {
   const groomerId = 4; // TODO
   const [shopDetail, setShopDetail] = useState({});
   const [isLoading, setIsLoading] = useState(true);
+  const [isChatOpen, setIsChatOpen] = useState(false);
 
   useEffect(() => {
     const fetchShopDetail = async () => {

@@ -22,6 +22,7 @@ const UserForm = ({
   const location = useLocation();
   const [pathname, setPathname] = useState();
 
+  console.log(formData, "ggg");
   useEffect(() => {
     setPathname(location.pathname);
     console.log(nickname);

@@ -9,7 +9,7 @@ function OAuth2RedirectPage() {
   const location = useLocation();
   const code = new URL(window.location.href).searchParams.get("code");
   const socialLogin = location.pathname.includes("kakao") ? "kakao" : "google";
-  const { updateUserInfo, updateId, updateDefaultRole, setLoginStatus } = useAuthStore();
+  const { updateUserInfoState, updateId, updateDefaultRole, setLoginStatus } = useAuthStore();
 
   const sendCodeToBackend = async (code) => {
     try {
@@ -29,7 +29,7 @@ function OAuth2RedirectPage() {
       const nickName = response.data.body.data.user.nickname;
       const userId = response.data.body.data.user.id;
 
-      updateUserInfo({ email: email, username: username, nickName: nickName });
+      updateUserInfoState({ email: email, username: username, nickName: nickName });
       updateId({ customerId: customerId, groomerId: groomerId, userId: userId });
 
       if (roles.includes("미용사")) {
@@ -47,7 +47,7 @@ function OAuth2RedirectPage() {
         const username = error.response.data.body.data.user.username;
         const userId = error.response.data.body.data.user.userId;
         localStorage.setItem("accessToken", accessToken);
-        updateUserInfo({ email: email, username: username });
+        updateUserInfoState({ email: email, username: username });
         updateId({ userId: userId });
         navigate("/selectRole", { state: { email: email, username: username } });
       } else {

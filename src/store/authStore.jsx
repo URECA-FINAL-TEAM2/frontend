@@ -12,11 +12,12 @@ const useAuthStore = create(
       },
       userInfo: {
         email: "",
-        username: ""
+        username: "",
+        nickName: ""
       },
 
       // userInfo 업데이트
-      updateUserInfo: (userData) =>
+      updateUserInfoState: (userData) =>
         set((state) => ({
           userInfo: { ...state.userInfo, ...userData }
         })),

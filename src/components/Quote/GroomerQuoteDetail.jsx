@@ -1,8 +1,10 @@
 import { getGroomerQuoteDetail } from "@/queries/quoteQuery";
 import React, { useEffect, useState } from "react";
 import { User, Schedule, Corgi, Note, Photos, Description, Won } from "/public/Icons";
+import useAuthStore from "@/store/authStore";
 
 function GroomerQuoteDetail({ requestId }) {
+  const { id } = useAuthStore();
   const [quoteData, setQuoteData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -11,7 +13,7 @@ function GroomerQuoteDetail({ requestId }) {
     const fetchQuoteData = async () => {
       try {
         setIsLoading(true);
-        const data = await getGroomerQuoteDetail(requestId);
+        const data = await getGroomerQuoteDetail(id.groomerId, requestId);
         setQuoteData(data);
       } catch (error) {
         console.error("Error fetching Quote Data:", error);

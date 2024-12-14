@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { Designer, Schedule, Corgi, Note, Photos, Description, Won, Banknotes } from "/public/Icons";
 
 function CustomerQuoteDetail({ quotesId, onDataLoad }) {
-  const customerId = 7; // TODO
+  const { id } = useAuthStore();
   const [quoteData, setQuoteData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -12,7 +12,7 @@ function CustomerQuoteDetail({ quotesId, onDataLoad }) {
     const fetchQuoteData = async () => {
       try {
         setIsLoading(true);
-        const data = await getCustomerQuoteDetail(quotesId);
+        const data = await getCustomerQuoteDetail(id.customerId, quotesId);
         setQuoteData(data);
         onDataLoad({ amount: data.quote.cost, shopName: data.groomer.shopName });
       } catch (error) {

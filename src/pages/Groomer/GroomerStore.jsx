@@ -9,9 +9,10 @@ import { getMyShopDetail } from "@/queries/shopQuery";
 import { RiImageEditFill } from "react-icons/ri";
 import { EditShop } from "/public/Icons";
 import { useNavigate } from "react-router-dom";
+import useAuthStore from "@/store/authStore";
 
 const GroomerStore = () => {
-  const groomerId = 4; // TODO
+  const { id } = useAuthStore();
   const navigate = useNavigate();
   const [shopDetail, setShopDetail] = useState({});
   const [isLoading, setIsLoading] = useState(true);
@@ -19,7 +20,7 @@ const GroomerStore = () => {
   useEffect(() => {
     const fetchShopDetail = async () => {
       try {
-        const response = await getMyShopDetail(groomerId);
+        const response = await getMyShopDetail(id.groomerId);
         setShopDetail(response);
         console.log(shopDetail.groomerPortfolioImages);
       } catch (error) {

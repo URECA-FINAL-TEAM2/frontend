@@ -8,8 +8,10 @@ import { Region, Schedule, Corgi, Note, Photos } from "/public/Icons";
 import BottomButton from "@/components/common/button/BottomButton";
 import { sendCustomerQuote } from "@/queries/quoteRequestQuery";
 import { useNavigate } from "react-router-dom";
+import useAuthStore from "@/store/authStore";
 
 const TotalQuoteRequestForm = () => {
+  const { id } = useAuthStore();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [cancelReason, setCancelReason] = useState("");
   const [attachedImages, setAttachedImages] = useState([]);
@@ -132,7 +134,6 @@ const TotalQuoteRequestForm = () => {
   }
 
   const sendQuote = async () => {
-    const customerId = 47;
     const requestDto = {
       dogId: petInfo.id,
       requestType: "전체요청",
@@ -148,7 +149,7 @@ const TotalQuoteRequestForm = () => {
       attachedImages.map((blobUrl, index) => blobUrlToFile(blobUrl, `image_${index}.jpg`))
     );
 
-    await sendCustomerQuote(customerId, requestDto, fileImages);
+    await sendCustomerQuote(id.customerId, requestDto, fileImages);
     navigate("/customer/quotes");
   };
 
@@ -223,7 +224,7 @@ const TotalQuoteRequestForm = () => {
         {/* <BiSolidDog size={24} color="black" /> */}
         <img src={Corgi} alt="Description" className="h-5 w-5" />
         <h2 className="text-lg font-semibold leading-none">반려견 정보</h2>
-        {petInfo && <RiEditLine size={20} className="cursor-pointer text-gray-500" onClick={openModal} />}{" "}
+        {petInfo && <RiEditLine size={20} className="cursor-pointer py-0.5 text-gray-500" onClick={openModal} />}{" "}
       </div>
 
       <div className="mb-6 rounded-lg border border-main-400 p-4 pb-3">
@@ -336,13 +337,7 @@ const TotalQuoteRequestForm = () => {
       )}
 
       {/* 반려견 선택 모달 */}
-      <PetSelectModal
-        isOpen={isModalOpen}
-        onClose={handleCloseModal}
-        onConfirm={handlePetSelect}
-        closeText="닫기"
-        confirmText="확인"
-      ></PetSelectModal>
+      <PetSelectModal isOpen={isModalOpen} onClose={handleCloseModal} onConfirm={handlePetSelect}></PetSelectModal>
 
       {/* 지역 선택 모달 */}
       <RegionSelectModal

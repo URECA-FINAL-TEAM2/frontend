@@ -7,9 +7,10 @@ import { MdOutlineEditLocation } from "react-icons/md";
 import { HiMap } from "react-icons/hi2";
 import useRegionStore from "@/store/regionStore";
 import { updateUserAddress } from "@/queries/userQuery";
+import useAuthStore from "@/store/authStore";
 
 function CustomerSearchPage(props) {
-  const customerId = 47; // TODO
+  const { id } = useAuthStore();
   const { sidoName, sigunguName, setRegion } = useRegionStore();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -24,7 +25,7 @@ function CustomerSearchPage(props) {
   const handleLocationSelect = (selectLocation) => {
     const updateAddress = async () => {
       try {
-        const response = await updateUserAddress(selectLocation.sidoName, selectLocation.sigunguName, customerId);
+        const response = await updateUserAddress(selectLocation.sidoName, selectLocation.sigunguName, id.customerId);
         console.log(response);
         setRegion(selectLocation.sidoName, selectLocation.sigunguName);
       } catch (err) {

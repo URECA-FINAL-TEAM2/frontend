@@ -6,41 +6,12 @@ import SubHeader from "@/components/common/SubHeader";
 import GroomerTotalRequests from "@/components/QuoteRequest/Groomer/GroomerTotalRequests";
 import GroomerShopRequests from "@/components/QuoteRequest/Groomer/GroomerShopRequests";
 import GroomerSentRequests from "@/components/QuoteRequest/Groomer/GroomerSentRequests";
-import { getQuotesAll, getQuotesGroomer } from "@/queries/quoteQuery";
 
 const GroomerQuote = () => {
+  const { id } = useAuthStore(); // id.groomerId 사용예정
   const [activeSection, setActiveSection] = useState("section1");
   const [shopRequests, setShopRequests] = useState(null);
   const [totalRequests, setTotalRequests] = useState(null);
-
-  // Fetch shopRequests on mount
-  useEffect(() => {
-    const fetchShopRequests = async () => {
-      try {
-        const requests = await getQuotesGroomer();
-        setShopRequests(requests.quoteRequests);
-      } catch (error) {
-        console.error("Failed to fetch shop requests:", error);
-      }
-    };
-
-    fetchShopRequests();
-  }, []); // Empty dependency array, only run once on mount
-
-  // Fetch totalRequests on mount
-  useEffect(() => {
-    const fetchShopRequests = async () => {
-      try {
-        const requests = await getQuotesAll();
-        console.log("requests", requests);
-        setTotalRequests(requests.quoteRequests);
-      } catch (error) {
-        console.error("Failed to fetch shop requests:", error);
-      }
-    };
-
-    fetchShopRequests();
-  }, []); // Empty dependency array, only run once on mount
 
   // Show loading message until both shopRequests and totalRequests are fetched
   if (!shopRequests || !totalRequests) return "데이터 가져오는중...";
@@ -77,11 +48,11 @@ const GroomerQuote = () => {
   const renderContent = () => {
     switch (activeSection) {
       case "section1":
-        return <GroomerShopRequests Infos={shopRequests} />;
+        return <GroomerShopRequests Infos={shopRequests} />; // GetRequestGroomer : 1:1 견적 요청
       case "section2":
-        return <GroomerTotalRequests Infos={totalRequests} />;
+        return <GroomerTotalRequests Infos={totalRequests} />; // GetTotalRequestGroomer : 견적 공고
       case "section3":
-        return <GroomerSentRequests Infos={sentQuotes} />;
+        return <GroomerSentRequests Infos={sentQuotes} />; // GetRequestGroomerSend : 보낸 견적서
       default:
         return null;
     }

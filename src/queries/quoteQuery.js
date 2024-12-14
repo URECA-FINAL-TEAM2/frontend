@@ -68,8 +68,8 @@ const insertQuote = async (quoteData) => {
   }
 };
 
-const getQuotesAll = async () => {
-  const customerId = 47; //TODO
+const getQuotesAll = async (customerId) => {
+  // 고객 화면
   try {
     const response = await axiosInstance.get("/quotes/requests/my/all", {
       params: {
@@ -83,8 +83,8 @@ const getQuotesAll = async () => {
   }
 };
 
-const getQuotesGroomer = async () => {
-  const customerId = 47; //TODO
+const getQuotesGroomer = async (customerId) => {
+  // 고객 화면
   try {
     const response = await axiosInstance.get("/quotes/requests/my/groomer", {
       params: {
@@ -98,10 +98,7 @@ const getQuotesGroomer = async () => {
   }
 };
 
-const getCustomerQuoteDetail = async (quotesId) => {
-  // TODO GET 연결 : `https://beautymeongdang.com/quotes/detail/${quotesId}?customerId=16`
-  const customerId = 47; //TODO
-
+const getCustomerQuoteDetail = async (customerId, quotesId) => {
   try {
     const response = await axiosInstance.get(`/quotes/detail/${quotesId}`, {
       params: {
@@ -116,9 +113,8 @@ const getCustomerQuoteDetail = async (quotesId) => {
   // return customerQuoteDetail;
 };
 
-const getGroomerQuoteDetail = async (requestId) => {
+const getGroomerQuoteDetail = async (groomerId, requestId) => {
   // TODO GET 연결 : `https://beautymeongdang.com/quotes/groomer/detail?requestId=${requestId}&groomerId=1`
-  const groomerId = 4; //TODO
   try {
     const response = await axiosInstance.get(`/quotes/detail/${requestId}/${groomerId}`);
     return response.data.data;

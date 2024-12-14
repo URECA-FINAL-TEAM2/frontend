@@ -1,24 +1,25 @@
-import { deleteRecommend, postRecommend } from "@/queries/shopQuery";
+import { deleteReviewRecommend, postReviewRecommend } from "@/queries/reviewQuery";
+import useAuthStore from "@/store/authStore";
 import { formatDateOnly } from "@/utils/formatDate";
 import StarRating from "@/utils/StarRating";
 import React, { useState } from "react";
 import { FaRegThumbsUp, FaThumbsUp } from "react-icons/fa6";
 
 function ShopReview({ groomerUsername, reviewData, isCustomer }) {
+  const { id } = useAuthStore();
   const [isFill, setIsFill] = useState(isCustomer && reviewData.isRecommended);
   const [recCnt, setRecCnt] = useState(reviewData.recommendCount);
-  const customerId = 47; //TODO
 
   const thumbUpClick = () => {
     setIsFill((prev) => !prev);
     setRecCnt((prev) => prev + 1);
-    postRecommend(customerId, reviewData.reviewId);
+    postReviewRecommend(id.customerId, reviewData.reviewId);
   };
 
   const thumbUpDelete = () => {
     setIsFill((prev) => !prev);
     setRecCnt((prev) => prev - 1);
-    deleteRecommend(customerId, reviewData.reviewId);
+    deleteReviewRecommend(id.customerId, reviewData.reviewId);
   };
 
   return (

@@ -64,3 +64,33 @@ export const updateReview = async (reviewId, reviewData) => {
     console.error("리뷰 수정 실패:", error);
   }
 };
+
+export const postReviewRecommend = async (customerId, reviewId) => {
+  try {
+    const response = await axiosInstance.post("/recommend", {
+      params: {
+        customerId,
+        reviewId
+      }
+    });
+
+    console.log(response.status === 200 ? "요청 성공" : `요청 실패: ${response.status}`);
+  } catch (error) {
+    console.error("요청 실패:", error);
+  }
+};
+
+export const deleteReviewRecommend = async (customerId, reviewId) => {
+  try {
+    const response = await axiosInstance.delete("/recommend", {
+      params: {
+        customerId,
+        reviewId
+      }
+    });
+
+    console.log(response.status === 200 ? "요청 성공" : `요청 실패: ${response.status}`);
+  } catch (error) {
+    console.error("요청 실패:", error);
+  }
+};

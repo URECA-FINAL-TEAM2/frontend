@@ -4,6 +4,7 @@ import useShopStore from "../../store/shopStore";
 import { useMapSetup } from "./MapBase";
 import useListPositionStore from "../../store/listPositionStore";
 import { useNavigate } from "react-router-dom";
+import useRegionStore from "@/store/regionStore";
 
 const InteractiveMap = () => {
   const listPosition = useListPositionStore((state) => state.listPosition);
@@ -11,11 +12,8 @@ const InteractiveMap = () => {
   const setSelectedShop = useShopStore((state) => state.setSelectedShop);
   const selectedShop = useShopStore((state) => state.selectedShop);
 
-  // TODO: store에서 꺼낼 것
-  // TODO: store에 저장된 값이 바뀔 경우, 여기도 바로 반영되도록
-  const sidoName = "서울특별시";
-  const sigunguName = "강남구";
-  const address = sidoName + " " + sigunguName;
+  const { sidoName, sigunguName } = useRegionStore();
+  const address = `${sidoName} ${sigunguName}`;
 
   const mapRef = useRef(null);
   const [mapCenter, setMapCenter] = useState({
@@ -33,9 +31,9 @@ const InteractiveMap = () => {
   };
 
   const options = {
-    disableDefaultUI: true, // 모든 기본 UI 컨트롤 비활성화
-    clickableIcons: false, // POI 아이콘 클릭 비활성화
-    scrollwheel: true // 마우스 휠로 줌 활성화
+    disableDefaultUI: true,
+    clickableIcons: false,
+    scrollwheel: true
   };
 
   const calculateMapOffset = useCallback(() => {
@@ -105,7 +103,6 @@ const InteractiveMap = () => {
             lng: location.lng()
           });
 
-          // 지역 크기에 맞춰 자동으로 zoom level과 bounds 설정
           const bounds = results[0].geometry.viewport;
           map.fitBounds(bounds);
 
@@ -122,7 +119,6 @@ const InteractiveMap = () => {
 
   const navigate = useNavigate();
 
-  // handleShopClick 수정
   const handleShopClick = useCallback(
     (shopInfo) => {
       setSelectedShop({ shopId: shopInfo.shopId, latitude: shopInfo.latitude, longitude: shopInfo.longitude });
@@ -143,7 +139,59 @@ const InteractiveMap = () => {
     }
   }, [selectedShop, calculateMapOffset, smoothlyAnimateToPosition]);
 
-  if (!isLoaded) return error;
+  // UseEffect to update map center when the address changes
+  useEffect(() => {
+    if (!address || !window.google) return; // Check if google is defined
+
+    const geocoder = new google.maps.Geocoder();
+    geocoder.geocode({ address: address }, (results, status) => {
+      if (status === "OK") {
+        const location = results[0].geometry.location;
+        setMapCenter({
+          lat: location.lat(),
+          lng: location.lng()
+        });
+
+        const bounds = results[0].geometry.viewport;
+        if (mapRef.current) {
+          const map = mapRef.current;
+          map.fitBounds(bounds);
+        }
+
+        const offset = calculateMapOffset();
+        smoothlyAnimateToPosition(location.toJSON(), offset);
+      } else {
+        setLocationError("주소를 찾을 수 없습니다.");
+        console.error("Geocoding error:", status);
+      }
+    });
+  }, [address, calculateMapOffset, smoothlyAnimateToPosition]);
+
+  // 마커를 다시 그리도록 하는 useEffect
+  useEffect(() => {
+    if (mapRef.current && shops.length > 0) {
+      const map = mapRef.current;
+      // 마커들을 지워줍니다
+      const markers = [];
+      shops.forEach((shop) => {
+        const marker = new google.maps.Marker({
+          position: { lat: shop.latitude, lng: shop.longitude },
+          map: map,
+          title: shop.shopName
+        });
+
+        marker.addListener("click", () => handleShopClick(shop));
+        markers.push(marker);
+      });
+
+      // 이전 마커들을 제거합니다
+      return () => {
+        markers.forEach((marker) => marker.setMap(null));
+      };
+    }
+  }, [shops, handleShopClick]); // shops가 변경될 때마다 마커를 다시 그리도록 설정
+
+  if (!isLoaded || !window.google) return error;
 
   return (
     <div className="relative h-full w-full">
@@ -160,6 +208,7 @@ const InteractiveMap = () => {
         onLoad={onMapLoad}
         onClick={() => setSelectedShop(null)}
       >
+        {/* shops에 변경이 있을 때마다 마커를 그리도록 설정 */}
         {shops.map(
           (shop) =>
             window.google && (
@@ -167,14 +216,6 @@ const InteractiveMap = () => {
                 key={shop.shopName}
                 position={{ lat: shop.latitude, lng: shop.longitude }}
                 onClick={() => handleShopClick(shop)}
-                // icon={{
-                //   path: google.maps.SymbolPath.CIRCLE,
-                //   scale: 6,
-                //   fillColor: "#FF0000",
-                //   fillOpacity: 0.7,
-                //   strokeColor: "#ffffff",
-                //   strokeWeight: 1.5
-                // }}
                 title={shop.shopName}
               />
             )

@@ -1,5 +1,3 @@
-// regionQuery.js
-
 import axiosInstance from "@/api/axiosInstance";
 
 const getSidoList = async () => {

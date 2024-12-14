@@ -1,44 +1,4 @@
-//quoteRequestQuery.js
 import axiosInstance from "@/api/axiosInstance";
-
-const dogList = [
-  {
-    dogId: 1,
-    dogName: "바우",
-    profileImage: "https://picsum.photos/200"
-  },
-  {
-    dogId: 2,
-    dogName: "초코",
-    profileImage: "https://picsum.photos/200"
-  },
-  {
-    dogId: 3,
-    dogName: "네모",
-    profileImage: "https://picsum.photos/200"
-  }
-];
-
-const dogInfo = {
-  dogId: 1,
-  dogBreed: "포메라니안",
-  dogName: "두부",
-  image: "https://picsum.photos/200",
-  dogWeight: "2.1kg",
-  dogAge: 5,
-  dogGender: "MALE",
-  neutering: false,
-  experience: false,
-  significant: "과하게 용맹해요"
-};
-
-const groomerDetail = {
-  shopImage: "https://s3-beauty-meongdang.s3.ap-northeast-2.amazonaws.com/매장+로고+이미지/멍브라운.jpg",
-  groomerName: "도리도림",
-  shopName: "멍브라운",
-  address: "서울특별시 강남구 선릉로 162길",
-  phone: "010-2345-6789"
-};
 
 const customerRequestDetails = [
   {
@@ -112,14 +72,6 @@ const groomerRequestDetail = {
   requestImages: []
 };
 
-const getDogList = async () => {
-  return dogList;
-};
-
-const getDogInfo = async (dogId) => {
-  return dogInfo;
-};
-
 const getGroomerDetail = async (groomerId) => {
   const response = await axiosInstance.get(`/requests/groomer/${groomerId}/shop`);
   return response.data.data;
@@ -182,12 +134,4 @@ const getGroomerRequestDetail = async (requestId) => {
   return groomerRequestDetail;
 };
 
-export {
-  getDogList,
-  getDogInfo,
-  getGroomerDetail,
-  getCustomerRequestDetail,
-  getGroomerRequestDetail,
-  sendCustomerQuote,
-  sendGroomerQuote
-};
+export { getGroomerDetail, getCustomerRequestDetail, getGroomerRequestDetail, sendCustomerQuote, sendGroomerQuote };

@@ -1,9 +1,12 @@
 import React, { useState, useRef, useEffect } from "react";
+import useShopStore from "../../store/shopStore";
 
-function SearchBox({ onSearch, placeholder = "검색..." }) {
+function SearchBox() {
   const [isExpanded, setIsExpanded] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const inputRef = useRef(null);
+  const buttonRef = useRef(null);
+  const { searchShops } = useShopStore();
 
   useEffect(() => {
     if (isExpanded) {
@@ -13,8 +16,27 @@ function SearchBox({ onSearch, placeholder = "검색..." }) {
 
   const handleSearch = (e) => {
     e.preventDefault();
-    if (onSearch) {
-      onSearch(searchQuery);
+    searchShops(searchQuery);
+  };
+
+  const handleBlur = (e) => {
+    // Check if the related target is the button
+    // This prevents closing when clicking the search button
+    if (e.relatedTarget !== buttonRef.current && !searchQuery) {
+      setIsExpanded(false);
+      searchShops(""); // Reset to original shops
+    }
+  };
+
+  const toggleSearch = () => {
+    if (isExpanded) {
+      // If expanded, close it
+      setIsExpanded(false);
+      setSearchQuery("");
+      searchShops(""); // Reset to original shops
+    } else {
+      // If not expanded, open it
+      setIsExpanded(true);
     }
   };
 
@@ -26,20 +48,19 @@ function SearchBox({ onSearch, placeholder = "검색..." }) {
             <input
               ref={inputRef}
               type="search"
-              placeholder={placeholder}
+              placeholder="매장명 • 주소 • 미용사 스킬을 검색하세요."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className={`absolute right-0 top-1/2 z-10 h-12 -translate-y-1/2 rounded-full border bg-white transition-all duration-300 ease-in-out ${
-                isExpanded ? "w-64 cursor-text pl-4 pr-12 opacity-100" : "w-12 cursor-pointer pl-0 pr-0 opacity-0"
+              className={`absolute right-0 top-1/2 z-10 h-12 -translate-y-1/2 rounded-full border bg-white text-sm transition-all duration-300 ease-in-out ${
+                isExpanded ? "w-80 cursor-text pl-5 pr-12 opacity-100" : "w-12 cursor-pointer pl-0 pr-0 opacity-0"
               } `}
               onFocus={() => setIsExpanded(true)}
-              onBlur={() => {
-                if (!searchQuery) setIsExpanded(false);
-              }}
+              onBlur={handleBlur}
             />
             <button
+              ref={buttonRef}
               type="button"
-              onClick={() => setIsExpanded(!isExpanded)}
+              onClick={toggleSearch}
               className="relative z-20 flex h-12 w-12 items-center justify-center rounded-full border bg-white hover:bg-gray-100"
             >
               <svg

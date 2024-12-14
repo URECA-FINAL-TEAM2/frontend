@@ -11,7 +11,7 @@ const ShopList = () => {
     listPosition === 60 ? "calc((100vh - var(--bottom-bar-height) - var(--header-height)) * 0.4)" : "0";
 
   return (
-    <div className="w-full">
+    <>
       <div className="mb-1 flex h-[20px] items-center px-7">
         <span
           onClick={() => setSortType("favorite")}
@@ -36,8 +36,12 @@ const ShopList = () => {
         <ShopItem key={shopInfo.shopId} shopInfo={shopInfo} />
       ))}
 
+      {shops.length === 0 ? (
+        <div className="mx-auto w-[360px] px-3 py-3 text-center text-sm text-gray-600">검색 결과가 없습니다.</div>
+      ) : null}
+
       <div style={{ height: marginBottomHeight }} />
-    </div>
+    </>
   );
 };
 

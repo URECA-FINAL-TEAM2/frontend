@@ -7,8 +7,10 @@ import Modal from "@/components/common/modal/modal";
 import toast, { Toaster } from "react-hot-toast";
 import useAuthStore from "@/store/authStore";
 import { BsInfoCircle } from "react-icons/bs";
+import { useNavigate } from "react-router-dom";
 
 const EditPortfolio = () => {
+  const navigate = useNavigate();
   const { id } = useAuthStore();
   const [images, setImages] = useState([]);
   const [rawImages, setRawImages] = useState([]);
@@ -37,9 +39,26 @@ const EditPortfolio = () => {
   };
 
   const handleCompleteImage = async () => {
-    await insertGroomerPortfolio(rawImages, id);
-    setIsModalOpen(false);
-    toast("수정이 완료되었습니다.", { icon: "👏🏻" });
+    try {
+      await insertGroomerPortfolio(rawImages, id);
+      setIsModalOpen(false);
+      toast("수정 완료되었습니다.", {
+        icon: "👏🏻"
+      });
+
+      setTimeout(() => {
+        navigate(-1);
+      }, 500);
+    } catch (error) {
+      console.error(error);
+      toast("담당자에게 문의하세요", {
+        icon: "❌"
+      });
+
+      setTimeout(() => {
+        navigate(-1);
+      }, 500);
+    }
   };
 
   useEffect(() => {

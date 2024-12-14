@@ -72,7 +72,7 @@ const WriteReviews = () => {
 
     setTimeout(() => {
       navigate(-1);
-    }, 1500);
+    }, 500);
   };
 
   // 별 렌더링 함수

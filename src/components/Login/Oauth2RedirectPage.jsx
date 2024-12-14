@@ -3,8 +3,11 @@ import { useLocation, useNavigate } from "react-router-dom";
 import BounceLoader from "react-spinners/BounceLoader";
 import axiosInstance from "../../api/axiosInstance";
 import useAuthStore from "../../store/authStore";
+import toast, { Toaster } from "react-hot-toast";
+import { useToastStore } from "@/store/toastStore";
 
 function OAuth2RedirectPage() {
+  const setToast = useToastStore((state) => state.setToast);
   const navigate = useNavigate();
   const location = useLocation();
   const code = new URL(window.location.href).searchParams.get("code");
@@ -34,9 +37,11 @@ function OAuth2RedirectPage() {
 
       if (roles.includes("미용사")) {
         updateDefaultRole("groomer");
+        setToast(`환영합니다. ${username} 미용사님!`, "👋🏻");
         navigate("/groomer/home");
       } else {
         updateDefaultRole("customer");
+        setToast(`환영합니다. ${username} 고객님!`, "👋🏻");
         navigate("/customer/home");
       }
     } catch (error) {
@@ -66,6 +71,7 @@ function OAuth2RedirectPage() {
     <div className="flex min-h-screen flex-col items-center justify-center bg-main-100">
       <BounceLoader color="#FF8E8E" />
       <div className="mt-10 text-xl text-main">로그인 시도중</div>
+      <Toaster />
     </div>
   );
 }

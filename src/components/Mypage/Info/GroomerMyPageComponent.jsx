@@ -12,7 +12,7 @@ const GroomerMyPageComponent = ({ userInfo, counts }) => {
     <>
       <button
         onClick={() => navigate("/groomer/info", { state: { role: "groomer" } })}
-        className="mx-auto flex items-center justify-around p-6 px-10 text-start"
+        className="mx-auto flex w-10/12 items-center justify-around py-6 text-start"
       >
         <div className="aspect-w-1 aspect-h-1">
           <img

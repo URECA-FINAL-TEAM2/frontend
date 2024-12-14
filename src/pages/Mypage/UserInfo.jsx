@@ -6,15 +6,11 @@ import { deleteUserInfo, getUserInfo, updateAddress, updateUserInfo } from "@/qu
 import useAuthStore from "@/store/authStore";
 import toast, { Toaster } from "react-hot-toast";
 import Modal from "@/components/common/modal/modal";
-import useToastAndNavigate from "@/hooks/CustomerSearch/useToastAndNavigate";
-import Logout from "@/components/Login/Logout";
-import { authLogout } from "@/queries/authQuery";
 
 const UserInfo = () => {
   const nicknameRef = useRef();
   const phoneRef = useRef();
   const navigate = useNavigate();
-  const showToastAndNavigate = useToastAndNavigate();
   const [nickname, setNickname] = useState("yet");
   const location = useLocation();
   const { id, logout, updateUserInfoState } = useAuthStore();
@@ -54,11 +50,13 @@ const UserInfo = () => {
     try {
       console.log(role, "삭제");
       await deleteUserInfo(role, id);
+      logout();
       toast("정보가 삭제되었습니다.\n 자동 로그아웃 처리됩니다.", {
         icon: "👋🏻"
       });
-      logout();
-      navigate("/");
+      setTimeout(() => {
+        navigate(-1);
+      }, 500);
     } catch (error) {
       console.error("정보 삭제를 실패했습니다.");
     }
@@ -87,9 +85,19 @@ const UserInfo = () => {
         try {
           await updateUserInfo(role, formData, id);
           updateUserInfoState({ nickName: formData.nickName || formData.nickname });
-          showToastAndNavigate("수정 완료되었습니다.", "👏🏻");
+          toast("수정 완료되었습니다.", {
+            icon: "👏🏻"
+          });
+          setTimeout(() => {
+            navigate(-1);
+          }, 500);
         } catch (error) {
-          showToastAndNavigate("담당자에게 문의하세요.", "❌");
+          toast("담당자에게 문의하세요.", {
+            icon: "❌"
+          });
+          setTimeout(() => {
+            navigate(-1);
+          }, 500);
         }
       }
     } else {

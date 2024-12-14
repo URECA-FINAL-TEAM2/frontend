@@ -86,7 +86,7 @@ function CustomerQuoteDetail({ quotesId, onDataLoad }) {
         <img src={Corgi} alt="Dog Icon" className="h-5 w-5" />
         <h2 className="text-lg font-semibold leading-none">반려견 정보</h2>
       </div>
-      <div className="mb-6 rounded-lg border border-main-400 p-4">
+      <div className="mb-6 rounded-lg border border-main-400 p-4 pb-3">
         <div className="flex items-center">
           <div className="mr-4 self-center">
             <img
@@ -96,14 +96,35 @@ function CustomerQuoteDetail({ quotesId, onDataLoad }) {
             />
             <p className="mt-1 text-center font-semibold">{quoteData.quoteRequest.dogName}</p>
           </div>
-          <div className="self-center text-sm leading-normal">
-            <p>견종: {quoteData.quoteRequest.dogBreed}</p>
-            <p>무게: {quoteData.quoteRequest.dogWeight}</p>
-            <p>나이: {quoteData.quoteRequest.dogAge}</p>
-            <p>성별: {quoteData.quoteRequest.dogGender === "MALE" ? "남아" : "여아"}</p>
-            <p>중성화 여부: {quoteData.quoteRequest.neutering ? "Y" : "N"}</p>
-            <p>미용 신청 여부: {quoteData.quoteRequest.experience ? "Y" : "N"}</p>
-            <p>특이사항: {quoteData.quoteRequest.significant}</p>
+          <div className="text-sm leading-snug">
+            <p>
+              <span className="mr-2 font-semibold">견종</span>
+              {quoteData.quoteRequest.dogBreed}
+            </p>
+            <p>
+              <span className="mr-2 font-semibold">무게</span>
+              {quoteData.quoteRequest.dogWeight}
+            </p>
+            <p>
+              <span className="mr-2 font-semibold">나이</span>
+              {quoteData.quoteRequest.dogAge}
+            </p>
+            <p>
+              <span className="mr-2 font-semibold">성별</span>
+              {quoteData.quoteRequest.dogGender === "MALE" ? "남아" : "여아"}
+            </p>
+            <p>
+              <span className="mr-2 font-semibold">중성화 여부</span>
+              {quoteData.quoteRequest.neutering ? "Y" : "N"}
+            </p>
+            <p>
+              <span className="mr-2 font-semibold">미용 경험 여부</span>
+              {quoteData.quoteRequest.experience ? "Y" : "N"}
+            </p>
+            <p>
+              <span className="mr-2 font-semibold">특이사항</span>
+              {quoteData.quoteRequest.significant}
+            </p>
           </div>
         </div>
       </div>

@@ -1,20 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { getReservationDetail } from "@/queries/reservationQuery";
-import { RiCalendarScheduleLine } from "react-icons/ri";
-import { ImScissors } from "react-icons/im";
-import { BiSolidDog } from "react-icons/bi";
-import { GrDocumentText, GrDocumentUser } from "react-icons/gr";
-import { TbPhoto, TbCreditCard } from "react-icons/tb";
-import { BsPersonVcard } from "react-icons/bs";
+import { TbCreditCard } from "react-icons/tb";
 import BottomButton from "@/components/common/button/BottomButton";
 import Modal from "@/components/common/modal/modal";
 import SubHeader from "@/components/common/SubHeader";
 import { RequestCancel } from "@/queries/paymentQuery";
 import { useLocation, useNavigate } from "react-router-dom";
+import { User, Designer, Schedule, Corgi, Note, Photos, Description } from "/public/Icons";
 
 const GroomerReservationDetail = () => {
   const location = useLocation();
   const { selectedQuoteId, status } = location.state || {};
+  // const { selectedQuoteId, status } = { selectedQuoteId: 139, status: "" }; // 예약 상태 테스트용용
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [cancelReason, setCancelReason] = useState("");
   const [detail, setDetail] = useState(null);
@@ -85,146 +82,159 @@ const GroomerReservationDetail = () => {
   return (
     <div>
       <SubHeader title="예약 정보 및 서비스" />
-      <div className="mx-auto mt-10 max-w-lg bg-white p-6">
+      <div className="mx-auto mt-14 max-w-lg bg-white p-6">
         {/* 예약자 정보 */}
-        <div className="mb-2 mt-6 flex items-center space-x-2">
-          <BsPersonVcard size={24} color="black" />
-          <h2 className="text-xl font-semibold">예약자 정보</h2>
+        <div className="mb-1.5 flex items-center space-x-1">
+          <img src={User} alt="Description" className="h-5 w-5" />
+          <h2 className="text-lg font-semibold leading-none">예약자 정보</h2>
         </div>
 
         <div className={`mb-6 rounded-lg p-4 ${status === "예약 취소" ? "bg-gray-200" : "bg-main-100"}`}>
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-xs text-gray-600">이름</p>
-              <p className="text-xs font-medium">{detail.customerName}</p>
+          <div className="w-full flex-col items-center">
+            <div className="flex justify-between leading-snug">
+              <p className="">이름</p>
+              <p className="">{detail.customerName}</p>
             </div>
-            <div>
-              <p className="text-xs text-gray-600">전화번호</p>
-              <p className="text-xs font-medium">{detail.phone}</p>
+            <div className="flex justify-between leading-snug">
+              <p className="">전화번호</p>
+              <p className="">{detail.phone}</p>
             </div>
           </div>
         </div>
 
         {/* 미용 일시 */}
-        <div className="mb-2 flex items-center space-x-2">
-          <RiCalendarScheduleLine size={24} color="black" />
-          <h2 className="text-xl font-semibold">미용 일시</h2>
+        <div className="mb-1.5 flex items-center space-x-1">
+          <img src={Schedule} alt="Schedule Icon" className="h-5 w-5" />
+          <h2 className="text-lg font-semibold leading-none">미용 일시</h2>
         </div>
 
-        <div className="mb-6 rounded-lg">
-          <div className="flex items-center justify-between space-x-4">
-            <div
-              className={`${borderColor} ${bgColor} bgflex flex-1 items-center justify-center rounded-lg border px-4 py-2 text-center text-sm`}
-            >
-              <p>{new Date(detail.beautyDate).toLocaleDateString()}</p>
-            </div>
-            <div
-              className={`${borderColor} ${bgColor} flex flex-1 items-center justify-center rounded-lg border px-4 py-2 text-center text-sm`}
-            >
-              <p>{new Date(detail.beautyDate).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}</p>
-            </div>
-          </div>
+        <div className={`mb-6 rounded-lg border p-4 ${borderColor} ${bgColor}`}>
+          <p>
+            {new Date(detail.beautyDate).toLocaleDateString()}
+            {new Date(detail.beautyDate).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
+          </p>
         </div>
 
         {/* 매장 및 디자이너 정보 */}
-        <div className="mb-2 flex items-center space-x-2">
-          <ImScissors size={24} color="black" />
-          <h2 className="text-xl font-semibold">매장 · 디자이너 정보</h2>
+        <div className="mb-1.5 flex items-center space-x-1">
+          <img src={Designer} alt="Description" className="h-5 w-5" />
+          <h2 className="text-lg font-semibold leading-none">매장 · 디자이너 정보</h2>
         </div>
 
         <div className={`mb-6 rounded-lg border ${bgColor} ${borderColor} p-4`}>
           <div className="flex items-center">
-            <img src={detail.shopLogo} alt="매장 로고" className="mr-4 h-24 w-24 rounded-lg" />
+            <img src={detail.shopLogo} alt="매장 로고" className="mr-3 h-20 w-20 rounded-lg" />
             <div>
-              <p className="text-lg font-bold">{detail.shopName}</p>
-              <p className="text-gray-600">{detail.address}</p>
-              <p className="text-lg font-bold">{detail.groomerName} 디자이너</p>
-              <p className="text-gray-600">{detail.phone}</p>
+              <p className="font-semibold leading-[18px]">{detail.shopName}</p>
+              <p className="mb-1.5 line-clamp-1 text-sm leading-[18px] text-gray-600">{detail.address}</p>
+              <p className="font-semibold leading-[18px]">{detail.groomerName} 디자이너</p>
+              <p className="mb-1.5 line-clamp-1 text-sm leading-[18px] text-gray-600">{detail.phone}</p>
+            </div>
+            <div className="mt-2 h-[180px] w-full">
+              <StaticMap location={{ lat: 37.5, lng: 127 }} shopName={detail.shopName} />
+              {/* TODO : API 수정 완료시 위경도 정보 꺼내오기 */}
+              {/* <StaticMap location={{ lat: detail.latitude, lng: detail.longtitude }} shopName={detail.shopName} /> */}
             </div>
           </div>
         </div>
 
         {/* 반려견 정보 */}
-        <div className="mb-2 flex items-center space-x-2">
-          <BiSolidDog size={24} color="black" />
-          <h2 className="text-xl font-semibold">반려견 정보</h2>
+        <div className="mb-1.5 flex items-center space-x-1">
+          <img src={Corgi} alt="Dog Icon" className="h-5 w-5" />
+          <h2 className="text-lg font-semibold leading-none">반려견 정보</h2>
         </div>
 
         <div className={`mb-6 rounded-lg border ${bgColor} ${borderColor} p-4`}>
-          <div className="flex items-start">
-            <div className="mr-4 flex flex-col items-center">
-              <img src={detail.profileImage} alt="반려견 사진" className="h-24 w-24 rounded-lg" />
-              <p className="mt-4 font-bold">{detail.dogName}</p>
+          <div className="flex items-center">
+            <div className="mr-4 self-center">
+              <img src={detail.profileImage} alt="반려견 사진" className="h-24 w-24 rounded-lg object-cover pt-0.5" />
+              <p className="mt-1 text-center font-semibold">{detail.dogName}</p>
             </div>
-            <div>
-              <p className="text-gray-600">견종 : {detail.dogBreed}</p>
-              <p className="text-gray-600">무게 : {detail.dogWeight}</p>
-              <p className="text-gray-600">나이 : {detail.dogAge}살</p>
-              <p className="text-gray-600">성별 : {detail.dogGender === "MALE" ? "남아" : "여아"}</p>
-              <p className="text-gray-600">중성화 여부 : {detail.neutering ? "Y" : "N"}</p>
-              <p className="text-gray-600">특이사항 : {detail.significant}</p>
+            <div className="self-center text-base leading-tight">
+              <p>
+                <span className="mr-2 font-semibold">견종</span>
+                <span>{detail.dogBreed}</span>
+              </p>
+              <p>
+                <span className="mr-2 font-semibold">무게</span>
+                <span>{detail.dogWeight}</span>
+              </p>
+              <p>
+                <span className="mr-2 font-semibold">나이</span>
+                <span>{detail.dogAge}살</span>
+              </p>
+              <p>
+                <span className="mr-2 font-semibold">성별</span>
+                <span>{detail.dogGender === "MALE" ? "남아" : "여아"}</span>
+              </p>
+              <p>
+                <span className="mr-2 font-semibold">중성화 여부</span>
+                <span>{detail.neutering ? "Y" : "N"}</span>
+              </p>
+              <p>
+                <span className="mr-2 font-semibold">특이사항</span>
+                <span>{detail.significant}</span>
+              </p>
             </div>
           </div>
         </div>
 
         {/* 요청 내용 */}
-        <div className="mb-2 flex items-center space-x-2">
-          <GrDocumentUser size={24} color="black" />
-          <h2 className="text-xl font-semibold">요청 내용</h2>
+        <div className="mb-1.5 flex items-center space-x-1">
+          <img src={Note} alt="Note Icon" className="h-5 w-5" />
+          <h2 className="text-lg font-semibold leading-none">요청 내용</h2>
         </div>
 
-        <div className={`mb-6 rounded-lg border ${bgColor} ${borderColor} p-4`}>
-          <p className="text-gray-600">{detail.requestContent}</p>
+        <div className={`mb-6 rounded-lg border ${bgColor} leading-tight ${borderColor} p-4`}>
+          <p>{detail.requestContent}</p>
         </div>
 
         {/* 첨부 사진 */}
-        <div className="mb-2 flex items-center space-x-2">
-          <TbPhoto size={24} color="black" />
-          <h2 className="text-xl font-semibold">첨부 사진</h2>
+        <div className="mb-1.5 flex items-center space-x-1">
+          <img src={Photos} alt="Photos Icon" className="h-5 w-5" />
+          <h2 className="text-lg font-semibold leading-none">첨부 사진</h2>
         </div>
 
-        <div className="rounded-lgp-4 mb-6">
-          <div className="grid grid-cols-3 gap-2">
-            {detail.requestImage.map((img, index) => (
-              <img
-                key={index}
-                src={img}
-                alt={`첨부 사진 ${index + 1}`}
-                className="h-24 w-24 rounded-lg border bg-gray-100"
-              />
-            ))}
-          </div>
+        <div className="mb-6 rounded-lg">
+          {detail.requestImage.length > 0 ? (
+            <div className="grid grid-cols-3 gap-3">
+              {detail.requestImage.map((img, index) => (
+                <div key={index} className="relative">
+                  <img src={img} alt={`첨부 사진 ${index + 1}`} className="h-28 w-28 rounded-lg object-cover" />
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div className="flex h-28 w-full items-center justify-center">
+              <p className="text-center text-gray-500">첨부된 사진이 없습니다.</p>
+            </div>
+          )}
         </div>
 
         {/* 견적 설명 */}
-        <div className="mb-2 flex items-center space-x-2">
-          <GrDocumentText size={24} color="black" />
-          <h2 className="text-xl font-semibold">견적 설명</h2>
+        <div className="mb-1.5 flex items-center space-x-1">
+          <img src={Description} alt="Description Icon" className="h-5 w-5" />
+          <h2 className="text-lg font-semibold leading-none">견적 설명</h2>
         </div>
 
-        <div className={`mb-6 rounded-lg border ${bgColor} ${borderColor} p-4`}>
-          <p className="text-gray-600">{detail.quoteContent}</p>
+        <div className={`mb-6 rounded-lg border ${bgColor} ${borderColor} p-4 leading-tight`}>
+          <p>{detail.quoteContent}</p>
         </div>
 
         {/* 결제 정보 */}
-        <div className="mb-2 flex items-center space-x-2">
-          <TbCreditCard size={24} color="black" />
-          <h2 className="text-xl font-semibold">결제 정보</h2>
+        <div className="mb-2 flex items-center space-x-1">
+          <TbCreditCard size={20} color="black" />
+          <h2 className="text-lg font-semibold leading-none">결제 정보</h2>
         </div>
 
-        <div className={`mb-6 rounded-lg border ${bgColor} ${borderColor} p-4`}>
+        <div className={`mb-6 rounded-lg border ${bgColor} ${borderColor} p-4 leading-tight`}>
           <div>
-            {status === "예약 취소" ? (
-              <p className="font-bold text-gray-600">
-                예약금
-                <span className="text-main-400"> {detail.amount * 0.2}원</span> 환불 완료되었습니다.
-              </p>
-            ) : (
-              <p className="font-bold text-gray-600">
-                예약금
-                <span className="text-main-400"> {detail.amount * 0.2}원</span> 결제 완료되었습니다.
-              </p>
-            )}
+            <p>
+              예약금
+              <span className="font-bold text-main"> {detail.amount * 0.2}원</span>{" "}
+              <span className="font-semibold">{status === "예약 취소" ? "환불 완료" : "결제 완료"}</span>
+              되었습니다.
+            </p>
           </div>
         </div>
 

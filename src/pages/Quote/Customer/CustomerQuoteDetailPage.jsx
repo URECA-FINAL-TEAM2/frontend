@@ -123,7 +123,10 @@ function CustomerQuoteDetailPage(props) {
         } w-full items-center justify-center rounded-t-[10px] shadow-md`}
       >
         {!isExpanded ? (
-          <button onClick={toggleExpand} className="flex h-full w-full items-center justify-center hover:bg-main-300">
+          <button
+            onClick={toggleExpand}
+            className="flex h-full w-full items-center justify-center rounded-t-[10px] hover:bg-main-300"
+          >
             결제해서 예약하기
           </button>
         ) : (

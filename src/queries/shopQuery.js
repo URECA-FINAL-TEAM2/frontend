@@ -1,3 +1,4 @@
+//shopQuery.js
 import axiosInstance from "@/api/axiosInstance";
 
 // const shopDetail = {
@@ -237,4 +238,34 @@ export const parseAddress = (fullAddress) => {
     address: address.trim(), // 앞뒤 공백 제거
     detailAddress: detailAddress || "" // 상세 주소 없으면 빈 문자열 반환
   };
+};
+
+export const postRecommend = async (customerId, reviewId) => {
+  try {
+    const response = await axiosInstance.post("/recommend", {
+      params: {
+        customerId,
+        reviewId
+      }
+    });
+
+    console.log(response.status === 200 ? "요청 성공" : `요청 실패: ${response.status}`);
+  } catch (error) {
+    console.error("요청 실패:", error);
+  }
+};
+
+export const deleteRecommend = async (customerId, reviewId) => {
+  try {
+    const response = await axiosInstance.delete("/recommend", {
+      params: {
+        customerId,
+        reviewId
+      }
+    });
+
+    console.log(response.status === 200 ? "요청 성공" : `요청 실패: ${response.status}`);
+  } catch (error) {
+    console.error("요청 실패:", error);
+  }
 };

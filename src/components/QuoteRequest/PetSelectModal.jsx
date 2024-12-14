@@ -2,13 +2,18 @@ import React, { useEffect, useState } from "react";
 import { IoCloseCircleOutline } from "react-icons/io5";
 import Button from "../common/button/Button";
 import { getQuotePetList, getQuotePetInfo } from "@/queries/petQuery";
+import { useNavigate } from "react-router-dom";
 
 const PetSelectModal = ({ isOpen = false, onClose, onConfirm }) => {
   if (!isOpen) return null;
 
-  const customerId = 2;
+  const customerId = 47;
+  const navigate = useNavigate();
   const [dogList, setDogList] = useState(null);
-  const [dogInfo, setDogInfo] = useState(null);
+
+  const handleRegister = () => {
+    navigate("/customer/mypet"); // TODO: 반려견 등록 완료 후 다시 견적요청 작성 페이지(PetSelectModal 사용한 페이지지)로 이동
+  };
 
   useEffect(() => {
     const fetchDogList = async () => {
@@ -55,7 +60,9 @@ const PetSelectModal = ({ isOpen = false, onClose, onConfirm }) => {
           </div>
           <div className="flex h-full flex-col items-center justify-center space-y-4">
             <div className="text-center">등록된 반려견 정보가 없습니다.</div>
-            <Button styleType="pink">반려견 등록하러 가기</Button>
+            <Button onClick={handleRegister} styleType="pink">
+              반려견 등록하러 가기
+            </Button>
           </div>
         </div>
       </div>

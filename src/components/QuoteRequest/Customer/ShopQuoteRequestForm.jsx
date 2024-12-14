@@ -2,10 +2,13 @@ import React, { useState } from "react";
 import { RiEditLine } from "react-icons/ri";
 import { IoIosAddCircle, IoIosCloseCircle } from "react-icons/io";
 import { Designer, Schedule, Corgi, Note, Photos } from "/public/Icons";
+import BottomButton from "@/components/common/button/BottomButton";
 
 import PetSelectModal from "@/components/QuoteRequest/PetSelectModal";
+import { sendGroomerQuote } from "@/queries/quoteRequestQuery";
+import { useNavigate } from "react-router-dom";
 
-const ShopQuoteRequestForm = (shopId) => {
+const ShopQuoteRequestForm = ({ groomerId }) => {
   // TODO : API 연결
   const groomerInfo = {
     shopImage: "https://picsum.photos/200",
@@ -19,6 +22,7 @@ const ShopQuoteRequestForm = (shopId) => {
   const [cancelReason, setCancelReason] = useState("");
   const [attachedImages, setAttachedImages] = useState([]);
   const [petInfo, setPetInfo] = useState(null);
+  const [requestContent, setRequestContent] = useState("");
 
   const getMinSelectableDate = () => {
     const tomorrow = new Date();
@@ -29,6 +33,8 @@ const ShopQuoteRequestForm = (shopId) => {
 
   const [selectedDate, setSelectedDate] = useState(getMinSelectableDate());
   const [selectedTime, setSelectedTime] = useState("09:00");
+
+  const navigate = useNavigate();
 
   const handleDateChange = (e) => {
     const selectedDateTime = new Date(e.target.value);
@@ -83,11 +89,13 @@ const ShopQuoteRequestForm = (shopId) => {
   };
 
   const handlePetSelect = (selectedDog) => {
+    if (!selectedDog) return;
     console.log("selectedDog", selectedDog);
 
     setPetInfo({
+      id: selectedDog.dogId,
       name: selectedDog.dogName,
-      image: selectedDog.image,
+      image: selectedDog.dogProfileImage,
       breed: selectedDog.dogBreed,
       weight: selectedDog.dogWeight,
       age: selectedDog.dogAge,
@@ -99,6 +107,50 @@ const ShopQuoteRequestForm = (shopId) => {
 
     setIsModalOpen(false);
   };
+
+  const combineDateAndTime = (date, time) => {
+    // 날짜 객체 생성 (깊은 복사를 위해 new Date() 사용)
+    const combinedDateTime = new Date(date);
+
+    // 시간 분리
+    const [hours, minutes] = time.split(":");
+
+    // 시간 설정 (시, 분, 초, 밀리초)
+    combinedDateTime.setHours(parseInt(hours), parseInt(minutes), 0, 0);
+
+    // ISO 8601 형식으로 변환
+    return combinedDateTime.toISOString();
+  };
+
+  async function blobUrlToFile(blobUrl, filename = "image.jpg") {
+    const response = await fetch(blobUrl);
+    const blob = await response.blob();
+    return new File([blob], filename, { type: blob.type });
+  }
+
+  const sendQuote = async () => {
+    const customerId = 47;
+    const requestDto = {
+      dogId: petInfo.id,
+      requestType: "1:1요청",
+      requestContent: requestContent,
+      beautyDate: combineDateAndTime(selectedDate, selectedTime),
+      groomerId: groomerId
+    };
+
+    console.log("requestDto", requestDto);
+
+    // Blob URL을 File 객체로 변환
+    const fileImages = await Promise.all(
+      attachedImages.map((blobUrl, index) => blobUrlToFile(blobUrl, `image_${index}.jpg`))
+    );
+
+    await sendGroomerQuote(customerId, requestDto, fileImages);
+    navigate("/customer/quotes");
+  };
+
+  const isSubmitEnabled =
+    petInfo !== null && requestContent.trim() !== "" && selectedDate !== null && selectedTime !== null;
 
   return (
     <div className="mx-auto mb-[var(--bottom-bar-height)] mt-[var(--header-height)] max-w-lg bg-white px-6">
@@ -155,21 +207,42 @@ const ShopQuoteRequestForm = (shopId) => {
         {petInfo && <RiEditLine size={20} className="cursor-pointer py-0.5 text-gray-500" onClick={openModal} />}
       </div>
 
-      <div className="mb-6 rounded-lg border border-main-400 p-4">
+      <div className="mb-6 rounded-lg border border-main-400 p-4 pb-3">
         {petInfo ? (
           <div className="flex items-start">
             <div className="mr-4 self-center">
               <img src={petInfo?.image} alt="반려견 사진" className="h-28 w-28 rounded-lg" />
               <p className="mt-1 text-center font-semibold">{petInfo?.name}</p>
             </div>
-            <div className="text-sm leading-normal">
-              <p>견종: {petInfo?.breed}</p>
-              <p>무게: {petInfo?.weight}</p>
-              <p>나이: {petInfo?.age}</p>
-              <p>성별: {petInfo?.gender == "MALE" ? "남아" : "여아"}</p>
-              <p>중성화 여부: {petInfo?.neutering ? "Y" : "N"}</p>
-              <p>미용 신청 여부: {petInfo?.experience ? "Y" : "N"}</p>
-              <p>특이사항: {petInfo?.significant}</p>
+            <div className="text-sm leading-snug">
+              <p>
+                <span className="mr-2 font-semibold">견종</span>
+                {petInfo?.breed}
+              </p>
+              <p>
+                <span className="mr-2 font-semibold">무게</span>
+                {petInfo?.weight}
+              </p>
+              <p>
+                <span className="mr-2 font-semibold">나이</span>
+                {petInfo?.age}
+              </p>
+              <p>
+                <span className="mr-2 font-semibold">성별</span>
+                {petInfo?.gender === "MALE" ? "남아" : "여아"}
+              </p>
+              <p>
+                <span className="mr-2 font-semibold">중성화 여부</span>
+                {petInfo?.neutering ? "Y" : "N"}
+              </p>
+              <p>
+                <span className="mr-2 font-semibold">미용 신청 여부</span>
+                {petInfo?.experience ? "Y" : "N"}
+              </p>
+              <p>
+                <span className="mr-2 font-semibold">특이사항</span>
+                {petInfo?.significant}
+              </p>
             </div>
           </div>
         ) : (
@@ -187,6 +260,8 @@ const ShopQuoteRequestForm = (shopId) => {
         <textarea
           placeholder="요청 내용을 상세하게 작성해주세요."
           className="w-full resize-none rounded-lg border-none focus:outline-none"
+          value={requestContent}
+          onChange={(event) => setRequestContent(event.target.value)}
           rows={4}
         />
       </div>
@@ -235,6 +310,12 @@ const ShopQuoteRequestForm = (shopId) => {
         </div>
       </div>
 
+      {isSubmitEnabled ? (
+        <BottomButton onClick={sendQuote}>견적 요청 보내기</BottomButton>
+      ) : (
+        <BottomButton styleType="gray">견적 요청 보내기</BottomButton>
+      )}
+
       {/* 반려견 선택 모달 */}
       <PetSelectModal
         isOpen={isModalOpen}
@@ -242,18 +323,7 @@ const ShopQuoteRequestForm = (shopId) => {
         onConfirm={handlePetSelect}
         closeText="닫기"
         confirmText="확인"
-      >
-        <div>
-          <p className="mb-4 text-sm font-medium">취소 사유를 입력해주세요.</p>
-          <input
-            type="text"
-            value={cancelReason}
-            onChange={(e) => setCancelReason(e.target.value)}
-            placeholder="취소 사유 입력"
-            className="w-full rounded-md border p-2 text-sm"
-          />
-        </div>
-      </PetSelectModal>
+      ></PetSelectModal>
     </div>
   );
 };

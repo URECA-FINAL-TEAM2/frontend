@@ -82,14 +82,35 @@ function GroomerQuoteDetail({ requestId }) {
             <img src={quoteData.dog.dogProfileImage} alt="반려견 사진" className="h-28 w-28 rounded-lg object-cover" />
             <p className="mt-1 text-center font-semibold">{quoteData.dog.dogName}</p>
           </div>
-          <div className="self-center text-sm leading-normal">
-            <p>견종: {quoteData.dog.dogBreed}</p>
-            <p>무게: {quoteData.dog.dogWeight}</p>
-            <p>나이: {quoteData.dog.dogAge}</p>
-            <p>성별: {quoteData.dog.dogGender === "MALE" ? "남아" : "여아"}</p>
-            <p>중성화 여부: {quoteData.dog.neutering ? "Y" : "N"}</p>
-            <p>미용 신청 여부: {quoteData.dog.experience ? "Y" : "N"}</p>
-            <p>특이사항: {quoteData.dog.significant}</p>
+          <div className="text-sm leading-snug">
+            <p>
+              <span className="mr-2 font-semibold">견종</span>
+              {quoteData.dog.dogBreed}
+            </p>
+            <p>
+              <span className="mr-2 font-semibold">무게</span>
+              {quoteData.dog.dogWeight}
+            </p>
+            <p>
+              <span className="mr-2 font-semibold">나이</span>
+              {quoteData.dog.dogAge}
+            </p>
+            <p>
+              <span className="mr-2 font-semibold">성별</span>
+              {quoteData.dog.dogGender === "MALE" ? "남아" : "여아"}
+            </p>
+            <p>
+              <span className="mr-2 font-semibold">중성화 여부</span>
+              {quoteData.dog.neutering ? "Y" : "N"}
+            </p>
+            <p>
+              <span className="mr-2 font-semibold">미용 신청 여부</span>
+              {quoteData.dog.experience ? "Y" : "N"}
+            </p>
+            <p>
+              <span className="mr-2 font-semibold">특이사항</span>
+              {quoteData.dog.significant}
+            </p>
           </div>
         </div>
       </div>

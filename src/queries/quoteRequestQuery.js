@@ -125,21 +125,18 @@ const getGroomerDetail = async (groomerId) => {
   // return groomerDetail;
 };
 
-const sendAllQuote = async (customerId, requestDto, images) => {
+const sendCustomerQuote = async (customerId, requestDto, images) => {
   const formData = new FormData();
 
   // requestDto를 JSON 문자열로 변환하여 추가
-  formData.append(
-    "requestDto",
-    new Blob([JSON.stringify(requestDto)], {
-      type: "application/json"
-    })
-  );
+  formData.append("requestDto", JSON.stringify(requestDto));
 
   // 이미지 추가 (여러 이미지인 경우)
   images.forEach((image, index) => {
-    formData.append("images", image, `image_${index}`);
+    formData.append("images", image, `image_${index}.jpg`);
   });
+
+  console.log("form", formData);
 
   const response = await axiosInstance.post(`/requests/all`, formData, {
     params: { customerId },
@@ -155,16 +152,11 @@ const sendGroomerQuote = async (customerId, requestDto, images) => {
   const formData = new FormData();
 
   // requestDto를 JSON 문자열로 변환하여 추가
-  formData.append(
-    "requestDto",
-    new Blob([JSON.stringify(requestDto)], {
-      type: "application/json"
-    })
-  );
+  formData.append("requestDto", JSON.stringify(requestDto));
 
   // 이미지 추가 (여러 이미지인 경우)
   images.forEach((image, index) => {
-    formData.append("images", image, `image_${index}`);
+    formData.append("images", image, `image_${index}.jpg`);
   });
 
   const response = await axiosInstance.post(`/requests/groomer`, formData, {
@@ -187,4 +179,12 @@ const getGroomerRequestDetail = async (requestId) => {
   return groomerRequestDetail;
 };
 
-export { getDogList, getDogInfo, getGroomerDetail, getCustomerRequestDetail, getGroomerRequestDetail };
+export {
+  getDogList,
+  getDogInfo,
+  getGroomerDetail,
+  getCustomerRequestDetail,
+  getGroomerRequestDetail,
+  sendCustomerQuote,
+  sendGroomerQuote
+};

@@ -39,6 +39,7 @@ export const getGroomerList = async (groomerId) => {
 };
 
 // 예약 상세 조회
+// TODO : lat, lan 받아야 함 (API 수정요청)
 export const getReservationDetail = async (selectedQuoteId) => {
   try {
     const sId = selectedQuoteId.selectedQuoteId;

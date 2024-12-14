@@ -4,12 +4,17 @@ import { IoIosAddCircle, IoIosCloseCircle } from "react-icons/io";
 import RegionSelectModal from "../../common/modal/RegionSelectModal";
 import PetSelectModal from "../PetSelectModal";
 import { Region, Schedule, Corgi, Note, Photos } from "/public/Icons";
+import BottomButton from "@/components/common/button/BottomButton";
+import { sendCustomerQuote } from "@/queries/quoteRequestQuery";
+import { useNavigate } from "react-router-dom";
 
 const TotalQuoteRequestForm = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [cancelReason, setCancelReason] = useState("");
   const [attachedImages, setAttachedImages] = useState([]);
   const [petInfo, setPetInfo] = useState(null);
+  const [requestContent, setRequestContent] = useState("");
+  const navigate = useNavigate();
 
   const [isLocationModalOpen, SetIsLocationModalOpen] = useState(false);
   // TODO : 지역 초기값 설정 (GET API Request)
@@ -105,6 +110,47 @@ const TotalQuoteRequestForm = () => {
     SetIsLocationModalOpen(false);
   };
 
+  const combineDateAndTime = (date, time) => {
+    // 날짜 객체 생성 (깊은 복사를 위해 new Date() 사용)
+    const combinedDateTime = new Date(date);
+
+    // 시간 분리
+    const [hours, minutes] = time.split(":");
+
+    // 시간 설정 (시, 분, 초, 밀리초)
+    combinedDateTime.setHours(parseInt(hours), parseInt(minutes), 0, 0);
+
+    // ISO 8601 형식으로 변환
+    return combinedDateTime.toISOString();
+  };
+
+  async function blobUrlToFile(blobUrl, filename = "image.jpg") {
+    const response = await fetch(blobUrl);
+    const blob = await response.blob();
+    return new File([blob], filename, { type: blob.type });
+  }
+
+  const sendQuote = async () => {
+    const customerId = 47;
+    const requestDto = {
+      dogId: petInfo.id,
+      requestType: "전체요청",
+      requestContent: requestContent,
+      beautyDate: combineDateAndTime(selectedDate, selectedTime),
+      sigunguId: location?.sigungu
+    };
+
+    console.log("requestDto ", requestDto);
+
+    // Blob URL을 File 객체로 변환
+    const fileImages = await Promise.all(
+      attachedImages.map((blobUrl, index) => blobUrlToFile(blobUrl, `image_${index}.jpg`))
+    );
+
+    await sendCustomerQuote(customerId, requestDto, fileImages);
+    navigate("/customer/quotes");
+  };
+
   const handleLocationSelect = (selectLocation) => {
     setLocation({
       sido: selectLocation.sido,
@@ -115,10 +161,17 @@ const TotalQuoteRequestForm = () => {
     SetIsLocationModalOpen(false);
   };
 
+  const isSubmitEnabled =
+    location !== null &&
+    petInfo !== null &&
+    requestContent.trim() !== "" &&
+    selectedDate !== null &&
+    selectedTime !== null;
+
   return (
     <div className="mx-auto mb-[var(--bottom-bar-height)] mt-[var(--header-height)] max-w-lg bg-white px-6">
       {/* 지역 */}
-      <div className="mb-1.5 flex items-center space-x-2">
+      <div className="mb-1.5 flex items-center space-x-1">
         <img src={Region} alt="Description" className="h-5 w-5" />
         <h2 className="text-lg font-semibold leading-none">지역</h2>
         {location && (
@@ -137,7 +190,7 @@ const TotalQuoteRequestForm = () => {
       </div>
 
       {/* 미용 일시 */}
-      <div className="mb-1.5 flex items-center space-x-2">
+      <div className="mb-1.5 flex items-center space-x-1">
         <img src={Schedule} alt="Description" className="h-5 w-5" />
         <h2 className="text-lg font-semibold leading-none">미용 일시</h2>
       </div>
@@ -165,28 +218,49 @@ const TotalQuoteRequestForm = () => {
       </div>
 
       {/* 반려견 정보 */}
-      <div className="mb-1.5 flex items-center space-x-2">
+      <div className="mb-1.5 flex items-center space-x-1">
         {/* <BiSolidDog size={24} color="black" /> */}
         <img src={Corgi} alt="Description" className="h-5 w-5" />
         <h2 className="text-lg font-semibold leading-none">반려견 정보</h2>
         {petInfo && <RiEditLine size={20} className="cursor-pointer text-gray-500" onClick={openModal} />}{" "}
       </div>
 
-      <div className="mb-6 rounded-lg border border-main-400 p-4">
+      <div className="mb-6 rounded-lg border border-main-400 p-4 pb-3">
         {petInfo ? (
           <div className="flex items-start">
             <div className="mr-4 self-center">
               <img src={petInfo?.image} alt="반려견 사진" className="h-28 w-28 rounded-lg object-cover" />
               <p className="mt-1 text-center font-semibold">{petInfo?.name}</p>
             </div>
-            <div className="text-sm leading-normal">
-              <p>견종: {petInfo?.breed}</p>
-              <p>무게: {petInfo?.weight}</p>
-              <p>나이: {petInfo?.age}</p>
-              <p>성별: {petInfo?.gender == "MALE" ? "남아" : "여아"}</p>
-              <p>중성화 여부: {petInfo?.neutering ? "Y" : "N"}</p>
-              <p>미용 신청 여부: {petInfo?.experience ? "Y" : "N"}</p>
-              <p>특이사항: {petInfo?.significant}</p>
+            <div className="text-sm leading-snug">
+              <p>
+                <span className="mr-2 font-semibold">견종</span>
+                {petInfo?.breed}
+              </p>
+              <p>
+                <span className="mr-2 font-semibold">무게</span>
+                {petInfo?.weight}
+              </p>
+              <p>
+                <span className="mr-2 font-semibold">나이</span>
+                {petInfo?.age}
+              </p>
+              <p>
+                <span className="mr-2 font-semibold">성별</span>
+                {petInfo?.gender === "MALE" ? "남아" : "여아"}
+              </p>
+              <p>
+                <span className="mr-2 font-semibold">중성화 여부</span>
+                {petInfo?.neutering ? "Y" : "N"}
+              </p>
+              <p>
+                <span className="mr-2 font-semibold">미용 신청 여부</span>
+                {petInfo?.experience ? "Y" : "N"}
+              </p>
+              <p>
+                <span className="mr-2 font-semibold">특이사항</span>
+                {petInfo?.significant}
+              </p>
             </div>
           </div>
         ) : (
@@ -195,7 +269,7 @@ const TotalQuoteRequestForm = () => {
       </div>
 
       {/* 요청 내용 */}
-      <div className="mb-1.5 flex items-center space-x-2">
+      <div className="mb-1.5 flex items-center space-x-1">
         <img src={Note} alt="Description" className="h-5 w-5" />
         <h2 className="text-lg font-semibold leading-none">요청 내용</h2>
       </div>
@@ -204,12 +278,14 @@ const TotalQuoteRequestForm = () => {
         <textarea
           placeholder="요청 내용을 상세하게 작성해주세요."
           className="w-full resize-none rounded-lg border-none focus:outline-none"
+          value={requestContent}
+          onChange={(event) => setRequestContent(event.target.value)}
           rows={4}
         />
       </div>
 
       {/* 첨부 사진 */}
-      <div className="mb-1.5 flex items-center space-x-2">
+      <div className="mb-1.5 flex items-center space-x-1">
         <img src={Photos} alt="Description" className="h-5 w-5" />
         <h2 className="text-lg font-semibold leading-none">첨부 사진</h2>
       </div>
@@ -252,6 +328,12 @@ const TotalQuoteRequestForm = () => {
         </div>
       </div>
 
+      {isSubmitEnabled ? (
+        <BottomButton onClick={sendQuote}>견적 요청 보내기</BottomButton>
+      ) : (
+        <BottomButton styleType="gray">견적 요청 보내기</BottomButton>
+      )}
+
       {/* 모달 */}
       <PetSelectModal
         isOpen={isModalOpen}
@@ -259,18 +341,7 @@ const TotalQuoteRequestForm = () => {
         onConfirm={handlePetSelect}
         closeText="닫기"
         confirmText="확인"
-      >
-        <div>
-          <p className="mb-4 text-sm font-medium">취소 사유를 입력해주세요.</p>
-          <input
-            type="text"
-            value={cancelReason}
-            onChange={(e) => setCancelReason(e.target.value)}
-            placeholder="취소 사유 입력"
-            className="w-full rounded-md border p-2 text-sm"
-          />
-        </div>
-      </PetSelectModal>
+      ></PetSelectModal>
 
       {/* 모달 */}
       <RegionSelectModal
@@ -279,18 +350,7 @@ const TotalQuoteRequestForm = () => {
         onConfirm={handleLocationSelect}
         closeText="닫기"
         confirmText="확인"
-      >
-        <div>
-          <p className="mb-4 text-sm font-medium">취소 사유를 입력해주세요.</p>
-          <input
-            type="text"
-            value={cancelReason}
-            onChange={(e) => setCancelReason(e.target.value)}
-            placeholder="취소 사유 입력"
-            className="w-full rounded-md border p-2 text-sm"
-          />
-        </div>
-      </RegionSelectModal>
+      ></RegionSelectModal>
     </div>
   );
 };

@@ -300,7 +300,7 @@ const CustomerReservationDetail = () => {
           confirmText="확인"
         >
           <div>
-            <p className="mb-4 text-sm font-medium">취소 사유를 입력해주세요.</p>
+            <p className="text mb-4 font-medium">취소 사유를 입력해주세요.</p>
             <input
               type="text"
               value={cancelReason}

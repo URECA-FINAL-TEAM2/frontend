@@ -147,11 +147,27 @@ const getGroomerRequestDetail = async (requestId) => {
   return groomerRequestDetail;
 };
 
+const RequestReject = async (rejectData) => {
+  try {
+    const response = await axiosInstance.put("/requests/groomer", {
+      requestId: rejectData.requestId,
+      groomerId: rejectData.groomerId,
+      rejectionReason: rejectData.rejectReason
+    });
+
+    return response.data;
+  } catch (error) {
+    console.error("Error rejecting request:", error);
+    throw error;
+  }
+};
+
 export {
   getQuotePetList,
   getGroomerDetail,
   getCustomerRequestDetail,
   getGroomerRequestDetail,
   sendCustomerQuote,
-  sendGroomerQuote
+  sendGroomerQuote,
+  RequestReject
 };

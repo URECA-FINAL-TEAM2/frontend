@@ -5,12 +5,14 @@ import InfoRequired from "@/pages/Main/InfoRequired";
 import Login from "@/pages/Main/Login";
 import Onboarding from "@/pages/Main/Onboarding";
 import SelectRole from "@/pages/Main/SelectRole";
+import TestGPT from "@/pages/TestGPT";
 import TestPage from "@/pages/TestPage";
 import { Route, Routes } from "react-router-dom";
 
 const PublicRoutes = () => {
   return (
     <Routes>
+      <Route path="gpt" element={<TestGPT />} />
       <Route path="testpage" element={<ChatClient />} />
       <Route path="testpage1" element={<TestPage />} />
       <Route path="" element={<Onboarding />} />

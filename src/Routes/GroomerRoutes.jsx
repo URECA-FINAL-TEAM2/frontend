@@ -23,7 +23,6 @@ const GroomerRoutes = () => {
         <Route path="chat" element={<GroomerChat />} />
       </Route>
 
-      {/* groomer/ -none */}
       <Route path="quotes" element={<GroomerQuote />} />
       <Route path="quotes/request/detail/:requestId" element={<GroomerQuoteRequestPage />} />
       <Route path="quotes/detail/:requestId" element={<GroomerQuoteDetailPage />} />

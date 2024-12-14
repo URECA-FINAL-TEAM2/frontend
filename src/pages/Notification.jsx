@@ -12,6 +12,7 @@ import { GoDotFill } from "react-icons/go";
 import toast, { Toaster } from "react-hot-toast";
 import { GoTrash } from "react-icons/go";
 import { useNotificationStore } from "@/store/notificationStore";
+import useSSEStore from "@/store/connectionStore";
 
 const Notification = () => {
   const updateUnreadCount = useNotificationStore((state) => state.updateUnreadCount);
@@ -19,47 +20,38 @@ const Notification = () => {
   const userId = id.userId;
   const roleType = DefaultRole;
   const [notifications, setNotifications] = useState([]);
-  const sseSource = useRef(null);
+  const { sseSource } = useSSEStore();
 
-  // SSE 연결
-  const connectSse = () => {
-    if (sseSource.current) {
-      sseSource.current.close();
-    }
+  useEffect(() => {
+    connectSSE({
+      roleType,
+      userId,
+      onOpen: () => {
+        fetchNotifications();
+        fetchUnreadNotificationCount();
+      },
+      onMessage: (newNotification) => {
+        console.log("새 알림 수신:", newNotification);
+        const newNoti = JSON.parse(newNotification);
+        setNotifications((prev) => [...prev, newNoti]);
+        updateUnreadCount((prev) => prev + 1);
+      },
+      onError: () => {
+        console.error("SSE 연결 오류");
+        if (sseSource.current) {
+          sseSource.current.close();
+        }
+      }
+    });
+    fetchUnreadNotificationCount();
+    fetchNotifications();
 
-    const token = localStorage.getItem("accessToken");
-    if (!token) {
-      console.error("토큰이 없습니다.");
-      return;
-    }
-
-    const url = `https://www.beautymeongdang.com/notifications/connect?userId=${userId}&roleType=${roleType}&token=${encodeURIComponent(token)}`;
-    const eventSource = new EventSource(url);
-
-    // const eventSource = connectSSE(roleType, userId);
-
-    eventSource.onopen = () => {
-      fetchNotifications();
-      fetchUnreadNotificationCount();
-    };
-
-    eventSource.onmessage = (event) => {
-      console.log("새로운 이벤트 발생", event);
-      const newNotification = JSON.parse(event.data);
-      setNotifications((prev) => [...prev, newNotification]);
-      updateUnreadCount((prev) => prev + 1);
-    };
-
-    eventSource.onerror = () => {
-      console.error("SSE 연결 오류. 다시 연결 시도 중...");
+    return () => {
       if (sseSource.current) {
         sseSource.current.close();
       }
-      setTimeout(connectSse, 5000);
     };
-
-    sseSource.current = eventSource;
-  };
+  }, [roleType, userId]);
 
   // 알림 목록 가져오기
   const fetchNotifications = async () => {
@@ -101,18 +93,6 @@ const Notification = () => {
       console.error("알림 삭제 중 오류:", error);
     }
   };
-
-  useEffect(() => {
-    connectSse();
-    fetchUnreadNotificationCount();
-    fetchNotifications();
-
-    return () => {
-      if (sseSource.current) {
-        sseSource.current.close();
-      }
-    };
-  }, []);
 
   return (
     <div id="notification-container" className="notification-container">

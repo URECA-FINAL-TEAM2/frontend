@@ -17,7 +17,7 @@ const UserInfo = () => {
   const showToastAndNavigate = useToastAndNavigate();
   const [nickname, setNickname] = useState("yet");
   const location = useLocation();
-  const { id, logout } = useAuthStore();
+  const { id, logout, updateUserInfoState } = useAuthStore();
   const { role } = location.state || {};
   const [validPhone, setValidPhone] = useState("yet");
   const [formData, setFormData] = useState({
@@ -86,6 +86,7 @@ const UserInfo = () => {
 
         try {
           await updateUserInfo(role, formData, id);
+          updateUserInfoState({ nickName: formData.nickName || formData.nickname });
           showToastAndNavigate("수정 완료되었습니다.", "👏🏻");
         } catch (error) {
           showToastAndNavigate("담당자에게 문의하세요.", "❌");

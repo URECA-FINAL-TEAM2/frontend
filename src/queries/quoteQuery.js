@@ -1,3 +1,6 @@
+//quoteQuery.js
+import axiosInstance from "@/api/axiosInstance";
+
 const customerQuoteDetail = {
   groomer: {
     shopLogo: "https://s3-beauty-meongdang.s3.ap-northeast-2.amazonaws.com/매장+로고+이미지/언니네강아지.jpg",
@@ -53,14 +56,78 @@ const groomerQuoteDetail = {
   }
 };
 
+const insertQuote = async (quoteData) => {
+  try {
+    const response = await axiosInstance.post(`/quotes`, quoteData, {
+      headers: { "Content-Type": "application/json" }
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error inserting quote:", error);
+    throw error;
+  }
+};
+
+const getQuotesAll = async () => {
+  const customerId = 47; //TODO
+  try {
+    const response = await axiosInstance.get("/quotes/requests/my/all", {
+      params: {
+        customerId: customerId
+      }
+    });
+    return response.data.data;
+  } catch (error) {
+    console.error("Error inserting quote:", error);
+    throw error;
+  }
+};
+
+const getQuotesGroomer = async () => {
+  const customerId = 47; //TODO
+  try {
+    const response = await axiosInstance.get("/quotes/requests/my/groomer", {
+      params: {
+        customerId: customerId
+      }
+    });
+    return response.data.data;
+  } catch (error) {
+    console.error("Error inserting quote:", error);
+    throw error;
+  }
+};
+
 const getCustomerQuoteDetail = async (quotesId) => {
   // TODO GET 연결 : `https://beautymeongdang.com/quotes/detail/${quotesId}?customerId=16`
-  return customerQuoteDetail;
+  const customerId = 47; //TODO
+
+  try {
+    const response = await axiosInstance.get(`/quotes/detail/${quotesId}`, {
+      params: {
+        customerId: customerId
+      }
+    });
+    return response.data.data;
+  } catch (error) {
+    console.error("Error inserting quote:", error);
+    throw error;
+  }
+  // return customerQuoteDetail;
 };
 
 const getGroomerQuoteDetail = async (requestId) => {
   // TODO GET 연결 : `https://beautymeongdang.com/quotes/groomer/detail?requestId=${requestId}&groomerId=1`
-  return groomerQuoteDetail;
+  const groomerId = 4; //TODO
+  try {
+    const response = await axiosInstance.get(`/quotes/detail/${requestId}/${groomerId}`);
+    return response.data.data;
+  } catch (error) {
+    console.error("Error inserting quote:", error);
+    throw error;
+  }
+
+  // return groomerQuoteDetail;
 };
 
-export { getCustomerQuoteDetail, getGroomerQuoteDetail };
+export { getCustomerQuoteDetail, getGroomerQuoteDetail, getQuotesGroomer, insertQuote, getQuotesAll };

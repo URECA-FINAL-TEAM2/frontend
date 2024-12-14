@@ -1,7 +1,7 @@
 import { Link, useLocation } from "react-router-dom";
 import logo from "/Logo/logoHori.svg";
-import { VscBell } from "react-icons/vsc";
 import { useEffect, useState } from "react";
+import NotiComponents from "../Main/NotiComponents";
 
 const Header = () => {
   const location = useLocation();
@@ -20,9 +20,7 @@ const Header = () => {
       <Link to={url}>
         <img src={logo} alt="logo" className="" />
       </Link>
-      <Link to="/notification">
-        <VscBell size={28} />
-      </Link>
+      <NotiComponents />
     </div>
   );
 };

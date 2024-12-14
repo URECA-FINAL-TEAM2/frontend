@@ -1,63 +1,15 @@
+//TotalQuoteRequestList.jsx
 import { formatDate } from "@/utils/formatDate";
 import React from "react";
-import { MdExpandMore, MdExpandLess } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 import { Region, Schedule, Note } from "/public/Icons";
 
 function TotalQuoteRequestList({ Infos }) {
-  const quoteRequests = [
-    {
-      quoteRequestId: 35,
-      region: "서울특별시 강남구",
-      requestStatus: "요청",
-      beautyDate: "2024-01-30T14:00:00",
-      dogName: "요미",
-      image: "https://s3-beauty-meongdang.s3.ap-northeast-2.amazonaws.com/반려견+프로필+이미지/요크셔텔어.jpg",
-      dogWeight: "2.8",
-      dogBreed: "요크셔테리어",
-      dogAge: "3",
-      requestContent: "기본 미용 상담 필요해요기본 미용 상담 필요해요기본 미용 상담 필요해요",
-      quotes: [
-        {
-          quoteId: 67,
-          shopName: "킹덤펫",
-          groomerName: "섭섭",
-          quoteStatus: "수락",
-          cost: 80000,
-          quoteContent: "케어 스페셜",
-          createdAt: "2024-01-05T10:30:22"
-        }
-      ]
-    },
-    {
-      quoteRequestId: 34,
-      region: "서울특별시 강남구",
-      requestStatus: "제안 완료",
-      beautyDate: "2024-01-29T14:00:00",
-      dogName: "닥스",
-      image: "https://s3-beauty-meongdang.s3.ap-northeast-2.amazonaws.com/반려견+프로필+이미지/닥스훈트.jpg",
-      dogWeight: "5.5",
-      dogBreed: "닥스훈트",
-      dogAge: "1",
-      requestContent: "전체 미용 부탁드립니다",
-      quotes: [
-        {
-          quoteId: 66,
-          shopName: "두루몽실",
-          groomerName: "써윤기",
-          quoteStatus: "수락",
-          cost: 75000,
-          quoteContent: "전체 미용 패키지",
-          createdAt: "2024-01-04T10:30:22"
-        }
-      ]
-    }
-  ];
-
   return (
     <>
-      <CustomerEstimate Info={quoteRequests[0]} />
-      <CustomerEstimate Info={quoteRequests[1]} />
+      {Infos?.map((Info) => {
+        return <CustomerEstimate Info={Info} />;
+      })}
     </>
   );
 }

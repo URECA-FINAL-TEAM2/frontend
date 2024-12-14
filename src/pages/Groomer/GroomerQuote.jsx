@@ -1,104 +1,49 @@
 //GroomerQuote.jsx
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import GroomerBottom from "@/components/common/GroomerBottom";
 import SubHeader from "@/components/common/SubHeader";
 import GroomerTotalRequests from "@/components/QuoteRequest/Groomer/GroomerTotalRequests";
 import GroomerShopRequests from "@/components/QuoteRequest/Groomer/GroomerShopRequests";
 import GroomerSentRequests from "@/components/QuoteRequest/Groomer/GroomerSentRequests";
+import { getQuotesAll, getQuotesGroomer } from "@/queries/quoteQuery";
 
 const GroomerQuote = () => {
   const [activeSection, setActiveSection] = useState("section1");
+  const [shopRequests, setShopRequests] = useState(null);
+  const [totalRequests, setTotalRequests] = useState(null);
 
-  const shopRequests = [
-    {
-      requestId: 3,
-      userName: "이도림",
-      userProfileImage:
-        "http://img1.kakaocdn.net/thumb/R640x640.q70/?fname=http://t1.kakaocdn.net/account_images/default_profile.jpeg",
-      expiryDate: "2024-11-28T15:00:00",
-      beautyDate: "2024-12-03T15:00:00",
-      dogBreed: "비숑",
-      dogGender: "FEMALE",
-      dogWeight: "5.6",
-      requestContent: "1:1 미용하고 싶어요3"
-    },
-    {
-      requestId: 11,
-      userName: "이도림",
-      userProfileImage:
-        "http://img1.kakaocdn.net/thumb/R640x640.q70/?fname=http://t1.kakaocdn.net/account_images/default_profile.jpeg",
-      expiryDate: "2024-12-03T00:00:00",
-      beautyDate: "2024-12-03T15:00:00",
-      dogBreed: "비숑",
-      dogGender: "MALE",
-      dogWeight: "5.6",
-      requestContent: "1:1 미용4"
-    },
-    {
-      requestId: 12,
-      userName: "이도림",
-      userProfileImage:
-        "http://img1.kakaocdn.net/thumb/R640x640.q70/?fname=http://t1.kakaocdn.net/account_images/default_profile.jpeg",
-      expiryDate: "2024-12-03T00:00:00",
-      beautyDate: "2024-12-03T15:00:00",
-      dogBreed: "비숑",
-      dogGender: "FEMALE",
-      dogWeight: "5.6",
-      requestContent: "1:1 미용5"
-    }
-  ];
+  // Fetch shopRequests on mount
+  useEffect(() => {
+    const fetchShopRequests = async () => {
+      try {
+        const requests = await getQuotesGroomer();
+        setShopRequests(requests.quoteRequests);
+      } catch (error) {
+        console.error("Failed to fetch shop requests:", error);
+      }
+    };
 
-  const totalRequests = [
-    {
-      requestId: 4,
-      userName: "이도림",
-      userProfileImage:
-        "http://img1.kakaocdn.net/thumb/R640x640.q70/?fname=http://t1.kakaocdn.net/account_images/default_profile.jpeg",
-      expiryDate: "2024-11-28T15:00:00",
-      beautyDate: "2024-12-03T15:00:00",
-      dogBreed: "비숑",
-      dogGender: "FEMALE",
-      dogWeight: "5.6",
-      requestContent: "(공지) 미용하고 싶어요1"
-    },
-    {
-      requestId: 6,
-      userName: "이도림",
-      userProfileImage:
-        "http://img1.kakaocdn.net/thumb/R640x640.q70/?fname=http://t1.kakaocdn.net/account_images/default_profile.jpeg",
-      expiryDate: "2024-11-28T15:00:00",
-      beautyDate: "2024-12-03T15:00:00",
-      dogBreed: "비숑",
-      dogGender: "FEMALE",
-      dogWeight: "5.6",
-      requestContent: "(공지) 미용하고 싶어요3"
-    },
-    {
-      requestId: 8,
-      userName: "이도림",
-      userProfileImage:
-        "http://img1.kakaocdn.net/thumb/R640x640.q70/?fname=http://t1.kakaocdn.net/account_images/default_profile.jpeg",
-      expiryDate: "2024-11-28T15:00:00",
-      beautyDate: "2024-12-03T15:00:00",
-      dogBreed: "비숑",
-      dogGender: "FEMALE",
-      dogWeight: "5.6",
-      requestContent: "(공지) 미용하고 싶어요5"
-    },
-    {
-      requestId: 9,
-      userName: "이도림",
-      userProfileImage:
-        "http://img1.kakaocdn.net/thumb/R640x640.q70/?fname=http://t1.kakaocdn.net/account_images/default_profile.jpeg",
-      expiryDate: "2024-11-28T15:00:00",
-      beautyDate: "2024-12-03T15:00:00",
-      dogBreed: "비숑",
-      dogGender: "FEMALE",
-      dogWeight: "5.6",
-      requestContent: "(공지) 미용하고 싶어요6"
-    }
-  ];
+    fetchShopRequests();
+  }, []); // Empty dependency array, only run once on mount
+
+  // Fetch totalRequests on mount
+  useEffect(() => {
+    const fetchShopRequests = async () => {
+      try {
+        const requests = await getQuotesAll();
+        console.log("requests", requests);
+        setTotalRequests(requests.quoteRequests);
+      } catch (error) {
+        console.error("Failed to fetch shop requests:", error);
+      }
+    };
+
+    fetchShopRequests();
+  }, []); // Empty dependency array, only run once on mount
+
+  // Show loading message until both shopRequests and totalRequests are fetched
+  if (!shopRequests || !totalRequests) return "데이터 가져오는중...";
 
   const sentQuotes = [
     {

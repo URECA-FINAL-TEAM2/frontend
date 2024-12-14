@@ -43,31 +43,33 @@ const GroomerHome = () => {
     <main className="min-h-screen">
       <div className="mx-auto w-11/12 pb-24 pt-6">
         {/* 오늘의 예약 */}
-        <section className="rounded-xl bg-white px-6 py-3 shadow-md">
-          <div className="flex items-center justify-between">
-            <span className="text-lg">오늘의 예약</span>
-            <span>{preview.todayReservation}</span>
-          </div>
-        </section>
 
+        <section className="rounded-xl bg-white px-6 py-3 shadow-md">
+          <Link to="/groomer/reservation">
+            <div className="flex items-center justify-between">
+              <span className="text-lg">오늘의 예약</span>
+              <span>{preview.todayReservation}</span>
+            </div>
+          </Link>
+        </section>
         {/* 1:1 견적 요청 */}
         <section className="my-4 rounded-xl bg-white px-6 py-3 shadow-md">
-          <div className="flex flex-col">
-            <span className="text-lg">1:1 견적 요청</span>
-            <span className="text-sm text-main">받은 요청을 확인하고, 견적을 보내보세요!</span>
+          <Link to="/groomer/quotes">
+            <div className="flex flex-col">
+              <span className="text-lg">1:1 견적 요청</span>
+              <span className="text-sm text-main">받은 요청을 확인하고, 견적을 보내보세요!</span>
 
-            <Summary
-              firstName={"전체"}
-              firstValue={preview.totalDirectRequest}
-              secondName={"오늘 요청"}
-              secondValue={preview.todayRequest}
-              thirdName={"견적 미발송"}
-              thirdValue={preview.unsentQuote}
-              navigate={"/groomer/docs"}
-            />
-          </div>
+              <Summary
+                firstName={"전체"}
+                firstValue={preview.totalDirectRequest}
+                secondName={"오늘 요청"}
+                secondValue={preview.todayRequest}
+                thirdName={"견적 미발송"}
+                thirdValue={preview.unsentQuote}
+              />
+            </div>
+          </Link>
         </section>
-
         {/* 우리동네 견적공고 */}
         <section>
           <div className="flex items-center justify-between px-3">

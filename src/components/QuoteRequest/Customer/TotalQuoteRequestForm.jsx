@@ -335,7 +335,7 @@ const TotalQuoteRequestForm = () => {
         <BottomButton styleType="gray">견적 요청 보내기</BottomButton>
       )}
 
-      {/* 모달 */}
+      {/* 반려견 선택 모달 */}
       <PetSelectModal
         isOpen={isModalOpen}
         onClose={handleCloseModal}
@@ -344,13 +344,11 @@ const TotalQuoteRequestForm = () => {
         confirmText="확인"
       ></PetSelectModal>
 
-      {/* 모달 */}
+      {/* 지역 선택 모달 */}
       <RegionSelectModal
         isOpen={isLocationModalOpen}
         onClose={handleCloseLocationModal}
         onConfirm={handleLocationSelect}
-        closeText="닫기"
-        confirmText="확인"
       ></RegionSelectModal>
     </div>
   );

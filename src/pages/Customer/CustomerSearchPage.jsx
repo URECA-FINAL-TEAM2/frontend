@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import CustomerBottom from "../../components/common/CustomerBottom";
 import RegionSelectModal from "../../components/common/modal/RegionSelectModal.jsx";
 import CustomerSearch from "../../components/CustomerSearch/CustomerSearch.jsx";
@@ -6,6 +6,7 @@ import SearchBox from "../../components/CustomerSearch/SearchBox.jsx";
 import { MdOutlineEditLocation } from "react-icons/md";
 import { HiMap } from "react-icons/hi2";
 import useRegionStore from "@/store/regionStore";
+import { updateUserAddress } from "@/queries/userQuery";
 
 function CustomerSearchPage(props) {
   const customerId = 47; // TODO
@@ -14,14 +15,28 @@ function CustomerSearchPage(props) {
 
   const onModalClose = () => {
     setIsModalOpen(false);
-    // [ ] 이 페이지의 sidoName, sigunguName update
-    // [ ] store에 저장 {sidoName, sigunguName}
-    // [ ] 지역 수정 PUT API Request 보내기
-    // [ ] 매장 리스트 조회 GET API Request 보내기 -> 리렌더링
   };
 
   const onModalOpen = () => {
     setIsModalOpen(true);
+  };
+
+  const handleLocationSelect = (selectLocation) => {
+    const updateAddress = async () => {
+      try {
+        const response = await updateUserAddress(selectLocation.sidoName, selectLocation.sigunguName, customerId);
+        console.log(response);
+        setRegion(selectLocation.sidoName, selectLocation.sigunguName);
+      } catch (err) {
+        console.error("회원 주소 업데이트에 실패했습니다.", err);
+        setError("회원 주소 업데이트에 실패했습니다.");
+      }
+    };
+    // [x] store에 저장 {sidoName, sigunguName}
+    // [x] 지역 수정 PUT API Request 보내기
+    // [x] 매장 리스트 조회 GET API Request 보내기 -> 리렌더링
+    updateAddress();
+    setIsModalOpen(false);
   };
 
   return (
@@ -44,7 +59,11 @@ function CustomerSearchPage(props) {
       </main>
       <CustomerBottom />
 
-      <RegionSelectModal isOpen={isModalOpen} onClose={onModalClose} onConfirm={onModalClose}></RegionSelectModal>
+      <RegionSelectModal
+        isOpen={isModalOpen}
+        onClose={onModalClose}
+        onConfirm={handleLocationSelect}
+      ></RegionSelectModal>
     </div>
   );
 }

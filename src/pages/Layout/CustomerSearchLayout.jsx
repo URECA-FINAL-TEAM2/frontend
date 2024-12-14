@@ -10,14 +10,11 @@ const CustomerSearchLayout = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    console.log("useEffect 실행");
     const fetchUserAddress = async () => {
       try {
-        console.log("getUserAddress 호출");
         const response = await getUserAddress(customerId);
         console.log("주소 로드 성공:", response.sidoName, response.sigunguName);
         setRegion(response.sidoName, response.sigunguName);
-        console.log("setRegion 호출 완료");
       } catch (error) {
         console.error("주소 로드 실패:", error);
       } finally {

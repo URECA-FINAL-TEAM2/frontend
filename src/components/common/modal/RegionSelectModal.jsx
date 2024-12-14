@@ -3,11 +3,11 @@ import PropTypes from "prop-types";
 import Modal from "./modal";
 import { getSidoList, getSigunguList } from "../../../queries/regionQuery";
 
-const RegionSelectModal = ({ isOpen, onClose, onConfirm, initialRegion = { sido: "", sigungu: "" } }) => {
+const RegionSelectModal = ({ isOpen, onClose, onConfirm }) => {
   const [sidoList, setSidoList] = useState([]);
   const [sigunguList, setSigunguList] = useState([]);
-  const [selectedSido, setSelectedSido] = useState(initialRegion.sido);
-  const [selectedSigungu, setSelectedSigungu] = useState(initialRegion.sigungu);
+  const [selectedSido, setSelectedSido] = useState("");
+  const [selectedSigungu, setSelectedSigungu] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
   // 시도 목록 로드
@@ -70,8 +70,8 @@ const RegionSelectModal = ({ isOpen, onClose, onConfirm, initialRegion = { sido:
   };
 
   const handleClose = () => {
-    setSelectedSido(initialRegion.sido);
-    setSelectedSigungu(initialRegion.sigungu);
+    setSelectedSido("");
+    setSelectedSigungu("");
     onClose();
   };
 
@@ -113,11 +113,7 @@ const RegionSelectModal = ({ isOpen, onClose, onConfirm, initialRegion = { sido:
 RegionSelectModal.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
-  onConfirm: PropTypes.func.isRequired,
-  initialRegion: PropTypes.shape({
-    sido: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-    sigungu: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
-  })
+  onConfirm: PropTypes.func.isRequired
 };
 
 export default RegionSelectModal;

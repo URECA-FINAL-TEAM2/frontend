@@ -5,11 +5,21 @@ import { getCustomerMain } from "@/queries/mainQuery";
 import ShopItem from "@/components/CustomerSearch/ShopItem";
 import useAuthStore from "@/store/authStore";
 import BannerSwiper from "@/components/Main/BannerSwiper";
+import toast, { Toaster } from "react-hot-toast";
+import { useToastStore } from "@/store/toastStore";
 
 const CustomerHome = () => {
+  const { toastMessage, toastIcon, clearToast } = useToastStore();
   const { id } = useAuthStore();
   const [bestReviews, setBestReviews] = useState([]);
   const [localGroomers, setLocalGroomers] = useState([]);
+
+  useEffect(() => {
+    if (toastMessage) {
+      toast(toastMessage, { icon: toastIcon });
+      clearToast();
+    }
+  }, [toastMessage, toastIcon]);
 
   useEffect(() => {
     const getMain = async () => {
@@ -59,6 +69,7 @@ const CustomerHome = () => {
           })}
         </section>
       </div>
+      <Toaster />
     </main>
   );
 };

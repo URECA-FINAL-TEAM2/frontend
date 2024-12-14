@@ -6,7 +6,6 @@ const useToastAndNavigate = () => {
 
   const showToastAndNavigate = (message, icon = "👏🏻", delay = 1000) => {
     toast(message, { icon });
-
     navigate(-1);
   };
 

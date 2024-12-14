@@ -4,8 +4,11 @@ import { useEffect, useState } from "react";
 import Summary from "../../components/common/Summary";
 import { getGroomerMain } from "@/queries/mainQuery";
 import useAuthStore from "@/store/authStore";
+import { useToastStore } from "@/store/toastStore";
+import toast, { Toaster } from "react-hot-toast";
 
 const GroomerHome = () => {
+  const { toastMessage, toastIcon, clearToast } = useToastStore();
   const { id } = useAuthStore();
   const [totalRequest, setTotalRequest] = useState([]);
   const [preview, setPreview] = useState({
@@ -14,6 +17,13 @@ const GroomerHome = () => {
     todayRequest: 0, // 오늘 요청
     unsentQuote: 0 // 견적 미발송
   });
+
+  useEffect(() => {
+    if (toastMessage) {
+      toast(toastMessage, { icon: toastIcon });
+      clearToast();
+    }
+  }, [toastMessage, toastIcon]);
 
   const updatePreview = (data) => {
     setPreview((prev) => ({
@@ -84,6 +94,7 @@ const GroomerHome = () => {
           })}
         </section>
       </div>
+      <Toaster />
     </main>
   );
 };

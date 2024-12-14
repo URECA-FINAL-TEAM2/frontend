@@ -24,8 +24,6 @@ const BannerSwiper = () => {
           disableOnInteraction: false
         }}
         scrollbar={{ draggable: true }}
-        onSwiper={(swiper) => console.log(swiper)}
-        onSlideChange={() => console.log("slide change")}
       >
         <SwiperSlide>
           <img src={banner01} alt="Banner 01" className="h-[250px] w-[350px] rounded-xl object-fill" />

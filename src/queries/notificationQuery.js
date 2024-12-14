@@ -19,7 +19,6 @@ export const getUnreadNotificationCount = async (roleType, userId) => {
     const response = await axiosInstance.get("/notifications/unread-count", {
       params: { userId, roleType }
     });
-    console.log("안읽은알림개수", response.data.unreadCount);
     return response.data.unreadCount;
   } catch (error) {
     console.error("읽지않은 알림 개수 조회 실패:", error);
@@ -34,7 +33,6 @@ export const deleteNotification = async (roleType, userId, notificationId) => {
       params: { userId, roleType }
     });
 
-    console.log(response);
     return response.data;
   } catch (error) {
     console.error("특정 알림 삭제 실패:", error);

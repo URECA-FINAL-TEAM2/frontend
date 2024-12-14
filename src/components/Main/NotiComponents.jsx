@@ -25,7 +25,6 @@ const NotiComponents = () => {
   // 사이드바 열고 닫기
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
-    console.log("Notifications:", notifications);
   };
 
   // SSE 연결

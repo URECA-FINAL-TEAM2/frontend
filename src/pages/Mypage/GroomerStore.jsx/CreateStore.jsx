@@ -68,7 +68,7 @@ const CreateStore = () => {
 
     setTimeout(() => {
       navigate("/groomer/mypage");
-    }, 800);
+    }, 500);
   };
 
   const handleOpenModal = () => {

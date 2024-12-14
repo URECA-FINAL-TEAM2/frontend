@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { formatDate } from "@/utils/formatDate";
-import { BsQuestionCircleFill } from "react-icons/bs";
+import { BsQuestionCircleFill, BsX } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
 import { Designer, Schedule, Note } from "/public/Icons";
 
@@ -121,9 +121,17 @@ const CustomerEstimate = ({ Info }) => {
                 </span>
                 {showRejectionReason && (
                   <div className="absolute right-0 top-full z-10 mt-1 w-56 rounded-lg border border-gray-200 bg-white px-4 py-3 shadow-lg">
-                    <div className="mb-2 flex items-center">
-                      <BsQuestionCircleFill className="mr-1.5 text-sm text-gray-500" />
-                      <h3 className="text-sm font-semibold">거절 사유</h3>
+                    <div className="mb-2 flex items-center justify-between">
+                      <div className="flex items-center">
+                        <BsQuestionCircleFill className="mr-1.5 text-sm text-gray-500" />
+                        <h3 className="text-sm font-semibold">거절 사유</h3>
+                      </div>
+                      <button
+                        onClick={() => setShowRejectionReason(false)}
+                        className="text-gray-500 hover:text-gray-700"
+                      >
+                        <BsX className="text-xl" />
+                      </button>
                     </div>
                     <p className="text-sm text-gray-600">
                       {Info.rejectionReason || "거절 사유가 제공되지 않았습니다."}

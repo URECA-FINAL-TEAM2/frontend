@@ -10,5 +10,20 @@ import User from "./User.svg";
 import Won from "./Won.svg";
 import ArrowDown from "./ArrowDown.svg";
 import ArrowUp from "./ArrowUp.svg";
+import EditShop from "./EditShop.png";
 
-export { Banknotes, Corgi, Description, Designer, Note, Photos, Region, Schedule, User, Won, ArrowDown, ArrowUp };
+export {
+  EditShop,
+  Banknotes,
+  Corgi,
+  Description,
+  Designer,
+  Note,
+  Photos,
+  Region,
+  Schedule,
+  User,
+  Won,
+  ArrowDown,
+  ArrowUp
+};

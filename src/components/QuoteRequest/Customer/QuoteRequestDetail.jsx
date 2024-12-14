@@ -94,20 +94,41 @@ const QuoteRequestDetail = ({ requestId }) => {
         <h2 className="text-lg font-semibold leading-none">반려견 정보</h2>
       </div>
 
-      <div className="mb-6 rounded-lg border border-main-400 p-4">
+      <div className="mb-6 rounded-lg border border-main-400 p-4 pb-3">
         <div className="flex items-start">
           <div className="mr-4 self-center">
             <img src={requestData.dogProfileImage} alt="반려견 사진" className="h-28 w-28 rounded-lg object-cover" />
             <p className="mt-1 text-center font-semibold">{requestData.dogName}</p>
           </div>
-          <div className="text-sm leading-normal">
-            <p>견종: {requestData.dogBreed}</p>
-            <p>무게: {requestData.dogWeight}</p>
-            <p>나이: {requestData.dogAge}</p>
-            <p>성별: {requestData.dogGender === "MALE" ? "남아" : "여아"}</p>
-            <p>중성화 여부: {requestData.neutering ? "Y" : "N"}</p>
-            <p>미용 신청 여부: {requestData.experience ? "Y" : "N"}</p>
-            <p>특이사항: {requestData.significant}</p>
+          <div className="text-sm leading-snug">
+            <p>
+              <span className="mr-2 font-semibold">견종</span>
+              {requestData.dogBreed}
+            </p>
+            <p>
+              <span className="mr-2 font-semibold">무게</span>
+              {requestData.dogWeight}
+            </p>
+            <p>
+              <span className="mr-2 font-semibold">나이</span>
+              {requestData.dogAge}
+            </p>
+            <p>
+              <span className="mr-2 font-semibold">성별</span>
+              {requestData.dogGender === "MALE" ? "남아" : "여아"}
+            </p>
+            <p>
+              <span className="mr-2 font-semibold">중성화 여부</span>
+              {requestData.neutering ? "Y" : "N"}
+            </p>
+            <p>
+              <span className="mr-2 font-semibold">미용 신청 여부</span>
+              {requestData.experience ? "Y" : "N"}
+            </p>
+            <p>
+              <span className="mr-2 font-semibold">특이사항</span>
+              {requestData.significant}
+            </p>
           </div>
         </div>
       </div>

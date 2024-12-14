@@ -1,7 +1,10 @@
 import { formatDate } from "@/utils/formatDate";
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Schedule, Corgi, Note } from "/public/Icons";
+import useAuthStore from "@/store/authStore";
+import Modal from "@/components/common/modal/modal";
+import { RequestReject } from "@/queries/quoteRequestQuery";
 
 function GroomerShopRequests({ Infos }) {
   return (
@@ -14,7 +17,41 @@ function GroomerShopRequests({ Infos }) {
 }
 
 const GroomerEstimate = ({ Info }) => {
+  const { id } = useAuthStore();
   const navigate = useNavigate();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [rejectReason, setRejectReason] = useState("");
+
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    setRejectReason("");
+  };
+
+  const handleReject = async () => {
+    if (rejectReason.trim() === "") {
+      alert("거절 사유를 입력해주세요.");
+      return;
+    }
+
+    try {
+      const rejectData = {
+        requestId: Info.requestId,
+        groomerId: id.groomerId,
+        rejectReason: rejectReason
+      };
+      const response = await RequestReject(rejectData);
+      console.log("거절 성공: " + response);
+      setIsModalOpen(false);
+      setRejectReason("");
+    } catch (error) {
+      console.log("견적 요청 거절 실패");
+    }
+  };
+
   return (
     <div className="m-5 rounded-xl bg-white p-4">
       <div className="mb-3 flex">
@@ -51,10 +88,25 @@ const GroomerEstimate = ({ Info }) => {
         >
           상세보기
         </div>
-        <div className="flex h-[35px] w-1/4 cursor-pointer items-center justify-center rounded-lg bg-gray-300 text-center text-sm text-white">
+        <div
+          onClick={openModal}
+          className="flex h-[35px] w-1/4 cursor-pointer items-center justify-center rounded-lg bg-gray-300 text-center text-sm text-white"
+        >
           거절하기
         </div>
       </div>
+      <Modal isOpen={isModalOpen} onClose={handleCloseModal} onConfirm={handleReject}>
+        <div className="w-full">
+          <p className="mb-4 text-center font-medium">거절 사유를 입력해주세요.</p>
+          <input
+            type="text"
+            value={rejectReason}
+            onChange={(e) => setRejectReason(e.target.value)}
+            placeholder="거절 사유 입력"
+            className="w-full rounded-md border p-2 text-sm"
+          />
+        </div>
+      </Modal>
     </div>
   );
 };

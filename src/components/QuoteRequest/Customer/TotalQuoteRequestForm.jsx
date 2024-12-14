@@ -82,7 +82,6 @@ const TotalQuoteRequestForm = () => {
 
   const handleCloseModal = () => {
     setIsModalOpen(false);
-    setCancelReason("");
   };
 
   const handlePetSelect = (selectedDog) => {

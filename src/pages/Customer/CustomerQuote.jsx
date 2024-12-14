@@ -3,19 +3,56 @@ import CustomerBottom from "@/components/common/CustomerBottom";
 import SubHeader from "@/components/common/SubHeader";
 import ShopQuoteRequestList from "@/components/QuoteRequest/Customer/ShopQuoteRequestList";
 import TotalQuoteRequestList from "@/components/QuoteRequest/Customer/TotalQuoteRequestList";
-import React, { useState } from "react";
+import { getQuotesAll, getQuotesGroomer } from "@/queries/quoteQuery";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const CustomerQuote = () => {
   const [activeSection, setActiveSection] = useState("section1");
+  const [shopRequests, setShopRequests] = useState(null);
+  const [totalRequests, setTotalRequests] = useState(null);
+
   const navigate = useNavigate();
+
+  // Fetch shopRequests on mount
+  useEffect(() => {
+    const fetchShopRequests = async () => {
+      try {
+        const requests = await getQuotesGroomer();
+        setShopRequests(requests.quoteRequests);
+      } catch (error) {
+        console.error("Failed to fetch shop requests:", error);
+      }
+    };
+
+    fetchShopRequests();
+  }, []); // Empty dependency array, only run once on mount
+
+  // Fetch totalRequests on mount
+  useEffect(() => {
+    const fetchShopRequests = async () => {
+      try {
+        const requests = await getQuotesAll();
+        console.log("requests", requests);
+        setTotalRequests(requests.quoteRequests);
+      } catch (error) {
+        console.error("Failed to fetch shop requests:", error);
+      }
+    };
+
+    fetchShopRequests();
+  }, []); // Empty dependency array, only run once on mount
+
+  // Show loading message until both shopRequests and totalRequests are fetched
+  if (!shopRequests) return "1:1 맞춤 견적 데이터를 가져오는중...";
+  if (!totalRequests) return "내 견적 공고 데이터를 가져오는중...";
 
   const renderContent = () => {
     switch (activeSection) {
       case "section1":
-        return <ShopQuoteRequestList />;
+        return <ShopQuoteRequestList Infos={shopRequests} />;
       case "section2":
-        return <TotalQuoteRequestList />;
+        return <TotalQuoteRequestList Infos={totalRequests} />;
       default:
         return null;
     }

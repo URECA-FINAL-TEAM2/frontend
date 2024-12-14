@@ -1,10 +1,14 @@
 import PropTypes from "prop-types";
 
-const BottomButton = ({ styleType, onClick = () => {}, children }) => {
+const BottomButton = ({ styleType = "pink", onClick = () => {}, children }) => {
   const buttonStyle =
     styleType === "lightPink"
       ? "bg-main-200 text-main-400 hover:bg-main-100"
-      : "bg-main-400 text-white hover:bg-main-300";
+      : styleType === "pink"
+        ? "bg-main-400 text-white hover:bg-main-300"
+        : styleType === "gray"
+          ? "bg-gray-200 text-gray-300 cursor-not-allowed"
+          : "";
 
   return (
     <button

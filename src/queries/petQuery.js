@@ -26,7 +26,7 @@ export const getPetInfo = async (dogId, id) => {
 // 견적서에서 반려견 정보 조회
 export const getQuotePetInfo = async (dogId) => {
   try {
-    const customerId = 2; // TODO
+    const customerId = 47; // TODO
 
     const response = await axiosInstance.get(`/profile/customer/dogs/${dogId}`, {
       params: { customerId }

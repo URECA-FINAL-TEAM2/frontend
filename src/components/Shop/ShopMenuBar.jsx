@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { GoHeart, GoHeartFill } from "react-icons/go";
-import { FaFolderOpen } from "react-icons/fa6";
-import { MdReviews } from "react-icons/md";
-import { RiScissors2Fill } from "react-icons/ri";
-import { IoChatbubbles } from "react-icons/io5";
+import { MdOutlineReviews } from "react-icons/md";
+import { RiScissors2Line } from "react-icons/ri";
+import { IoChatbubblesOutline } from "react-icons/io5";
 import { deleteFavorite, postFavorite } from "@/queries/shopQuery";
+import { PiImagesSquareFill } from "react-icons/pi";
 
 const ShopMenuBar = ({ shopId, isCustomer, isFavorite, favoriteCount, scrollToSection }) => {
   // TODO
@@ -59,7 +59,7 @@ const ShopMenuBar = ({ shopId, isCustomer, isFavorite, favoriteCount, scrollToSe
           className="flex flex-1 cursor-pointer flex-col items-center py-3"
           onClick={() => handleSectionClick("portfolio")}
         >
-          <FaFolderOpen className="text-[25px] text-gray-600" />
+          <PiImagesSquareFill className="text-[25px] text-gray-600" />
           <div className="mt-1 select-none text-[12px]">포트폴리오</div>
         </div>
 
@@ -67,7 +67,7 @@ const ShopMenuBar = ({ shopId, isCustomer, isFavorite, favoriteCount, scrollToSe
           className="flex flex-1 cursor-pointer flex-col items-center py-3"
           onClick={() => handleSectionClick("groomer")}
         >
-          <RiScissors2Fill className="text-[25px] text-gray-600" />
+          <RiScissors2Line className="text-[25px] text-gray-600" />
           <div className="mt-1 select-none text-[12px]">미용사</div>
         </div>
 
@@ -75,13 +75,13 @@ const ShopMenuBar = ({ shopId, isCustomer, isFavorite, favoriteCount, scrollToSe
           className="flex flex-1 cursor-pointer flex-col items-center py-3"
           onClick={() => handleSectionClick("reviews")}
         >
-          <MdReviews className="text-[25px] text-gray-600" />
+          <MdOutlineReviews className="text-[25px] text-gray-600" />
           <div className="mt-1 select-none text-[12px]">후기</div>
         </div>
 
         {isCustomer ? (
           <div className="flex flex-1 cursor-pointer flex-col items-center py-3" onClick={() => {}}>
-            <IoChatbubbles className="text-[25px] text-gray-600" />
+            <IoChatbubblesOutline className="text-[25px] text-gray-600" />
             <div className="mt-1 select-none text-[12px]">채팅 문의</div>
           </div>
         ) : null}

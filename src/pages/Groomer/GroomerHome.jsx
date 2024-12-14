@@ -10,7 +10,19 @@ import toast, { Toaster } from "react-hot-toast";
 const GroomerHome = () => {
   const { toastMessage, toastIcon, clearToast } = useToastStore();
   const { id } = useAuthStore();
-  const [totalRequest, setTotalRequest] = useState([]);
+  const [totalRequest, setTotalRequest] = useState([
+    {
+      requestId: 7,
+      profileImage: "/profile-user.png",
+      userName: "이도림",
+      closingDate: "2024-12-03T15:00:00",
+      beautyDate: "2024-12-03T15:00:00",
+      breed: "비숑",
+      dogWeight: "5.6",
+      dogGender: "FEMALE",
+      requestContent: "(공지) 미용하고 싶어요4"
+    }
+  ]);
   const [preview, setPreview] = useState({
     todayReservation: 0, // 오늘의 예약
     totalDirectRequest: 0, // 전체
@@ -84,7 +96,7 @@ const GroomerHome = () => {
         <section>
           <div className="flex items-center justify-between px-3">
             <h2 className="text-lg">우리동네 견적 공고</h2>
-            <Link to="/groomer/docs">
+            <Link to="/groomer/quotes">
               <div className="text-xs">더보기</div>
             </Link>
           </div>

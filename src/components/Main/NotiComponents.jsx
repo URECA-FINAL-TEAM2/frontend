@@ -142,14 +142,14 @@ const NotiComponents = () => {
     <div className="relative">
       {unreadCount > 0 ? (
         <div onClick={toggleSidebar} className="relative cursor-pointer">
-          <VscBell size={28} />
+          <VscBell size={23} />
           <div className="absolute -right-0 -top-1 rounded-2xl bg-[#ff8e8e] px-[0.4em] py-[0.1px] text-[10px] text-white">
             {unreadCount}
           </div>
         </div>
       ) : (
         <div onClick={toggleSidebar} className="cursor-pointer">
-          <VscBell size={28} />
+          <VscBell size={23} />
         </div>
       )}
 

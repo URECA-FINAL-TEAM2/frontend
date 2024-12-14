@@ -8,6 +8,7 @@ import CreateStore from "@/pages/Mypage/GroomerStore.jsx/CreateStore";
 import MyStore from "@/pages/Mypage/GroomerStore.jsx/MyStore";
 import UserInfo from "@/pages/Mypage/UserInfo";
 import MypageBoth from "@/pages/MypageBoth";
+import NotFound from "@/pages/NotFound";
 import GroomerQuoteDetailPage from "@/pages/Quote/Groomer/GroomerQuoteDetailPage";
 import GroomerQuoteRequestPage from "@/pages/Quote/Groomer/GroomerQuoteRequestPage";
 import GroomerReservationDetail from "@/pages/Reservation/Groomer/GroomerReservationDetail";
@@ -23,17 +24,18 @@ const GroomerRoutes = () => {
         <Route path="chat" element={<GroomerChat />} />
       </Route>
 
-      {/* groomer/ -none */}
       <Route path="quotes" element={<GroomerQuote />} />
       <Route path="quotes/request/detail/:requestId" element={<GroomerQuoteRequestPage />} />
       <Route path="quotes/detail/:requestId" element={<GroomerQuoteDetailPage />} />
-      <Route path="mypage" element={<MypageBoth />} />
+      {/* <Route path="mypage" element={<MypageBoth />} /> */}
       <Route path="info" element={<UserInfo />} />
       <Route path="mystore" element={<MyStore />} />
       <Route path="createstore" element={<CreateStore />} />
       <Route path="editportfolio" element={<EditPortfolio />} />
       <Route path="reservation" element={<GroomerReservationMain />} />
       <Route path="reservation/detail" element={<GroomerReservationDetail />} />
+
+      <Route path="*" element={<NotFound />} />
     </Routes>
   );
 };

@@ -126,7 +126,10 @@ export const getGroomerMain = async (id) => {
     const response = await axiosInstance.get(`/main/groomer/${id}`);
     return response.data.data;
   } catch (error) {
-    throw new Error("Failed to fetch customer main data");
+    if (error.response?.status === 404) {
+      throw { status: 404, message: "Groomer not found" }; // 상태 코드와 메시지를 포함한 에러 객체 던짐
+    }
+    throw new Error("Failed to fetch groomer main data"); // 기본 에러
   }
 };
 

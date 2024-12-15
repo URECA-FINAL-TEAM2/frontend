@@ -1,3 +1,4 @@
+//quoteRequestQuery.js
 import axiosInstance from "@/api/axiosInstance";
 
 const customerRequestDetails = [
@@ -138,7 +139,14 @@ const sendGroomerQuote = async (customerId, requestDto, images) => {
 };
 
 const getCustomerRequestDetail = async (requestId) => {
-  return customerRequestDetails[requestId];
+  // return customerRequestDetails[requestId];
+  try {
+    const response = await axiosInstance.get(`/requests/customer/detail/${requestId}`, {});
+    return response.data.data;
+  } catch (error) {
+    console.error("Error rejecting request:", error);
+    throw error;
+  }
 };
 
 const getGroomerRequestDetail = async (requestId) => {
@@ -162,6 +170,39 @@ const RequestReject = async (rejectData) => {
   }
 };
 
+const getGroomerQuoteDirect = async () => {
+  const groomerId = 4;
+  try {
+    const response = await axiosInstance.get(`/requests/groomer/direct/${groomerId}`);
+    return response.data.data;
+  } catch (error) {
+    console.error("Error inserting quote:", error);
+    throw error;
+  }
+};
+
+const getGroomerQuoteTotal = async () => {
+  const groomerId = 4;
+  try {
+    const response = await axiosInstance.get(`/requests/groomer/total/${groomerId}`);
+    return response.data.data;
+  } catch (error) {
+    console.error("Error inserting quote:", error);
+    throw error;
+  }
+};
+
+const getGroomerQuoteSend = async () => {
+  const groomerId = 4;
+  try {
+    const response = await axiosInstance.get(`/requests/groomer/send/${groomerId}`);
+    return response.data.data;
+  } catch (error) {
+    console.error("Error inserting quote:", error);
+    throw error;
+  }
+};
+
 export {
   getQuotePetList,
   getGroomerDetail,
@@ -169,5 +210,8 @@ export {
   getGroomerRequestDetail,
   sendCustomerQuote,
   sendGroomerQuote,
-  RequestReject
+  RequestReject,
+  getGroomerQuoteDirect,
+  getGroomerQuoteTotal,
+  getGroomerQuoteSend
 };

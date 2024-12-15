@@ -6,8 +6,9 @@ import { Schedule, Corgi, Note } from "/public/Icons";
 function GroomerSentRequests({ Infos }) {
   return (
     <>
-      <GroomerEstimate Info={Infos[0]} />
-      <GroomerEstimate Info={Infos[1]} />
+      {Infos.map((Info) => {
+        return <GroomerEstimate Info={Info} />;
+      })}
     </>
   );
 }

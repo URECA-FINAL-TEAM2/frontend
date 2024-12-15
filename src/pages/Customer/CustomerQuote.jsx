@@ -1,4 +1,3 @@
-//CustomerQuote.jsx
 import CustomerBottom from "@/components/common/CustomerBottom";
 import SubHeader from "@/components/common/SubHeader";
 import ShopQuoteRequestList from "@/components/QuoteRequest/Customer/ShopQuoteRequestList";
@@ -16,7 +15,6 @@ const CustomerQuote = () => {
 
   const navigate = useNavigate();
 
-  // Fetch shopRequests on mount
   useEffect(() => {
     const fetchShopRequests = async () => {
       try {
@@ -28,11 +26,10 @@ const CustomerQuote = () => {
     };
 
     fetchShopRequests();
-  }, []); // Empty dependency array, only run once on mount
+  }, []);
 
-  // Fetch totalRequests on mount
   useEffect(() => {
-    const fetchShopRequests = async () => {
+    const fetchTotalRequests = async () => {
       try {
         const requests = await getQuotesAll(id.customerId);
         console.log("requests", requests);
@@ -42,10 +39,9 @@ const CustomerQuote = () => {
       }
     };
 
-    fetchShopRequests();
-  }, []); // Empty dependency array, only run once on mount
+    fetchTotalRequests();
+  }, []);
 
-  // Show loading message until both shopRequests and totalRequests are fetched
   if (!shopRequests) return "1:1 맞춤 견적 데이터를 가져오는중...";
   if (!totalRequests) return "내 견적 공고 데이터를 가져오는중...";
 

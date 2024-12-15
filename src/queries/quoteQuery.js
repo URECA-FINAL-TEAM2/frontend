@@ -69,7 +69,6 @@ const insertQuote = async (quoteData) => {
 };
 
 const getQuotesAll = async (customerId) => {
-  // 고객 화면
   try {
     const response = await axiosInstance.get("/quotes/requests/my/all", {
       params: {
@@ -81,6 +80,88 @@ const getQuotesAll = async (customerId) => {
     console.error("Error inserting quote:", error);
     throw error;
   }
+
+  // return {
+  //   quoteRequests: [
+  //     {
+  //       quoteRequestId: 1,
+  //       requestStatus: "요청",
+  //       region: "서울특별시 강남구",
+  //       beautyDate: "2024-11-19 14:30:00",
+  //       dogName: "두부",
+  //       dogImage:
+  //         "https://s3-beauty-meongdang.s3.ap-northeast-2.amazonaws.com/%EB%B0%98%EB%A0%A4%EA%B2%AC%20%ED%94%84%EB%A1%9C%ED%95%84%20%EC%9D%B4%EB%AF%B8%EC%A7%80/eea7a3b9-4604-4ec7-8b16-a4aed6c7c9a4.jpg",
+  //       requestContent: "식빵컷",
+  //       quotes: [
+  //         {
+  //           quoteId: 1,
+  //           shopName: "댕댕몽",
+  //           shopLogo: "https://picsum.photos/50",
+  //           groomerName: "수민", //nickname
+  //           quoteStatus: "제안",
+  //           cost: 60000,
+  //           quoteContent: "2.1kg 반려견 기준으로 미용 20,000원...",
+  //           createAt: "2024-11-19 14:30:00"
+  //         },
+  //         {
+  //           quoteId: 2,
+  //           shopName: "댕몽",
+  //           shopLogo: "https://picsum.photos/50",
+  //           groomerName: "리우", //nickname
+  //           quoteStatus: "마감",
+  //           cost: 70000,
+  //           quoteContent:
+  //             "2.1kg 반려견 기준으로 미용 20,000원, 가위컷 40,000원 책정되었습니다. 소요 시간은 약2시간 입니다.",
+  //           createAt: "2024-11-19 14:30:00"
+  //         }
+  //       ]
+  //     },
+  //     {
+  //       quoteRequestId: 3,
+  //       requestStatus: "제안 완료",
+  //       region: "서울특별시 강남구",
+  //       beautyDate: "2024-11-19 14:30:00",
+  //       dogName: "두부",
+  //       dogImage:
+  //         "https://s3-beauty-meongdang.s3.ap-northeast-2.amazonaws.com/%EB%B0%98%EB%A0%A4%EA%B2%AC%20%ED%94%84%EB%A1%9C%ED%95%84%20%EC%9D%B4%EB%AF%B8%EC%A7%80/eea7a3b9-4604-4ec7-8b16-a4aed6c7c9a4.jpg",
+  //       requestContent: "식빵컷",
+  //       quotes: [
+  //         {
+  //           quoteId: 33,
+  //           shopName: "댕댕몽",
+  //           shopLogo: "https://picsum.photos/50",
+  //           groomerName: "수민", //nickname
+  //           quoteStatus: "마감",
+  //           cost: 60000,
+  //           quoteContent: "2.1kg 반려견 기준으로 미용 20,000원...",
+  //           createAt: "2024-11-19 14:30:00"
+  //         },
+  //         {
+  //           quoteId: 45,
+  //           shopName: "댕몽",
+  //           shopLogo: "https://picsum.photos/50",
+  //           groomerName: "리우", //nickname
+  //           quoteStatus: "수락",
+  //           cost: 70000,
+  //           quoteContent:
+  //             "2.1kg 반려견 기준으로 미용 20,000원, 가위컷 40,000원 책정되었습니다. 소요 시간은 약2시간 입니다.",
+  //           createAt: "2024-11-19 14:30:00"
+  //         }
+  //       ]
+  //     },
+  //     {
+  //       quoteRequestId: 5,
+  //       requestStatus: "마감",
+  //       region: "서울특별시 강남구",
+  //       beautyDate: "2024-11-19 14:30:00",
+  //       dogName: "두부",
+  //       dogImage:
+  //         "https://s3-beauty-meongdang.s3.ap-northeast-2.amazonaws.com/%EB%B0%98%EB%A0%A4%EA%B2%AC%20%ED%94%84%EB%A1%9C%ED%95%84%20%EC%9D%B4%EB%AF%B8%EC%A7%80/eea7a3b9-4604-4ec7-8b16-a4aed6c7c9a4.jpg",
+  //       requestContent: "식빵컷",
+  //       quotes: []
+  //     }
+  //   ]
+  // };
 };
 
 const getQuotesGroomer = async (customerId) => {
@@ -114,7 +195,7 @@ const getCustomerQuoteDetail = async (customerId, quotesId) => {
 };
 
 const getGroomerQuoteDetail = async (groomerId, requestId) => {
-  // TODO GET 연결 : `https://beautymeongdang.com/quotes/groomer/detail?requestId=${requestId}&groomerId=1`
+  // TODO GET 연결 : `https://beautymeongdang.com/quotes/groomer/detail?requestId=${requestId}&${groomerId}`
   try {
     const response = await axiosInstance.get(`/quotes/detail/${requestId}/${groomerId}`);
     return response.data.data;

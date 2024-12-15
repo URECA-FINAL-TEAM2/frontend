@@ -1,5 +1,5 @@
 //TotalQuoteRequestForm.jsx
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { RiEditLine } from "react-icons/ri";
 import { IoIosAddCircle, IoIosCloseCircle } from "react-icons/io";
 import RegionSelectModal from "../../common/modal/RegionSelectModal";
@@ -9,19 +9,40 @@ import BottomButton from "@/components/common/button/BottomButton";
 import { sendCustomerQuote } from "@/queries/quoteRequestQuery";
 import { useNavigate } from "react-router-dom";
 import useAuthStore from "@/store/authStore";
+import { getUserAddress } from "@/queries/userQuery";
 
 const TotalQuoteRequestForm = () => {
   const { id } = useAuthStore();
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [cancelReason, setCancelReason] = useState("");
   const [attachedImages, setAttachedImages] = useState([]);
   const [petInfo, setPetInfo] = useState(null);
   const [requestContent, setRequestContent] = useState("");
+  const [isLocationModalOpen, SetIsLocationModalOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
 
-  const [isLocationModalOpen, SetIsLocationModalOpen] = useState(false);
-  // TODO : 지역 초기값 설정 (GET API Request)
   const [location, setLocation] = useState(null);
+  useEffect(() => {
+    const fetchUserAddress = async () => {
+      try {
+        const response = await getUserAddress(id.customerId);
+        console.log("주소 로드 성공:", response.sidoName, response.sigunguName);
+        setLocation({
+          sido: response.sidoId,
+          sigungu: response.sigunguId,
+          sidoName: response.sidoName,
+          sigunguName: response.sigunguName
+        });
+      } catch (error) {
+        console.error("주소 로드 실패:", error);
+      } finally {
+        setIsLoading(false);
+        console.log("로딩 상태 변경 완료");
+      }
+    };
+
+    fetchUserAddress();
+  }, []);
 
   const getMinSelectableDate = () => {
     const tomorrow = new Date();
@@ -181,13 +202,11 @@ const TotalQuoteRequestForm = () => {
       </div>
 
       <div className="mb-6 rounded-lg border border-main-400 p-4">
-        {location ? (
+        {!isLoading ? (
           <p>
             {location.sidoName} {location.sigunguName}
           </p>
-        ) : (
-          <p onClick={openLocationModal}>클릭해서 견적 요청을 보낼 지역을 선택하세요!</p>
-        )}
+        ) : null}
       </div>
 
       {/* 미용 일시 */}

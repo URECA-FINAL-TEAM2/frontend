@@ -1,26 +1,42 @@
 //ShopQuoteRequestForm.jsx
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { RiEditLine } from "react-icons/ri";
 import { IoIosAddCircle, IoIosCloseCircle } from "react-icons/io";
 import { Designer, Schedule, Corgi, Note, Photos } from "/public/Icons";
 import BottomButton from "@/components/common/button/BottomButton";
 
 import PetSelectModal from "@/components/QuoteRequest/PetSelectModal";
-import { sendGroomerQuote } from "@/queries/quoteRequestQuery";
+import { getGroomerDetail, sendGroomerQuote } from "@/queries/quoteRequestQuery";
 import { useNavigate } from "react-router-dom";
 import useAuthStore from "@/store/authStore";
 
 const ShopQuoteRequestForm = ({ groomerId }) => {
   const { id } = useAuthStore();
+  const [groomerInfo, setGroomerInfo] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
 
-  // TODO : API 연결
-  const groomerInfo = {
-    shopImage: "https://picsum.photos/200",
-    groomerName: "문정", //nickname
-    shopName: "강남구미용실1",
-    address: "서울 강남구 101-1",
-    phone: "010-1234-5678"
-  };
+  useEffect(() => {
+    const fetchGroomerInfo = async () => {
+      try {
+        const response = await getGroomerDetail(groomerId);
+        console.log("매장/디자이너 정보 로드 완료");
+        setGroomerInfo({
+          shopImage: response.shopImage,
+          groomerName: response.groomerName,
+          shopName: response.shopName,
+          address: response.address,
+          phone: response.phone
+        });
+      } catch (error) {
+        console.error("매장/디자이너 정보 로드 실패:", error);
+      } finally {
+        setIsLoading(false);
+        console.log("로딩 상태 변경 완료");
+      }
+    };
+
+    fetchGroomerInfo();
+  }, []);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [attachedImages, setAttachedImages] = useState([]);
@@ -162,15 +178,17 @@ const ShopQuoteRequestForm = ({ groomerId }) => {
       </div>
 
       <div className="mb-6 rounded-lg border border-main-400 p-3">
-        <div className="flex items-center">
-          <img src={groomerInfo.shopImage} alt="매장 로고" className="mr-3 h-20 w-20 rounded-lg" />
-          <div>
-            <p className="text-[15px] font-semibold leading-[18px]">{groomerInfo.shopName}</p>
-            <p className="mb-1.5 line-clamp-1 text-sm leading-[18px] text-gray-600">{groomerInfo.address}</p>
-            <p className="text-[15px] font-semibold leading-[18px]">{groomerInfo.groomerName} 디자이너</p>
-            <p className="text-sm leading-[18px] text-gray-600">{groomerInfo.phone}</p>
+        {!isLoading ? (
+          <div className="flex items-center">
+            <img src={groomerInfo.shopImage} alt="매장 로고" className="mr-3 h-20 w-20 rounded-lg" />
+            <div>
+              <p className="text-[15px] font-semibold leading-[18px]">{groomerInfo.shopName}</p>
+              <p className="mb-1.5 line-clamp-1 text-sm leading-[18px] text-gray-600">{groomerInfo.address}</p>
+              <p className="text-[15px] font-semibold leading-[18px]">{groomerInfo.groomerName} 디자이너</p>
+              <p className="text-sm leading-[18px] text-gray-600">{groomerInfo.phone}</p>
+            </div>
           </div>
-        </div>
+        ) : null}
       </div>
 
       {/* 미용 일시 */}

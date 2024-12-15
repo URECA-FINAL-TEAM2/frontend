@@ -7,6 +7,7 @@ function GroomerQuoteForm({ requestId }) {
   const [requestInfo, setRequestInfo] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [value, setValue] = useState("");
 
   useEffect(() => {
     const fetchRequestInfo = async () => {
@@ -48,6 +49,30 @@ function GroomerQuoteForm({ requestId }) {
     hour: "2-digit",
     minute: "2-digit"
   });
+
+  // Format cost
+  const formatNumber = (num) => {
+    // Remove any non-digit characters
+    const cleanedNum = num.replace(/[^\d]/g, "");
+
+    // Format with commas
+    return cleanedNum.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  };
+
+  const handleChange = (e) => {
+    const inputValue = e.target.value.replace(/,/g, "");
+
+    // Ensure only numeric input
+    if (/^\d*$/.test(inputValue)) {
+      setValue(formatNumber(inputValue));
+    }
+  };
+
+  const handleBlur = (e) => {
+    // Optional: Remove comma for actual numeric value if needed
+    const numericValue = e.target.value.replace(/,/g, "");
+    console.log("Numeric Value:", numericValue);
+  };
 
   return (
     <div className="mx-auto mb-[79px] mt-[--header-height] max-w-lg bg-white px-6">
@@ -171,15 +196,16 @@ function GroomerQuoteForm({ requestId }) {
       <div className="flex justify-between">
         <div className="flex items-center space-x-1">
           <img src={Won} alt="Won Icon" className="h-5 w-5" />
-
           <h2 className="text-lg font-semibold leading-none">금액</h2>
         </div>
         <div className="flex">
           <div className="mr-1 w-48 rounded-lg border border-main-400 leading-tight">
             <input
-              type="number"
+              type="text"
+              value={value}
+              onChange={handleChange}
+              onBlur={handleBlur}
               className="w-full resize-none rounded-lg border-none px-0.5 pb-0 pt-1 text-end focus:outline-none"
-              rows={1}
             />
           </div>
           <p className="mt-1 text-xl font-semibold leading-none">원</p>

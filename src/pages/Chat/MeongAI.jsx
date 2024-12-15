@@ -1,7 +1,7 @@
 import { IoArrowUpCircle } from "react-icons/io5";
 import MeongChatHeader from "@/components/Chat/MeongChatHeader";
 import TypingEffect from "@/utils/TypingEffect";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axiosInstance from "@/api/axiosInstance";
 import logo from "/Logo/logoBtn.png";
 
@@ -18,6 +18,17 @@ const formatTime = () => {
 const MeongAI = () => {
   const [input, setInput] = useState("");
   const [messageList, setMessageList] = useState([]);
+
+  // useEffect(() => {
+  //   const savedMessages = sessionStorage.getItem("meongAI_chat");
+  //   if (savedMessages) {
+  //     setMessageList(JSON.parse(savedMessages));
+  //   }
+  // }, []);
+
+  // useEffect(() => {
+  //   sessionStorage.setItem("meongAI_chat", JSON.stringify(messageList));
+  // }, [messageList]);
 
   const sendChat = async () => {
     const currentTime = formatTime();
@@ -53,7 +64,7 @@ const MeongAI = () => {
       <div className="flex h-screen flex-col bg-gray-50 pt-[80px]">
         {/* 채팅창 */}
         <div className="flex-1 space-y-4 overflow-y-auto p-4">
-          <TypingEffect text="반가워요! 저는 멍당AI라고 해요. 저에게 무엇이든 물어보세요!" speed={150} />
+          <TypingEffect text="  반가워요! 저는 멍당AI라고 해요. 저에게 무엇이든 물어보세요!" speed={150} />
           {messageList.map((msg, index) => (
             // 말풍선
             <div key={index} className={`flex items-start ${msg.sender === "user" ? "justify-end" : ""} space-x-2`}>

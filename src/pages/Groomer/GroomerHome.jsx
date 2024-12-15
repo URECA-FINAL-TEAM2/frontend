@@ -96,6 +96,7 @@ const GroomerHome = () => {
                     secondValue={preview.todayRequest}
                     thirdName={"견적 미발송"}
                     thirdValue={preview.unsentQuote}
+                    navigate={"/groomer/quotes"}
                   />
                 </div>
               </Link>

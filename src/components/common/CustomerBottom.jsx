@@ -5,6 +5,7 @@ import { TbPawFilled } from "react-icons/tb";
 import { Link, useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { IoHomeSharp } from "react-icons/io5";
+import GPTBtn from "../Chat/GPTBtn";
 
 const CustomerBottom = () => {
   const location = useLocation();
@@ -58,6 +59,7 @@ const CustomerBottom = () => {
           </div>
         </Link>
       </div>
+      <GPTBtn />
     </div>
   );
 };

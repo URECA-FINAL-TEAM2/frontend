@@ -59,7 +59,6 @@ const GroomerBottom = () => {
           </div>
         </Link>
       </div>
-
       <GPTBtn />
     </div>
   );

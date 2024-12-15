@@ -171,7 +171,7 @@ const NotiComponents = () => {
                 </button>
               </div>
 
-              <div className="mt-2 flex text-[10px]">
+              <div className="mt-2 flex text-xs">
                 <button
                   onClick={() => setFilterType("all")}
                   className="mr-2 rounded-2xl border border-main-200 px-2 py-1 shadow-sm"

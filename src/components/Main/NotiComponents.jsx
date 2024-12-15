@@ -9,10 +9,12 @@ import { useEffect, useRef, useState } from "react";
 import { VscBell } from "react-icons/vsc";
 import { GoTrash, GoDotFill } from "react-icons/go";
 import { IoCloseOutline } from "react-icons/io5";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+import Modal from "../common/modal/modal";
+import toast from "react-hot-toast";
 
 const NotiComponents = () => {
-  const navigate = useNavigate();
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const { id, DefaultRole } = useAuthStore();
   const userId = id.userId;
   const roleType = DefaultRole;
@@ -79,7 +81,6 @@ const NotiComponents = () => {
       }
       setNotifications(response);
       const link = getNotifyLink(response[0].notifyType);
-      console.log(link);
       setNotifyLink(link);
     } catch (error) {
       console.error("알림 조회 중 오류:", error);
@@ -112,12 +113,22 @@ const NotiComponents = () => {
 
   // 전체 알림 삭제
   const handleClear = async () => {
-    try {
-      await clearNotifications(roleType, userId);
-      setNotifications([]);
-      setUnreadCount(0);
-    } catch (error) {
-      console.error("알림 삭제 중 오류:", error);
+    setIsModalOpen(false);
+    if (notifications.length) {
+      try {
+        await clearNotifications(roleType, userId);
+        setNotifications([]);
+        setUnreadCount(0);
+        toast("알림이 모두 삭제되었습니다.", {
+          icon: "👋🏻"
+        });
+      } catch (error) {
+        console.error("알림 삭제 중 오류:", error);
+      }
+    } else {
+      toast("삭제할 알림이 없습니다.", {
+        icon: "❌"
+      });
     }
   };
 
@@ -184,7 +195,11 @@ const NotiComponents = () => {
             <div>
               {/* 헤더 */}
               <div className="grid h-[var(--header-height)] w-[400px] grid-cols-[1fr_2fr_1fr] items-center bg-white px-5 text-center">
-                <div></div>
+                <button onClick={() => setIsModalOpen(true)} className="flex items-center justify-start">
+                  <GoTrash size={13} className="mr-1" />
+                  <span className="text-[10px]">전체 삭제</span>
+                </button>
+
                 <span className="text-lg">알림</span>
                 <div className="text-end">
                   <button onClick={toggleSidebar} className="text-end">
@@ -211,34 +226,45 @@ const NotiComponents = () => {
               <div className="mx-auto">
                 <div className="mx-auto flex justify-end"></div>
                 {filteredNotifications.map((noti) => (
-                  <Link to={notifyLink} className="my-3 block rounded-xl bg-white p-4 px-6" key={noti.id}>
+                  <div className="my-3 block rounded-xl bg-white p-4 px-6" key={noti.id}>
                     <div className="flex flex-col">
-                      <div className="flex items-center">
+                      <Link to={notifyLink} className="flex items-center">
                         <span className="mr-2 rounded-2xl bg-main-200 px-2 py-[0.5px] text-[9px] text-main-500">
                           {noti.notifyType}
                         </span>
                         <span className="ml-auto text-right text-xs text-gray-400">
                           {new Date(noti.createdAt).toLocaleString()}
                         </span>
-                      </div>
-                      <div className="mt-1 inline-flex items-center">
+                      </Link>
+                      <Link to={notifyLink} className="mt-1 inline-flex items-center">
                         <GoDotFill color={noti.readCheckYn ? "white" : "red"} size={25} />
                         <span className="ml-1 text-sm font-semibold text-gray-900">{noti.content}</span>
-                      </div>
+                      </Link>
                       <div className="mt-1 flex items-center justify-between">
-                        <p className="ml-5 text-xs text-gray-500">견적 내용을 자세히 확인해보세요.</p>
+                        <Link to={notifyLink} className="ml-5 text-xs text-gray-500">
+                          견적 내용을 자세히 확인해보세요.
+                        </Link>
                         <button onClick={() => handleDelete(noti.id)}>
                           <GoTrash color="red" size={13} className="ml-1" />
                         </button>
                       </div>
                     </div>
-                  </Link>
+                  </div>
                 ))}
               </div>
             </div>
           </div>
         </div>
       )}
+      <Modal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        onConfirm={handleClear}
+        closeText="닫기"
+        confirmText="확인"
+      >
+        알림을 전체 삭제하시겠습니까?
+      </Modal>
     </div>
   );
 };

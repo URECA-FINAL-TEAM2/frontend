@@ -10,19 +10,21 @@ import { RiImageEditFill } from "react-icons/ri";
 import { EditShop } from "/public/Icons";
 import { useNavigate } from "react-router-dom";
 import useAuthStore from "@/store/authStore";
+import logo from "/Logo/doglogo.png";
+import EmptyPage from "@/components/common/EmptyPage";
 
 const GroomerStore = () => {
   const { id } = useAuthStore();
   const navigate = useNavigate();
   const [shopDetail, setShopDetail] = useState({});
   const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchShopDetail = async () => {
       try {
         const response = await getMyShopDetail(id.groomerId);
         setShopDetail(response);
-        console.log(shopDetail.groomerPortfolioImages);
       } catch (error) {
         console.error("매장 상세 로드 실패:", error);
       } finally {
@@ -76,9 +78,19 @@ const GroomerStore = () => {
 
   if (!shopDetail) {
     return (
-      <div className="absolute inset-0 flex items-center justify-center bg-white">
-        <p>데이터를 불러올 수 없습니다.</p>
-      </div>
+      <EmptyPage
+        content={
+          <div className="pb-24 text-center">
+            <span className="block text-lg">등록된 매장이 없습니다.</span>
+            <button
+              onClick={() => navigate("/groomer/createstore", { state: { update: false } })}
+              className="mt-2 rounded-xl bg-main px-5 py-1 text-lg text-white hover:bg-main-300"
+            >
+              매장 등록하기
+            </button>
+          </div>
+        }
+      />
     );
   }
 

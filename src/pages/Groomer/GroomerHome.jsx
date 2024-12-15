@@ -72,7 +72,6 @@ const GroomerHome = () => {
     <main className="min-h-screen bg-main-100">
       <div className="mx-auto w-11/12 pb-24 pt-6">
         {/* 오늘의 예약 */}
-
         {isShop ? (
           <>
             <section className="rounded-xl bg-white px-6 py-3 shadow-md">

@@ -9,12 +9,14 @@ import { useEffect, useRef, useState } from "react";
 import { VscBell } from "react-icons/vsc";
 import { GoTrash, GoDotFill } from "react-icons/go";
 import { IoCloseOutline } from "react-icons/io5";
+import { Link, useNavigate } from "react-router-dom";
 
 const NotiComponents = () => {
+  const navigate = useNavigate();
   const { id, DefaultRole } = useAuthStore();
   const userId = id.userId;
   const roleType = DefaultRole;
-
+  const [notifyLink, setNotifyLink] = useState("");
   // 상태 관리
   const [notifications, setNotifications] = useState([]);
   const [unreadCount, setUnreadCount] = useState(0);
@@ -76,6 +78,9 @@ const NotiComponents = () => {
         throw new Error("응답 데이터가 배열이 아닙니다.");
       }
       setNotifications(response);
+      const link = getNotifyLink(response[0].notifyType);
+      console.log(link);
+      setNotifyLink(link);
     } catch (error) {
       console.error("알림 조회 중 오류:", error);
     }
@@ -130,6 +135,26 @@ const NotiComponents = () => {
     };
   }, [roleType, userId]);
 
+  // 역할 및 알림 타입에 따른 링크 설정
+  const getNotifyLink = (type) => {
+    const basePath = roleType === "groomer" ? "/groomer" : "/customer";
+
+    switch (type) {
+      case "예약 알림":
+      case "예약 취소 알림":
+        return `${basePath}/reservation`;
+      case "견적서 알림":
+      case "견적서 요청 알림":
+        return `${basePath}/quotes`;
+      case "리뷰 알림":
+        return `${basePath}/store`;
+      case "채팅방 생성 알림":
+        return `${basePath}/chat`;
+      default:
+        return `${basePath}/home`; // 기본 경로
+    }
+  };
+
   const [filterType, setFilterType] = useState("all"); // "all" 또는 "unread"
 
   // 알림 필터링
@@ -139,7 +164,7 @@ const NotiComponents = () => {
       : notifications; // 전체 알림
 
   return (
-    <div className="relative">
+    <div className="">
       {unreadCount > 0 ? (
         <div onClick={toggleSidebar} className="relative cursor-pointer">
           <VscBell size={23} />
@@ -153,25 +178,22 @@ const NotiComponents = () => {
         </div>
       )}
 
-      {/* 사이드바 */}
       {isSidebarOpen && (
-        <div className="absolute right-0 top-0 h-[95vh] w-[360px] overflow-y-scroll rounded-xl bg-white shadow-2xl">
-          <div className="relative">
-            <div className="p-4">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center">
-                  <h2 className="mr-2 text-lg font-semibold">알림</h2>
-                  <button className="flex items-center rounded-2xl text-[10px]" onClick={handleClear}>
-                    <GoTrash size={10} className="mr-1" />
-                    <span className="text-[10px]">전체삭제</span>
+        <div className="fixed inset-0 z-40 flex items-center justify-center">
+          <div className="min-h-screen w-[400px] overflow-y-scroll rounded-xl bg-white shadow-2xl">
+            <div>
+              {/* 헤더 */}
+              <div className="grid h-[var(--header-height)] w-[400px] grid-cols-[1fr_2fr_1fr] items-center bg-white px-5 text-center">
+                <div></div>
+                <span className="text-lg">알림</span>
+                <div className="text-end">
+                  <button onClick={toggleSidebar} className="text-end">
+                    <IoCloseOutline size={20} />
                   </button>
                 </div>
-                <button onClick={toggleSidebar} className="text-gray-500 hover:text-black">
-                  <IoCloseOutline />
-                </button>
               </div>
 
-              <div className="mt-2 flex text-xs">
+              <div className="mt-2 flex px-5 text-xs">
                 <button
                   onClick={() => setFilterType("all")}
                   className="mr-2 rounded-2xl border border-main-200 px-2 py-1 shadow-sm"
@@ -189,7 +211,7 @@ const NotiComponents = () => {
               <div className="mx-auto">
                 <div className="mx-auto flex justify-end"></div>
                 {filteredNotifications.map((noti) => (
-                  <div className="my-3 rounded-xl border border-main-100 bg-white p-4" key={noti.id}>
+                  <Link to={notifyLink} className="my-3 block rounded-xl bg-white p-4 px-6" key={noti.id}>
                     <div className="flex flex-col">
                       <div className="flex items-center">
                         <span className="mr-2 rounded-2xl bg-main-200 px-2 py-[0.5px] text-[9px] text-main-500">
@@ -210,7 +232,7 @@ const NotiComponents = () => {
                         </button>
                       </div>
                     </div>
-                  </div>
+                  </Link>
                 ))}
               </div>
             </div>

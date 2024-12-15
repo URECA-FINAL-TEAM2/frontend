@@ -1,4 +1,3 @@
-import { MdKeyboardArrowLeft } from "react-icons/md";
 import { Link } from "react-router-dom";
 import { IoIosHome } from "react-icons/io";
 import dog from "/Test/dog.jpg";
@@ -10,7 +9,6 @@ const ChatHeader = () => {
       <div className="flex items-center">
         <Link to={-1}>
           <VscChevronLeft size={20} />
-          {/* <MdKeyboardArrowLeft size="35" /> */}
         </Link>
         <img src={dog} alt="Profile" className="mx-3 h-12 w-12 rounded-full" />
         <div>

@@ -16,7 +16,7 @@ const SelectRole = () => {
   return (
     <div className="flex min-h-screen flex-col items-center justify-center bg-main-300 text-white">
       <div data-aos="flip-left" data-aos-easing="ease-out-cubic" data-aos-duration="1000" className="mb-5 text-2xl">
-        어떤 서비스를 원하시나요?
+        가입 유형을 선택해 주세요.
       </div>
 
       <div>

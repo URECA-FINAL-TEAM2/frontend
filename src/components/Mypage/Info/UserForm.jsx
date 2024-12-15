@@ -41,7 +41,7 @@ const UserForm = ({
           <div className="inputStyle border-main-400 text-gray-300">{formData?.email}</div>
         </div>
         <div>
-          <label htmlFor="username" className="labelStyle">
+          <label htmlFor="userName" className="labelStyle">
             이름
           </label>
           <div className="inputStyle border-main-400 text-gray-300">{formData?.userName || formData?.username}</div>
@@ -57,7 +57,7 @@ const UserForm = ({
               type="text"
               id="nickname"
               name="nickname"
-              value={formData?.nickName || formData?.nickname}
+              value={formData?.nickname}
               onChange={handleChange}
               placeholder="닉네임을 입력해주세요."
               className=""

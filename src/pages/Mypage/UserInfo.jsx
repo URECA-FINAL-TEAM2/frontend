@@ -18,9 +18,9 @@ const UserInfo = () => {
   const [validPhone, setValidPhone] = useState("yet");
   const [formData, setFormData] = useState({
     profileImage: null,
-    username: "",
+    userName: "",
     email: "",
-    nickName: "",
+    nickname: "",
     phone: "",
     sidoId: 0,
     sigunguId: 0,
@@ -30,7 +30,6 @@ const UserInfo = () => {
   });
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalState, setModalState] = useState("update");
-  // 닉네임 유효성검사, 중복검사
 
   const handleOpenModal = (state) => {
     setIsModalOpen(true);
@@ -55,7 +54,7 @@ const UserInfo = () => {
         icon: "👋🏻"
       });
       setTimeout(() => {
-        navigate(-1);
+        navigate("/");
       }, 500);
     } catch (error) {
       console.error("정보 삭제를 실패했습니다.");
@@ -84,7 +83,7 @@ const UserInfo = () => {
 
         try {
           await updateUserInfo(role, formData, id);
-          updateUserInfoState({ nickName: formData.nickName || formData.nickname });
+          updateUserInfoState({ nickname: formData.nickName || formData.nickname });
           toast("수정 완료되었습니다.", {
             icon: "👏🏻"
           });
@@ -118,6 +117,7 @@ const UserInfo = () => {
   useEffect(() => {
     const getInfo = async () => {
       const response = await getUserInfo(role, id);
+      console.log("백엔드 응답", response);
       setFormData(response);
     };
     getInfo();

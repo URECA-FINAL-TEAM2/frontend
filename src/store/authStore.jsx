@@ -12,8 +12,8 @@ const useAuthStore = create(
       },
       userInfo: {
         email: "",
-        username: "",
-        nickName: ""
+        userName: "",
+        nickname: ""
       },
 
       // userInfo 업데이트
@@ -55,8 +55,8 @@ const useAuthStore = create(
           },
           userInfo: {
             email: "",
-            username: "",
-            nickName: ""
+            userName: "",
+            nickname: ""
           }
         });
       }

@@ -7,21 +7,23 @@ import { registerUser } from "@/queries/authQuery";
 import useAuthStore from "@/store/authStore";
 import Modal from "@/components/common/modal/modal";
 import toast, { Toaster } from "react-hot-toast";
+import { useToastStore } from "@/store/toastStore";
 
 const InfoRequired = () => {
+  const setToast = useToastStore((state) => state.setToast);
   const navigate = useNavigate();
   const location = useLocation();
   const phoneRef = useRef();
   const nicknameRef = useRef();
-  const { updateId, updateDefaultRole, setLoginStatus, userInfo } = useAuthStore();
+  const { updateId, updateDefaultRole, setLoginStatus, userInfo, updateUserInfoState } = useAuthStore();
   const [validPhone, setValidPhone] = useState("yet");
   const [nickname, setNickname] = useState("yet");
   const { role } = location.state || {};
   const [formData, setFormData] = useState({
     email: userInfo.email,
     profileImage: null,
-    username: userInfo.username,
-    nickName: userInfo.nickName,
+    userName: userInfo.userName,
+    nickname: userInfo.nickname,
     phone: "",
     sidoId: "",
     sigunguId: "",
@@ -52,22 +54,30 @@ const InfoRequired = () => {
 
     if (validPhone === "possible" && nickname === "possible") {
       try {
+        console.log("회원가입시 formData", formData);
         const response = await registerUser(formData, role);
 
         const customerId = response?.customerId;
         const groomerId = response?.groomerId;
-
+        const nickname = response?.nickname;
+        updateUserInfoState({ nickname: nickname });
         setLoginStatus(true);
         updateDefaultRole(role);
         if (role === "customer") {
           updateId({ customerId: customerId });
+
+          setToast(`환영합니다. ${nickname} 고객님!`, "👋🏻");
           navigate("/customer/home");
         } else {
           updateId({ groomerId: groomerId });
+          setToast(`환영합니다. ${nickname} 미용사님!`, "👋🏻");
           navigate("/groomer/home");
         }
       } catch (error) {
         console.error("회원 등록 실패:", error);
+        toast("회원정보를 확인해주세요", {
+          icon: "❌"
+        });
       }
     } else {
       if (nickname !== "possible") {

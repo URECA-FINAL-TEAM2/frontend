@@ -49,35 +49,6 @@ const TestGPT = () => {
     console.log(response);
   };
 
-  // 모델 리스트 조회 /gpt/modelList
-  const getModelList = async () => {
-    const response = await axiosInstance.get("/gpt/modelList", {
-      headers: {
-        "x-api-key": import.meta.env.VITE_GPT_API_KEY
-      }
-    });
-    console.log(response);
-  };
-
-  // 모델 조회 /gpt/model
-  const getModel = async () => {
-    const modelName = "gpt";
-    const response = await axiosInstance.get(`/gpt/model?modelName=${modelName}`);
-    console.log(response);
-  };
-
-  // 단일 프롬프트 테스트 /gpt/completion
-  const postTestController = async () => {
-    const data = {
-      model: "string",
-      prompt: "string",
-      temperature: 0,
-      max_tokens: 0
-    };
-    const response = await axiosInstance.post("/gpt/completion", data);
-    console.log(response);
-  };
-
   // 채팅 프롬프트 테스트 /gpt/chat-completion
   const postTestChatController = async () => {
     const data = [
@@ -103,7 +74,7 @@ const TestGPT = () => {
       />
 
       {/* 테스트 버튼 */}
-      <button onClick={handleTestAPI} className="rounded bg-blue-500 px-6 py-2 text-white hover:bg-blue-600">
+      <button onClick={postTestChatController} className="rounded bg-blue-500 px-6 py-2 text-white hover:bg-blue-600">
         API 테스트
       </button>
 
@@ -115,21 +86,6 @@ const TestGPT = () => {
         </div>
       )}
 
-      <button onClick={postPrompt} className="my-3 rounded bg-blue-500 px-6 py-2 text-white hover:bg-blue-600">
-        gpt/prompt
-      </button>
-      <button onClick={postLegacyPrompt} className="my-3 rounded bg-blue-500 px-6 py-2 text-white hover:bg-blue-600">
-        gpt/legacyPrompt
-      </button>
-      <button onClick={getModelList} className="my-3 rounded bg-blue-500 px-6 py-2 text-white hover:bg-blue-600">
-        모델 리스트 조회 /gpt/modelList
-      </button>
-      <button onClick={getModel} className="my-3 rounded bg-blue-500 px-6 py-2 text-white hover:bg-blue-600">
-        모델 조회 /gpt/model
-      </button>
-      <button onClick={postTestController} className="my-3 rounded bg-blue-500 px-6 py-2 text-white hover:bg-blue-600">
-        단일 프롬프트 테스트 /gpt/completion
-      </button>
       <button
         onClick={postTestChatController}
         className="my-3 rounded bg-blue-500 px-6 py-2 text-white hover:bg-blue-600"

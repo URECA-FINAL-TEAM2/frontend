@@ -27,7 +27,7 @@ const Toggle = ({ isChecked, setIsChecked }) => {
         updateDefaultRole("groomer");
       }
     } else {
-      if (!id.customerId) setIsModalOpen(false);
+      if (!id.customerId) setIsModalOpen(true);
       else {
         setIsChecked((prev) => !prev);
         updateDefaultRole("customer");

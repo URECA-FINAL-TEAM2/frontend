@@ -28,20 +28,20 @@ function OAuth2RedirectPage() {
       const customerId = response.data.body.data?.customerId || null;
       const groomerId = response.data.body.data?.groomerId || null;
       const email = response.data.body.data.email;
-      const username = response.data.body.data.user.username;
-      const nickName = response.data.body.data.user.nickname;
+      const userName = response.data.body.data.user.username;
+      const nickname = response.data.body.data.user.nickname;
       const userId = response.data.body.data.user.id;
 
-      updateUserInfoState({ email: email, username: username, nickName: nickName });
+      updateUserInfoState({ email: email, userName: userName, nickname: nickname });
       updateId({ customerId: customerId, groomerId: groomerId, userId: userId });
 
       if (roles.includes("미용사")) {
         updateDefaultRole("groomer");
-        setToast(`환영합니다. ${username} 미용사님!`, "👋🏻");
+        setToast(`환영합니다. ${userName} 미용사님!`, "👋🏻");
         navigate("/groomer/home");
       } else {
         updateDefaultRole("customer");
-        setToast(`환영합니다. ${username} 고객님!`, "👋🏻");
+        setToast(`환영합니다. ${userName} 고객님!`, "👋🏻");
         navigate("/customer/home");
       }
     } catch (error) {
@@ -49,12 +49,12 @@ function OAuth2RedirectPage() {
         console.error("등록되지 않은 회원입니다. 추가 정보를 입력해주세요.");
         const accessToken = error.response.data.body.data.accessToken;
         const email = error.response.data.body.data.email;
-        const username = error.response.data.body.data.user.username;
+        const userName = error.response.data.body.data.user.username;
         const userId = error.response.data.body.data.user.userId;
         localStorage.setItem("accessToken", accessToken);
-        updateUserInfoState({ email: email, username: username });
+        updateUserInfoState({ email: email, userName: userName });
         updateId({ userId: userId });
-        navigate("/selectRole", { state: { email: email, username: username } });
+        navigate("/selectRole", { state: { email: email, userName: userName } });
       } else {
         console.error("Error sending code to backend:", error);
       }

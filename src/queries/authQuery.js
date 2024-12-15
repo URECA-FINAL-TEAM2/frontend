@@ -16,13 +16,17 @@ export const registerUser = async (userData, role) => {
   const endPoint = role === "customer" ? "/api/users/register/customer" : "/api/users/register/groomer";
   const formData = new FormData();
 
-  const { profileImage, ...jsonData } = userData;
+  const { profileImage, nickname, ...jsonData } = userData;
 
   delete jsonData.email;
   delete jsonData.username;
+  delete jsonData.userName;
   delete jsonData.role;
   delete jsonData.sidoName;
   delete jsonData.sigunguName;
+  jsonData.nickName = nickname;
+
+  console.log(jsonData);
   if (role === "customer") {
     delete jsonData.skill;
   } else {
@@ -79,15 +83,18 @@ export const validatePhoneNumber = (phoneNumber) => {
 export const handleNicknameCheck = async (nickname, setNickname) => {
   const nicknameRegex = /^(?=.*[a-zA-Z가-힣])[a-zA-Z가-힣0-9_-]{2,10}$/;
 
-  if (!nickname) {
+  const trimmedNickname = nickname.trim(); // 공백 제거
+
+  if (!trimmedNickname) {
     return setNickname("required");
   }
 
-  if (!nicknameRegex.test(nickname)) {
+  if (!nicknameRegex.test(trimmedNickname)) {
     return setNickname("impossible");
   }
 
-  const response = await nicknameCheck(nickname);
+  const response = await nicknameCheck(trimmedNickname);
+
   setNickname(response.data ? "possible" : "duplication");
 };
 

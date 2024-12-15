@@ -1,3 +1,4 @@
+import ChatRoomList from "@/pages/Chat/ChatRoomList";
 import CustomerChat from "@/pages/Customer/CustomerChat";
 import CustomerHome from "@/pages/Customer/CustomerHome";
 import CustomerQuote from "@/pages/Customer/CustomerQuote";
@@ -29,7 +30,7 @@ const CustomerRoutes = () => {
       {/* customer/ -layout */}
       <Route element={<CustomerLayout />}>
         <Route path="home" element={<CustomerHome />} />
-        <Route path="chat" element={<CustomerChat />} />
+        <Route path="chat" element={<ChatRoomList />} />
       </Route>
 
       {/* customer/ -none */}

@@ -6,6 +6,7 @@ import GroomerRoutes from "./Routes/GroomerRoutes";
 import NotFound from "./pages/NotFound";
 import PrivateRoute from "./Routes/PrivateRoutes";
 import MypageBoth from "./pages/MypageBoth";
+import Chat from "./pages/Chat/Chat";
 
 function App() {
   const { isLoggedIn, DefaultRole } = useAuthStore();
@@ -15,6 +16,7 @@ function App() {
       <Router>
         <Routes>
           <Route path="/*" element={<PublicRoutes />} />
+          <Route path="/inChat" element={<Chat />} />
 
           <Route
             path="/customer/*"

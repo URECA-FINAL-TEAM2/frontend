@@ -1,4 +1,5 @@
 import EditPortfolio from "@/components/Mypage/Store/EditPortfolio";
+import ChatRoomList from "@/pages/Chat/ChatRoomList";
 import GroomerChat from "@/pages/Groomer/GroomerChat";
 import GroomerHome from "@/pages/Groomer/GroomerHome";
 import GroomerQuote from "@/pages/Groomer/GroomerQuote";
@@ -21,7 +22,7 @@ const GroomerRoutes = () => {
       <Route element={<GroomerLayout />}>
         <Route path="home" element={<GroomerHome />} />
         <Route path="store" element={<GroomerStore />} />
-        <Route path="chat" element={<GroomerChat />} />
+        <Route path="chat" element={<ChatRoomList />} />
       </Route>
 
       <Route path="quotes" element={<GroomerQuote />} />

@@ -7,6 +7,7 @@ import SubHeader from "@/components/common/SubHeader";
 import { RequestCancel } from "@/queries/paymentQuery";
 import { useLocation, useNavigate } from "react-router-dom";
 import { User, Designer, Schedule, Corgi, Note, Photos, Description } from "/public/Icons";
+import StaticMap from "@/components/Map/StaticMap";
 
 const GroomerReservationDetail = () => {
   const location = useLocation();
@@ -130,11 +131,11 @@ const GroomerReservationDetail = () => {
               <p className="font-semibold leading-[18px]">{detail.groomerName} 디자이너</p>
               <p className="mb-1.5 line-clamp-1 text-sm leading-[18px] text-gray-600">{detail.phone}</p>
             </div>
-            <div className="mt-2 h-[180px] w-full">
-              <StaticMap location={{ lat: 37.5, lng: 127 }} shopName={detail.shopName} />
-              {/* TODO : API 수정 완료시 위경도 정보 꺼내오기 */}
-              {/* <StaticMap location={{ lat: detail.latitude, lng: detail.longtitude }} shopName={detail.shopName} /> */}
-            </div>
+          </div>
+          <div className="mt-2 h-[180px] w-full">
+            <StaticMap location={{ lat: 37.5, lng: 127 }} shopName={detail.shopName} />
+            {/* TODO : API 수정 완료시 위경도 정보 꺼내오기 */}
+            {/* <StaticMap location={{ lat: detail.latitude, lng: detail.longtitude }} shopName={detail.shopName} /> */}
           </div>
         </div>
 
@@ -227,7 +228,7 @@ const GroomerReservationDetail = () => {
           <h2 className="text-lg font-semibold leading-none">결제 정보</h2>
         </div>
 
-        <div className={`mb-6 rounded-lg border ${bgColor} ${borderColor} p-4 leading-tight`}>
+        <div className={`rounded-lg border ${bgColor} ${borderColor} p-4 leading-tight`}>
           <div>
             <p>
               예약금
@@ -238,13 +239,13 @@ const GroomerReservationDetail = () => {
           </div>
         </div>
 
-        <div className="mt-14">
-          {status !== "미용 완료" && status !== "예약 취소" && (
+        {status !== "미용 완료" && status !== "예약 취소" && (
+          <div className="mt-14">
             <BottomButton styleType="lightPink" onClick={() => setIsModalOpen(true)}>
               예약 취소하기
             </BottomButton>
-          )}
-        </div>
+          </div>
+        )}
 
         {/* 모달 */}
         <Modal
@@ -254,7 +255,7 @@ const GroomerReservationDetail = () => {
           closeText="닫기"
           confirmText="확인"
         >
-          <div>
+          <div className="w-full">
             <p className="text mb-4 font-medium">취소 사유를 입력해주세요.</p>
             <input
               type="text"

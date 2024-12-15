@@ -280,16 +280,13 @@ const CustomerReservationDetail = () => {
           </div>
         )}
 
-        <div>
-          {status !== "미용 완료" && status !== "예약 취소" && (
-            <>
-              <div className="h-[55px]"></div>
-              <BottomButton styleType="lightPink" onClick={() => setIsModalOpen(true)}>
-                예약 취소하기
-              </BottomButton>
-            </>
-          )}
-        </div>
+        {status !== "미용 완료" && status !== "예약 취소" && (
+          <div className="mt-14">
+            <BottomButton styleType="lightPink" onClick={() => setIsModalOpen(true)}>
+              예약 취소하기
+            </BottomButton>
+          </div>
+        )}
 
         {/* 모달 */}
         <Modal
@@ -299,7 +296,7 @@ const CustomerReservationDetail = () => {
           closeText="닫기"
           confirmText="확인"
         >
-          <div>
+          <div className="w-full">
             <p className="text mb-4 font-medium">취소 사유를 입력해주세요.</p>
             <input
               type="text"

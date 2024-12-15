@@ -99,13 +99,18 @@ export const getShopDetail = async (shopId, customerId) => {
 
 export const getMyShopDetail = async (groomerId) => {
   try {
-    // return myShopDetail;
     const response = await axiosInstance.get("/profile/groomer/shop/detail/groomer", {
       params: { groomerId }
     });
     return response.data.data;
   } catch (error) {
-    throw new Error("Failed to fetch shop detail data");
+    // 만약 NOT_FOUND 상태인 경우
+    if (error.response && error.response.data.status === "NOT_FOUND") {
+      // null이나 특정 객체를 반환하여 컴포넌트에서 처리할 수 있도록 함
+      return null;
+    }
+    // 다른 종류의 에러는 throw
+    throw error;
   }
 };
 

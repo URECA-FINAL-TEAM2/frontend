@@ -19,22 +19,25 @@ function App() {
           <Route path="/*" element={<PublicRoutes />} />
           <Route path="/chat/:roomId" element={<Chat />} />
 
-          <Route
+          {/* <Route
             path="/customer/*"
             element={
               <PrivateRoute isLoggedIn={isLoggedIn} role="customer" userRole={DefaultRole}>
                 <CustomerRoutes />
               </PrivateRoute>
             }
-          />
-          <Route
+          /> */}
+
+          <Route path="/customer/*" element={<CustomerRoutes />} />
+          {/* <Route
             path="/groomer/*"
             element={
               <PrivateRoute isLoggedIn={isLoggedIn} role="groomer" userRole={DefaultRole}>
                 <GroomerRoutes />
               </PrivateRoute>
             }
-          />
+          /> */}
+          <Route path="/groomer/*" element={<GroomerRoutes />} />
 
           <Route path="/customer/mypage" element={<MypageBoth />} />
           <Route path="/groomer/mypage" element={<MypageBoth />} />

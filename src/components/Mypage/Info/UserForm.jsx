@@ -38,13 +38,13 @@ const UserForm = ({
           <label htmlFor="email" className="labelStyle">
             이메일
           </label>
-          <div className="inputStyle border-main-400 text-gray-300">{formData?.email}</div>
+          <div className="inputStyle border-main-400 text-gray-500">{formData?.email}</div>
         </div>
         <div>
           <label htmlFor="userName" className="labelStyle">
             이름
           </label>
-          <div className="inputStyle border-main-400 text-gray-300">{formData?.userName || formData?.username}</div>
+          <div className="inputStyle border-main-400 text-gray-500">{formData?.userName || formData?.username}</div>
         </div>
         {/* Nickname */}
         <div>

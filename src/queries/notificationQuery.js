@@ -52,3 +52,16 @@ export const clearNotifications = async (roleType, userId) => {
     throw error;
   }
 };
+
+// 알림 읽음 처리
+export const readNotification = async (notificationId) => {
+  try {
+    const response = await axiosInstance.put("/notifications", {
+      params: { notificationId }
+    });
+    return response.data;
+  } catch (error) {
+    console.error("알림 읽음 처리 실패:", error);
+    throw error;
+  }
+};

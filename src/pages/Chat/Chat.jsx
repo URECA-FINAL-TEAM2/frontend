@@ -145,6 +145,10 @@ const Chat = () => {
                   <div className="relative flex items-end space-x-2">
                     <p className="text-xs text-gray-500">{dayjs(msg.messageTime).format("YY.MM.DD · HH:mm")}</p>
                     <div className="max-w-40 rounded-lg bg-main-400 p-2 text-white">
+                      {/* 주석코드 동작하면 아래 4줄 지우고 이거 남기기 */}
+                      {/* {msg.messageImage && <img src={msg.messageImage} alt="" className="mt-2 max-w-full" />}
+                     <div className="text-right">{msg.messageContent || msg.content}</div> */}
+
                       {/* 수신한 내용 */}
                       <img src={msg.messageImage} alt="" className="mt-2 max-w-full" />
                       <div className="text-right">{msg.messageContent}</div>

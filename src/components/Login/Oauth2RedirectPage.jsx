@@ -21,17 +21,17 @@ function OAuth2RedirectPage() {
           code: code
         }
       });
-      const result = response.data.body.data;
+      const result = response?.data?.body?.data;
       console.log("추가정보입력 성공 후 로그인,", response);
-      localStorage.setItem("accessToken", result.accessToken);
+      localStorage.setItem("accessToken", result?.accessToken);
       setLoginStatus(true);
-      const roles = result.user.roles;
+      const roles = result?.user.roles;
       const customerId = result?.customerId || null;
       const groomerId = result?.groomerId || null;
-      const email = result.email;
-      const userName = result.user.username;
-      const nickname = result.user.nickname;
-      const userId = result.user.id;
+      const email = result?.email;
+      const userName = result?.user.username;
+      const nickname = result?.user.nickname;
+      const userId = result?.user.id;
 
       updateUserInfoState({ email: email, userName: userName, nickname: nickname });
       updateId({ customerId: customerId, groomerId: groomerId, userId: userId });
@@ -48,11 +48,11 @@ function OAuth2RedirectPage() {
     } catch (error) {
       if (error.response?.status === 400) {
         console.error("등록되지 않은 회원입니다. 추가 정보를 입력해주세요.");
-        const result = error.response.data.body.data;
-        const accessToken = result.accessToken;
-        const email = result.email;
-        const userName = result.user.username;
-        const userId = result.user.userId;
+        const result = error?.response?.data?.body?.data;
+        const accessToken = result?.accessToken;
+        const email = result?.email;
+        const userName = result?.user.username;
+        const userId = result?.user.userId;
         localStorage.setItem("accessToken", accessToken);
         updateUserInfoState({ email: email, userName: userName });
         updateId({ userId: userId });

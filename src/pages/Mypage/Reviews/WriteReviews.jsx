@@ -86,7 +86,7 @@ const WriteReviews = () => {
         {Array.from({ length: fullStars }).map((_, index) => (
           <ImStarFull key={`full-${index}`} color="#F4B400" size={12} />
         ))}
-        {hasHalfStar && <ImStarHalf key="half" color="#F4B400" size={15} />}
+        {hasHalfStar && <ImStarHalf key="half" color="#F4B400" size={12} />}
         {Array.from({ length: emptyStars }).map((_, index) => (
           <ImStarEmpty key={`empty-${index}`} color="#E0E0E0" size={12} />
         ))}

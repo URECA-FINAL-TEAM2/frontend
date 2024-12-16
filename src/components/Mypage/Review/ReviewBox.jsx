@@ -44,6 +44,7 @@ const ReviewBox = ({ review }) => {
               key={index} // 고유 키 설정
               className="my-2 rounded-xl px-1"
               src={imgSrc}
+              loading="lazy"
               alt={`dog Img ${index + 1}`} // alt에 고유 텍스트 추가
             />
           ))}{" "}

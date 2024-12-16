@@ -5,17 +5,24 @@ import { getCustomerReviewList } from "@/queries/reviewQuery";
 import useAuthStore from "@/store/authStore";
 
 const MyReviews = () => {
-  const [reviews, setReviews] = useState([]); // 리뷰 리스트 상태
+  const [reviews, setReviews] = useState([]); // 리뷰 리스트 상태const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
   const { id } = useAuthStore();
 
   useEffect(() => {
     const getList = async () => {
       try {
+        setIsLoading(true);
+        setError(null);
         const response = await getCustomerReviewList(id); // 사용자 ID를 매개변수로 전달
         console.log("리뷰목록조회", response);
         setReviews(response.data.data); // 리뷰 리스트 상태 업데이트
       } catch (error) {
         console.error("리뷰 목록 조회 실패:", error);
+        setError("리뷰 목록을 불러오는데 실패했습니다.");
+      } finally {
+        setIsLoading(false);
       }
     };
     getList();

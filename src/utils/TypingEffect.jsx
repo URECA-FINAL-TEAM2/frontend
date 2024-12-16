@@ -7,27 +7,28 @@ const TypingEffect = ({ text, speed = 100, delay = 0 }) => {
     if (!text) return;
 
     let index = 0;
+    let intervalId = null;
 
-    // 2초 대기 후 타이핑 효과 시작
-    const timeout = setTimeout(() => {
+    const startTyping = () => {
       setDisplayedText(text[index] || "");
       index++;
 
-      const interval = setInterval(() => {
+      intervalId = setInterval(() => {
         if (index < text.length - 1) {
           setDisplayedText((prev) => prev + text[index]);
           index++;
         } else {
-          clearInterval(interval);
+          clearInterval(intervalId);
         }
       }, speed);
-
-      // 클린업 함수
-      return () => clearInterval(interval);
-    }, delay);
+    };
 
     // 클린업 함수
-    return () => clearTimeout(timeout);
+    const timeoutId = setTimeout(startTyping, delay);
+    return () => {
+      clearTimeout(timeoutId);
+      if (intervalId) clearInterval(intervalId);
+    };
   }, [text, speed]);
 
   return <div>{displayedText}</div>;

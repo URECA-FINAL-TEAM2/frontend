@@ -28,7 +28,7 @@ axiosInstance.interceptors.response.use(
 
       try {
         // 백엔드 토큰 재발급 요청 API 수정
-        const refreshResponse = await axiosInstance.post("/auth/refresh-token");
+        const refreshResponse = await axiosInstance.post("/auth/token/reissue");
         const newAccessToken = refreshResponse.data.accessToken;
 
         localStorage.setItem("accessToken", newAccessToken);

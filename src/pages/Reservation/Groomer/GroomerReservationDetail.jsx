@@ -132,10 +132,8 @@ const GroomerReservationDetail = () => {
               <p className="mb-1.5 line-clamp-1 text-sm leading-[18px] text-gray-600">{detail.phone}</p>
             </div>
           </div>
-          <div className="mt-2 h-[180px] w-full">
-            <StaticMap location={{ lat: 37.5, lng: 127 }} shopName={detail.shopName} />
-            {/* TODO : API 수정 완료시 위경도 정보 꺼내오기 */}
-            {/* <StaticMap location={{ lat: detail.latitude, lng: detail.longtitude }} shopName={detail.shopName} /> */}
+          <div className="mt-2 h-[170px] w-full">
+            <StaticMap location={{ lat: detail.latitude, lng: detail.longitude }} shopName={detail.shopName} />
           </div>
         </div>
 

@@ -35,12 +35,14 @@ const GroomerStore = () => {
     fetchShopDetail();
   }, []);
 
+  const StoreRef = useRef(null);
   const portfolioRef = useRef(null);
   const groomerRef = useRef(null);
   const reviewsRef = useRef(null);
 
   const scrollToSection = (section) => {
     const refs = {
+      storeInfo: StoreRef,
       portfolio: portfolioRef,
       groomer: groomerRef,
       reviews: reviewsRef
@@ -50,11 +52,15 @@ const GroomerStore = () => {
     if (targetRef) {
       targetRef.scrollIntoView({
         behavior: "smooth",
-        block: "start"
+        block: "center"
+      });
+
+      window.scrollTo({
+        behavior: "smooth"
       });
 
       // Optional: Adjust scroll position manually
-      window.scrollBy(0, -75);
+      window.scrollBy(0, -150);
     }
   };
 
@@ -95,14 +101,15 @@ const GroomerStore = () => {
   }
 
   return (
-    <div className="relative mb-[--bottom-bar-height] mt-6 overflow-y-scroll bg-white scrollbar-hide">
+    <div className="relative mb-[--bottom-bar-height] mt-6 bg-white scrollbar-hide">
       <div>
         <ShopIntro shopDetail={shopDetail} />
       </div>
+      <div className="sticky top-[75px] z-10 bg-white">
+        <ShopMenuBar isCustomer={false} favoriteCount={shopDetail.favoriteCount} scrollToSection={scrollToSection} />
+      </div>
 
-      <ShopMenuBar isCustomer={false} favoriteCount={shopDetail.favoriteCount} scrollToSection={scrollToSection} />
-
-      <div>
+      <div ref={StoreRef}>
         <ShopInfo shopDetail={shopDetail} />
       </div>
 

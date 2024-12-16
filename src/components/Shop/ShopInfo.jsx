@@ -3,16 +3,16 @@ import StaticMap from "../Map/StaticMap";
 
 function ShopInfo({ shopDetail }) {
   return (
-    <div className="mx-5 my-3">
-      <p className="mb-1 font-semibold">매장 정보</p>
-      <div>
+    <div className="m-5">
+      <p className="mb-1 text-lg font-semibold">매장 정보</p>
+      <div className="py-1">
         <div className="flex">
-          <p className="w-20 font-semibold text-gray-500">영업시간</p>
-          <p>{shopDetail.businessTime}</p>
+          <p className="w-20 text-sm font-semibold text-gray-500">영업시간</p>
+          <p className="text-sm">{shopDetail.businessTime}</p>
         </div>
         <div className="flex">
-          <p className="w-20 font-semibold text-gray-500">주소</p>
-          <p>{shopDetail.address}</p>
+          <p className="w-20 text-sm font-semibold text-gray-500">주소</p>
+          <p className="text-sm">{shopDetail.address}</p>
         </div>
       </div>
       <div className="mt-2 h-[200px] w-full">

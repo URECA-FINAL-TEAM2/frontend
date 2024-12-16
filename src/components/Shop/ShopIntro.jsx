@@ -5,10 +5,10 @@ const ShopIntro = ({ shopDetail }) => {
   if (!shopDetail) return <div>Loading...</div>;
 
   return (
-    <div className="mx-5 mb-3 justify-items-center">
-      <img className="h-[150px] w-[150px] rounded-lg object-cover" src={shopDetail.shopLogo} alt="Shop" />
-      <p className="mt-2 text-[20px] font-bold">{shopDetail.shopName}</p>
-      <div className="mt-[-2px] flex text-[18px]">
+    <div className="mb-3 justify-items-center">
+      <img className="h-[230px] w-full object-cover" src={shopDetail.shopLogo} alt="Shop" />
+      <p className="mt-2 text-[23px] font-bold">{shopDetail.shopName}</p>
+      <div className="mt-[-2px] flex p-1 text-[18px]">
         <StarRating starScore={Number(shopDetail.starScoreAvg)} />
       </div>
       <p className="mx-10 mt-3 text-center text-[12px] font-normal text-gray-400">{shopDetail.description}</p>

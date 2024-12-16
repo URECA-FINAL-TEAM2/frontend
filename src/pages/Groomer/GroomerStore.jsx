@@ -10,7 +10,6 @@ import { RiImageEditFill } from "react-icons/ri";
 import { EditShop } from "/public/Icons";
 import { useNavigate } from "react-router-dom";
 import useAuthStore from "@/store/authStore";
-import logo from "/Logo/doglogo.png";
 import EmptyPage from "@/components/common/EmptyPage";
 
 const GroomerStore = () => {

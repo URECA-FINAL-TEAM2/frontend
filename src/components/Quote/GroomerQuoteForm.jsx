@@ -13,9 +13,9 @@ function GroomerQuoteForm({ requestId }) {
   const [error, setError] = useState(null);
   const [value, setValue] = useState("");
   const [quoteContent, setQuoteContent] = useState("");
-  // const { id } = useAuthStore();
-  // 테스트용 groomerId : 4 -> TODO: 다시 돌려놓기
-  const { id } = { id: { groomerId: 4 } };
+  const { id } = useAuthStore();
+  // 테스트용 groomerId : 5 도도한 몽이네
+  // const { id } = { id: { groomerId: 5 } };
 
   const navigate = useNavigate();
 

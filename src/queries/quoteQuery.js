@@ -196,9 +196,8 @@ const getCustomerQuoteDetail = async (customerId, quotesId) => {
 };
 
 const getGroomerQuoteDetail = async (groomerId, requestId) => {
-  // TODO GET 연결 : `https://beautymeongdang.com/quotes/groomer/detail?requestId=${requestId}&${groomerId}`
   try {
-    const response = await axiosInstance.get(`/quotes/detail/${requestId}/${groomerId}`);
+    const response = await axiosInstance.get(`/quotes/groomer/detail/${requestId}/${groomerId}`);
     return response.data.data;
   } catch (error) {
     console.error("Error inserting quote:", error);

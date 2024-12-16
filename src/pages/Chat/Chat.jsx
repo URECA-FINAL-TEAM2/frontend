@@ -73,8 +73,8 @@ const Chat = () => {
     };
   }, [roomId, token, userId, userType]);
 
-  // 메시지 전송 핸들러
-  const handleSendMessage = () => {
+  // 메시지 전송 핸들러 - 원본
+  const handleSendMessage1 = () => {
     if (!messageContent.trim() && !selectedImage) return;
 
     const imageBase64 = selectedImage ? selectedImage.preview : null;
@@ -85,12 +85,35 @@ const Chat = () => {
     setSelectedImage(null); // 이미지 초기화
   };
 
+  // 메시지 전송 핸들러
+  const handleSendMessage = () => {
+    if (!messageContent.trim() && !selectedImage) return;
+
+    console.log("Sending userType:", userType);
+
+    const imageFile = selectedImage?.file || null;
+
+    sendMessage(stompClientRef, roomId, userId, messageContent, userType, imageFile);
+
+    setMessageContent("");
+    setSelectedImage(null);
+  };
+
   // 이미지 파일 선택 핸들러
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
-      const imageUrl = URL.createObjectURL(file);
-      setSelectedImage({ file, preview: imageUrl });
+      const previewUrl = URL.createObjectURL(file);
+      const reader = new FileReader();
+
+      reader.onload = () => {
+        setSelectedImage({
+          file: reader.result,
+          preview: previewUrl
+        });
+      };
+
+      reader.readAsDataURL(file);
     }
   };
 
@@ -138,11 +161,16 @@ const Chat = () => {
                   <div className="relative flex items-end space-x-2">
                     <p className="text-xs text-gray-500">{dayjs(msg.messageTime).format("YY.MM.DD · HH:mm")}</p>
                     <div className="max-w-40 rounded-lg bg-main-400 p-2 text-white">
-                      {msg.messageContent}
+                      {/* 수신한 내용 */}
+                      <img src={msg.messageImage} alt="" className="mt-2 max-w-full" />
+                      <div className="text-right">{msg.messageContent}</div>
+
+                      {/* 송신한 내용d<div></div> */}
                       {msg.imageUrl && <img src={msg.imageUrl} alt="" className="mt-2 max-w-full" />}
+                      <div className="text-right">{msg.content}</div>
                     </div>
                   </div>
-                  {/* 고객 자신은 자신의 프로필 안 봐도 될 것 같아서 일단 주석처리함 */}
+                  {/* 고객 자신은 자신의 프로필 안 봐도 될 것 같아서 일단 주석처리함. */}
                   {/* <div className="flex flex-col items-center">
                     <img
                       src={customerInfo.customerProfileImage}

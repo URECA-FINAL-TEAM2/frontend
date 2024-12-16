@@ -84,6 +84,7 @@ export const subscribeToChatRoom = (stompClientRef, currentSubscriptionRef, chat
   if (stompClientRef.current) {
     currentSubscriptionRef.current = stompClientRef.current.subscribe(`/sub/chat/room/${chatId}`, (message) => {
       const messageData = JSON.parse(message.body);
+      console.log("구독", messageData);
       setMessages((prevMessages) => [...prevMessages, messageData]);
     });
   } else {
@@ -91,8 +92,24 @@ export const subscribeToChatRoom = (stompClientRef, currentSubscriptionRef, chat
   }
 };
 
-// 메시지 전송 함수
-export const sendMessage = (stompClientRef, chatId, userId, messageContent, userType, selectedImage) => {
+// 메시지 전송 함수 - 원본
+export const sendMessage = (stompClientRef, chatId, userId, messageContent, userType, imageFile) => {
+  const messageData = {
+    chatId: parseInt(chatId),
+    senderId: parseInt(userId),
+    content: messageContent,
+    messageType: "TALK",
+    customerYn: userType,
+    base64Image: imageFile
+  };
+
+  stompClientRef.current.send("/pub/send", {}, JSON.stringify(messageData));
+};
+
+// 메세지 전송 함수 - 승희 수정
+export const sendMessage1 = (stompClientRef, chatId, userId, messageContent, userType, selectedImage) => {
+  const formData = new FormData();
+
   const messageData = {
     chatId: parseInt(chatId),
     senderId: parseInt(userId),
@@ -102,7 +119,10 @@ export const sendMessage = (stompClientRef, chatId, userId, messageContent, user
     base64Image: selectedImage
   };
 
-  stompClientRef.current.send("/pub/send", {}, JSON.stringify(messageData));
+  formData.append("messageData", JSON.stringify(messageData)); // 문자열들
+  formData.append("base64Image", selectedImage); // 이미지 파일
+
+  stompClientRef.current.send("/pub/send", {}, formData);
 };
 
 // 고객 채팅방 리스트

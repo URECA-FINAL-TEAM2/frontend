@@ -53,7 +53,6 @@ const Chat = () => {
         setMessages(chatData.data?.messages || []);
         setGroomerInfo(chatData.data?.groomerInfo);
         setCustomerInfo(chatData.data?.customerInfo);
-
         // 3. 채팅방 구독 설정
         subscribeToChatRoom(stompClientRef, currentSubscriptionRef, roomId, setMessages);
         console.log("Subscribed to chat and loaded previous messages.");
@@ -73,26 +72,12 @@ const Chat = () => {
     };
   }, [roomId, token, userId, userType]);
 
-  // 메시지 전송 핸들러 - 원본
-  const handleSendMessage1 = () => {
-    if (!messageContent.trim() && !selectedImage) return;
-
-    const imageBase64 = selectedImage ? selectedImage.preview : null;
-    console.log("Sending userType:", userType);
-    sendMessage(stompClientRef, roomId, userId, messageContent, userType, imageBase64);
-
-    setMessageContent(""); // 메시지 초기화
-    setSelectedImage(null); // 이미지 초기화
-  };
-
   // 메시지 전송 핸들러
   const handleSendMessage = () => {
     if (!messageContent.trim() && !selectedImage) return;
 
     console.log("Sending userType:", userType);
-
     const imageFile = selectedImage?.file || null;
-
     sendMessage(stompClientRef, roomId, userId, messageContent, userType, imageFile);
 
     setMessageContent("");
@@ -124,9 +109,8 @@ const Chat = () => {
 
   return (
     <>
-      <ChatHeader headerData={headerData} />
+      <ChatHeader groomerInfo={groomerInfo} customerInfo={customerInfo} />
       <div className="flex h-screen flex-col bg-gray-50 pt-[80px]">
-        {/* 채팅창 */}
         {/* 채팅창 */}
         <div className="flex-1 space-y-4 overflow-y-auto p-4">
           {messages.map((msg, index) => (

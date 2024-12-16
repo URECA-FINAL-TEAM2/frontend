@@ -6,7 +6,7 @@ import dayjs from "dayjs";
 
 const formatDate = (dateString) => {
   if (!dateString) return "";
-  return dayjs(dateString).format("YY-MM-DD HH:mm");
+  return dayjs(dateString).format("YY.MM.DD HH:mm");
 };
 
 const ChatRoomList = () => {
@@ -108,12 +108,6 @@ const ChatRoomList = () => {
             <Link
               to={`/chat/${chatRoomData.id}`}
               key={chatRoomData.id}
-              state={{
-                groomerName: chatRoomData.groomerName,
-                shopName: chatRoomData.shopName,
-                profileImage: chatRoomData.profileImage,
-                shopAddress: chatRoomData.shopAddress
-              }}
               className="flex items-center border-b-4 border-gray-200 px-6 py-4"
             >
               {/* 채팅방 프로필 이미지 */}

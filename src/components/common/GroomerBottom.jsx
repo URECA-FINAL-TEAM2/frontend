@@ -4,9 +4,9 @@ import { VscSymbolFile } from "react-icons/vsc";
 import { PiChatCircle } from "react-icons/pi";
 import { Link, useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
-
 import { IoHomeSharp } from "react-icons/io5";
 import GPTBtn from "../Chat/GPTBtn";
+
 const GroomerBottom = () => {
   const location = useLocation();
   const [active, setActive] = useState("");
@@ -59,7 +59,7 @@ const GroomerBottom = () => {
           </div>
         </Link>
       </div>
-      <GPTBtn />
+      {location.pathname !== "/groomer/store" && <GPTBtn />}
     </div>
   );
 };

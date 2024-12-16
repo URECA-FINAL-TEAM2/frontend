@@ -77,7 +77,7 @@ const CustomerEstimate = ({ Info, expandedQuoteRequestId, setExpandedQuoteReques
             <div className="mb-1.5 flex justify-between">
               <p className="px-1 text-[16px] font-semibold leading-snug">{Info.dogName}</p>
               <span
-                className={`inline-block w-20 self-center rounded px-2 py-0.5 text-center text-xs ${getQuoteRequestStatusProps(Info.requestStatus).className}`}
+                className={`rounded px-2 py-[3px] text-center text-xs ${getQuoteRequestStatusProps(Info.requestStatus).className}`}
               >
                 {getQuoteRequestStatusProps(Info.requestStatus).text}
               </span>{" "}

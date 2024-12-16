@@ -8,9 +8,9 @@ import useAuthStore from "@/store/authStore";
 import { getGroomerQuoteDirect, getGroomerQuoteSend, getGroomerQuoteTotal } from "@/queries/quoteRequestQuery";
 
 const GroomerQuote = () => {
-  // const { id } = useAuthStore();
-  // 테스트용 groomerId : 4 -> TODO: 다시 돌려놓기
-  const { id } = { id: { groomerId: 4 } };
+  const { id } = useAuthStore();
+  // 테스트용 groomerId : 5 도도한 몽이네
+  // const { id } = { id: { groomerId: 5 } };
   const [activeSection, setActiveSection] = useState("section1");
   const [shopRequests, setShopRequests] = useState(null);
   const [totalRequests, setTotalRequests] = useState(null);

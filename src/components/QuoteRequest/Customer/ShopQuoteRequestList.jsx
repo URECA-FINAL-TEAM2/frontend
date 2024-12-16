@@ -115,7 +115,7 @@ const CustomerEstimate = ({ Info }) => {
         {Info.status === "제안 완료" ? (
           <div
             onClick={() => {
-              navigate(`/customer/quotes/detail/${Info.quotesId}`);
+              navigate(`/customer/quotes/detail/${Info.quoteId}`);
             }}
             className="flex h-[35px] w-full cursor-pointer items-center justify-center rounded-lg bg-main-200 text-center text-sm text-main-600"
           >

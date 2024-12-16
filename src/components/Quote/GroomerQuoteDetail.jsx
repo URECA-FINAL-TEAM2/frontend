@@ -5,6 +5,8 @@ import useAuthStore from "@/store/authStore";
 
 function GroomerQuoteDetail({ requestId }) {
   const { id } = useAuthStore();
+  // 테스트용 groomerId : 5 도도한 몽이네
+  // const { id } = { id: { groomerId: 5 } };
   const [quoteData, setQuoteData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);

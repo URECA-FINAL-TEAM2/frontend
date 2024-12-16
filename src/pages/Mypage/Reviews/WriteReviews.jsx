@@ -84,11 +84,11 @@ const WriteReviews = () => {
     return (
       <>
         {Array.from({ length: fullStars }).map((_, index) => (
-          <ImStarFull key={`full-${index}`} color="#F4B400" size={15} />
+          <ImStarFull key={`full-${index}`} color="#F4B400" size={12} />
         ))}
         {hasHalfStar && <ImStarHalf key="half" color="#F4B400" size={15} />}
         {Array.from({ length: emptyStars }).map((_, index) => (
-          <ImStarEmpty key={`empty-${index}`} color="#E0E0E0" size={15} />
+          <ImStarEmpty key={`empty-${index}`} color="#E0E0E0" size={12} />
         ))}
       </>
     );
@@ -99,23 +99,26 @@ const WriteReviews = () => {
       <SubHeader title={"리뷰 수정"} />
       <div className="mx-auto min-h-screen bg-main-100 pt-[90px]">
         <div className="mx-auto mb-4 h-auto w-11/12 rounded-xl bg-white p-4">
-          <div className="flex items-center justify-between">
-            <div className="text-lg">매장명</div>
-            <div className="ml-3 text-xs">2024.11.14</div>
+          <div className="text-md flex items-center justify-between">
+            <span>{review.shopName}</span>
+            <span className="text-xs text-gray-400">{review.groomerName} 디자이너</span>
           </div>
-          <div className="mb-2 flex items-center">
-            <div className="mr-2 flex items-center space-x-1">{renderStars()}</div>
-            <select
-              value={reviewData.starScore}
-              onChange={handleStarScoreChange}
-              className="rounded-xl border border-gray-200 px-3"
-            >
-              {Array.from({ length: 11 }, (_, index) => index * 0.5).map((value) => (
-                <option key={value} value={value}>
-                  {value.toFixed(1)}
-                </option>
-              ))}
-            </select>
+          <div className="flex items-center justify-between">
+            <div className="flex items-center">
+              <div className="mr-2 flex items-center space-x-1">{renderStars()}</div>
+              <select
+                value={reviewData.starScore}
+                onChange={handleStarScoreChange}
+                className="rounded-xl border border-gray-200 px-3 text-sm"
+              >
+                {Array.from({ length: 11 }, (_, index) => index * 0.5).map((value) => (
+                  <option key={value} value={value}>
+                    {value.toFixed(1)}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div className="ml-3 text-xs text-gray-400">{review.reviewDate}</div>
           </div>
 
           <EditReviewImage
@@ -127,7 +130,7 @@ const WriteReviews = () => {
           <textarea
             value={reviewData.content}
             onChange={handleContentChange}
-            className="w-full rounded-md border border-gray-300 p-2"
+            className="w-full rounded-md border border-gray-200 p-2"
             rows="4"
             placeholder="리뷰 내용을 입력하세요."
           ></textarea>

@@ -12,7 +12,6 @@ export const getCustomerReviewList = async (id) => {
 
 export const deleteReview = async (reviewId) => {
   try {
-    const reviewId = reviewId;
     const response = await axiosInstance.put(`/reviews/delete/${reviewId}`);
     console.log(response);
   } catch (error) {

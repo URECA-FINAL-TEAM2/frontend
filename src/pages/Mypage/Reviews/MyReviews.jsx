@@ -25,12 +25,10 @@ const MyReviews = () => {
     <div className="mx-auto mt-[75px] min-h-screen">
       <SubHeader title={"리뷰관리"} />
 
-      <ReviewBox />
-
       {/* 리뷰 리스트 렌더링 */}
       {reviews.length > 0 ? (
         reviews.map((review) => (
-          <ReviewBox key={review.id} review={review} /> // 각 리뷰 데이터를 전달
+          <ReviewBox key={review.reviewId} review={review} /> // 각 리뷰 데이터를 전달
         ))
       ) : (
         <div className="text-center text-gray-500">작성된 리뷰가 없습니다.</div>

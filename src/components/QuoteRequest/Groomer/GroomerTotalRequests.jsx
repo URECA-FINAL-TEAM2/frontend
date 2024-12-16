@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { Schedule, Corgi, Note } from "/public/Icons";
 
 function GroomerTotalRequests({ Infos }) {
+  if (Infos === "404") return <div>매장정보없음</div>; // TODO: EmptyPage 사용
   return (
     <>
       {Infos.map((Info) => {

@@ -8,7 +8,9 @@ import useAuthStore from "@/store/authStore";
 import { getGroomerQuoteDirect, getGroomerQuoteSend, getGroomerQuoteTotal } from "@/queries/quoteRequestQuery";
 
 const GroomerQuote = () => {
-  const { id } = useAuthStore(); // id.groomerId 사용예정
+  // const { id } = useAuthStore();
+  // 테스트용 groomerId : 4 -> TODO: 다시 돌려놓기
+  const { id } = { id: { groomerId: 4 } };
   const [activeSection, setActiveSection] = useState("section1");
   const [shopRequests, setShopRequests] = useState(null);
   const [totalRequests, setTotalRequests] = useState(null);
@@ -18,49 +20,53 @@ const GroomerQuote = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const requests = await getGroomerQuoteDirect();
+        const requests = await getGroomerQuoteDirect(id.groomerId);
         setShopRequests(requests);
       } catch (error) {
-        console.error("Failed to fetch shop requests:", error);
+        console.error("Failed to fetch direct requests:", error);
       }
     };
 
     fetchData();
-  }, []); // Empty dependency array, only run once on mount
+  }, []);
 
-  // Fetch shopRequests on mount
+  // Fetch totalRequests on mount
+  // 404 error (매장 없을 경우) 예외처리 필요
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const requests = await getGroomerQuoteTotal();
-        setTotalRequests(requests);
+        const requests = await getGroomerQuoteTotal(id.groomerId);
+        if (requests.is404) {
+          setTotalRequests("404");
+        } else {
+          setTotalRequests(requests);
+        }
       } catch (error) {
-        console.error("Failed to fetch shop requests:", error);
+        console.error("Failed to fetch total requests:", error);
       }
     };
 
     fetchData();
-  }, []); // Empty dependency array, only run once on mount
+  }, []);
 
-  // Fetch shopRequests on mount
+  // Fetch sentRequests on mount
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const requests = await getGroomerQuoteSend();
+        const requests = await getGroomerQuoteSend(id.groomerId);
         console.log("requests", requests);
         setSentQuotes(requests);
       } catch (error) {
-        console.error("Failed to fetch shop requests:", error);
+        console.error("Failed to fetch sent requests:", error);
       }
     };
 
     fetchData();
-  }, []); // Empty dependency array, only run once on mount
+  }, []);
 
-  // Show loading message until both shopRequests and totalRequests are fetched
-  if (!shopRequests) return "1:1 맞춤 견적 데이터를 가져오는중...";
-  if (!totalRequests) return "견적 공고 데이터를 가져오는중...";
-  if (!sentQuotes) return "보낸 견적서 데이터를 가져오는중...";
+  if (shopRequests === null) return "1:1 맞춤 견적 데이터를 가져오는중...";
+  if (totalRequests === null) return "견적 공고 데이터를 가져오는중...";
+  if (sentQuotes === null) return "보낸 견적서 데이터를 가져오는중...";
 
   const renderContent = () => {
     switch (activeSection) {
@@ -73,6 +79,7 @@ const GroomerQuote = () => {
       default:
         return null;
     }
+    // TODO: 각각 빈 배열일 경우 빈화면 대신 결과가 없다는 텍스트라도 반환하기
   };
 
   return (

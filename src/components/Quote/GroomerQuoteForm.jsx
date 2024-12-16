@@ -13,7 +13,10 @@ function GroomerQuoteForm({ requestId }) {
   const [error, setError] = useState(null);
   const [value, setValue] = useState("");
   const [quoteContent, setQuoteContent] = useState("");
-  const { id } = useAuthStore();
+  // const { id } = useAuthStore();
+  // 테스트용 groomerId : 4 -> TODO: 다시 돌려놓기
+  const { id } = { id: { groomerId: 4 } };
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -76,18 +79,17 @@ function GroomerQuoteForm({ requestId }) {
   };
 
   const handleBlur = (e) => {
-    // Optional: Remove comma for actual numeric value if needed
     const numericValue = e.target.value.replace(/,/g, "");
     console.log("Numeric Value:", numericValue);
   };
 
   const handleSubmitButton = async () => {
     await insertQuote({
-      requestId: requestId,
+      requestId: Number(requestId),
       groomerId: id.groomerId,
       dogId: requestInfo.dogId,
       quoteContent: quoteContent,
-      quoteCost: value,
+      quoteCost: Number(value.replace(/,/g, "")),
       beautyDate: requestInfo.beautyDate
     });
 

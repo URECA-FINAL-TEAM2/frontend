@@ -57,6 +57,7 @@ const groomerQuoteDetail = {
 };
 
 const insertQuote = async (quoteData) => {
+  console.log(quoteData);
   try {
     const response = await axiosInstance.post(`/quotes`, quoteData, {
       headers: { "Content-Type": "application/json" }

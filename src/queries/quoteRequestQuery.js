@@ -150,9 +150,14 @@ const getCustomerRequestDetail = async (requestId) => {
 };
 
 const getGroomerRequestDetail = async (requestId) => {
-  // /requests/groomer/detail/{requestId}
-  // 빈 body
-  return groomerRequestDetail;
+  try {
+    const response = await axiosInstance.get(`/requests/groomer/detail/${requestId}`);
+    return response.data.data;
+  } catch (error) {
+    console.error("Error inserting quote:", error);
+    throw error;
+  }
+  // return groomerRequestDetail;
 };
 
 const RequestReject = async (rejectData) => {
@@ -170,8 +175,8 @@ const RequestReject = async (rejectData) => {
   }
 };
 
-const getGroomerQuoteDirect = async () => {
-  const groomerId = 4;
+const getGroomerQuoteDirect = async (groomerId) => {
+  console.log("groomerId: ", groomerId);
   try {
     const response = await axiosInstance.get(`/requests/groomer/direct/${groomerId}`);
     return response.data.data;
@@ -181,19 +186,21 @@ const getGroomerQuoteDirect = async () => {
   }
 };
 
-const getGroomerQuoteTotal = async () => {
-  const groomerId = 4;
+const getGroomerQuoteTotal = async (groomerId) => {
   try {
     const response = await axiosInstance.get(`/requests/groomer/total/${groomerId}`);
+    // 매장 등록 안 된 경우 404 -> 예외처리 필요
     return response.data.data;
   } catch (error) {
-    console.error("Error inserting quote:", error);
+    if (error.response && error.response.status === 404) {
+      console.warn("Data not found (404). Returning placeholder.");
+      return { is404: true }; // 404임을 표시하는 객체 반환
+    }
     throw error;
   }
 };
 
-const getGroomerQuoteSend = async () => {
-  const groomerId = 4;
+const getGroomerQuoteSend = async (groomerId) => {
   try {
     const response = await axiosInstance.get(`/requests/groomer/send/${groomerId}`);
     return response.data.data;

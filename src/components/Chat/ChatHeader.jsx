@@ -14,7 +14,7 @@ const ChatHeader = ({ groomerInfo, customerInfo }) => {
         <Link to={-1}>
           <VscChevronLeft size={20} />
         </Link>
-        <img src={headerData?.profileImage} alt="Profile" className="mx-3 h-12 w-12 rounded-full" />
+        <img src={headerData?.groomerProfileImage} alt="Profile" className="mx-3 h-12 w-12 rounded-full" />
         <div>
           <h1 className="text-md font-semibold">{headerData?.groomerName}</h1>
           <p className="text-xs text-gray-500">{headerData?.shopName}</p>

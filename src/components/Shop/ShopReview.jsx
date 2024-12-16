@@ -26,9 +26,7 @@ function ShopReview({ groomerUsername, reviewData, isCustomer }) {
     <div className="mx-auto mb-4 w-full rounded-xl bg-gray-50 p-3 pb-2">
       <div className="mb-1 flex">
         <div className="h-[40px] w-[40px] self-center">
-          <img className="rounded-lg" src="https://picsum.photos/200">
-            {/* TODO: API에 고객 프로필 이미지 추가 */}
-          </img>
+          <img className="rounded-lg" src={reviewData.customerProfile}></img>
         </div>
         <div className="ml-2 w-full">
           <div>

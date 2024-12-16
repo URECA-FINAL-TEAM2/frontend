@@ -17,7 +17,7 @@ function App() {
       <Router>
         <Routes>
           <Route path="/*" element={<PublicRoutes />} />
-          <Route path="/inChat" element={<Chat />} />
+          <Route path="/chat/:roomId" element={<Chat />} />
 
           <Route
             path="/customer/*"

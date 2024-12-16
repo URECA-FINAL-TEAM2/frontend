@@ -1,6 +1,46 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
+import { GetCustomerChatRoomList, createChatRoom } from "@/queries/chatQuery";
 
 function ShopGroomer({ shopDetail, isCustomer }) {
+  const navigate = useNavigate();
+
+  const token = localStorage.getItem("accessToken");
+  const authStorage = JSON.parse(localStorage.getItem("auth-storage"));
+  const customerId = authStorage?.state?.id?.customerId;
+  const groomerId = shopDetail?.groomerId;
+
+  const handleStartChat = async () => {
+    try {
+      // 1. 고객 채팅방 리스트 가져오기
+      const chatRoomListResponse = await GetCustomerChatRoomList(customerId);
+      const chatRoomList = chatRoomListResponse?.data;
+
+      console.log("Chat Room List:", chatRoomList);
+      console.log("Groomer ID:", groomerId);
+
+      // 2. 기존 채팅방 여부 확인
+      const existingChatRoom = chatRoomList?.find((room) => room.groomerId === groomerId);
+
+      let roomId;
+      if (existingChatRoom) {
+        // 기존 채팅방이 존재할 경우
+        roomId = existingChatRoom.roomId;
+        console.log(`Existing chat room found: ${roomId}`);
+      } else {
+        // 기존 채팅방이 없을 경우 새로 생성
+        const chatRoom = await createChatRoom(customerId, groomerId);
+        roomId = chatRoom?.data?.roomId;
+        console.log(`New chat room created: ${roomId}`);
+      }
+
+      // 3. 채팅 페이지로 이동
+      navigate(`/chat/${roomId}`);
+    } catch (error) {
+      console.error("Error starting chat:", error);
+    }
+  };
+
   const baseButtonClasses = `
     flex h-[28px]
     items-center justify-center 
@@ -23,8 +63,8 @@ function ShopGroomer({ shopDetail, isCustomer }) {
           <p className="text-[18px] font-bold">{shopDetail?.groomerUsername} 디자이너</p>
           <p className="mb-3 text-[12px] text-gray-600">{shopDetail?.skills}</p>
           <button
-            onClick={isCustomer ? () => {} : undefined}
-            className={`text-sm ${baseButtonClasses} ${!isCustomer ? "cursor-not-allowed" : ""} `}
+            onClick={isCustomer ? handleStartChat : undefined}
+            className={`text-sm ${baseButtonClasses} ${!isCustomer ? "cursor-not-allowed" : ""}`}
             disabled={!isCustomer}
           >
             채팅 문의하기

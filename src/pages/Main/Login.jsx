@@ -2,36 +2,35 @@ import { useEffect } from "react";
 import Logo2 from "/Logo/onboardingLogo2.svg";
 import line from "/Icons/line.svg";
 import Aos from "aos";
-import { useNavigate } from "react-router-dom";
 import KakaoLoginBtn from "../../components/Login/KakaoLoginBtn";
 import GoogleLoginBtn from "../../components/Login/GoogleLoginBtn";
+import TypingEffect from "@/utils/TypingEffect";
 
 const Login = () => {
-  const navigate = useNavigate();
-
   useEffect(() => {
     Aos.init();
   }, []);
 
   return (
     <div className="flex min-h-screen flex-col items-center justify-center bg-main-300 text-white">
-      <div className="flex flex-col items-center justify-center">
+      <div className="relative flex flex-col items-center justify-center">
         <img
           data-aos="fade-down"
           data-aos-easing="linear"
           data-aos-duration="500"
           src={Logo2}
           alt="onboardingPage Logo"
-          className="w-10/12"
+          className="w-[230px]"
         />
+
         <div
           className="titleFont mt-1 text-2xl"
           data-aos="fade-down"
           data-aos-easing="linear"
-          data-aos-duration="800"
+          data-aos-duration="1500"
           data-aos-offset="0"
         >
-          반려견 미용을 위한 최적의 장소
+          <TypingEffect text="  반려견 미용을 위한 최적의 장소!" speed={150} delay={2000} />
         </div>
       </div>
 

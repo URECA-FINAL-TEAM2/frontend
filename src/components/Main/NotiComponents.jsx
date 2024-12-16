@@ -152,7 +152,7 @@ const NotiComponents = () => {
   // 역할 및 알림 타입에 따른 링크 설정
   const getNotifyLink = (type) => {
     const basePath = roleType === "groomer" ? "/groomer" : "/customer";
-
+    console.log(type);
     switch (type) {
       case "예약 알림":
       case "예약 취소 알림":
@@ -178,7 +178,7 @@ const NotiComponents = () => {
       : notifications; // 전체 알림
 
   // 알림 읽음 처리
-  const showNotificationDetail = async (notificationId) => {
+  const showNotificationDetail = async (notificationId, notifyType) => {
     try {
       const response = await readNotification(roleType, userId, notificationId);
       console.log(response);
@@ -187,7 +187,9 @@ const NotiComponents = () => {
           notification.id === notificationId ? { ...notification, readCheckYn: true } : notification
         )
       );
-      navigate(notifyLink);
+      const link = getNotifyLink(notifyType);
+      toggleSidebar();
+      navigate(link);
     } catch (error) {
       console.error("알림 읽음 처리 실패:", error);
     }
@@ -252,10 +254,13 @@ const NotiComponents = () => {
               </div>
 
               <div className="mx-auto h-[90vh] overflow-y-scroll">
-                {filteredNotifications.map((noti) => (
+                {[...filteredNotifications].reverse().map((noti) => (
                   <div className="my-3 block rounded-xl bg-white p-4 px-6" key={noti.id}>
                     <div className="flex flex-col">
-                      <button onClick={() => showNotificationDetail(noti.id)} className="flex items-center">
+                      <button
+                        onClick={() => showNotificationDetail(noti.id, noti.notifyType)}
+                        className="flex items-center"
+                      >
                         <span className="mr-2 rounded-2xl bg-main-200 px-2 py-[0.5px] text-[9px] text-main-500">
                           {noti.notifyType}
                         </span>
@@ -263,14 +268,20 @@ const NotiComponents = () => {
                           {new Date(noti.createdAt).toLocaleString()}
                         </span>
                       </button>
-                      <button onClick={() => showNotificationDetail(noti.id)} className="mt-1 inline-flex items-center">
+                      <button
+                        onClick={() => showNotificationDetail(noti.id, noti.notifyType)}
+                        className="mt-1 inline-flex items-center"
+                      >
                         <GoDotFill color={noti.readCheckYn ? "white" : "red"} size={15} />
                         <span className="ml-1 flex w-11/12 text-start text-sm font-semibold text-gray-900">
                           {noti.content}
                         </span>
                       </button>
                       <div className="mt-1 flex items-center justify-between text-start">
-                        <button onClick={() => showNotificationDetail(noti.id)} className="ml-5 text-xs text-gray-500">
+                        <button
+                          onClick={() => showNotificationDetail(noti.id, noti.notifyType)}
+                          className="ml-5 text-xs text-gray-500"
+                        >
                           견적 내용을 자세히 확인해보세요.
                         </button>
                         <button onClick={() => handleDelete(noti.id)}>

@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import { connect, sendMessage, fetchPreviousMessages, subscribeToChatRoom } from "@/queries/chatQuery";
 import ChatHeader from "@/components/Chat/ChatHeader";
 import { IoArrowUpCircle } from "react-icons/io5";
@@ -7,6 +7,9 @@ import { HiPaperClip } from "react-icons/hi2";
 import dayjs from "dayjs";
 
 const Chat = () => {
+  const location = useLocation();
+  const headerData = location.state || {};
+
   const { roomId } = useParams(); // URL에서 roomId 가져오기
   const stompClientRef = useRef(null);
   const currentSubscriptionRef = useRef(null);
@@ -98,7 +101,7 @@ const Chat = () => {
 
   return (
     <>
-      <ChatHeader />
+      <ChatHeader headerData={headerData} />
       <div className="flex h-screen flex-col bg-gray-50 pt-[80px]">
         {/* 채팅창 */}
         {/* 채팅창 */}
@@ -132,21 +135,22 @@ const Chat = () => {
               {/* Customer 메시지 */}
               {msg.customerYn && customerInfo && (
                 <div className="flex items-center justify-end space-x-2">
-                  <div className="relative flex items-center space-x-2">
-                    <p className="text-xs text-gray-500">{dayjs(msg.messageTime).format("YY-MM-DD HH:mm")}</p>
+                  <div className="relative flex items-end space-x-2">
+                    <p className="text-xs text-gray-500">{dayjs(msg.messageTime).format("YY.MM.DD · HH:mm")}</p>
                     <div className="max-w-40 rounded-lg bg-main-400 p-2 text-white">
                       {msg.messageContent}
                       {msg.imageUrl && <img src={msg.imageUrl} alt="" className="mt-2 max-w-full" />}
                     </div>
                   </div>
-                  <div className="flex flex-col items-center">
+                  {/* 고객 자신은 자신의 프로필 안 봐도 될 것 같아서 일단 주석처리함 */}
+                  {/* <div className="flex flex-col items-center">
                     <img
                       src={customerInfo.customerProfileImage}
                       alt={customerInfo.customerName}
                       className="mb-1 h-12 w-12 rounded-full object-cover"
                     />
                     <div className="text-xs font-semibold text-gray-700">{customerInfo.customerName}</div>
-                  </div>
+                  </div> */}
                 </div>
               )}
             </div>

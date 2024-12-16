@@ -148,7 +148,13 @@ const CustomerReservationDetail = () => {
             </div>
           </div>
           <div className="mt-2 h-[170px] w-full">
-            <StaticMap location={{ lat: detail.latitude, lng: detail.longitude }} shopName={detail.shopName} />
+            {detail.latitude && detail.longitude ? (
+              <StaticMap location={{ lat: detail.latitude, lng: detail.longitude }} shopName={detail.shopName} />
+            ) : (
+              <div className="flex h-full items-center justify-center rounded-lg bg-gray-100">
+                <p className="text-gray-500">지도를 표시할 수 없습니다</p>
+              </div>
+            )}
           </div>
         </div>
 

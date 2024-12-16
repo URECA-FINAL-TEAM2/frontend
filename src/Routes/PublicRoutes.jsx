@@ -1,4 +1,5 @@
 import OAuth2RedirectPage from "@/components/Login/Oauth2RedirectPage";
+import Chat from "@/pages/Chat/Chat";
 import ChatClient from "@/pages/Chat/ChatClient";
 import BestReviews from "@/pages/Main/BestReviews";
 import InfoRequired from "@/pages/Main/InfoRequired";
@@ -15,8 +16,8 @@ const PublicRoutes = () => {
   return (
     <Routes>
       <Route path="gpt" element={<TestGPT />} />
-      <Route path="testpage" element={<ChatClient />} />
-      <Route path="testpage1" element={<TestPage />} />
+      <Route path="testpage" element={<Chat />} />
+      <Route path="testpage1" element={<ChatClient />} />
       <Route path="" element={<Onboarding />} />
       <Route path="login" element={<Login />} />
       <Route path="login/oauth2/code/kakao" element={<OAuth2RedirectPage />} />

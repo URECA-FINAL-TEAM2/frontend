@@ -6,7 +6,7 @@ import dayjs from "dayjs";
 
 const formatDate = (dateString) => {
   if (!dateString) return "";
-  return dayjs(dateString).format("YY-MM-DD HH:mm");
+  return dayjs(dateString).format("YY.MM.DD HH:mm");
 };
 
 const ChatRoomList = () => {
@@ -39,13 +39,15 @@ const ChatRoomList = () => {
 
         // 데이터 정리
         const sanitizedChatRooms = chatRoomData.map((room) => ({
-          id: room.id,
+          id: room.roomId || "unknown",
           name: room.name || "",
           store: room.store || "",
           lastMessage: room.lastMessage || "",
           lastMessageTime: room.lastMessageTime || "",
           groomerName: room.groomerName || "",
-          shopName: room.shopName || ""
+          shopName: room.shopName || "",
+          shopAddress: room.shopAddress || "주소",
+          profileImage: room.profileImage || "/default-profile.png" // 기본 프로필 이미지 설정
         }));
         setChatRooms(sanitizedChatRooms);
       } catch (error) {
@@ -71,6 +73,9 @@ const ChatRoomList = () => {
       lastMessage.includes(searchTerm) // 메시지 내용 검색
     );
   });
+
+  // 필터된 결과를 콘솔에 출력
+  console.log("Filtered Chat Rooms:", filteredChatRooms);
 
   return (
     <div className="flex min-h-screen flex-col bg-gray-100">
@@ -100,7 +105,11 @@ const ChatRoomList = () => {
           <div className="mt-4 text-center text-red-500">{error}</div>
         ) : filteredChatRooms.length > 0 ? (
           filteredChatRooms.map((chatRoomData) => (
-            <Link to="/inChat" key={chatRoomData.id} className="flex items-center border-b-4 border-gray-200 px-6 py-4">
+            <Link
+              to={`/chat/${chatRoomData.id}`}
+              key={chatRoomData.id}
+              className="flex items-center border-b-4 border-gray-200 px-6 py-4"
+            >
               {/* 채팅방 프로필 이미지 */}
               <img src={chatRoomData.profileImage} className="h-16 w-16 rounded-full" />
               <div className="ml-4 flex-grow">
@@ -108,7 +117,9 @@ const ChatRoomList = () => {
                   <div className="text-base font-semibold">{chatRoomData.groomerName}</div>
                   <div className="text-xs text-gray-500">{formatDate(chatRoomData.lastMessageTime)}</div>
                 </div>
-                <div className="text-xs text-main-500">{chatRoomData.shopName}</div>
+                <div className="text-xs text-main-500">
+                  {chatRoomData.shopName} · {chatRoomData.shopAddress}
+                </div>
                 <div className="text-xs">{chatRoomData.lastMessage}</div>
               </div>
             </Link>

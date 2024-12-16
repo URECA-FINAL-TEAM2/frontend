@@ -5,13 +5,12 @@ import { MdThumbUpAlt } from "react-icons/md";
 const BestReviewBox = ({ bestReview }) => {
   const navigate = useNavigate();
   const handleShopDetail = () => {
-    console.log("매장 상세 페이지로 이동");
-    // navigate("/");
+    navigate(`/customer/shop/${bestReview.shopId}`);
   };
 
   return (
     <button
-      onClick={() => handleShopDetail(2)} // 파라미터에 shopId or groomerId
+      onClick={() => handleShopDetail()} // 파라미터에 shopId or groomerId
       className="mx-auto flex w-[360px] cursor-pointer items-center gap-3 rounded-[10px] bg-white px-3 py-3"
     >
       <div>

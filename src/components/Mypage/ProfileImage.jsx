@@ -1,14 +1,22 @@
 import { useEffect, useState } from "react";
-import DefaultCustomerProfile from "/Icons/DefaultCustomerProfile.svg";
-import DefaultPetProfile from "/Icons/DefaultPetProfile.svg";
-import DefaultStoreProfile from "/Icons/DefaultStoreProfile.svg";
+import DefaultCustomerProfile from "/Icons/Default/userDefaultImg.svg";
+import DefaultPetProfile from "/Icons/Default/dogDefaultImg.svg";
+import DefaultStoreProfile from "/Icons/Default/storeDefaultImg.svg";
+import { useLocation } from "react-router-dom";
 
 const ProfileImage = ({ formData, setFormData, onlyRead = false }) => {
-  const [imagePreview, setImagePreview] = useState(DefaultCustomerProfile);
+  const location = useLocation();
+  const [imagePreview, setImagePreview] = useState(null);
   const [isDefault, setIsDefault] = useState(true);
 
   useEffect(() => {
-    if (location.pathname.includes("store")) {
+    if (formData?.profileImage) {
+      setIsDefault(false);
+    } else {
+      setIsDefault(true);
+    }
+
+    if (location.pathname.includes("mystore")) {
       setImagePreview(formData?.profileImage ? formData?.profileImage : DefaultStoreProfile);
     } else if (location.pathname.includes("info")) {
       setImagePreview(formData?.profileImage ? formData?.profileImage : DefaultCustomerProfile);
@@ -37,7 +45,13 @@ const ProfileImage = ({ formData, setFormData, onlyRead = false }) => {
 
   // 기본 이미지 초기화
   const handleResetImage = () => {
-    setImagePreview(DefaultCustomerProfile);
+    if (location.pathname.includes("mystore")) {
+      setImagePreview(DefaultStoreProfile);
+    } else if (location.pathname.includes("info")) {
+      setImagePreview(DefaultCustomerProfile);
+    } else {
+      setImagePreview(DefaultPetProfile);
+    }
     setIsDefault(true);
   };
 
@@ -54,7 +68,12 @@ const ProfileImage = ({ formData, setFormData, onlyRead = false }) => {
         />
       )}
       <div className="mx-auto mb-10 mt-20 flex flex-col items-center justify-center">
-        <img src={imagePreview} alt="Default Image" onClick={handleImageClick} className="img-border h-[100px] w-1/4" />
+        <img
+          src={imagePreview}
+          alt="Default Image"
+          onClick={handleImageClick}
+          className={`${!isDefault && "img-border"} h-[100px] w-1/4`}
+        />
 
         {!isDefault && (
           <button onClick={handleResetImage} className="mt-2 text-sm text-gray-300">

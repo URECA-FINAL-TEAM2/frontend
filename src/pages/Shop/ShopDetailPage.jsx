@@ -35,18 +35,33 @@ const ShopDetailPage = () => {
     fetchShopDetail();
   }, [shopId, id.customerId]);
 
+  const StoreRef = useRef(null);
   const portfolioRef = useRef(null);
   const groomerRef = useRef(null);
   const reviewsRef = useRef(null);
 
   const scrollToSection = (section) => {
     const refs = {
+      storeInfo: StoreRef,
       portfolio: portfolioRef,
       groomer: groomerRef,
       reviews: reviewsRef
     };
 
-    refs[section]?.current?.scrollIntoView({ behavior: "smooth" });
+    const targetRef = refs[section]?.current;
+
+    if (targetRef) {
+      // 스크롤을 화면 상단으로 이동
+      targetRef.scrollIntoView({ behavior: "smooth", block: "start" });
+
+      // 스크롤 위치를 추가로 조정 (예: 200px 아래로 이동)
+      setTimeout(() => {
+        window.scrollBy({
+          top: 150, // 상단에서 200px 떨어지게
+          behavior: "center"
+        });
+      }, 300); // scrollIntoView 완료 후 실행
+    }
   };
 
   if (isLoading) {
@@ -72,28 +87,29 @@ const ShopDetailPage = () => {
       <div>
         <ShopIntro shopDetail={shopDetail} />
       </div>
+      <div className="sticky top-0 z-10 bg-white">
+        <ShopMenuBar
+          shopId={shopId}
+          isCustomer={true}
+          isFavorite={shopDetail.isFavorite}
+          favoriteCount={shopDetail.favoriteCount}
+          scrollToSection={scrollToSection}
+        />
+      </div>
 
-      <ShopMenuBar
-        shopId={shopId}
-        isCustomer={true}
-        isFavorite={shopDetail.isFavorite}
-        favoriteCount={shopDetail.favoriteCount}
-        scrollToSection={scrollToSection}
-      />
-
-      <div>
+      <div className="my-10" ref={StoreRef}>
         <ShopInfo shopDetail={shopDetail} />
       </div>
 
-      <div ref={portfolioRef}>
+      <div className="my-10" ref={portfolioRef}>
         <ShopPortfolio portfolios={shopDetail.groomerPortfolioImages} />
       </div>
 
-      <div ref={groomerRef}>
+      <div className="my-10" ref={groomerRef}>
         <ShopGroomer isCustomer={true} shopDetail={shopDetail} />
       </div>
 
-      <div ref={reviewsRef}>
+      <div className="my-10" ref={reviewsRef}>
         <ShopReviewList
           groomerUsername={shopDetail.groomerUsername}
           isCustomer={true}

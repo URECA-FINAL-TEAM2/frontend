@@ -14,19 +14,7 @@ const GroomerHome = () => {
   const { toastMessage, toastIcon, clearToast } = useToastStore();
   const { id } = useAuthStore();
   const [isShop, setIsShop] = useState(true);
-  const [totalRequest, setTotalRequest] = useState([
-    {
-      requestId: 7,
-      profileImage: "/profile-user.png",
-      userName: "이도림",
-      closingDate: "2024-12-03T15:00:00",
-      beautyDate: "2024-12-03T15:00:00",
-      breed: "비숑",
-      dogWeight: "5.6",
-      dogGender: "FEMALE",
-      requestContent: "(공지) 미용하고 싶어요4"
-    }
-  ]);
+  const [totalRequest, setTotalRequest] = useState([]);
   const [preview, setPreview] = useState({
     todayReservation: 0, // 오늘의 예약
     totalDirectRequest: 0, // 전체

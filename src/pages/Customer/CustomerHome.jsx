@@ -59,7 +59,7 @@ const CustomerHome = () => {
         <section>
           <div className="flex items-center justify-between px-3">
             <h2 className="text-lg">우리동네 디자이너</h2>
-            <Link to="/customer/search">
+            <Link to="/customer/shop">
               <div className="text-xs">더보기</div>
             </Link>
           </div>

@@ -84,6 +84,7 @@ export const subscribeToChatRoom = (stompClientRef, currentSubscriptionRef, chat
   if (stompClientRef.current) {
     currentSubscriptionRef.current = stompClientRef.current.subscribe(`/sub/chat/room/${chatId}`, (message) => {
       const messageData = JSON.parse(message.body);
+      console.log("구독", messageData);
       setMessages((prevMessages) => [...prevMessages, messageData]);
     });
   } else {
@@ -91,15 +92,15 @@ export const subscribeToChatRoom = (stompClientRef, currentSubscriptionRef, chat
   }
 };
 
-// 메시지 전송 함수
-export const sendMessage = (stompClientRef, chatId, userId, messageContent, userType, selectedImage) => {
+// 메시지 전송 함수 - 원본
+export const sendMessage = (stompClientRef, chatId, userId, messageContent, userType, imageFile) => {
   const messageData = {
     chatId: parseInt(chatId),
     senderId: parseInt(userId),
     content: messageContent,
     messageType: "TALK",
     customerYn: userType,
-    base64Image: selectedImage
+    base64Image: imageFile
   };
 
   stompClientRef.current.send("/pub/send", {}, JSON.stringify(messageData));

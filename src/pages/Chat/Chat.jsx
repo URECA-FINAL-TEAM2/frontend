@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import { connect, sendMessage, fetchPreviousMessages, subscribeToChatRoom } from "@/queries/chatQuery";
 import ChatHeader from "@/components/Chat/ChatHeader";
 import { IoArrowUpCircle } from "react-icons/io5";
@@ -7,6 +7,9 @@ import { HiPaperClip } from "react-icons/hi2";
 import dayjs from "dayjs";
 
 const Chat = () => {
+  const location = useLocation();
+  const headerData = location.state || {};
+
   const { roomId } = useParams(); // URL에서 roomId 가져오기
   const stompClientRef = useRef(null);
   const currentSubscriptionRef = useRef(null);
@@ -50,7 +53,6 @@ const Chat = () => {
         setMessages(chatData.data?.messages || []);
         setGroomerInfo(chatData.data?.groomerInfo);
         setCustomerInfo(chatData.data?.customerInfo);
-
         // 3. 채팅방 구독 설정
         subscribeToChatRoom(stompClientRef, currentSubscriptionRef, roomId, setMessages);
         console.log("Subscribed to chat and loaded previous messages.");
@@ -74,20 +76,29 @@ const Chat = () => {
   const handleSendMessage = () => {
     if (!messageContent.trim() && !selectedImage) return;
 
-    const imageBase64 = selectedImage ? selectedImage.preview : null;
     console.log("Sending userType:", userType);
-    sendMessage(stompClientRef, roomId, userId, messageContent, userType, imageBase64);
+    const imageFile = selectedImage?.file || null;
+    sendMessage(stompClientRef, roomId, userId, messageContent, userType, imageFile);
 
-    setMessageContent(""); // 메시지 초기화
-    setSelectedImage(null); // 이미지 초기화
+    setMessageContent("");
+    setSelectedImage(null);
   };
 
   // 이미지 파일 선택 핸들러
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
-      const imageUrl = URL.createObjectURL(file);
-      setSelectedImage({ file, preview: imageUrl });
+      const previewUrl = URL.createObjectURL(file);
+      const reader = new FileReader();
+
+      reader.onload = () => {
+        setSelectedImage({
+          file: reader.result,
+          preview: previewUrl
+        });
+      };
+
+      reader.readAsDataURL(file);
     }
   };
 
@@ -98,9 +109,8 @@ const Chat = () => {
 
   return (
     <>
-      <ChatHeader />
+      <ChatHeader groomerInfo={groomerInfo} customerInfo={customerInfo} />
       <div className="flex h-screen flex-col bg-gray-50 pt-[80px]">
-        {/* 채팅창 */}
         {/* 채팅창 */}
         <div className="flex-1 space-y-4 overflow-y-auto p-4">
           {messages.map((msg, index) => (
@@ -132,21 +142,31 @@ const Chat = () => {
               {/* Customer 메시지 */}
               {msg.customerYn && customerInfo && (
                 <div className="flex items-center justify-end space-x-2">
-                  <div className="relative flex items-center space-x-2">
-                    <p className="text-xs text-gray-500">{dayjs(msg.messageTime).format("YY-MM-DD HH:mm")}</p>
+                  <div className="relative flex items-end space-x-2">
+                    <p className="text-xs text-gray-500">{dayjs(msg.messageTime).format("YY.MM.DD · HH:mm")}</p>
                     <div className="max-w-40 rounded-lg bg-main-400 p-2 text-white">
-                      {msg.messageContent}
+                      {/* 주석코드 동작하면 아래 4줄 지우고 이거 남기기 */}
+                      {/* {msg.messageImage && <img src={msg.messageImage} alt="" className="mt-2 max-w-full" />}
+                     <div className="text-right">{msg.messageContent || msg.content}</div> */}
+
+                      {/* 수신한 내용 */}
+                      <img src={msg.messageImage} alt="" className="mt-2 max-w-full" />
+                      <div className="text-right">{msg.messageContent}</div>
+
+                      {/* 송신한 내용d<div></div> */}
                       {msg.imageUrl && <img src={msg.imageUrl} alt="" className="mt-2 max-w-full" />}
+                      <div className="text-right">{msg.content}</div>
                     </div>
                   </div>
-                  <div className="flex flex-col items-center">
+                  {/* 고객 자신은 자신의 프로필 안 봐도 될 것 같아서 일단 주석처리함. */}
+                  {/* <div className="flex flex-col items-center">
                     <img
                       src={customerInfo.customerProfileImage}
                       alt={customerInfo.customerName}
                       className="mb-1 h-12 w-12 rounded-full object-cover"
                     />
                     <div className="text-xs font-semibold text-gray-700">{customerInfo.customerName}</div>
-                  </div>
+                  </div> */}
                 </div>
               )}
             </div>

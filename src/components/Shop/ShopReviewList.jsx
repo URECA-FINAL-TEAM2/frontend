@@ -56,19 +56,19 @@ function ShopReviewList({ groomerUsername, reviewList, isCustomer }) {
 
   return (
     <div className="mx-5 mt-3">
-      <div className="mb-1 flex w-full items-center justify-between">
-        <p className="font-semibold">이용후기</p>
+      <div className="mb-3 flex w-full items-center justify-between">
+        <p className="text-lg font-semibold">이용후기</p>
         {reviewList.length !== 0 ? (
-          <div>
+          <div className="flex items-center">
             <span
-              className={`cursor-pointer text-[13px] ${sortMethod === "recent" ? "font-bold text-black" : "text-gray-400"}`}
+              className={`cursor-pointer text-[12px] ${sortMethod === "recent" ? "font-bold text-black" : "text-gray-400"}`}
               onClick={() => handleSortMethodChange("recent")}
             >
               최신순
             </span>
-            <span className="mx-1 text-[13px]">|</span>
+            <span className="mx-1 text-[10px]">|</span>
             <span
-              className={`cursor-pointer text-[13px] ${sortMethod === "recommended" ? "font-bold text-black" : "text-gray-400"}`}
+              className={`cursor-pointer text-[12px] ${sortMethod === "recommended" ? "font-bold text-black" : "text-gray-400"}`}
               onClick={() => handleSortMethodChange("recommended")}
             >
               추천순

@@ -34,7 +34,7 @@ function ShopGroomer({ shopDetail, isCustomer }) {
         console.log(`New chat room created: ${roomId}`);
       }
 
-      // 3. 채팅 페이지로 이동
+      // 3. 채팅 페이지로 이동 +미용사정보들 추가
       navigate(`/chat/${roomId}`);
     } catch (error) {
       console.error("Error starting chat:", error);

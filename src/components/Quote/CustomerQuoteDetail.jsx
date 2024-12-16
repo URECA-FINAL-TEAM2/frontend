@@ -1,6 +1,7 @@
 import { getCustomerQuoteDetail } from "@/queries/quoteQuery";
 import React, { useEffect, useState } from "react";
 import { Designer, Schedule, Corgi, Note, Photos, Description, Won, Banknotes } from "/public/Icons";
+import useAuthStore from "@/store/authStore";
 
 function CustomerQuoteDetail({ quotesId, onDataLoad }) {
   const { id } = useAuthStore();
@@ -151,7 +152,7 @@ function CustomerQuoteDetail({ quotesId, onDataLoad }) {
               return (
                 <div key={index} className="relative">
                   <img
-                    src={encodeURI(image)} // URL 인코딩
+                    src={image}
                     alt={`Uploaded Request Img ${index}`}
                     className="h-28 w-28 rounded-lg object-cover"
                   />

@@ -21,8 +21,8 @@ const GroomerRoutes = () => {
     <Routes>
       <Route element={<GroomerLayout />}>
         <Route path="home" element={<GroomerHome />} />
-        <Route path="store" element={<GroomerStore />} />
         <Route path="chat" element={<ChatRoomList />} />
+        <Route path="store" element={<GroomerStore />} />
       </Route>
 
       <Route path="quotes" element={<GroomerQuote />} />

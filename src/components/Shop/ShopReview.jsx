@@ -23,29 +23,29 @@ function ShopReview({ groomerUsername, reviewData, isCustomer }) {
   };
 
   return (
-    <div className="mx-auto mb-4 w-full rounded-xl bg-gray-50 p-3 pb-2">
+    <div className="mx-auto mb-4 w-full rounded-xl bg-gray-50 p-4 pb-2">
       <div className="mb-1 flex">
         <div className="h-[40px] w-[40px] self-center">
           <img className="rounded-lg" src={reviewData.customerProfile}></img>
         </div>
         <div className="ml-2 w-full">
           <div>
-            <div className="flex w-full justify-between">
+            <div className="flex w-full items-center justify-between">
               <div className="text-[15px] font-semibold">{reviewData.customerNickname}</div>
-              <div className="text-xs">담당 디자이너 : {groomerUsername}</div>
+              <div className="text-[10px]">담당 디자이너 : {groomerUsername}</div>
             </div>
           </div>
           <div className="mt-[-3px]">
-            <div className="flex items-center justify-between">
+            <div className="flex items-start justify-between">
               <div className="flex text-[13px]">
                 <StarRating starScore={reviewData.starScore} />
               </div>
-              <div className="text-xs">{formatDateOnly(reviewData.createdAt)}</div>
+              <div className="text-[10px]">{formatDateOnly(reviewData.createdAt)}</div>
             </div>
           </div>
         </div>
       </div>
-      <div className="">
+      <div className="my-3">
         {reviewData.reviewsImage.length > 0 ? (
           <div className="grid grid-cols-3 gap-2">
             {reviewData.reviewsImage.map((url, index) => (

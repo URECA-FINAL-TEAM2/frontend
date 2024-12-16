@@ -10,12 +10,13 @@ import { useEffect, useRef, useState } from "react";
 import { VscBell } from "react-icons/vsc";
 import { GoTrash, GoDotFill } from "react-icons/go";
 import { IoCloseOutline } from "react-icons/io5";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Modal from "../common/modal/modal";
 import toast from "react-hot-toast";
 import { IoIosInformationCircleOutline } from "react-icons/io";
 
 const NotiComponents = () => {
+  const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { id, DefaultRole } = useAuthStore();
   const userId = id.userId;
@@ -186,6 +187,7 @@ const NotiComponents = () => {
           notification.id === notificationId ? { ...notification, readCheckYn: true } : notification
         )
       );
+      navigate(notifyLink);
     } catch (error) {
       console.error("알림 읽음 처리 실패:", error);
     }

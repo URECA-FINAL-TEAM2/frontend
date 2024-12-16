@@ -52,14 +52,18 @@ const GroomerStore = () => {
       targetRef.scrollIntoView({
         behavior: "smooth",
         block: "center"
+        // 후기때문에 ,,,
       });
+      // const offset = 200; // 상단에서 100px 떨어지게
+      // const topPosition = targetRef.getBoundingClientRect().top + window.pageYOffset - offset;
 
-      window.scrollTo({
-        behavior: "smooth"
-      });
+      // window.scrollTo({
+      //   behavior: "smooth",
+      //   top: topPosition
+      // });
 
       // Optional: Adjust scroll position manually
-      window.scrollBy(0, -150);
+      // window.scrollBy(0, -200);
     }
   };
 
@@ -108,19 +112,19 @@ const GroomerStore = () => {
         <ShopMenuBar isCustomer={false} favoriteCount={shopDetail.favoriteCount} scrollToSection={scrollToSection} />
       </div>
 
-      <div ref={StoreRef}>
+      <div className="my-10" ref={StoreRef}>
         <ShopInfo shopDetail={shopDetail} />
       </div>
 
-      <div ref={portfolioRef}>
+      <div className="my-10" ref={portfolioRef}>
         <ShopPortfolio portfolios={shopDetail.groomerPortfolioImages} />
       </div>
 
-      <div ref={groomerRef}>
+      <div className="my-10" ref={groomerRef}>
         <ShopGroomer isCustomer={false} shopDetail={shopDetail} />
       </div>
 
-      <div ref={reviewsRef}>
+      <div className="my-10" ref={reviewsRef}>
         <ShopReviewList
           groomerUsername={shopDetail.groomerUsername}
           isCustomer={false}

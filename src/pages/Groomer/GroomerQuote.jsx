@@ -1,5 +1,3 @@
-//GroomerQuote.jsx
-
 import React, { useEffect, useState } from "react";
 import GroomerBottom from "@/components/common/GroomerBottom";
 import SubHeader from "@/components/common/SubHeader";
@@ -7,129 +5,68 @@ import GroomerTotalRequests from "@/components/QuoteRequest/Groomer/GroomerTotal
 import GroomerShopRequests from "@/components/QuoteRequest/Groomer/GroomerShopRequests";
 import GroomerSentRequests from "@/components/QuoteRequest/Groomer/GroomerSentRequests";
 import useAuthStore from "@/store/authStore";
+import { getGroomerQuoteDirect, getGroomerQuoteSend, getGroomerQuoteTotal } from "@/queries/quoteRequestQuery";
 
 const GroomerQuote = () => {
-  const { id } = useAuthStore(); // id.groomerId 사용예정
+  // const { id } = useAuthStore();
+  // 테스트용 groomerId : 4 -> TODO: 다시 돌려놓기
+  const { id } = { id: { groomerId: 4 } };
   const [activeSection, setActiveSection] = useState("section1");
+  const [shopRequests, setShopRequests] = useState(null);
+  const [totalRequests, setTotalRequests] = useState(null);
+  const [sentQuotes, setSentQuotes] = useState(null);
 
-  const shopRequests = [
-    {
-      requestId: 3,
-      userName: "이도림",
-      userProfileImage:
-        "http://img1.kakaocdn.net/thumb/R640x640.q70/?fname=http://t1.kakaocdn.net/account_images/default_profile.jpeg",
-      expiryDate: "2024-11-28T15:00:00",
-      beautyDate: "2024-12-03T15:00:00",
-      dogBreed: "비숑",
-      dogGender: "FEMALE",
-      dogWeight: "5.6",
-      requestContent: "1:1 미용하고 싶어요3"
-    },
-    {
-      requestId: 11,
-      userName: "이도림",
-      userProfileImage:
-        "http://img1.kakaocdn.net/thumb/R640x640.q70/?fname=http://t1.kakaocdn.net/account_images/default_profile.jpeg",
-      expiryDate: "2024-12-03T00:00:00",
-      beautyDate: "2024-12-03T15:00:00",
-      dogBreed: "비숑",
-      dogGender: "MALE",
-      dogWeight: "5.6",
-      requestContent: "1:1 미용4"
-    },
-    {
-      requestId: 12,
-      userName: "이도림",
-      userProfileImage:
-        "http://img1.kakaocdn.net/thumb/R640x640.q70/?fname=http://t1.kakaocdn.net/account_images/default_profile.jpeg",
-      expiryDate: "2024-12-03T00:00:00",
-      beautyDate: "2024-12-03T15:00:00",
-      dogBreed: "비숑",
-      dogGender: "FEMALE",
-      dogWeight: "5.6",
-      requestContent: "1:1 미용5"
-    }
-  ];
+  // Fetch shopRequests on mount
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const requests = await getGroomerQuoteDirect(id.groomerId);
+        setShopRequests(requests);
+      } catch (error) {
+        console.error("Failed to fetch direct requests:", error);
+      }
+    };
 
-  const totalRequests = [
-    {
-      requestId: 4,
-      userName: "이도림",
-      userProfileImage:
-        "http://img1.kakaocdn.net/thumb/R640x640.q70/?fname=http://t1.kakaocdn.net/account_images/default_profile.jpeg",
-      expiryDate: "2024-11-28T15:00:00",
-      beautyDate: "2024-12-03T15:00:00",
-      dogBreed: "비숑",
-      dogGender: "FEMALE",
-      dogWeight: "5.6",
-      requestContent: "(공지) 미용하고 싶어요1"
-    },
-    {
-      requestId: 6,
-      userName: "이도림",
-      userProfileImage:
-        "http://img1.kakaocdn.net/thumb/R640x640.q70/?fname=http://t1.kakaocdn.net/account_images/default_profile.jpeg",
-      expiryDate: "2024-11-28T15:00:00",
-      beautyDate: "2024-12-03T15:00:00",
-      dogBreed: "비숑",
-      dogGender: "FEMALE",
-      dogWeight: "5.6",
-      requestContent: "(공지) 미용하고 싶어요3"
-    },
-    {
-      requestId: 8,
-      userName: "이도림",
-      userProfileImage:
-        "http://img1.kakaocdn.net/thumb/R640x640.q70/?fname=http://t1.kakaocdn.net/account_images/default_profile.jpeg",
-      expiryDate: "2024-11-28T15:00:00",
-      beautyDate: "2024-12-03T15:00:00",
-      dogBreed: "비숑",
-      dogGender: "FEMALE",
-      dogWeight: "5.6",
-      requestContent: "(공지) 미용하고 싶어요5"
-    },
-    {
-      requestId: 9,
-      userName: "이도림",
-      userProfileImage:
-        "http://img1.kakaocdn.net/thumb/R640x640.q70/?fname=http://t1.kakaocdn.net/account_images/default_profile.jpeg",
-      expiryDate: "2024-11-28T15:00:00",
-      beautyDate: "2024-12-03T15:00:00",
-      dogBreed: "비숑",
-      dogGender: "FEMALE",
-      dogWeight: "5.6",
-      requestContent: "(공지) 미용하고 싶어요6"
-    }
-  ];
+    fetchData();
+  }, []);
 
-  const sentQuotes = [
-    {
-      requestId: 2,
-      userName: "이도림",
-      userProfileImage:
-        "http://img1.kakaocdn.net/thumb/R640x640.q70/?fname=http://t1.kakaocdn.net/account_images/default_profile.jpeg",
-      beautyDate: "2024-12-03T15:00:00",
-      dogBreed: "비숑",
-      dogGender: "FEMALE",
-      dogWeight: "5.6",
-      requestContent: "1:1 미용하고 싶어요2",
-      requestType: "020",
-      status: "제안"
-    },
-    {
-      requestId: 5,
-      userName: "이도림",
-      userProfileImage:
-        "http://img1.kakaocdn.net/thumb/R640x640.q70/?fname=http://t1.kakaocdn.net/account_images/default_profile.jpeg",
-      beautyDate: "2024-12-03T15:30:20",
-      dogBreed: "비숑",
-      dogGender: "FEMALE",
-      dogWeight: "5.6",
-      requestContent: "(공지) 미용하고 싶어요2",
-      requestType: "010",
-      status: "수락"
-    }
-  ];
+  // Fetch totalRequests on mount
+  // 404 error (매장 없을 경우) 예외처리 필요
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const requests = await getGroomerQuoteTotal(id.groomerId);
+        if (requests.is404) {
+          setTotalRequests("404");
+        } else {
+          setTotalRequests(requests);
+        }
+      } catch (error) {
+        console.error("Failed to fetch total requests:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  // Fetch sentRequests on mount
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const requests = await getGroomerQuoteSend(id.groomerId);
+        console.log("requests", requests);
+        setSentQuotes(requests);
+      } catch (error) {
+        console.error("Failed to fetch sent requests:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  if (shopRequests === null) return "1:1 맞춤 견적 데이터를 가져오는중...";
+  if (totalRequests === null) return "견적 공고 데이터를 가져오는중...";
+  if (sentQuotes === null) return "보낸 견적서 데이터를 가져오는중...";
 
   const renderContent = () => {
     switch (activeSection) {
@@ -142,6 +79,7 @@ const GroomerQuote = () => {
       default:
         return null;
     }
+    // TODO: 각각 빈 배열일 경우 빈화면 대신 결과가 없다는 텍스트라도 반환하기
   };
 
   return (

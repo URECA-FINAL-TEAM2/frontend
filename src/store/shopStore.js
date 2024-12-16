@@ -5,15 +5,15 @@ const useShopStore = create((set, get) => ({
   shops: [],
   originalShops: [], // 원본 데이터 저장용
   selectedShop: null,
-  sortType: "favorite", // 'favorite' or 'review'
+  sortType: "favoriteCount", // 'favoriteCount' or 'reviewCount'
   searchQuery: "", // New state to track search query
 
   // Actions
   setShops: (shops) =>
     set({
-      shops,
+      shops: [...shops].sort((a, b) => b.favoriteCount - a.favoriteCount), // favoriteCount로 정렬,
       originalShops: [...shops], // 원본 데이터 저장
-      sortType: "favorite",
+      sortType: "favoriteCount",
       searchQuery: "" // Reset search query
     }),
 
@@ -31,7 +31,7 @@ const useShopStore = create((set, get) => ({
     const { originalShops, searchQuery } = get();
     let shopsToSort = [...originalShops];
 
-    // Apply search filter if there's a search query
+    // 검색 필터링 (searchQuery가 있는 경우)
     if (searchQuery) {
       shopsToSort = shopsToSort.filter(
         (shop) =>
@@ -41,18 +41,19 @@ const useShopStore = create((set, get) => ({
       );
     }
 
-    if (sortType === "favorite") {
-      set({
-        sortType,
-        shops: shopsToSort
-      });
-    } else if (sortType === "review") {
-      const sortedShops = shopsToSort.sort((a, b) => b.starCount - a.starCount);
-      set({
-        sortType,
-        shops: sortedShops
-      });
+    // 정렬 로직
+    if (sortType === "favoriteCount") {
+      // 찜 많은 순으로 정렬
+      shopsToSort.sort((a, b) => b.favoriteCount - a.favoriteCount);
+    } else if (sortType === "reviewCount") {
+      // 리뷰 많은 순으로 정렬 (리뷰 카운트로 정렬)
+      shopsToSort.sort((a, b) => b.reviewCount - a.reviewCount);
     }
+
+    set({
+      sortType,
+      shops: shopsToSort
+    });
   },
 
   // New search action

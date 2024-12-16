@@ -6,8 +6,9 @@ import { Schedule, Corgi, Note } from "/public/Icons";
 function GroomerSentRequests({ Infos }) {
   return (
     <>
-      <GroomerEstimate Info={Infos[0]} />
-      <GroomerEstimate Info={Infos[1]} />
+      {Infos.map((Info) => {
+        return <GroomerEstimate Info={Info} />;
+      })}
     </>
   );
 }
@@ -26,7 +27,7 @@ const GroomerEstimate = ({ Info }) => {
               <span className="flex items-center rounded-md bg-main px-1.5 text-xs text-white">1:1 맞춤 요청</span>
             ) : null}
           </div>
-          <span className="rounded-md bg-main-100 px-1 py-[1px] text-xs text-main">{Info.status}</span>
+          <span className="rounded-md bg-main-100 px-1 py-[1px] text-xs text-main-500">{Info.status}</span>
         </div>
       </div>
       <div className="mb-2 text-sm">
@@ -48,7 +49,7 @@ const GroomerEstimate = ({ Info }) => {
       <div className="flex w-full gap-2">
         <div
           onClick={() => {
-            navigate(`/groomer/quotes/detail/${1}`);
+            navigate(`/groomer/quotes/detail/${Info.requestId}`);
           }}
           className="flex h-[35px] w-1/2 cursor-pointer items-center justify-center rounded-lg bg-gray-200 text-center text-sm"
         >

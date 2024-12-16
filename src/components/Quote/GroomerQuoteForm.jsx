@@ -2,12 +2,22 @@ import { getGroomerRequestDetail } from "@/queries/quoteRequestQuery";
 import { formatDate } from "@/utils/formatDate";
 import React, { useEffect, useState } from "react";
 import { User, Schedule, Corgi, Note, Photos, Description, Won } from "/public/Icons";
+import BottomButton from "../common/button/BottomButton";
+import { insertQuote } from "@/queries/quoteQuery";
+import useAuthStore from "@/store/authStore";
+import { useNavigate } from "react-router-dom";
 
 function GroomerQuoteForm({ requestId }) {
   const [requestInfo, setRequestInfo] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [value, setValue] = useState("");
+  const [quoteContent, setQuoteContent] = useState("");
+  // const { id } = useAuthStore();
+  // 테스트용 groomerId : 4 -> TODO: 다시 돌려놓기
+  const { id } = { id: { groomerId: 4 } };
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchRequestInfo = async () => {
@@ -69,9 +79,21 @@ function GroomerQuoteForm({ requestId }) {
   };
 
   const handleBlur = (e) => {
-    // Optional: Remove comma for actual numeric value if needed
     const numericValue = e.target.value.replace(/,/g, "");
     console.log("Numeric Value:", numericValue);
+  };
+
+  const handleSubmitButton = async () => {
+    await insertQuote({
+      requestId: Number(requestId),
+      groomerId: id.groomerId,
+      dogId: requestInfo.dogId,
+      quoteContent: quoteContent,
+      quoteCost: Number(value.replace(/,/g, "")),
+      beautyDate: requestInfo.beautyDate
+    });
+
+    navigate("/groomer/quotes");
   };
 
   return (
@@ -188,6 +210,8 @@ function GroomerQuoteForm({ requestId }) {
         <textarea
           placeholder="서비스 진행 방식, 가격 책정 방식 등을 상세하게 작성해주세요."
           className="w-full resize-none rounded-lg border-none p-2 focus:outline-none"
+          value={quoteContent}
+          onChange={(event) => setQuoteContent(event.target.value)}
           rows={4}
         />
       </div>
@@ -211,6 +235,8 @@ function GroomerQuoteForm({ requestId }) {
           <p className="mt-1 text-xl font-semibold leading-none">원</p>
         </div>
       </div>
+
+      <BottomButton onClick={handleSubmitButton}>견적서 보내기</BottomButton>
     </div>
   );
 }

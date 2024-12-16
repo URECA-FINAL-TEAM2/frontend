@@ -14,18 +14,18 @@ const ShopList = () => {
     <>
       <div className="mb-1 flex h-[20px] items-center px-7">
         <span
-          onClick={() => setSortType("favorite")}
+          onClick={() => setSortType("favoriteCount")}
           className={`cursor-pointer rounded-md px-2 py-1 text-sm transition-colors duration-200 ${
-            sortType === "favorite" ? "text-primary font-bold" : "hover:text-primary text-gray-600"
+            sortType === "favoriteCount" ? "text-primary font-bold" : "hover:text-primary text-gray-600"
           }`}
         >
           찜 많은 순
         </span>
         <span className="text-gray-300">|</span>
         <span
-          onClick={() => setSortType("review")}
+          onClick={() => setSortType("reviewCount")}
           className={`cursor-pointer rounded-md px-2 py-1 text-sm transition-colors duration-200 ${
-            sortType === "review" ? "text-primary font-bold" : "hover:text-primary text-gray-600"
+            sortType === "reviewCount" ? "text-primary font-bold" : "hover:text-primary text-gray-600"
           }`}
         >
           리뷰 많은 순

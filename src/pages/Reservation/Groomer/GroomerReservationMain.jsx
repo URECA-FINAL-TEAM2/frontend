@@ -40,42 +40,50 @@ const GroomerReservationMain = () => {
   return (
     <div>
       <SubHeader title="예약 내역" />
-      <div className="mx-auto max-w-lg bg-white p-4">
+      <div className="mx-auto max-w-lg bg-white">
         {/* 상단 탭 */}
-        <div className="jusify-around mb-4 mt-12 flex border-b">
+        <div className="jusify-around mb-4 mt-[75px] flex border-b">
           <button
             onClick={() => setActiveTab("today")}
             className={`flex-1 py-2 ${
-              activeTab === "today" ? "border-b-4 text-black" : "border-b-4 border-transparent text-gray-500"
-            }`}
-            style={activeTab === "today" ? { borderColor: "#ff8e8e" } : {}}
+              activeTab === "today"
+                ? "border-b-2 border-solid border-black font-semibold text-black"
+                : "text-gray-300 hover:bg-gray-100"
+            } text-[15px] transition-colors`}
+            style={activeTab === "today" ? { borderColor: "black" } : {}}
           >
             오늘의 예약
           </button>
           <button
             onClick={() => setActiveTab("completed")}
             className={`flex-1 py-2 ${
-              activeTab === "completed" ? "border-b-4 text-black" : "border-b-4 border-transparent text-gray-500"
-            }`}
-            style={activeTab === "completed" ? { borderColor: "#ff8e8e" } : {}}
+              activeTab === "completed"
+                ? "border-b-2 border-solid border-black font-semibold text-black"
+                : "text-gray-300 hover:bg-gray-100"
+            } text-[15px] transition-colors`}
+            style={activeTab === "completed" ? { borderColor: "black" } : {}}
           >
             완료
           </button>
           <button
             onClick={() => setActiveTab("reserved")}
             className={`flex-1 py-2 ${
-              activeTab === "reserved" ? "border-b-4 text-black" : "border-b-4 border-transparent text-gray-500"
-            }`}
-            style={activeTab === "reserved" ? { borderColor: "#ff8e8e" } : {}}
+              activeTab === "reserved"
+                ? "border-b-2 border-solid border-black font-semibold text-black"
+                : "text-gray-300 hover:bg-gray-100"
+            } text-[15px] transition-colors`}
+            style={activeTab === "reserved" ? { borderColor: "black" } : {}}
           >
             예약
           </button>
           <button
             onClick={() => setActiveTab("canceled")}
             className={`flex-1 py-2 ${
-              activeTab === "canceled" ? "border-b-4 text-black" : "border-b-4 border-transparent text-gray-500"
-            }`}
-            style={activeTab === "canceled" ? { borderColor: "#ff8e8e" } : {}}
+              activeTab === "canceled"
+                ? "border-b-2 border-solid border-black font-semibold text-black"
+                : "text-gray-300 hover:bg-gray-100"
+            } text-[15px] transition-colors`}
+            style={activeTab === "canceled" ? { borderColor: "black" } : {}}
           >
             취소
           </button>

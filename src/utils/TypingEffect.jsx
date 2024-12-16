@@ -1,39 +1,37 @@
 import { useState, useEffect } from "react";
-import logo from "/Logo/logoBtn.png";
 
-const TypingEffect = ({ text, speed = 100 }) => {
+const TypingEffect = ({ text, speed = 100, delay = 0 }) => {
   const [displayedText, setDisplayedText] = useState("");
 
   useEffect(() => {
     if (!text) return;
 
     let index = 0;
+    let intervalId = null;
 
-    setDisplayedText(text[index] || "");
-    index++;
+    const startTyping = () => {
+      setDisplayedText(text[index] || "");
+      index++;
 
-    const interval = setInterval(() => {
-      if (index < text.length - 1) {
-        setDisplayedText((prev) => prev + text[index]);
-        index++;
-      } else {
-        clearInterval(interval);
-      }
-    }, speed);
+      intervalId = setInterval(() => {
+        if (index < text.length - 1) {
+          setDisplayedText((prev) => prev + text[index]);
+          index++;
+        } else {
+          clearInterval(intervalId);
+        }
+      }, speed);
+    };
 
-    return () => clearInterval(interval);
+    // 클린업 함수
+    const timeoutId = setTimeout(startTyping, delay);
+    return () => {
+      clearTimeout(timeoutId);
+      if (intervalId) clearInterval(intervalId);
+    };
   }, [text, speed]);
 
-  return (
-    <div className={`flex items-start space-x-2`}>
-      <img src={logo} alt="" className="mt-1 flex h-9 w-9 items-center justify-center rounded-full bg-main-300 p-1" />
-      <div className={`max-w-xs`}>
-        <div className={`rounded-lg bg-main-100 px-4 py-2`}>
-          <p>{displayedText}</p>
-        </div>
-      </div>
-    </div>
-  );
+  return <div>{displayedText}</div>;
 };
 
 export default TypingEffect;

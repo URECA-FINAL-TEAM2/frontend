@@ -4,9 +4,9 @@ import { VscSymbolFile } from "react-icons/vsc";
 import { PiChatCircle } from "react-icons/pi";
 import { Link, useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
-
 import { IoHomeSharp } from "react-icons/io5";
 import GPTBtn from "../Chat/GPTBtn";
+
 const GroomerBottom = () => {
   const location = useLocation();
   const [active, setActive] = useState("");
@@ -31,35 +31,35 @@ const GroomerBottom = () => {
         <Link to="/groomer/home">
           <div className={`bottom ${active === "home" && "bottom-active"}`}>
             <IoHomeSharp size={25} />
-            <span className="mt-1 text-xs">홈</span>
+            <span className="mt-1 text-[10px]">홈</span>
           </div>
         </Link>
         <Link to="/groomer/quotes">
           <div className={`bottom ${active === "quotes" && "bottom-active"}`}>
             <VscSymbolFile size={25} />
-            <span className="mt-1 text-xs">견적 요청</span>
+            <span className="mt-1 text-[10px]">견적 요청</span>
           </div>
         </Link>
         <Link to="/groomer/store">
           <div className={`bottom ${active === "store" && "bottom-active"}`}>
             <BsShop size={25} />
-            <span className="mt-1 text-xs">내 매장</span>
+            <span className="mt-1 text-[10px]">내 매장</span>
           </div>
         </Link>
         <Link to="/groomer/chat">
           <div className={`bottom ${active === "chat" && "bottom-active"}`}>
             <PiChatCircle size={27} />
-            <span className="mt-1 text-xs">채팅</span>
+            <span className="mt-1 text-[10px]">채팅</span>
           </div>
         </Link>
         <Link to="/groomer/mypage">
           <div className={`bottom ${active === "mypage" && "bottom-active"}`}>
             <PiUserCircleFill size={30} />
-            <span className="mt-1 text-xs">마이</span>
+            <span className="mt-1 text-[10px]">MY</span>
           </div>
         </Link>
       </div>
-      <GPTBtn />
+      {location.pathname !== "/groomer/store" && <GPTBtn />}
     </div>
   );
 };

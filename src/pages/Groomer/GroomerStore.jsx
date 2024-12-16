@@ -10,7 +10,6 @@ import { RiImageEditFill } from "react-icons/ri";
 import { EditShop } from "/public/Icons";
 import { useNavigate } from "react-router-dom";
 import useAuthStore from "@/store/authStore";
-import logo from "/Logo/doglogo.png";
 import EmptyPage from "@/components/common/EmptyPage";
 
 const GroomerStore = () => {
@@ -35,12 +34,14 @@ const GroomerStore = () => {
     fetchShopDetail();
   }, []);
 
+  const StoreRef = useRef(null);
   const portfolioRef = useRef(null);
   const groomerRef = useRef(null);
   const reviewsRef = useRef(null);
 
   const scrollToSection = (section) => {
     const refs = {
+      storeInfo: StoreRef,
       portfolio: portfolioRef,
       groomer: groomerRef,
       reviews: reviewsRef
@@ -50,11 +51,15 @@ const GroomerStore = () => {
     if (targetRef) {
       targetRef.scrollIntoView({
         behavior: "smooth",
-        block: "start"
+        block: "center"
+      });
+
+      window.scrollTo({
+        behavior: "smooth"
       });
 
       // Optional: Adjust scroll position manually
-      window.scrollBy(0, -75);
+      window.scrollBy(0, -150);
     }
   };
 
@@ -95,14 +100,15 @@ const GroomerStore = () => {
   }
 
   return (
-    <div className="relative mb-[--bottom-bar-height] mt-6 overflow-y-scroll bg-white scrollbar-hide">
+    <div className="relative mb-[--bottom-bar-height] mt-6 bg-white scrollbar-hide">
       <div>
         <ShopIntro shopDetail={shopDetail} />
       </div>
+      <div className="sticky top-[75px] z-10 bg-white">
+        <ShopMenuBar isCustomer={false} favoriteCount={shopDetail.favoriteCount} scrollToSection={scrollToSection} />
+      </div>
 
-      <ShopMenuBar isCustomer={false} favoriteCount={shopDetail.favoriteCount} scrollToSection={scrollToSection} />
-
-      <div>
+      <div ref={StoreRef}>
         <ShopInfo shopDetail={shopDetail} />
       </div>
 
@@ -132,7 +138,7 @@ const EditStoreButton = ({ onClick }) => {
   return (
     <button
       onClick={onClick}
-      className="fixed bottom-20 z-50 ml-[330px] mt-[24px] flex h-14 w-14 transform items-center justify-center rounded-full bg-main p-3 text-white shadow-lg transition-colors duration-300 hover:bg-main-300"
+      className="fixed bottom-20 z-50 ml-[340px] mt-[24px] flex h-12 w-12 transform items-center justify-center rounded-full bg-main p-3 text-white shadow-lg transition-colors duration-300 hover:bg-main-300"
     >
       <img src={EditShop} className="ml-1 h-6 w-6" />
     </button>
@@ -143,7 +149,7 @@ const EditPortfolioButton = ({ onClick }) => {
   return (
     <button
       onClick={onClick}
-      className="fixed bottom-36 z-50 ml-[330px] mt-[24px] flex h-14 w-14 transform items-center justify-center rounded-full bg-main p-3 text-white shadow-lg transition-colors duration-300 hover:bg-main-300"
+      className="fixed bottom-32 z-50 mb-2 ml-[340px] mt-[24px] flex h-12 w-12 transform items-center justify-center rounded-full bg-main p-3 text-white shadow-lg transition-colors duration-300 hover:bg-main-300"
     >
       <RiImageEditFill size={23} />
     </button>

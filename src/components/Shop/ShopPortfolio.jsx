@@ -2,8 +2,8 @@ import React from "react";
 
 function ShopPortfolio({ portfolios }) {
   return (
-    <div className="mx-5 my-3">
-      <p className="mb-1 font-semibold">포트폴리오</p>
+    <div className="m-5">
+      <p className="mb-1 pt-3 text-lg font-semibold">포트폴리오</p>
       <div className="grid grid-cols-3 gap-2">
         {portfolios.map((portfolio, index) => (
           <div key={index}>

@@ -6,6 +6,7 @@ import { IoChatbubblesOutline } from "react-icons/io5";
 import { deleteFavorite, postFavorite } from "@/queries/shopQuery";
 import { PiImagesSquareFill } from "react-icons/pi";
 import useAuthStore from "@/store/authStore";
+import { BsShop } from "react-icons/bs";
 
 const ShopMenuBar = ({ shopId, isCustomer, isFavorite, favoriteCount, scrollToSection }) => {
   const { id } = useAuthStore();
@@ -53,6 +54,14 @@ const ShopMenuBar = ({ shopId, isCustomer, isFavorite, favoriteCount, scrollToSe
             </div>
           )}
           <div className="mt-1 select-none text-[12px]">{favCnt}</div>
+        </div>
+
+        <div
+          className="flex flex-1 cursor-pointer flex-col items-center py-3"
+          onClick={() => handleSectionClick("storeInfo")}
+        >
+          <BsShop className="p-[2px] text-[25px] text-gray-600" />
+          <div className="mt-1 select-none text-[12px]">매장 정보</div>
         </div>
 
         <div

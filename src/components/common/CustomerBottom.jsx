@@ -55,7 +55,7 @@ const CustomerBottom = () => {
         <Link to="/customer/mypage">
           <div className={`bottom ${active === "mypage" && "bottom-active"}`}>
             <PiUserCircleFill size={30} />
-            <span className="text-[10px]">마이</span>
+            <span className="text-[10px]">MY</span>
           </div>
         </Link>
       </div>

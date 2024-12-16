@@ -179,13 +179,15 @@ const NotiComponents = () => {
   // 알림 읽음 처리
   const showNotificationDetail = async (notificationId) => {
     try {
-      const response = await readNotification(notificationId);
-      // 읽음 처리 된 Id false 처리하기
-      // 알림 목록 안에 notificationId
-
+      const response = await readNotification(roleType, userId, notificationId);
       console.log(response);
+      setNotifications((prevNotifications) =>
+        prevNotifications.map((notification) =>
+          notification.id === notificationId ? { ...notification, readCheckYn: true } : notification
+        )
+      );
     } catch (error) {
-      console.error("알림 삭제 중 오류:", error);
+      console.error("알림 읽음 처리 실패:", error);
     }
   };
 
@@ -205,9 +207,9 @@ const NotiComponents = () => {
       )}
 
       {isSidebarOpen && (
-        <div className="fixed inset-0 z-40 flex items-center justify-center">
-          <div className="min-h-screen w-[400px] overflow-y-scroll rounded-xl bg-white shadow-2xl">
-            <div>
+        <div className="fixed left-0 right-0 top-0 z-50 flex items-center justify-center">
+          <div className="min-h-screen w-[400px] overflow-y-scroll rounded-xl bg-white shadow-2xl scrollbar-hide">
+            <div className="">
               {/* 헤더 */}
               <div className="grid h-[var(--header-height)] w-[400px] grid-cols-[1fr_2fr_1fr] items-center bg-white px-5 text-center">
                 <div></div>
@@ -247,8 +249,7 @@ const NotiComponents = () => {
                 </button>
               </div>
 
-              <div className="mx-auto">
-                <div className="mx-auto flex justify-end"></div>
+              <div className="mx-auto h-[90vh] overflow-y-scroll">
                 {filteredNotifications.map((noti) => (
                   <div className="my-3 block rounded-xl bg-white p-4 px-6" key={noti.id}>
                     <div className="flex flex-col">
@@ -277,6 +278,7 @@ const NotiComponents = () => {
                     </div>
                   </div>
                 ))}
+                <div className="mb-28"></div>
               </div>
             </div>
           </div>

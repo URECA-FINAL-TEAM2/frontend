@@ -44,11 +44,20 @@ function App() {
         }
       };
 
+      const MAX_RETRY_COUNT = 3;
+      const RETRY_DELAY = 5000;
+      let retryCount = 0;
+
       eventSource.onerror = (error) => {
         console.error("SSE 연결 오류:", error);
         console.log("readyState:", eventSource.readyState);
         eventSource.close();
-        setTimeout(connectSse, 5000);
+        if (retryCount < MAX_RETRY_COUNT) {
+          retryCount++;
+          setTimeout(connectSse, RETRY_DELAY * retryCount);
+        } else {
+          console.error("최대 재시도 횟수 초과");
+        }
       };
 
       sseSource.current = eventSource;

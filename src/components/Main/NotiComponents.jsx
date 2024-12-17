@@ -31,8 +31,9 @@ const NotiComponents = () => {
   // 사이드바 열고 닫기
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
-    fetchNotifications();
-    fetchUnreadNotificationCount();
+    if (!isSidebarOpen) {
+      Promise.all([fetchNotifications(), fetchUnreadNotificationCount()]);
+    }
   };
 
   // 알림 목록 가져오기

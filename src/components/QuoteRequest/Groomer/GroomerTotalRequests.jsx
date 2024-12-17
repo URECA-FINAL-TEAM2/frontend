@@ -30,11 +30,11 @@ const GroomerEstimate = ({ Info }) => {
       <div className="mb-2 text-sm">
         <div className="mb-1 flex items-center">
           <img src={Schedule} alt="Description" className="mr-2 h-5 w-5" />
-          <p>{formatDate(Info.beautyDate)}</p>
+          <p className="line-clamp-1">{formatDate(Info.beautyDate)}</p>
         </div>
         <div className="mb-1 flex items-center">
           <img src={Corgi} alt="Description" className="mr-2 h-5 w-5" />
-          <p>
+          <p className="line-clamp-1">
             {Info.dogBreed} • {Info.dogGender == "MALE" ? "남아" : "여아"} • {Info.dogWeight}kg
           </p>
         </div>

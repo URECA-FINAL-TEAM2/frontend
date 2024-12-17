@@ -39,12 +39,12 @@ const CustomerEstimate = ({ Info, expandedQuoteRequestId, setExpandedQuoteReques
     }
   };
 
-  const getQuoteStatusProps = (status) => {
+  const getQuoteStatusProps = (status, expireDate) => {
     switch (status) {
       case "제안":
         return {
           className: "bg-main-100 text-main-500",
-          text: "수락 가능"
+          text: `${formatDate(expireDate)}까지`
         };
       case "수락":
         return {
@@ -84,11 +84,11 @@ const CustomerEstimate = ({ Info, expandedQuoteRequestId, setExpandedQuoteReques
             </div>
             <div className="mb-1 flex items-center text-sm">
               <img src={Region} alt="Description" className="mr-1.5 h-5 w-5" />
-              <p>{Info.region}</p>
+              <p className="line-clamp-1">{Info.region}</p>
             </div>
             <div className="mb-1 flex items-center text-sm">
               <img src={Schedule} alt="Description" className="mr-1.5 h-5 w-5" />
-              <p>{formatDate(Info.beautyDate)}</p>
+              <p className="line-clamp-1">{formatDate(Info.beautyDate)}</p>
             </div>
             <div className="flex items-center text-sm">
               <img src={Note} alt="Description" className="mr-1.5 h-5 w-5" />
@@ -123,7 +123,7 @@ const CustomerEstimate = ({ Info, expandedQuoteRequestId, setExpandedQuoteReques
                   <span
                     className={`rounded-md px-1.5 py-0.5 text-xs ${getQuoteStatusProps(quote.quoteStatus).className}`}
                   >
-                    {getQuoteStatusProps(quote.quoteStatus).text}
+                    {getQuoteStatusProps(quote.quoteStatus, quote.expireDate).text}
                   </span>
                 </div>
               </div>
@@ -162,7 +162,11 @@ const CustomerEstimate = ({ Info, expandedQuoteRequestId, setExpandedQuoteReques
                   </div>
                   <div
                     onClick={() => {
-                      /*TODO: 매장 상세로 navigate*/
+                      if (quote.shopId) {
+                        navigate(`/customer/shop/${quote.shopId}`);
+                      } else {
+                        console.log("유효하지 않은 shopId입니다.");
+                      }
                     }}
                     className={
                       "flex h-[35px] w-full cursor-pointer items-center justify-center rounded-lg bg-main text-center text-sm text-white"

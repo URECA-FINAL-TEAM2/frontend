@@ -32,7 +32,7 @@ const ShopItem = ({ shopInfo }) => {
           <div className="flex items-center gap-0.5">
             <FaStar className="h-[12px] fill-yellow-400" />
             <p className="w-18 text-[12px] font-normal">
-              {shopInfo.starScoreAvg} ({shopInfo.reviewCount})
+              {parseFloat(shopInfo.starScoreAvg).toFixed(1)} ({shopInfo.reviewCount})
             </p>
           </div>
         </div>

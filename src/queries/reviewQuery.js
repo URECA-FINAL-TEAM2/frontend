@@ -66,7 +66,7 @@ export const updateReview = async (reviewId, reviewData) => {
 
 export const postReviewRecommend = async (customerId, reviewId) => {
   try {
-    const response = await axiosInstance.post("/recommend", {
+    const response = await axiosInstance.post("/recommend", null, {
       params: {
         customerId,
         reviewId

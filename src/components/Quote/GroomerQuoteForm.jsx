@@ -6,6 +6,8 @@ import BottomButton from "../common/button/BottomButton";
 import { insertQuote } from "@/queries/quoteQuery";
 import useAuthStore from "@/store/authStore";
 import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
+import { icons } from "lucide-react";
 
 function GroomerQuoteForm({ requestId }) {
   const [requestInfo, setRequestInfo] = useState(null);
@@ -14,8 +16,6 @@ function GroomerQuoteForm({ requestId }) {
   const [value, setValue] = useState("");
   const [quoteContent, setQuoteContent] = useState("");
   const { id } = useAuthStore();
-  // 테스트용 groomerId : 5 도도한 몽이네
-  // const { id } = { id: { groomerId: 5 } };
 
   const navigate = useNavigate();
 
@@ -93,6 +93,9 @@ function GroomerQuoteForm({ requestId }) {
       beautyDate: requestInfo.beautyDate
     });
 
+    toast("견적서가 발송되었습니다.", {
+      icon: "📨"
+    });
     navigate("/groomer/quotes");
   };
 

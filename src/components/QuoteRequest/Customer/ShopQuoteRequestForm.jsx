@@ -1,14 +1,13 @@
-//ShopQuoteRequestForm.jsx
 import React, { useEffect, useState } from "react";
 import { RiEditLine } from "react-icons/ri";
 import { IoIosAddCircle, IoIosCloseCircle } from "react-icons/io";
 import { Designer, Schedule, Corgi, Note, Photos } from "/public/Icons";
 import BottomButton from "@/components/common/button/BottomButton";
-
 import PetSelectModal from "@/components/QuoteRequest/PetSelectModal";
 import { getGroomerDetail, sendGroomerQuote } from "@/queries/quoteRequestQuery";
 import { useNavigate } from "react-router-dom";
 import useAuthStore from "@/store/authStore";
+import toast, { Toaster } from "react-hot-toast";
 
 const ShopQuoteRequestForm = ({ groomerId }) => {
   const { id } = useAuthStore();
@@ -136,6 +135,9 @@ const ShopQuoteRequestForm = ({ groomerId }) => {
     // 시간 설정 (시, 분, 초, 밀리초)
     combinedDateTime.setHours(parseInt(hours), parseInt(minutes), 0, 0);
 
+    // UTC 시간에 9시간 추가
+    combinedDateTime.setHours(combinedDateTime.getHours() + 9);
+
     // ISO 8601 형식으로 변환
     return combinedDateTime.toISOString();
   };
@@ -147,23 +149,39 @@ const ShopQuoteRequestForm = ({ groomerId }) => {
   }
 
   const sendQuote = async () => {
-    const requestDto = {
-      dogId: petInfo.id,
-      requestType: "1:1요청",
-      requestContent: requestContent,
-      beautyDate: combineDateAndTime(selectedDate, selectedTime),
-      groomerId: groomerId
-    };
+    try {
+      const requestDto = {
+        dogId: petInfo.id,
+        requestType: "1:1요청",
+        requestContent: requestContent,
+        beautyDate: combineDateAndTime(selectedDate, selectedTime),
+        groomerId: groomerId
+      };
 
-    console.log("requestDto", requestDto);
+      console.log("requestDto", requestDto);
 
-    // Blob URL을 File 객체로 변환
-    const fileImages = await Promise.all(
-      attachedImages.map((blobUrl, index) => blobUrlToFile(blobUrl, `image_${index}.jpg`))
-    );
+      // Blob URL을 File 객체로 변환
+      const fileImages = await Promise.all(
+        attachedImages.map((blobUrl, index) => blobUrlToFile(blobUrl, `image_${index}.jpg`))
+      );
 
-    await sendGroomerQuote(id.customerId, requestDto, fileImages);
-    navigate("/customer/quotes");
+      await sendGroomerQuote(id.customerId, requestDto, fileImages);
+
+      // 성공 토스트
+      toast.success("견적 요청이 발송되었습니다.", {
+        position: "top-center", // 위치 지정
+        duration: 3000 // 표시 시간 지정
+      });
+
+      navigate("/customer/quotes");
+    } catch (error) {
+      // 실패 토스트
+      toast.error("견적 요청 중 오류가 발생했습니다.", {
+        position: "top-center",
+        duration: 3000
+      });
+      console.error("견적 요청 실패:", error);
+    }
   };
 
   const isSubmitEnabled =
@@ -343,6 +361,7 @@ const ShopQuoteRequestForm = ({ groomerId }) => {
         closeText="닫기"
         confirmText="확인"
       ></PetSelectModal>
+      <Toaster />
     </div>
   );
 };

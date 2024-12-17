@@ -25,9 +25,8 @@ function ShopReview({ groomerUsername, reviewData, isCustomer }) {
   return (
     <div className="mx-auto mb-4 w-full rounded-xl bg-gray-50 p-4 pb-2">
       <div className="mb-1 flex">
-        <div className="h-[40px] w-[40px] self-center">
-          <img className="rounded-lg" src={reviewData.customerProfile}></img>
-        </div>
+        <img className="h-9 w-9 rounded-lg" src={reviewData.customerProfile}></img>
+
         <div className="ml-2 w-full">
           <div>
             <div className="flex w-full items-center justify-between">

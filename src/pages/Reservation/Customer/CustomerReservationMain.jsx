@@ -101,6 +101,7 @@ const CustomerReservationMain = () => {
               </div>
 
               {activeTab === "completed" && (
+                <div className="mt-4 flex w-[330px] space-x-4">
                 <button
                   onClick={() => {
                     console.log(customerId, item?.groomerId, item?.selectedQuoteId);
@@ -113,6 +114,19 @@ const CustomerReservationMain = () => {
                 >
                   리뷰 쓰기
                 </button>
+
+                  {/* 예약 상세 */}
+                  <button
+                    className="w-full rounded-[10px] bg-main-400 py-1 font-medium text-white"
+                    onClick={() =>
+                      navigate("detail", {
+                        state: { selectedQuoteId: item.selectedQuoteId, status: item.status }
+                      })
+                    }
+                  >
+                    예약 상세
+                  </button>
+                </div>
               )}
 
               {/* 예약 상세 버튼 */}

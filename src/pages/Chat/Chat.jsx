@@ -26,7 +26,7 @@ const Chat = () => {
   const userId = authStorage?.state?.id?.userId;
   const userType = authStorage?.state?.DefaultRole === "customer";
 
-  const DefaultRole = authStorage?.state?.DefaultRole;
+  const DefaultRole = authStorage?.state?.DefaultRole; // sh
 
   //스크롤 자동 이동
   const scrollToBottom = () => {

@@ -17,16 +17,13 @@ import { IoIosInformationCircleOutline } from "react-icons/io";
 import useNotificationStore from "@/store/notificationStore";
 
 const NotiComponents = () => {
-  // useNotificationStore();
+  const { notifications, setNotifications, unreadCount, setUnreadCount, addNotification } = useNotificationStore();
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { id, DefaultRole } = useAuthStore();
   const userId = id.userId;
   const roleType = DefaultRole;
   const [notifyLink, setNotifyLink] = useState("");
-  // 상태 관리
-  const [notifications, setNotifications] = useState([]);
-  const [unreadCount, setUnreadCount] = useState(0);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   const sseSource = useRef(null);
@@ -34,48 +31,9 @@ const NotiComponents = () => {
   // 사이드바 열고 닫기
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
+    fetchNotifications();
+    fetchUnreadNotificationCount();
   };
-
-  // SSE 연결
-  // const connectSse = () => {
-  //   if (sseSource.current) {
-  //     sseSource.current.close();
-  //   }
-
-  //   const token = localStorage.getItem("accessToken");
-  //   if (!token) {
-  //     console.error("토큰이 없습니다.");
-  //     return;
-  //   }
-
-  //   const url = `https://www.beautymeongdang.com/notifications/connect?userId=${userId}&roleType=${roleType}&token=${encodeURIComponent(token)}`;
-  //   console.log("SSE 연결 URL:", url);
-
-  //   const eventSource = new EventSource(url);
-
-  //   eventSource.onopen = () => {
-  //     console.log("SSE 연결이 열렸습니다.");
-  //     fetchNotifications();
-  //     fetchUnreadNotificationCount();
-  //   };
-
-  //   eventSource.onmessage = (event) => {
-  //     console.log("새 알림:", event.data);
-  //     const newNotification = JSON.parse(event.data);
-
-  //     // 알림 목록 및 개수 업데이트
-  //     setNotifications((prev) => [...prev, newNotification]);
-  //     setUnreadCount((prev) => prev + 1);
-  //   };
-
-  //   eventSource.onerror = () => {
-  //     console.error("SSE 연결 오류. 다시 연결 시도 중...");
-  //     eventSource.close();
-  //     setTimeout(connectSse, 5000); // 5초 후 재연결
-  //   };
-
-  //   sseSource.current = eventSource;
-  // };
 
   // 알림 목록 가져오기
   const fetchNotifications = async () => {
@@ -137,9 +95,7 @@ const NotiComponents = () => {
     }
   };
 
-  // 컴포넌트가 마운트되었을 때 SSE 연결
   useEffect(() => {
-    // connectSse();
     fetchNotifications();
     fetchUnreadNotificationCount();
 

@@ -1,4 +1,3 @@
-//ShopQuoteRequestList.jsx
 import React, { useState } from "react";
 import { formatDate } from "@/utils/formatDate";
 import { BsQuestionCircleFill, BsX } from "react-icons/bs";
@@ -95,13 +94,13 @@ const CustomerEstimate = ({ Info }) => {
           </div>
           <div className="mb-1 flex items-center text-sm">
             <img src={Designer} alt="Designer" className="mr-1.5 h-5 w-5" />
-            <p>
+            <p className="line-clamp-1">
               {Info.shopName} - {Info.groomerName} 디자이너
             </p>
           </div>
           <div className="mb-1 flex items-center text-sm">
             <img src={Schedule} alt="Schedule" className="mr-1.5 h-5 w-5" />
-            <p>{formatDate(Info.beautyDate)}</p>
+            <p className="line-clamp-1">{formatDate(Info.beautyDate)}</p>
           </div>
           <div className="flex items-center text-sm">
             <img src={Note} alt="Description" className="mr-1.5 h-5 w-5" />
@@ -131,7 +130,7 @@ const CustomerEstimate = ({ Info }) => {
         )}
         <div
           onClick={() => {
-            /*TODO: 매장 상세로 navigate*/
+            navigate(`/customer/shop/${Info.shopId}`);
           }}
           className="flex h-[35px] w-full cursor-pointer items-center justify-center rounded-lg bg-main text-center text-sm text-white"
         >

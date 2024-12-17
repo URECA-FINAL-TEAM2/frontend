@@ -375,11 +375,15 @@ const TotalQuoteRequestForm = () => {
       <PetSelectModal isOpen={isModalOpen} onClose={handleCloseModal} onConfirm={handlePetSelect}></PetSelectModal>
 
       {/* 지역 선택 모달 */}
-      <RegionSelectModal
-        isOpen={isLocationModalOpen}
-        onClose={handleCloseLocationModal}
-        onConfirm={handleLocationSelect}
-      ></RegionSelectModal>
+      {!isLoading ? (
+        <RegionSelectModal
+          isOpen={isLocationModalOpen}
+          onClose={handleCloseLocationModal}
+          onConfirm={handleLocationSelect}
+          sidoName={location.sidoName}
+          sigunguName={location.sigunguName}
+        ></RegionSelectModal>
+      ) : null}
     </div>
   );
 };

@@ -248,7 +248,7 @@ const ShopQuoteRequestForm = ({ groomerId }) => {
         {petInfo ? (
           <div className="flex items-start">
             <div className="mr-4 self-center">
-              <img src={petInfo?.image} alt="반려견 사진" className="h-28 w-28 rounded-lg" />
+              <img src={petInfo?.image} alt="반려견 사진" className="h-28 w-28 min-w-28 rounded-lg" />
               <p className="mt-1 text-center font-semibold">{petInfo?.name}</p>
             </div>
             <div className="text-sm leading-snug">

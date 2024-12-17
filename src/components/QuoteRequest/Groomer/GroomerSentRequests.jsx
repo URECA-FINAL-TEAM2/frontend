@@ -26,7 +26,7 @@ const GroomerEstimate = ({ Info }) => {
         };
       case "수락":
         return {
-          className: "bg-gray-200",
+          className: "bg-main text-white",
           text: "예약 완료"
         };
       case "마감":
@@ -80,7 +80,7 @@ const GroomerEstimate = ({ Info }) => {
         onClick={() => {
           navigate(`/groomer/quotes/detail/${Info.requestId}`);
         }}
-        className="flex h-[35px] w-full cursor-pointer items-center justify-center rounded-lg bg-gray-200 text-center text-sm"
+        className="flex h-[32px] w-full cursor-pointer items-center justify-center rounded-lg bg-gray-200 text-center text-sm"
       >
         보낸 견적서 확인하기
       </div>

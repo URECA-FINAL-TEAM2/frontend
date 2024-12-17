@@ -115,7 +115,7 @@ function GroomerQuoteDetail({ requestId }) {
               <img
                 src={quoteData.dog.dogProfileImage}
                 alt="반려견 사진"
-                className="h-28 w-28 rounded-lg object-cover"
+                className="h-28 w-28 min-w-28 rounded-lg object-cover"
               />
               <p className="mt-1 text-center font-semibold">{quoteData.dog.dogName}</p>
             </div>

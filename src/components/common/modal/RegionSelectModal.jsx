@@ -90,7 +90,7 @@ const RegionSelectModal = ({ isOpen, onClose, onConfirm, sidoName, sigunguName }
         <select
           value={selectedSido}
           onChange={handleSidoChange}
-          className="h-[35px] w-[152px] rounded-md border border-gray-300 px-2"
+          className="h-[32px] w-[152px] rounded-md border border-gray-300 px-2"
         >
           <option value="">시/도 선택</option>
           {sidoList.map((sido) => (
@@ -104,7 +104,7 @@ const RegionSelectModal = ({ isOpen, onClose, onConfirm, sidoName, sigunguName }
           value={selectedSigungu}
           onChange={(e) => setSelectedSigungu(Number(e.target.value))}
           disabled={!selectedSido || isLoading}
-          className="h-[35px] w-[152px] rounded-md border border-gray-300 px-2 disabled:bg-gray-100"
+          className="h-[32px] w-[152px] rounded-md border border-gray-300 px-2 disabled:bg-gray-100"
         >
           <option value="">시/군/구 선택</option>
           {sigunguList.map((sigungu) => (

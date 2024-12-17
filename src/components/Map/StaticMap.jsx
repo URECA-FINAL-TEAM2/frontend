@@ -20,7 +20,7 @@ const StaticMap = ({ location, shopName }) => {
   return (
     <div className={"relative h-full w-full"}>
       <GoogleMap mapContainerStyle={mapContainerStyle} zoom={16} center={location} options={options}>
-        {window.google && <MarkerF position={location} title={shopName} />}
+        {window.google && <MarkerF position={location} title={shopName} key={shopName} />}
       </GoogleMap>
     </div>
   );

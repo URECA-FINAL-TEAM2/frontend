@@ -47,7 +47,7 @@ const GroomerEstimate = ({ Info }) => {
         onClick={() => {
           navigate(`/groomer/quotes/request/detail/${Info.requestId}`);
         }}
-        className="flex h-[35px] cursor-pointer items-center justify-center rounded-lg bg-gray-200 text-center text-sm"
+        className="flex h-[32px] cursor-pointer items-center justify-center rounded-lg bg-gray-200 text-center text-sm"
       >
         상세보기
       </div>

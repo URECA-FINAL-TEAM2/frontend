@@ -7,11 +7,13 @@ const CustomerReservationMain = () => {
   const [reservations, setReservations] = useState([]);
   const [activeTab, setActiveTab] = useState("completed");
   const navigate = useNavigate();
+  const authStorage = JSON.parse(localStorage.getItem("auth-storage"));
+  const customerId = authStorage?.state?.id?.customerId;
+  const groomerId = authStorage?.state?.id?.groomerId;
 
   useEffect(() => {
     const fetchReservations = async () => {
       try {
-        const customerId = 7;
         const response = await getCustomerList({ customerId });
         if (response.code === 200) {
           setReservations(response.data);

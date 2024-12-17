@@ -1,8 +1,16 @@
 import { create } from "zustand";
 
-export const useNotificationStore = create((set) => ({
-  unreadCount: 0, // 읽지 않은 알림 갯수
-  notifications: [], // 알림 목록
+const useNotificationStore = create((set) => ({
+  notifications: [],
+  unreadCount: 0,
 
-  updateUnreadCount: (count) => set({ unreadCount: count })
+  setNotifications: (notifications) => set({ notifications }),
+  setUnreadCount: (count) => set({ unreadCount: count }),
+  addNotification: (notification) =>
+    set((state) => ({
+      notifications: [...state.notifications, notification],
+      unreadCount: state.unreadCount + 1
+    }))
 }));
+
+export default useNotificationStore;

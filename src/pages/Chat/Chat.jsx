@@ -26,13 +26,15 @@ const Chat = () => {
   const userId = authStorage?.state?.id?.userId;
   const userType = authStorage?.state?.DefaultRole === "customer";
 
+  const DefaultRole = authStorage?.state?.DefaultRole; // sh
+
   //스크롤 자동 이동
   const scrollToBottom = () => {
     setTimeout(() => {
       messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
     }, 0);
   };
-
+  
   useEffect(() => {
     scrollToBottom();
   }, [messages]);
@@ -113,7 +115,7 @@ const Chat = () => {
 
   return (
     <>
-      <ChatHeader groomerInfo={groomerInfo} customerInfo={customerInfo} />
+      <ChatHeader DefaultRole={DefaultRole} groomerInfo={groomerInfo} customerInfo={customerInfo} />
       <div className="flex h-screen flex-col bg-gray-50 pt-[80px]">
         <div className="flex-1 space-y-4 overflow-y-auto p-4">
           {messages.map((msg, index) => {

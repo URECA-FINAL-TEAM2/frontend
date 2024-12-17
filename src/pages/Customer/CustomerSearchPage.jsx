@@ -64,6 +64,8 @@ function CustomerSearchPage(props) {
         isOpen={isModalOpen}
         onClose={onModalClose}
         onConfirm={handleLocationSelect}
+        sidoName={sidoName}
+        sigunguName={sigunguName}
       ></RegionSelectModal>
     </div>
   );

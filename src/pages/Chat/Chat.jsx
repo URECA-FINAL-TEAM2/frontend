@@ -34,7 +34,7 @@ const Chat = () => {
       messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
     }, 0);
   };
-  
+
   useEffect(() => {
     scrollToBottom();
   }, [messages]);
@@ -151,7 +151,7 @@ const Chat = () => {
                         {msg.imageUrl && <img src={msg.imageUrl} alt="" className="mt-2 max-w-full" />}
                         <div className="text-right">{msg.content}</div>
                       </div>
-                      <p className="text-xs text-gray-500">{dayjs(msg.messageTime).format("YY-MM-DD HH:mm")}</p>
+                      <p className="text-xs text-gray-500">{dayjs(msg.messageTime).format("YY.MM.DD · HH:mm")}</p>
                     </div>
                   </div>
                 )}

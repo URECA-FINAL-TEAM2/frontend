@@ -114,12 +114,18 @@ const ChatRoomList = () => {
               <img src={chatRoomData.profileImage} className="h-16 w-16 rounded-full" />
               <div className="ml-4 flex-grow">
                 <div className="flex items-center justify-between">
-                  <div className="text-base font-semibold">{chatRoomData.groomerName}</div>
+                  {/* 고객 or 미용사 */}
+                  <div className="text-base font-semibold">
+                    {userType ? chatRoomData.groomerName : chatRoomData.customerName}
+                  </div>
+                  {/* 마지막 메시지 시간 */}
                   <div className="text-xs text-gray-500">{formatDate(chatRoomData.lastMessageTime)}</div>
                 </div>
+                {/* 매장 정보 */}
                 <div className="text-xs text-main-500">
                   {chatRoomData.shopName} · {chatRoomData.shopAddress}
                 </div>
+                {/* 마지막 메시지 */}
                 <div className="text-xs">{chatRoomData.lastMessage}</div>
               </div>
             </Link>
@@ -127,7 +133,7 @@ const ChatRoomList = () => {
         ) : (
           <div className="mt-4 text-center text-gray-500">검색 결과가 없습니다.</div>
         )}
-        <div className="mb-80" />
+        <div className="mb-[80px]" />
       </div>
     </div>
   );

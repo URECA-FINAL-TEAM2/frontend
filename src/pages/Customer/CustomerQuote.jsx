@@ -1,21 +1,56 @@
-//CustomerQuote.jsx
 import CustomerBottom from "@/components/common/CustomerBottom";
 import SubHeader from "@/components/common/SubHeader";
 import ShopQuoteRequestList from "@/components/QuoteRequest/Customer/ShopQuoteRequestList";
 import TotalQuoteRequestList from "@/components/QuoteRequest/Customer/TotalQuoteRequestList";
-import React, { useState } from "react";
+import { getQuotesAll, getQuotesGroomer } from "@/queries/quoteQuery";
+import useAuthStore from "@/store/authStore";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const CustomerQuote = () => {
+  const { id } = useAuthStore();
   const [activeSection, setActiveSection] = useState("section1");
+  const [shopRequests, setShopRequests] = useState(null);
+  const [totalRequests, setTotalRequests] = useState(null);
+
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchShopRequests = async () => {
+      try {
+        const requests = await getQuotesGroomer(id.customerId);
+        setShopRequests(requests.quoteRequests);
+      } catch (error) {
+        console.error("Failed to fetch shop requests:", error);
+      }
+    };
+
+    fetchShopRequests();
+  }, []);
+
+  useEffect(() => {
+    const fetchTotalRequests = async () => {
+      try {
+        const requests = await getQuotesAll(id.customerId);
+        console.log("requests", requests);
+        setTotalRequests(requests.quoteRequests);
+      } catch (error) {
+        console.error("Failed to fetch shop requests:", error);
+      }
+    };
+
+    fetchTotalRequests();
+  }, []);
+
+  if (!shopRequests) return "1:1 맞춤 견적 데이터를 가져오는중...";
+  if (!totalRequests) return "내 견적 공고 데이터를 가져오는중...";
 
   const renderContent = () => {
     switch (activeSection) {
       case "section1":
-        return <ShopQuoteRequestList />;
+        return <ShopQuoteRequestList Infos={shopRequests} />;
       case "section2":
-        return <TotalQuoteRequestList />;
+        return <TotalQuoteRequestList Infos={totalRequests} />;
       default:
         return null;
     }

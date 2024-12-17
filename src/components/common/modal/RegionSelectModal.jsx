@@ -3,11 +3,11 @@ import PropTypes from "prop-types";
 import Modal from "./modal";
 import { getSidoList, getSigunguList } from "../../../queries/regionQuery";
 
-const RegionSelectModal = ({ isOpen, onClose, onConfirm, initialRegion = { sido: "", sigungu: "" } }) => {
+const RegionSelectModal = ({ isOpen, onClose, onConfirm, sidoName, sigunguName }) => {
   const [sidoList, setSidoList] = useState([]);
   const [sigunguList, setSigunguList] = useState([]);
-  const [selectedSido, setSelectedSido] = useState(initialRegion.sido);
-  const [selectedSigungu, setSelectedSigungu] = useState(initialRegion.sigungu);
+  const [selectedSido, setSelectedSido] = useState("");
+  const [selectedSigungu, setSelectedSigungu] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
   // 시도 목록 로드
@@ -16,13 +16,17 @@ const RegionSelectModal = ({ isOpen, onClose, onConfirm, initialRegion = { sido:
       try {
         const response = await getSidoList();
         setSidoList(response);
+
+        // Set default 시/도 when props are provided
+        const defaultSido = response.find((sido) => sido.sidoName === sidoName);
+        if (defaultSido) setSelectedSido(defaultSido.sidoId);
       } catch (error) {
         console.error("시도 목록 로드 실패:", error);
       }
     };
 
     fetchSidoList();
-  }, []);
+  }, [sidoName]);
 
   // 시군구 목록 로드
   useEffect(() => {
@@ -36,6 +40,10 @@ const RegionSelectModal = ({ isOpen, onClose, onConfirm, initialRegion = { sido:
       try {
         const response = await getSigunguList(selectedSido);
         setSigunguList(response);
+
+        // Set default 시/군/구 when props are provided
+        const defaultSigungu = response.find((sigungu) => sigungu.sigunguName === sigunguName);
+        if (defaultSigungu) setSelectedSigungu(defaultSigungu.sigunguId);
       } catch (error) {
         console.error("시군구 목록 로드 실패:", error);
       } finally {
@@ -44,7 +52,7 @@ const RegionSelectModal = ({ isOpen, onClose, onConfirm, initialRegion = { sido:
     };
 
     fetchSigunguList();
-  }, [selectedSido]);
+  }, [selectedSido, sigunguName]);
 
   const handleSidoChange = (e) => {
     const sidoId = Number(e.target.value);
@@ -70,8 +78,8 @@ const RegionSelectModal = ({ isOpen, onClose, onConfirm, initialRegion = { sido:
   };
 
   const handleClose = () => {
-    setSelectedSido(initialRegion.sido);
-    setSelectedSigungu(initialRegion.sigungu);
+    setSelectedSido("");
+    setSelectedSigungu("");
     onClose();
   };
 
@@ -114,10 +122,8 @@ RegionSelectModal.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
   onConfirm: PropTypes.func.isRequired,
-  initialRegion: PropTypes.shape({
-    sido: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-    sigungu: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
-  })
+  sidoName: PropTypes.string, // Default 시/도 이름
+  sigunguName: PropTypes.string // Default 시/군/구 이름
 };
 
 export default RegionSelectModal;

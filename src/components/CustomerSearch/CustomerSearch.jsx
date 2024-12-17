@@ -3,19 +3,22 @@ import ShopList from "./ShopList";
 import useShopStore from "../../store/shopStore";
 import { getShopList } from "../../queries/shopQuery";
 import useDragPosition from "../../hooks/CustomerSearch/useDragPosition";
+import useRegionStore from "@/store/regionStore";
+import useAuthStore from "@/store/authStore";
 
 const CustomerSearch = () => {
-  const [customerId, setCustomerId] = useState(1); // TODO
+  const { id } = useAuthStore();
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const setShops = useShopStore((state) => state.setShops);
   const { isDragging, listPosition, dragHandlers } = useDragPosition();
+  const { sidoName, sigunguName } = useRegionStore();
 
   useEffect(() => {
     const loadShops = async () => {
       try {
         setIsLoading(true);
-        const shopList = await getShopList(customerId);
+        const shopList = await getShopList(id.customerId);
         console.log(shopList);
         if (shopList) {
           setShops(shopList);
@@ -30,7 +33,7 @@ const CustomerSearch = () => {
     };
 
     loadShops();
-  }, [setShops]);
+  }, [setShops, sidoName, sigunguName]);
 
   if (error) {
     return (

@@ -1,11 +1,9 @@
-import React from "react";
 import { FaStar } from "react-icons/fa";
 import { GoHeartFill } from "react-icons/go";
 import { useNavigate } from "react-router-dom";
 import useShopStore from "../../store/shopStore";
 
 const ShopItem = ({ shopInfo }) => {
-  console.log(shopInfo);
   const setSelectedShop = useShopStore((state) => state.setSelectedShop);
 
   const navigate = useNavigate();
@@ -34,7 +32,7 @@ const ShopItem = ({ shopInfo }) => {
           <div className="flex items-center gap-0.5">
             <FaStar className="h-[12px] fill-yellow-400" />
             <p className="w-18 text-[12px] font-normal">
-              {shopInfo.starScoreAvg} ({shopInfo.reviewCount})
+              {parseFloat(shopInfo.starScoreAvg).toFixed(1)} ({shopInfo.reviewCount})
             </p>
           </div>
         </div>

@@ -24,10 +24,8 @@ export const getPetInfo = async (dogId, id) => {
 };
 
 // 견적서에서 반려견 정보 조회
-export const getQuotePetInfo = async (dogId) => {
+export const getQuotePetInfo = async (customerId, dogId) => {
   try {
-    const customerId = 2; // TODO
-
     const response = await axiosInstance.get(`/profile/customer/dogs/${dogId}`, {
       params: { customerId }
     });
@@ -43,20 +41,6 @@ export const getQuotePetInfo = async (dogId) => {
     return transformedData;
   } catch (error) {
     console.error("반려견 정보 조회 요청 실패:", error);
-    throw error;
-  }
-};
-
-// requestQuery하 api긴 한데 내용이 너무 pet이라 여기 추가함
-export const getQuotePetList = async (customerId) => {
-  try {
-    const response = await axiosInstance.get(`/requests/dog`, {
-      params: { customerId }
-    });
-    console.log(response);
-    return response.data.data;
-  } catch (error) {
-    console.error("반려견 목록 조회 요청 실패:", error);
     throw error;
   }
 };

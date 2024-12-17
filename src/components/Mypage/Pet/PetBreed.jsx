@@ -5,7 +5,7 @@ const PetBreed = ({ breed, onlyRead, formData, handleChange }) => {
   return (
     <div>
       <label className="labelStyle" htmlFor="dogBreedCodeId">
-        품종
+        품종*
       </label>
       {onlyRead ? (
         // 읽기 전용 모드에서는 선택된 품종 이름 표시
@@ -20,8 +20,8 @@ const PetBreed = ({ breed, onlyRead, formData, handleChange }) => {
           onChange={handleChange}
           required
         >
-          <option value="" className="text-gray-300">
-            품종을 선택해주세요.
+          <option value="" disabled selected className="text-gray-400">
+            품종을 선택하세요
           </option>
           {breed.map((breed) => (
             <option key={breed.breedId} value={breed.breedId}>

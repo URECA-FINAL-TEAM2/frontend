@@ -7,11 +7,13 @@ const CustomerReservationMain = () => {
   const [reservations, setReservations] = useState([]);
   const [activeTab, setActiveTab] = useState("completed");
   const navigate = useNavigate();
+  const authStorage = JSON.parse(localStorage.getItem("auth-storage"));
+  const customerId = authStorage?.state?.id?.customerId;
+  const groomerId = authStorage?.state?.id?.groomerId;
 
   useEffect(() => {
     const fetchReservations = async () => {
       try {
-        const customerId = 7;
         const response = await getCustomerList({ customerId });
         if (response.code === 200) {
           setReservations(response.data);
@@ -129,7 +131,7 @@ const CustomerReservationMain = () => {
               )}
             </div>
           ))}
-          {tabs[activeTab]?.length === 0 && <p className="text-center text-gray-500">내용이 없습니다.</p>}
+          {tabs[activeTab]?.length === 0 && <p className="mt-10 text-center text-gray-500">내용이 없습니다.</p>}
         </div>
       </div>
     </div>

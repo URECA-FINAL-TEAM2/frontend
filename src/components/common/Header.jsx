@@ -1,7 +1,7 @@
 import { Link, useLocation } from "react-router-dom";
 import logo from "/Logo/logoHori.svg";
-import { VscBell } from "react-icons/vsc";
 import { useEffect, useState } from "react";
+import NotiComponents from "../Main/NotiComponents";
 
 const Header = () => {
   const location = useLocation();
@@ -16,13 +16,11 @@ const Header = () => {
   }, [location.pathname]);
 
   return (
-    <div className="fixed flex h-[var(--header-height)] w-[400px] items-center justify-between bg-white px-5">
+    <div className="fixed z-40 flex h-[var(--header-height)] w-[400px] items-center justify-between bg-white px-5">
       <Link to={url}>
         <img src={logo} alt="logo" className="" />
       </Link>
-      <Link to="/notification">
-        <VscBell size={28} />
-      </Link>
+      <NotiComponents />
     </div>
   );
 };

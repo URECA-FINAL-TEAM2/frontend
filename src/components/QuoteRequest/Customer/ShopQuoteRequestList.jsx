@@ -1,65 +1,14 @@
 import React, { useState } from "react";
 import { formatDate } from "@/utils/formatDate";
-import { BsQuestionCircleFill } from "react-icons/bs";
+import { BsQuestionCircleFill, BsX } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
 import { Designer, Schedule, Note } from "/public/Icons";
 
-const quoteRequests = [
-  {
-    quoteRequestId: 1,
-    petName: "두부",
-    petImage: "https://picsum.photos/200",
-    status: "요청",
-    shopName: "댕댕살롱",
-    groomerName: "가영",
-    beautyDate: "2024-12-09T19:48:20.404Z",
-    requestContent: "식빵컷",
-    rejectionReason: null,
-    quotesId: null
-  },
-  {
-    quoteRequestId: 2,
-    petName: "콩이",
-    petImage: "https://picsum.photos/200",
-    status: "마감",
-    shopName: "멍멍펫",
-    groomerName: "금강",
-    beautyDate: "2024-11-19T00:00:00",
-    requestContent: "둥글둥글하게 부탁드려요",
-    rejectionReason: null,
-    quotesId: null
-  },
-  {
-    quoteRequestId: 3,
-    petName: "콩이",
-    petImage: "https://picsum.photos/200",
-    status: "거절",
-    shopName: "멍멍펫",
-    groomerName: "금강",
-    beautyDate: "2024-11-19T00:00:00",
-    requestContent: "둥글둥글하게 부탁드려요",
-    rejectionReason: "현재 예약이 꽉 차 있어 견적을 드릴 수 없습니다.",
-    quotesId: null
-  },
-  {
-    quoteRequestId: 4,
-    petName: "두부",
-    petImage: "https://picsum.photos/200",
-    status: "제안 완료",
-    shopName: "댕댕살롱",
-    groomerName: "가영",
-    beautyDate: "2024-12-09T19:48:20.404Z",
-    requestContent: "식빵컷",
-    rejectionReason: null,
-    quotesId: 1
-  }
-];
-
-function ShopQuoteRequestList() {
+function ShopQuoteRequestList({ Infos }) {
   return (
     <>
-      {quoteRequests.map((request) => (
-        <CustomerEstimate key={request.quoteRequestId} Info={request} />
+      {Infos?.map((request) => (
+        <CustomerEstimate Info={request} />
       ))}
     </>
   );
@@ -120,13 +69,19 @@ const CustomerEstimate = ({ Info }) => {
                 </span>
                 {showRejectionReason && (
                   <div className="absolute right-0 top-full z-10 mt-1 w-56 rounded-lg border border-gray-200 bg-white px-4 py-3 shadow-lg">
-                    <div className="mb-2 flex items-center">
-                      <BsQuestionCircleFill className="mr-1.5 text-sm text-gray-500" />
-                      <h3 className="text-sm font-semibold">거절 사유</h3>
+                    <div className="mb-2 flex items-center justify-between">
+                      <div className="flex items-center">
+                        <BsQuestionCircleFill className="mr-1.5 text-sm text-gray-500" />
+                        <h3 className="text-sm font-semibold">거절 사유</h3>
+                      </div>
+                      <button
+                        onClick={() => setShowRejectionReason(false)}
+                        className="text-gray-500 hover:text-gray-700"
+                      >
+                        <BsX className="text-xl" />
+                      </button>
                     </div>
-                    <p className="text-sm text-gray-600">
-                      {Info.rejectionReason || "거절 사유가 제공되지 않았습니다."}
-                    </p>
+                    <p className="text-sm text-gray-600">{Info.rejectReason || "거절 사유가 제공되지 않았습니다."}</p>
                   </div>
                 )}
               </div>
@@ -138,17 +93,17 @@ const CustomerEstimate = ({ Info }) => {
             )}
           </div>
           <div className="mb-1 flex items-center text-sm">
-            <img src={Designer} alt="Designer" className="mr-1 h-5 w-5" />
-            <p>
+            <img src={Designer} alt="Designer" className="mr-1.5 h-5 w-5" />
+            <p className="line-clamp-1">
               {Info.shopName} - {Info.groomerName} 디자이너
             </p>
           </div>
           <div className="mb-1 flex items-center text-sm">
-            <img src={Schedule} alt="Schedule" className="mr-1 h-5 w-5" />
-            <p>{formatDate(Info.beautyDate)}</p>
+            <img src={Schedule} alt="Schedule" className="mr-1.5 h-5 w-5" />
+            <p className="line-clamp-1">{formatDate(Info.beautyDate)}</p>
           </div>
           <div className="flex items-center text-sm">
-            <img src={Note} alt="Description" className="mr-1 h-5 w-5" />
+            <img src={Note} alt="Description" className="mr-1.5 h-5 w-5" />
             <p className="line-clamp-1">{Info.requestContent}</p>
           </div>
         </div>
@@ -157,7 +112,7 @@ const CustomerEstimate = ({ Info }) => {
         {Info.status === "제안 완료" ? (
           <div
             onClick={() => {
-              navigate(`/customer/quotes/detail/${Info.quotesId}`);
+              navigate(`/customer/quotes/detail/${Info.quoteId}`);
             }}
             className="flex h-[35px] w-full cursor-pointer items-center justify-center rounded-lg bg-main-200 text-center text-sm text-main-600"
           >
@@ -173,8 +128,13 @@ const CustomerEstimate = ({ Info }) => {
             견적 요청 보기
           </div>
         )}
-        <div className="flex h-[35px] w-full cursor-pointer items-center justify-center rounded-lg bg-main text-center text-sm text-white">
-          채팅하기
+        <div
+          onClick={() => {
+            navigate(`/customer/shop/${Info.shopId}`);
+          }}
+          className="flex h-[35px] w-full cursor-pointer items-center justify-center rounded-lg bg-main text-center text-sm text-white"
+        >
+          매장 상세보기
         </div>
       </div>
     </div>

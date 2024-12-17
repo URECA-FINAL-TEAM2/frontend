@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import { MdOutlineArrowBackIosNew, MdOutlineArrowForwardIos } from "react-icons/md";
+import logo from "/Logo/doglogo.png";
+
 const StorePortfolio = ({ portfolioImg }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [images, setImages] = useState([]); // 이미지 배열
@@ -28,17 +30,24 @@ const StorePortfolio = ({ portfolioImg }) => {
 
   return (
     <>
-      <div className="mx-auto mb-20 mt-5 grid w-10/12 grid-cols-3">
+      <div className="mx-auto mb-20 mt-[100px] grid w-10/12 grid-cols-3 gap-2">
         {images.map((img, index) => (
           <div
             onClick={() => handleOpenModal(index)} // 이미지 클릭 시 모달 열기
             key={index}
-            className="relative mx-auto my-2 w-[100px] cursor-pointer"
+            className="relative mx-auto w-[100px] cursor-pointer"
           >
             <img className="mx-auto h-[100px] w-[100px] rounded-md text-center" src={img} alt={`review${index}`} />
           </div>
         ))}
       </div>
+
+      {!images.length && (
+        <div className="flex flex-col items-center justify-center">
+          <img src={logo} alt="Logo" className="mx-auto mb-2 w-1/3" />
+          <span>포트폴리오 사진이 없습니다.</span>
+        </div>
+      )}
 
       <Modal isOpen={isModalOpen} onClose={handleCloseModal} handlePrev={handlePrev}>
         <div className="relative mt-3 flex h-[300px] w-full items-center justify-center">
@@ -62,7 +71,7 @@ const Modal = ({ isOpen = false, onClose, children, handlePrev }) => {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-30">
-      <div className="relative w-[360px] rounded-lg bg-white p-5 shadow-md">
+      <div className="relative w-[360px] rounded-lg bg-white shadow-md">
         <button onClick={onClose} className="absolute right-3 top-3 mb-5 text-xl font-bold text-gray-600">
           ✕
         </button>

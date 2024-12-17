@@ -11,15 +11,16 @@ const useAuthStore = create(
         groomerId: null
       },
       userInfo: {
-        name: "",
+        email: "",
+        userName: "",
         nickname: ""
       },
 
       // userInfo 업데이트
-      updateUserInfo: (userData) =>
-        set({
-          userInfo: userData
-        }),
+      updateUserInfoState: (userData) =>
+        set((state) => ({
+          userInfo: { ...state.userInfo, ...userData }
+        })),
 
       // DefaultRole 업데이트
       updateDefaultRole: (role) =>
@@ -53,7 +54,8 @@ const useAuthStore = create(
             groomerId: null
           },
           userInfo: {
-            name: "",
+            email: "",
+            userName: "",
             nickname: ""
           }
         });
@@ -62,10 +64,10 @@ const useAuthStore = create(
     {
       name: "auth-storage",
       partialize: (state) => ({
-        // userInfo: state.userInfo,
         isLoggedIn: state.isLoggedIn,
         DefaultRole: state.DefaultRole,
-        id: state.id
+        id: state.id,
+        userInfo: state.userInfo
       })
     }
   )

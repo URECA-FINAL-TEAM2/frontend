@@ -16,4 +16,33 @@ axiosInstance.interceptors.request.use(
   },
   (error) => Promise.reject(error)
 );
+
+// 응답 인터셉터 : 토큰 갱신 처리
+axiosInstance.interceptors.response.use(
+  (response) => response,
+  async (error) => {
+    const originalRequest = error.config;
+
+    if (error.response && error.response.status === 401 && !originalRequest._retry) {
+      originalRequest._retry = true;
+
+      try {
+        // 백엔드 토큰 재발급 요청 API 수정
+        const refreshResponse = await axiosInstance.post("/auth/token/reissue");
+        const newAccessToken = refreshResponse.data.accessToken;
+
+        localStorage.setItem("accessToken", newAccessToken);
+        originalRequest.headers["Authorization"] = `Bearer ${newAccessToken}`;
+
+        return axiosInstance(originalRequest);
+      } catch (refreshError) {
+        console.error("토큰 갱신 실패", refreshError);
+        return Promise.reject(refreshError);
+      }
+    }
+
+    return Promise.reject(error);
+  }
+);
+
 export default axiosInstance;

@@ -80,3 +80,26 @@ input[type="number"] {
     --radius: 0.5rem;
   }
 }
+
+/* Add select-none to all text elements */
+body,
+div,
+span,
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+a,
+button,
+input,
+textarea {
+  @apply select-none;
+}
+
+/* 이미지 태그에 object-cover 속성 일괄 적용 */
+img {
+  object-fit: cover;
+}

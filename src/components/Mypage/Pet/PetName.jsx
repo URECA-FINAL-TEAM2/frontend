@@ -2,7 +2,7 @@ const PetName = ({ onlyRead, formData, handleChange }) => {
   return (
     <div>
       <label className="labelStyle" htmlFor="dogName">
-        반려견 이름
+        반려견 이름*
       </label>
       {onlyRead ? (
         <div className="inputStyle h-[33px]">{formData.dogName}</div>

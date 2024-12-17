@@ -9,11 +9,12 @@ const GroomerReservationMain = () => {
   const [activeTab, setActiveTab] = useState("today");
   const today = dayjs();
   const navigate = useNavigate();
+  const authStorage = JSON.parse(localStorage.getItem("auth-storage"));
+  const groomerId = authStorage?.state?.id?.groomerId;
 
   useEffect(() => {
     const fetchReservations = async () => {
       try {
-        const groomerId = 10;
         const response = await getGroomerList({ groomerId });
         if (response.code === 200) {
           setReservations(response.data);
@@ -40,42 +41,50 @@ const GroomerReservationMain = () => {
   return (
     <div>
       <SubHeader title="예약 내역" />
-      <div className="mx-auto max-w-lg bg-white p-4">
+      <div className="mx-auto max-w-lg bg-white">
         {/* 상단 탭 */}
-        <div className="jusify-around mb-4 mt-12 flex border-b">
+        <div className="jusify-around mb-4 mt-[75px] flex border-b">
           <button
             onClick={() => setActiveTab("today")}
             className={`flex-1 py-2 ${
-              activeTab === "today" ? "border-b-4 text-black" : "border-b-4 border-transparent text-gray-500"
-            }`}
-            style={activeTab === "today" ? { borderColor: "#ff8e8e" } : {}}
+              activeTab === "today"
+                ? "border-b-2 border-solid border-black font-semibold text-black"
+                : "text-gray-300 hover:bg-gray-100"
+            } text-[15px] transition-colors`}
+            style={activeTab === "today" ? { borderColor: "black" } : {}}
           >
             오늘의 예약
           </button>
           <button
             onClick={() => setActiveTab("completed")}
             className={`flex-1 py-2 ${
-              activeTab === "completed" ? "border-b-4 text-black" : "border-b-4 border-transparent text-gray-500"
-            }`}
-            style={activeTab === "completed" ? { borderColor: "#ff8e8e" } : {}}
+              activeTab === "completed"
+                ? "border-b-2 border-solid border-black font-semibold text-black"
+                : "text-gray-300 hover:bg-gray-100"
+            } text-[15px] transition-colors`}
+            style={activeTab === "completed" ? { borderColor: "black" } : {}}
           >
             완료
           </button>
           <button
             onClick={() => setActiveTab("reserved")}
             className={`flex-1 py-2 ${
-              activeTab === "reserved" ? "border-b-4 text-black" : "border-b-4 border-transparent text-gray-500"
-            }`}
-            style={activeTab === "reserved" ? { borderColor: "#ff8e8e" } : {}}
+              activeTab === "reserved"
+                ? "border-b-2 border-solid border-black font-semibold text-black"
+                : "text-gray-300 hover:bg-gray-100"
+            } text-[15px] transition-colors`}
+            style={activeTab === "reserved" ? { borderColor: "black" } : {}}
           >
             예약
           </button>
           <button
             onClick={() => setActiveTab("canceled")}
             className={`flex-1 py-2 ${
-              activeTab === "canceled" ? "border-b-4 text-black" : "border-b-4 border-transparent text-gray-500"
-            }`}
-            style={activeTab === "canceled" ? { borderColor: "#ff8e8e" } : {}}
+              activeTab === "canceled"
+                ? "border-b-2 border-solid border-black font-semibold text-black"
+                : "text-gray-300 hover:bg-gray-100"
+            } text-[15px] transition-colors`}
+            style={activeTab === "canceled" ? { borderColor: "black" } : {}}
           >
             취소
           </button>
@@ -111,7 +120,7 @@ const GroomerReservationMain = () => {
               {/* 리뷰 쓰기 버튼 */}
               {activeTab === "completed" && (
                 <button className="mt-4 w-full rounded-full bg-main-200 py-1 font-medium text-main-400">
-                  리뷰 쓰기
+                  리뷰 확인
                 </button>
               )}
 
@@ -119,7 +128,11 @@ const GroomerReservationMain = () => {
               {activeTab === "reserved" && (
                 <button
                   className="mt-4 w-full rounded-full bg-main-200 py-1 font-medium text-main-400"
-                  onClick={() => navigate("detail")}
+                  onClick={() =>
+                    navigate("detail", {
+                      state: { selectedQuoteId: item.selectedQuoteId, status: item.status }
+                    })
+                  }
                 >
                   예약 상세
                 </button>
@@ -129,7 +142,11 @@ const GroomerReservationMain = () => {
               {activeTab === "canceled" && (
                 <button
                   className="mt-4 w-full rounded-full bg-gray-300 py-1 font-medium text-white"
-                  onClick={() => navigate("detail")}
+                  onClick={() =>
+                    navigate("detail", {
+                      state: { selectedQuoteId: item.selectedQuoteId, status: item.status }
+                    })
+                  }
                 >
                   예약 상세
                 </button>

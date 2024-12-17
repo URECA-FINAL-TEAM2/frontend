@@ -10,7 +10,7 @@ const StoreForm = ({ formData, setFormData, handleChange, handleSubmit, isUpdate
         {/* Store Name */}
         <div>
           <label htmlFor="shopName" className="labelStyle">
-            매장 이름
+            매장 이름*
           </label>
           <input
             type="text"
@@ -27,7 +27,7 @@ const StoreForm = ({ formData, setFormData, handleChange, handleSubmit, isUpdate
         {/* Description */}
         <div>
           <label htmlFor="description" className="labelStyle">
-            매장 설명
+            매장 설명*
           </label>
           <textarea
             id="description"

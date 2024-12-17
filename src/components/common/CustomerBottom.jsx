@@ -5,6 +5,7 @@ import { TbPawFilled } from "react-icons/tb";
 import { Link, useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { IoHomeSharp } from "react-icons/io5";
+import GPTBtn from "../Chat/GPTBtn";
 
 const CustomerBottom = () => {
   const location = useLocation();
@@ -54,10 +55,11 @@ const CustomerBottom = () => {
         <Link to="/customer/mypage">
           <div className={`bottom ${active === "mypage" && "bottom-active"}`}>
             <PiUserCircleFill size={30} />
-            <span className="text-[10px]">마이</span>
+            <span className="text-[10px]">MY</span>
           </div>
         </Link>
       </div>
+      <GPTBtn />
     </div>
   );
 };

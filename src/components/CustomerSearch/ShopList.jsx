@@ -11,21 +11,21 @@ const ShopList = () => {
     listPosition === 60 ? "calc((100vh - var(--bottom-bar-height) - var(--header-height)) * 0.4)" : "0";
 
   return (
-    <div className="w-full">
+    <>
       <div className="mb-1 flex h-[20px] items-center px-7">
         <span
-          onClick={() => setSortType("favorite")}
+          onClick={() => setSortType("favoriteCount")}
           className={`cursor-pointer rounded-md px-2 py-1 text-sm transition-colors duration-200 ${
-            sortType === "favorite" ? "text-primary font-bold" : "hover:text-primary text-gray-600"
+            sortType === "favoriteCount" ? "text-primary font-bold" : "hover:text-primary text-gray-600"
           }`}
         >
           찜 많은 순
         </span>
         <span className="text-gray-300">|</span>
         <span
-          onClick={() => setSortType("review")}
+          onClick={() => setSortType("reviewCount")}
           className={`cursor-pointer rounded-md px-2 py-1 text-sm transition-colors duration-200 ${
-            sortType === "review" ? "text-primary font-bold" : "hover:text-primary text-gray-600"
+            sortType === "reviewCount" ? "text-primary font-bold" : "hover:text-primary text-gray-600"
           }`}
         >
           리뷰 많은 순
@@ -36,8 +36,12 @@ const ShopList = () => {
         <ShopItem key={shopInfo.shopId} shopInfo={shopInfo} />
       ))}
 
+      {shops.length === 0 ? (
+        <div className="mx-auto w-[360px] px-3 py-3 text-center text-sm text-gray-600">검색 결과가 없습니다.</div>
+      ) : null}
+
       <div style={{ height: marginBottomHeight }} />
-    </div>
+    </>
   );
 };
 

@@ -1,26 +1,63 @@
 import { formatDate } from "@/utils/formatDate";
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Schedule, Corgi, Note } from "/public/Icons";
+import useAuthStore from "@/store/authStore";
+import Modal from "@/components/common/modal/modal";
+import { RequestReject } from "@/queries/quoteRequestQuery";
 
 function GroomerShopRequests({ Infos }) {
   return (
     <>
-      <GroomerEstimate Info={Infos[0]} />
-      <GroomerEstimate Info={Infos[1]} />
-      <GroomerEstimate Info={Infos[2]} />
+      {Infos.map((Info) => {
+        return <GroomerEstimate Info={Info} />;
+      })}
     </>
   );
 }
 
 const GroomerEstimate = ({ Info }) => {
+  const { id } = useAuthStore();
   const navigate = useNavigate();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [rejectReason, setRejectReason] = useState("");
+
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    setRejectReason("");
+  };
+
+  const handleReject = async () => {
+    if (rejectReason.trim() === "") {
+      alert("거절 사유를 입력해주세요.");
+      return;
+    }
+
+    try {
+      const rejectData = {
+        requestId: Info.requestId,
+        groomerId: id.groomerId,
+        rejectReason: rejectReason
+      };
+      const response = await RequestReject(rejectData);
+      console.log("거절 성공: " + response);
+      setIsModalOpen(false);
+      setRejectReason("");
+    } catch (error) {
+      console.log("견적 요청 거절 실패");
+    }
+  };
+
   return (
     <div className="m-5 rounded-xl bg-white p-4">
       <div className="mb-3 flex">
         <img src={Info.userProfileImage} alt="고객 프로필" className="mr-3 h-10 w-10 rounded-lg object-cover" />
         <div>
-          <p className="px-0.5 font-semibold leading-[1.1]">{Info.userName} 고객님</p>
+          <p className="line-clamp-1 px-0.5 font-semibold leading-[1.1]">{Info.userName} 고객님</p>
           <span className="rounded-md bg-main-100 px-1 py-[1px] text-xs text-main">
             {formatDate(Info.expiryDate)}까지
           </span>
@@ -29,11 +66,11 @@ const GroomerEstimate = ({ Info }) => {
       <div className="mb-2 text-sm">
         <div className="mb-1 flex items-center">
           <img src={Schedule} alt="Description" className="mr-2 h-5 w-5" />
-          <p>{formatDate(Info.beautyDate)}</p>
+          <p className="line-clamp-1">{formatDate(Info.beautyDate)}</p>
         </div>
         <div className="mb-1 flex items-center">
           <img src={Corgi} alt="Description" className="mr-2 h-5 w-5" />
-          <p>
+          <p className="line-clamp-1">
             {Info.dogBreed} • {Info.dogGender == "MALE" ? "남아" : "여아"} • {Info.dogWeight}kg
           </p>
         </div>
@@ -51,10 +88,25 @@ const GroomerEstimate = ({ Info }) => {
         >
           상세보기
         </div>
-        <div className="flex h-[35px] w-1/4 cursor-pointer items-center justify-center rounded-lg bg-gray-300 text-center text-sm text-white">
+        <div
+          onClick={openModal}
+          className="flex h-[35px] w-1/4 cursor-pointer items-center justify-center rounded-lg bg-gray-300 text-center text-sm text-white"
+        >
           거절하기
         </div>
       </div>
+      <Modal isOpen={isModalOpen} onClose={handleCloseModal} onConfirm={handleReject}>
+        <div className="w-full">
+          <p className="mb-4 text-center font-medium">거절 사유를 입력해주세요.</p>
+          <input
+            type="text"
+            value={rejectReason}
+            onChange={(e) => setRejectReason(e.target.value)}
+            placeholder="거절 사유 입력"
+            className="w-full rounded-md border p-2 text-sm"
+          />
+        </div>
+      </Modal>
     </div>
   );
 };

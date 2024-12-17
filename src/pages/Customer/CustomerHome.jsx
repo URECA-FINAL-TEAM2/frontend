@@ -4,11 +4,22 @@ import { useEffect, useState } from "react";
 import { getCustomerMain } from "@/queries/mainQuery";
 import ShopItem from "@/components/CustomerSearch/ShopItem";
 import useAuthStore from "@/store/authStore";
+import BannerSwiper from "@/components/Main/BannerSwiper";
+import toast, { Toaster } from "react-hot-toast";
+import { useToastStore } from "@/store/toastStore";
 
 const CustomerHome = () => {
+  const { toastMessage, toastIcon, clearToast } = useToastStore();
   const { id } = useAuthStore();
   const [bestReviews, setBestReviews] = useState([]);
   const [localGroomers, setLocalGroomers] = useState([]);
+
+  useEffect(() => {
+    if (toastMessage) {
+      toast(toastMessage, { icon: toastIcon });
+      clearToast();
+    }
+  }, [toastMessage, toastIcon]);
 
   useEffect(() => {
     const getMain = async () => {
@@ -27,11 +38,12 @@ const CustomerHome = () => {
 
   return (
     <main className="min-h-screen">
-      <div className="mx-auto w-11/12 pb-24 pt-6">
+      <div className="mx-auto w-11/12 pb-24 pt-2">
         {/* 배너 */}
         <section className="mb-6">
-          <div className="h-[200px] rounded-xl bg-white p-3">배너</div>
+          <BannerSwiper />
         </section>
+
         {/* BEST 미용후기 추천 */}
         <section className="mb-8">
           <div className="flex items-center justify-between px-3">
@@ -47,7 +59,7 @@ const CustomerHome = () => {
         <section>
           <div className="flex items-center justify-between px-3">
             <h2 className="text-lg">우리동네 디자이너</h2>
-            <Link to="/customer/search">
+            <Link to="/customer/shop">
               <div className="text-xs">더보기</div>
             </Link>
           </div>
@@ -57,6 +69,7 @@ const CustomerHome = () => {
           })}
         </section>
       </div>
+      <Toaster />
     </main>
   );
 };

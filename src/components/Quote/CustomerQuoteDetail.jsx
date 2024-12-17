@@ -135,7 +135,7 @@ function CustomerQuoteDetail({ quotesId, onDataLoad }) {
               </p>
               <p>
                 <span className="mr-2 font-semibold">무게</span>
-                {quoteData.quoteRequest.dogWeight}
+                {quoteData.quoteRequest.dogWeight}kg
               </p>
               <p>
                 <span className="mr-2 font-semibold">나이</span>

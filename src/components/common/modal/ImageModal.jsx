@@ -4,7 +4,7 @@ const ImageModal = ({ isOpen = false, onClose, children }) => {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 mx-auto flex w-[400px] items-center justify-center bg-black bg-opacity-30">
+    <div className="fixed inset-0 z-50 mx-auto flex w-full max-w-[400px] items-center justify-center bg-black bg-opacity-30">
       <div className="relative rounded-lg bg-transparent shadow-md">
         <button
           onClick={onClose}

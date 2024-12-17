@@ -136,11 +136,11 @@ const QuoteRequestDetail = ({ requestId }) => {
               </p>
               <p>
                 <span className="mr-2 font-semibold">무게</span>
-                {requestData.dogWeight}살
+                {requestData.dogWeight}kg
               </p>
               <p>
                 <span className="mr-2 font-semibold">나이</span>
-                {requestData.dogAge}
+                {requestData.dogAge}살
               </p>
               <p>
                 <span className="mr-2 font-semibold">성별</span>

@@ -176,7 +176,7 @@ function GroomerQuoteForm({ requestId }) {
               </p>
               <p>
                 <span className="mr-2 font-semibold">무게</span>
-                {requestInfo.dogWeight}
+                {requestInfo.dogWeight}kg
               </p>
               <p>
                 <span className="mr-2 font-semibold">나이</span>

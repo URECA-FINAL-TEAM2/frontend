@@ -44,11 +44,13 @@ function GroomerQuoteDetail({ requestId }) {
 
   // Navigate to previous image
   const handlePrevImage = () => {
+    if (!quoteData?.quote?.requestImage?.length) return;
     setSelectedImageIndex((prevIndex) => (prevIndex === 0 ? quoteData.quote.requestImage.length - 1 : prevIndex - 1));
   };
 
   // Navigate to next image
   const handleNextImage = () => {
+    if (!quoteData?.quote?.requestImage?.length) return;
     setSelectedImageIndex((prevIndex) => (prevIndex === quoteData.quote.requestImage.length - 1 ? 0 : prevIndex + 1));
   };
 
@@ -126,7 +128,7 @@ function GroomerQuoteDetail({ requestId }) {
               </p>
               <p>
                 <span className="mr-2 font-semibold">무게</span>
-                {quoteData.dog.dogWeight}
+                {quoteData.dog.dogWeight}kg
               </p>
               <p>
                 <span className="mr-2 font-semibold">나이</span>

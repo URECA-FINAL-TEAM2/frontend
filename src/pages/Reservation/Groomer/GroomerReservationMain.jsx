@@ -9,11 +9,12 @@ const GroomerReservationMain = () => {
   const [activeTab, setActiveTab] = useState("today");
   const today = dayjs();
   const navigate = useNavigate();
+  const authStorage = JSON.parse(localStorage.getItem("auth-storage"));
+  const groomerId = authStorage?.state?.id?.groomerId;
 
   useEffect(() => {
     const fetchReservations = async () => {
       try {
-        const groomerId = 10;
         const response = await getGroomerList({ groomerId });
         if (response.code === 200) {
           setReservations(response.data);

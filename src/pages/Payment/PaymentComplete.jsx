@@ -106,7 +106,7 @@ function PaymentComplete() {
         </div>
       </div>
 
-      <div className="mt-5 flex justify-center">
+      <div className="mb-[80px] mt-5 flex justify-center">
         <button
           className="w-[65%] rounded-lg bg-main-400 py-2 text-white shadow hover:bg-main-300"
           onClick={() => navigate("/customer/reservation")}

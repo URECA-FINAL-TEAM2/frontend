@@ -125,7 +125,7 @@ export const GetCustomerChatRoomList = async (customerId) => {
 // 미용사 채팅방 리스트
 export const GetGroomerChatRoomList = async (groomerId) => {
   try {
-    const response = await axiosInstance.get(`/chats/customer/${groomerId}`, {
+    const response = await axiosInstance.get(`/chats/groomer/${groomerId}`, {
       headers: {
         Accept: "application/json"
       }

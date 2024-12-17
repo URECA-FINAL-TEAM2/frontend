@@ -140,24 +140,38 @@ const CustomerEstimate = ({ Info, expandedQuoteRequestId, setExpandedQuoteReques
                   <p>{quote.quoteContent}</p>
                 </div>
               </div>
-              <div className="mt-3 flex justify-between gap-2">
-                <div
-                  onClick={() => {}}
-                  className={`flex h-[35px] w-full cursor-pointer items-center justify-center rounded-lg text-center text-sm ${
-                    quote.quoteStatus === "제안" ? "bg-main-200 text-main-600" : "bg-gray-200"
-                  }`}
-                >
-                  견적서 보기
+              {quote.quoteStatus !== "마감" && (
+                <div className="mt-3 flex justify-between gap-2">
+                  <div
+                    onClick={() => {
+                      if (quote.quoteStatus === "제안") {
+                        navigate(`/customer/quotes/detail/${quote.quoteId}`);
+                      } else if (quote.quoteStatus === "수락") {
+                        navigate("/customer/reservation");
+                      }
+                    }}
+                    className={`flex h-[35px] w-full cursor-pointer items-center justify-center rounded-lg text-center text-sm ${
+                      quote.quoteStatus === "제안"
+                        ? "bg-main-200 text-main-600"
+                        : quote.quoteStatus === "수락"
+                          ? "bg-main-200 text-main-600"
+                          : "bg-gray-200"
+                    }`}
+                  >
+                    {quote.quoteStatus === "제안" ? "견적서 보기" : "예약 내역 보기"}
+                  </div>
+                  <div
+                    onClick={() => {
+                      /*TODO: 매장 상세로 navigate*/
+                    }}
+                    className={
+                      "flex h-[35px] w-full cursor-pointer items-center justify-center rounded-lg bg-main text-center text-sm text-white"
+                    }
+                  >
+                    매장 상세보기
+                  </div>
                 </div>
-                <div
-                  onClick={() => {}}
-                  className={`flex h-[35px] w-full cursor-pointer items-center justify-center rounded-lg text-center text-sm ${
-                    quote.quoteStatus === "제안" ? "bg-main text-white" : "bg-gray-200"
-                  }`}
-                >
-                  채팅하기
-                </div>
-              </div>
+              )}
             </div>
           ))}
         </div>

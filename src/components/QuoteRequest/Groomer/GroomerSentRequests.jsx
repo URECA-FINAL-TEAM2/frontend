@@ -46,18 +46,13 @@ const GroomerEstimate = ({ Info }) => {
           <p className="line-clamp-1">{Info.requestContent}</p>
         </div>
       </div>
-      <div className="flex w-full gap-2">
-        <div
-          onClick={() => {
-            navigate(`/groomer/quotes/detail/${Info.requestId}`);
-          }}
-          className="flex h-[35px] w-1/2 cursor-pointer items-center justify-center rounded-lg bg-gray-200 text-center text-sm"
-        >
-          보낸 견적서 보기
-        </div>
-        <div className="flex h-[35px] w-1/2 cursor-pointer items-center justify-center rounded-lg bg-gray-200 text-center text-sm">
-          채팅하기
-        </div>
+      <div
+        onClick={() => {
+          navigate(`/groomer/quotes/detail/${Info.requestId}`);
+        }}
+        className="flex h-[35px] w-full cursor-pointer items-center justify-center rounded-lg bg-gray-200 text-center text-sm"
+      >
+        보낸 견적서 확인하기
       </div>
     </div>
   );

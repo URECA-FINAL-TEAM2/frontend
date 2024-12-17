@@ -8,6 +8,7 @@ import { RequestCancel } from "@/queries/paymentQuery";
 import { useLocation, useNavigate } from "react-router-dom";
 import { User, Designer, Schedule, Corgi, Note, Photos, Description } from "/public/Icons";
 import StaticMap from "@/components/Map/StaticMap";
+import toast, { Toaster } from "react-hot-toast";
 
 const GroomerReservationDetail = () => {
   const location = useLocation();
@@ -44,11 +45,11 @@ const GroomerReservationDetail = () => {
   // 예약 취소 요청
   const handleConfirmModal = async () => {
     if (cancelReason.trim() === "") {
-      alert("취소 사유를 입력해주세요."); // 안쓰면 팝업
+      toast.error("취소 사유를 입력해주세요.");
       return;
     }
     if (!detail || !detail.paymentKey) {
-      alert("유효한 결제 키가 없습니다. 예약을 취소할 수 없습니다.");
+      toast.error("유효한 결제 키가 없습니다. 예약을 취소할 수 없습니다.");
       return;
     }
 
@@ -59,13 +60,15 @@ const GroomerReservationDetail = () => {
       };
       const result = await RequestCancel(cancelData);
       console.log("취소 성공:", result);
-      alert("예약이 성공적으로 취소되었습니다.");
+      toast.success("예약이 취소되었습니다.");
       setIsModalOpen(false);
       setCancelReason("");
-      navigate("/groomer/reservation");
+      setTimeout(() => {
+        navigate("/groomer/reservation");
+      }, 1000);
     } catch (error) {
       console.error("취소 실패:", error);
-      alert("예약 취소에 실패했습니다. 다시 시도해주세요.");
+      toast.error("예약 취소에 실패했습니다. 다시 시도해주세요.");
     }
   };
 
@@ -271,6 +274,7 @@ const GroomerReservationDetail = () => {
           </div>
         </Modal>
       </div>
+      <Toaster />
     </div>
   );
 };

@@ -145,11 +145,11 @@ const Chat = () => {
                       <div className="max-w-48 rounded-lg bg-main-100 p-2 text-black">
                         {/* 수신한 내용 */}
                         {msg.messageImage && <img src={msg.messageImage} alt="" className="mt-2 max-w-40" />}
-                        <div className="text-right">{msg.messageContent}</div>
+                        <div className="text-left">{msg.messageContent}</div>
 
                         {/* 송신한 내용 */}
                         {msg.imageUrl && <img src={msg.imageUrl} alt="" className="mt-2 max-w-full" />}
-                        <div className="text-right">{msg.content}</div>
+                        <div className="text-left">{msg.content}</div>
                       </div>
                       <p className="text-xs text-gray-500">{dayjs(msg.messageTime).format("YY.MM.DD · HH:mm")}</p>
                     </div>
@@ -164,11 +164,11 @@ const Chat = () => {
                       <div className="max-w-40 rounded-lg bg-main-400 p-2 text-white">
                         {/* 수신한 내용 */}
                         {msg.messageImage && <img src={msg.messageImage} alt="" className="mt-2 max-w-full" />}
-                        <div className="text-right">{msg.messageContent}</div>
+                        <div className="text-left">{msg.messageContent}</div>
 
                         {/* 송신한 내용 */}
                         {msg.imageUrl && <img src={msg.imageUrl} alt="" className="mt-2 max-w-full" />}
-                        <div className="text-right">{msg.content}</div>
+                        <div className="text-left">{msg.content}</div>
                       </div>
                     </div>
                   </div>
@@ -209,6 +209,12 @@ const Chat = () => {
                 className="w-full rounded-lg border p-2 focus:outline-none focus:ring-2 focus:ring-main-200"
                 value={messageContent}
                 onChange={(e) => setMessageContent(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    e.preventDefault(); // 기본 동작 방지
+                    handleSendMessage(); // 메시지 전송
+                  }
+                }}
               />
             </div>
 

@@ -13,7 +13,6 @@ import StaticMap from "@/components/Map/StaticMap";
 const CustomerReservationDetail = () => {
   const location = useLocation();
   const { selectedQuoteId, status } = location.state || {};
-  // const { selectedQuoteId, status } = { selectedQuoteId: 139, status: "" }; // 예약 상태 테스트용
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [cancelReason, setCancelReason] = useState("");
   const [detail, setDetail] = useState(null);

@@ -37,9 +37,11 @@ const ShopItem = ({ shopInfo }) => {
           </div>
         </div>
 
-        <p className="text-[13px] font-normal">{shopInfo.address}</p>
-        <p className="mb-[-4px] mt-[-1px] text-[13px] font-normal text-gray-300">{shopInfo.skills}</p>
-        <p className="inline-block rounded-[5px] bg-gray-200 px-1 text-[11px] font-normal">{shopInfo.businessTime}</p>
+        <p className="line-clamp-1 text-[13px] font-normal">{shopInfo.address}</p>
+        <p className="mb-[-4px] mt-[-1px] line-clamp-1 text-[13px] font-normal text-gray-300">{shopInfo.skills}</p>
+        <p className="line-clamp-1 inline-block rounded-[5px] bg-gray-200 px-1 text-[11px] font-normal">
+          {shopInfo.businessTime}
+        </p>
       </div>
     </div>
   );

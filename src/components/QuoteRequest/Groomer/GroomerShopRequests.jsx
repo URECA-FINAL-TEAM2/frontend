@@ -8,9 +8,15 @@ import { RequestReject } from "@/queries/quoteRequestQuery";
 
 function GroomerShopRequests({ Infos, onRequestReject }) {
   if (Infos == null) return <></>;
+
+  const filteredItems = () => {
+    // expireDate 최신순으로 정렬 (최신 날짜가 먼저 오도록)
+    return Infos.sort((a, b) => new Date(b.expiryDate) - new Date(a.expiryDate));
+  };
+
   return (
     <>
-      {Infos.map((Info) => {
+      {filteredItems().map((Info) => {
         return <GroomerEstimate Info={Info} onRequestReject={onRequestReject} />;
       })}
     </>

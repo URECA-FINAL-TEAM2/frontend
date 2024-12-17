@@ -1,8 +1,22 @@
+import PropTypes from "prop-types";
 import { useEffect, useRef } from "react";
 
 const ThemeDropdown = ({ status, isOpen, setIsOpen, themeItems }) => {
   const dropdownRef = useRef(null);
   const buttonRef = useRef(null);
+
+  // Props validation
+  ThemeDropdown.propTypes = {
+    status: PropTypes.string.isRequired,
+    isOpen: PropTypes.bool.isRequired,
+    setIsOpen: PropTypes.func.isRequired,
+    themeItems: PropTypes.arrayOf(
+      PropTypes.shape({
+        label: PropTypes.string.isRequired,
+        onClick: PropTypes.func.isRequired
+      })
+    ).isRequired
+  };
 
   // Handle clicks outside the dropdown
   useEffect(() => {

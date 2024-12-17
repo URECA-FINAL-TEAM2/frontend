@@ -3,11 +3,81 @@ import { formatDate } from "@/utils/formatDate";
 import { BsQuestionCircleFill, BsX } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
 import { Designer, Schedule, Note } from "/public/Icons";
+import ThemeDropdown from "@/components/common/ThemeDropdown";
 
 function ShopQuoteRequestList({ Infos }) {
+  const [status, setStatus] = useState("전체");
+  const [isOpen, setIsOpen] = useState(false);
+
+  // Theme selection items
+  const themeItems = [
+    {
+      label: "전체",
+      onClick: () => {
+        setStatus("전체");
+        setIsOpen(false);
+      }
+    },
+    {
+      label: "견적 요청 중",
+      onClick: () => {
+        setStatus("견적 요청 중");
+        setIsOpen(false);
+      }
+    },
+    {
+      label: "견적 거절됨",
+      onClick: () => {
+        setStatus("견적 거절됨");
+        setIsOpen(false);
+      }
+    },
+    {
+      label: "기한 마감됨",
+      onClick: () => {
+        setStatus("기한 마감됨");
+        setIsOpen(false);
+      }
+    },
+    {
+      label: "견적서 수령",
+      onClick: () => {
+        setStatus("견적서 수령");
+        setIsOpen(false);
+      }
+    }
+  ];
+
+  const filteredItems = () => {
+    let items;
+    if (status === "전체") {
+      items = Infos; // 모든 아이템 반환
+    } else {
+      // 선택된 상태와 일치하는 아이템만 필터링
+      items = Infos.filter((request) => {
+        switch (status) {
+          case "견적 요청 중":
+            return request.status === "요청";
+          case "견적 거절됨":
+            return request.status === "거절";
+          case "기한 마감됨":
+            return request.status === "마감";
+          case "견적서 수령":
+            return request.status === "제안 완료";
+          default:
+            return true;
+        }
+      });
+    }
+
+    // expireDate 최신순으로 정렬 (최신 날짜가 먼저 오도록)
+    return items.sort((a, b) => new Date(b.expireDate) - new Date(a.expireDate));
+  };
+
   return (
     <>
-      {Infos?.map((request) => (
+      <ThemeDropdown status={status} isOpen={isOpen} setIsOpen={setIsOpen} themeItems={themeItems} />
+      {filteredItems().map((request) => (
         <CustomerEstimate Info={request} />
       ))}
     </>
@@ -114,7 +184,7 @@ const CustomerEstimate = ({ Info }) => {
             onClick={() => {
               navigate(`/customer/quotes/detail/${Info.quoteId}`);
             }}
-            className="flex h-[35px] w-full cursor-pointer items-center justify-center rounded-lg bg-main-200 text-center text-sm text-main-600"
+            className="flex h-[32px] w-full cursor-pointer items-center justify-center rounded-lg bg-main-200 text-center text-sm text-main-600"
           >
             견적서 보기
           </div>
@@ -123,7 +193,7 @@ const CustomerEstimate = ({ Info }) => {
             onClick={() => {
               navigate(`/customer/quotes/request/detail/${Info.quoteRequestId}`);
             }}
-            className="flex h-[35px] w-full cursor-pointer items-center justify-center rounded-lg bg-gray-200 text-center text-sm"
+            className="flex h-[32px] w-full cursor-pointer items-center justify-center rounded-lg bg-gray-200 text-center text-sm"
           >
             견적 요청 보기
           </div>
@@ -132,7 +202,7 @@ const CustomerEstimate = ({ Info }) => {
           onClick={() => {
             navigate(`/customer/shop/${Info.shopId}`);
           }}
-          className="flex h-[35px] w-full cursor-pointer items-center justify-center rounded-lg bg-main text-center text-sm text-white"
+          className="flex h-[32px] w-full cursor-pointer items-center justify-center rounded-lg bg-main text-center text-sm text-white"
         >
           매장 상세보기
         </div>

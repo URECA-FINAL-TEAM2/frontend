@@ -166,7 +166,11 @@ function GroomerQuoteForm({ requestId }) {
         <div className="mb-6 rounded-lg border border-main-400 p-4">
           <div className="flex items-center">
             <div className="mr-4 self-center">
-              <img src={requestInfo.dogProfileImage} alt="반려견 사진" className="h-28 w-28 rounded-lg object-cover" />
+              <img
+                src={requestInfo.dogProfileImage}
+                alt="반려견 사진"
+                className="h-28 w-28 min-w-28 rounded-lg object-cover"
+              />
               <p className="mt-1 text-center font-semibold">{requestInfo.dogName}</p>
             </div>
             <div className="text-sm leading-snug">

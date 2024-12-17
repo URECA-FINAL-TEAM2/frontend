@@ -14,8 +14,10 @@ import { useNavigate } from "react-router-dom";
 import Modal from "../common/modal/modal";
 import toast from "react-hot-toast";
 import { IoIosInformationCircleOutline } from "react-icons/io";
+import useNotificationStore from "@/store/notificationStore";
 
 const NotiComponents = () => {
+  // useNotificationStore();
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { id, DefaultRole } = useAuthStore();
@@ -35,45 +37,45 @@ const NotiComponents = () => {
   };
 
   // SSE 연결
-  const connectSse = () => {
-    if (sseSource.current) {
-      sseSource.current.close();
-    }
+  // const connectSse = () => {
+  //   if (sseSource.current) {
+  //     sseSource.current.close();
+  //   }
 
-    const token = localStorage.getItem("accessToken");
-    if (!token) {
-      console.error("토큰이 없습니다.");
-      return;
-    }
+  //   const token = localStorage.getItem("accessToken");
+  //   if (!token) {
+  //     console.error("토큰이 없습니다.");
+  //     return;
+  //   }
 
-    const url = `https://www.beautymeongdang.com/notifications/connect?userId=${userId}&roleType=${roleType}&token=${encodeURIComponent(token)}`;
-    console.log("SSE 연결 URL:", url);
+  //   const url = `https://www.beautymeongdang.com/notifications/connect?userId=${userId}&roleType=${roleType}&token=${encodeURIComponent(token)}`;
+  //   console.log("SSE 연결 URL:", url);
 
-    const eventSource = new EventSource(url);
+  //   const eventSource = new EventSource(url);
 
-    eventSource.onopen = () => {
-      console.log("SSE 연결이 열렸습니다.");
-      fetchNotifications();
-      fetchUnreadNotificationCount();
-    };
+  //   eventSource.onopen = () => {
+  //     console.log("SSE 연결이 열렸습니다.");
+  //     fetchNotifications();
+  //     fetchUnreadNotificationCount();
+  //   };
 
-    eventSource.onmessage = (event) => {
-      console.log("새 알림:", event.data);
-      const newNotification = JSON.parse(event.data);
+  //   eventSource.onmessage = (event) => {
+  //     console.log("새 알림:", event.data);
+  //     const newNotification = JSON.parse(event.data);
 
-      // 알림 목록 및 개수 업데이트
-      setNotifications((prev) => [...prev, newNotification]);
-      setUnreadCount((prev) => prev + 1);
-    };
+  //     // 알림 목록 및 개수 업데이트
+  //     setNotifications((prev) => [...prev, newNotification]);
+  //     setUnreadCount((prev) => prev + 1);
+  //   };
 
-    eventSource.onerror = () => {
-      console.error("SSE 연결 오류. 다시 연결 시도 중...");
-      eventSource.close();
-      setTimeout(connectSse, 5000); // 5초 후 재연결
-    };
+  //   eventSource.onerror = () => {
+  //     console.error("SSE 연결 오류. 다시 연결 시도 중...");
+  //     eventSource.close();
+  //     setTimeout(connectSse, 5000); // 5초 후 재연결
+  //   };
 
-    sseSource.current = eventSource;
-  };
+  //   sseSource.current = eventSource;
+  // };
 
   // 알림 목록 가져오기
   const fetchNotifications = async () => {
@@ -137,7 +139,7 @@ const NotiComponents = () => {
 
   // 컴포넌트가 마운트되었을 때 SSE 연결
   useEffect(() => {
-    connectSse();
+    // connectSse();
     fetchNotifications();
     fetchUnreadNotificationCount();
 

@@ -26,12 +26,17 @@ const Chat = () => {
   const userId = authStorage?.state?.id?.userId;
   const userType = authStorage?.state?.DefaultRole === "customer";
 
+  const DefaultRole = authStorage?.state?.DefaultRole;
+
   //스크롤 자동 이동
   const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    setTimeout(() => {
+      messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    }, 0);
   };
-
-  useEffect(scrollToBottom, [messages]);
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
 
   useEffect(() => {
     const setupWebSocketAndSubscription = async () => {
@@ -109,7 +114,7 @@ const Chat = () => {
 
   return (
     <>
-      <ChatHeader groomerInfo={groomerInfo} customerInfo={customerInfo} />
+      <ChatHeader DefaultRole={DefaultRole} groomerInfo={groomerInfo} customerInfo={customerInfo} />
       <div className="flex h-screen flex-col bg-gray-50 pt-[80px]">
         {/* 채팅창 */}
         <div className="flex-1 space-y-4 overflow-y-auto p-4">

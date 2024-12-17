@@ -56,7 +56,7 @@ function ShopGroomer({ shopDetail, isCustomer }) {
       <p className="mb-1 text-lg font-semibold">미용사</p>
       <div className="flex w-full items-center rounded-lg p-3">
         <img
-          className="mb-1 h-[100px] w-[100px] rounded-full bg-gray-500 object-cover"
+          className="mb-1 h-[100px] w-[100px] rounded-full bg-white object-cover"
           src={shopDetail?.groomerProfileImage}
         ></img>
         <div className="ml-5 flex flex-col">

@@ -1,4 +1,3 @@
-//TotalQuoteRequestForm.jsx
 import React, { useEffect, useState } from "react";
 import { RiEditLine } from "react-icons/ri";
 import { IoIosAddCircle, IoIosCloseCircle } from "react-icons/io";
@@ -10,6 +9,7 @@ import { sendCustomerQuote } from "@/queries/quoteRequestQuery";
 import { useNavigate } from "react-router-dom";
 import useAuthStore from "@/store/authStore";
 import { getUserAddress } from "@/queries/userQuery";
+import toast, { Toaster } from "react-hot-toast";
 
 const TotalQuoteRequestForm = () => {
   const { id } = useAuthStore();
@@ -143,6 +143,9 @@ const TotalQuoteRequestForm = () => {
     // 시간 설정 (시, 분, 초, 밀리초)
     combinedDateTime.setHours(parseInt(hours), parseInt(minutes), 0, 0);
 
+    // UTC 시간에 9시간 추가
+    combinedDateTime.setHours(combinedDateTime.getHours() + 9);
+
     // ISO 8601 형식으로 변환
     return combinedDateTime.toISOString();
   };
@@ -154,23 +157,37 @@ const TotalQuoteRequestForm = () => {
   }
 
   const sendQuote = async () => {
-    const requestDto = {
-      dogId: petInfo.id,
-      requestType: "전체요청",
-      requestContent: requestContent,
-      beautyDate: combineDateAndTime(selectedDate, selectedTime),
-      sigunguId: location?.sigungu
-    };
+    try {
+      const requestDto = {
+        dogId: petInfo.id,
+        requestType: "전체요청",
+        requestContent: requestContent,
+        beautyDate: combineDateAndTime(selectedDate, selectedTime),
+        sigunguId: location?.sigungu
+      };
 
-    console.log("requestDto ", requestDto);
+      // Blob URL을 File 객체로 변환
+      const fileImages = await Promise.all(
+        attachedImages.map((blobUrl, index) => blobUrlToFile(blobUrl, `image_${index}.jpg`))
+      );
 
-    // Blob URL을 File 객체로 변환
-    const fileImages = await Promise.all(
-      attachedImages.map((blobUrl, index) => blobUrlToFile(blobUrl, `image_${index}.jpg`))
-    );
+      await sendCustomerQuote(id.customerId, requestDto, fileImages);
 
-    await sendCustomerQuote(id.customerId, requestDto, fileImages);
-    navigate("/customer/quotes");
+      // 성공 토스트
+      toast.success("견적 요청이 발송되었습니다.", {
+        position: "top-center", // 위치 지정
+        duration: 3000 // 표시 시간 지정
+      });
+
+      navigate("/customer/quotes");
+    } catch (error) {
+      // 실패 토스트
+      toast.error("견적 요청 중 오류가 발생했습니다.", {
+        position: "top-center",
+        duration: 3000
+      });
+      console.error("견적 요청 실패:", error);
+    }
   };
 
   const handleLocationSelect = (selectLocation) => {
@@ -358,11 +375,15 @@ const TotalQuoteRequestForm = () => {
       <PetSelectModal isOpen={isModalOpen} onClose={handleCloseModal} onConfirm={handlePetSelect}></PetSelectModal>
 
       {/* 지역 선택 모달 */}
-      <RegionSelectModal
-        isOpen={isLocationModalOpen}
-        onClose={handleCloseLocationModal}
-        onConfirm={handleLocationSelect}
-      ></RegionSelectModal>
+      {!isLoading ? (
+        <RegionSelectModal
+          isOpen={isLocationModalOpen}
+          onClose={handleCloseLocationModal}
+          onConfirm={handleLocationSelect}
+          sidoName={location.sidoName}
+          sigunguName={location.sigunguName}
+        ></RegionSelectModal>
+      ) : null}
     </div>
   );
 };

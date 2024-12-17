@@ -82,9 +82,7 @@ const CustomerEstimate = ({ Info }) => {
                         <BsX className="text-xl" />
                       </button>
                     </div>
-                    <p className="text-sm text-gray-600">
-                      {Info.rejectionReason || "거절 사유가 제공되지 않았습니다."}
-                    </p>
+                    <p className="text-sm text-gray-600">{Info.rejectReason || "거절 사유가 제공되지 않았습니다."}</p>
                   </div>
                 )}
               </div>
@@ -131,8 +129,13 @@ const CustomerEstimate = ({ Info }) => {
             견적 요청 보기
           </div>
         )}
-        <div className="flex h-[35px] w-full cursor-pointer items-center justify-center rounded-lg bg-main text-center text-sm text-white">
-          채팅하기
+        <div
+          onClick={() => {
+            /*TODO: 매장 상세로 navigate*/
+          }}
+          className="flex h-[35px] w-full cursor-pointer items-center justify-center rounded-lg bg-main text-center text-sm text-white"
+        >
+          매장 상세보기
         </div>
       </div>
     </div>

@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { GoHeart, GoHeartFill } from "react-icons/go";
-import { MdOutlineReviews } from "react-icons/md";
+import { MdOutlineRateReview } from "react-icons/md";
 import { RiScissors2Line } from "react-icons/ri";
-import { IoChatbubblesOutline } from "react-icons/io5";
 import { deleteFavorite, postFavorite } from "@/queries/shopQuery";
 import { PiImagesSquareFill } from "react-icons/pi";
 import useAuthStore from "@/store/authStore";
@@ -84,16 +83,9 @@ const ShopMenuBar = ({ shopId, isCustomer, isFavorite, favoriteCount, scrollToSe
           className="flex flex-1 cursor-pointer flex-col items-center py-3"
           onClick={() => handleSectionClick("reviews")}
         >
-          <MdOutlineReviews className="text-[25px] text-gray-600" />
+          <MdOutlineRateReview className="text-[25px] text-gray-600" />
           <div className="mt-1 select-none text-[12px]">후기</div>
         </div>
-
-        {isCustomer ? (
-          <div className="flex flex-1 cursor-pointer flex-col items-center py-3" onClick={() => {}}>
-            <IoChatbubblesOutline className="text-[25px] text-gray-600" />
-            <div className="mt-1 select-none text-[12px]">채팅 문의</div>
-          </div>
-        ) : null}
       </div>
     </div>
   );

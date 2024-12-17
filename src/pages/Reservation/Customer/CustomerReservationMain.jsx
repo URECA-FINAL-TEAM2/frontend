@@ -96,12 +96,12 @@ const CustomerReservationMain = () => {
 
               {activeTab === "completed" && (
                 <div className="mt-4 flex w-[330px] space-x-4">
-                  {/* 리뷰 쓰기 버튼 */}
+                  {/* 리뷰 쓰기 */}
                   <button className="w-full rounded-[10px] bg-main-200 py-1 font-medium text-main-400">
                     리뷰 쓰기
                   </button>
 
-                  {/* 예약 상세 버튼 */}
+                  {/* 예약 상세 */}
                   <button
                     className="w-full rounded-[10px] bg-main-400 py-1 font-medium text-white"
                     onClick={() =>

@@ -30,7 +30,7 @@ const UserForm = ({
 
   return (
     <>
-      <form action="" className="mt-5 grow" method="PUT">
+      <form action="" className="mb-[--bottom-bar-height] mt-5 grow" method="PUT">
         {/* Profile Image */}
         <ProfileImage formData={formData} setFormData={setFormData} />
         {/* email */}

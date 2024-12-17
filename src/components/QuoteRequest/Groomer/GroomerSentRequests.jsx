@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { Schedule, Corgi, Note } from "/public/Icons";
 
 function GroomerSentRequests({ Infos }) {
+  if (Infos == null) return <></>;
   return (
     <>
       {Infos.map((Info) => {

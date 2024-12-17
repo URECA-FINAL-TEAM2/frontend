@@ -15,16 +15,31 @@ function ShopReview({ groomerUsername, reviewData, isCustomer }) {
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
   const [isImgModalOpen, setIsImgModalOpen] = useState(false);
 
-  const thumbUpClick = () => {
-    setIsFill((prev) => !prev);
-    setRecCnt((prev) => prev + 1);
-    postReviewRecommend(id.customerId, reviewData.reviewId);
+  const thumbUpClick = async () => {
+    const status = await postReviewRecommend(id.customerId, reviewData.reviewId);
+
+    if (status === 200) {
+      // 성공했을 때 상태 변경
+      setIsFill(true);
+      setRecCnt((prev) => prev + 1);
+    } else if (status === 400) {
+      // 본인의 리뷰인 경우
+      alert("본인의 리뷰는 추천할 수 없습니다."); // TODO: 토스트
+    } else {
+      console.error("추천 등록 실패");
+    }
   };
 
-  const thumbUpDelete = () => {
-    setIsFill((prev) => !prev);
-    setRecCnt((prev) => prev - 1);
-    deleteReviewRecommend(id.customerId, reviewData.reviewId);
+  const thumbUpDelete = async () => {
+    const status = await deleteReviewRecommend(id.customerId, reviewData.reviewId);
+
+    if (status === 200) {
+      // 성공했을 때만 상태 변경
+      setIsFill(false);
+      setRecCnt((prev) => prev - 1);
+    } else {
+      console.error("추천 삭제 실패");
+    }
   };
 
   // Handle opening image modal

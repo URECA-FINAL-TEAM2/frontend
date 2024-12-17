@@ -56,68 +56,69 @@ const GroomerHome = () => {
     getMain();
   }, []);
 
+  if (!isShop)
+    return (
+      <EmptyPage
+        content={
+          <div className="text-center">
+            <span className="block text-lg">등록된 매장이 없습니다.</span>
+            <button
+              onClick={() => navigate("/groomer/createstore", { state: { update: false } })}
+              className="mt-2 rounded-lg bg-main px-4 py-[3px] text-white hover:bg-main-300"
+            >
+              매장 등록하기
+            </button>
+          </div>
+        }
+      />
+    );
+
   return (
     <main className="min-h-screen bg-main-100">
       <div className="mx-auto w-11/12 pb-24 pt-6">
         {/* 오늘의 예약 */}
-        {isShop ? (
-          <>
-            <section className="rounded-xl bg-white px-6 py-3 shadow-md">
-              <Link to="/groomer/reservation">
-                <div className="flex items-center justify-between">
-                  <span className="text-lg">오늘의 예약</span>
-                  <span>{preview.todayReservation}</span>
-                </div>
-              </Link>
-            </section>
-            {/* 1:1 견적 요청 */}
-            <section className="my-4 rounded-xl bg-white px-6 py-3 shadow-md">
+        <>
+          <section className="rounded-xl bg-white px-6 py-3 shadow-md">
+            <Link to="/groomer/reservation">
+              <div className="flex items-center justify-between">
+                <span className="text-lg">오늘의 예약</span>
+                <span>{preview.todayReservation}</span>
+              </div>
+            </Link>
+          </section>
+          {/* 1:1 견적 요청 */}
+          <section className="my-4 rounded-xl bg-white px-6 py-3 shadow-md">
+            <Link to="/groomer/quotes">
+              <div className="flex flex-col">
+                <span className="text-lg">1:1 견적 요청</span>
+                <span className="text-sm text-main">받은 요청을 확인하고, 견적을 보내보세요!</span>
+
+                <Summary
+                  firstName={"전체"}
+                  firstValue={preview.totalDirectRequest}
+                  secondName={"오늘 요청"}
+                  secondValue={preview.todayRequest}
+                  thirdName={"견적 미발송"}
+                  thirdValue={preview.unsentQuote}
+                  navigate={"/groomer/quotes"}
+                />
+              </div>
+            </Link>
+          </section>
+
+          <section>
+            <div className="flex items-center justify-between px-3">
+              <h2 className="text-lg">우리동네 견적 공고</h2>
               <Link to="/groomer/quotes">
-                <div className="flex flex-col">
-                  <span className="text-lg">1:1 견적 요청</span>
-                  <span className="text-sm text-main">받은 요청을 확인하고, 견적을 보내보세요!</span>
-
-                  <Summary
-                    firstName={"전체"}
-                    firstValue={preview.totalDirectRequest}
-                    secondName={"오늘 요청"}
-                    secondValue={preview.todayRequest}
-                    thirdName={"견적 미발송"}
-                    thirdValue={preview.unsentQuote}
-                    navigate={"/groomer/quotes"}
-                  />
-                </div>
+                <div className="text-xs">더보기</div>
               </Link>
-            </section>
+            </div>
 
-            <section>
-              <div className="flex items-center justify-between px-3">
-                <h2 className="text-lg">우리동네 견적 공고</h2>
-                <Link to="/groomer/quotes">
-                  <div className="text-xs">더보기</div>
-                </Link>
-              </div>
-
-              {totalRequest.map((request) => {
-                return <GrommerTotalRequest key={request.requestId} request={request} />;
-              })}
-            </section>
-          </>
-        ) : (
-          <EmptyPage
-            content={
-              <div className="pb-24 text-center">
-                <span className="block text-lg">등록된 매장이 없습니다.</span>
-                <button
-                  onClick={() => navigate("/groomer/createstore", { state: { update: false } })}
-                  className="mt-2 rounded-xl bg-main px-5 py-1 text-lg text-white hover:bg-main-300"
-                >
-                  매장 등록하기
-                </button>
-              </div>
-            }
-          />
-        )}
+            {totalRequest.map((request) => {
+              return <GrommerTotalRequest key={request.requestId} request={request} />;
+            })}
+          </section>
+        </>
       </div>
       <Toaster />
     </main>

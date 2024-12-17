@@ -127,6 +127,7 @@ const ChatRoomList = () => {
         ) : (
           <div className="mt-4 text-center text-gray-500">검색 결과가 없습니다.</div>
         )}
+        <div className="mb-80" />
       </div>
     </div>
   );

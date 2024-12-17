@@ -28,10 +28,14 @@ const Chat = () => {
 
   //스크롤 자동 이동
   const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    setTimeout(() => {
+      messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    }, 0);
   };
 
-  useEffect(scrollToBottom, [messages]);
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
 
   useEffect(() => {
     const setupWebSocketAndSubscription = async () => {
@@ -111,62 +115,65 @@ const Chat = () => {
     <>
       <ChatHeader groomerInfo={groomerInfo} customerInfo={customerInfo} />
       <div className="flex h-screen flex-col bg-gray-50 pt-[80px]">
-        {/* 채팅창 */}
         <div className="flex-1 space-y-4 overflow-y-auto p-4">
-          {messages.map((msg, index) => (
-            <div
-              key={index}
-              className={`flex ${msg.customerYn ? "justify-end" : "justify-start"} items-center space-x-2`}
-            >
-              {/* Groomer 메시지 */}
-              {!msg.customerYn && groomerInfo && (
-                <div className="flex items-center space-x-2">
-                  <div className="flex flex-col items-center">
-                    <img
-                      src={groomerInfo.groomerProfileImage}
-                      alt={groomerInfo.groomerName}
-                      className="mb-1 h-10 w-10 rounded-full object-cover"
-                    />
-                    <div className="text-xs font-semibold text-gray-700">{groomerInfo.groomerName}</div>
-                  </div>
-                  <div className="relative flex items-center space-x-2">
-                    <div className="max-w-xs rounded-lg bg-main-100 p-2 text-black">
-                      {msg.messageContent}
-                      {msg.imageUrl && <img src={msg.imageUrl} alt="" className="mt-2 max-w-full" />}
+          {messages.map((msg, index) => {
+            // 메시지 방향 설정
+            const isLeft = userType ? !msg.customerYn : msg.customerYn; // 왼쪽에 표시될 조건
+            const isRight = !isLeft;
+
+            return (
+              <div key={index} className={`flex ${isRight ? "justify-end" : "justify-start"} items-center space-x-2`}>
+                {/* 왼쪽 메시지 (프로필 이미지 포함) */}
+                {isLeft && (
+                  <div className="flex items-center space-x-2">
+                    {/* 프로필 이미지 */}
+                    <div className="flex flex-col items-center">
+                      <img
+                        src={msg.customerYn ? customerInfo?.customerProfileImage : groomerInfo?.groomerProfileImage}
+                        alt={msg.customerYn ? customerInfo?.customerName : groomerInfo?.groomerName}
+                        className="mb-1 h-10 w-10 rounded-full object-cover"
+                      />
+                      <div className="text-xs font-semibold text-gray-700">
+                        {msg.customerYn ? customerInfo?.customerName : groomerInfo?.groomerName}
+                      </div>
                     </div>
-                    <p className="text-xs text-gray-500">{dayjs(msg.messageTime).format("YY-MM-DD HH:mm")}</p>
-                  </div>
-                </div>
-              )}
 
-              {/* Customer 메시지 */}
-              {msg.customerYn && customerInfo && (
-                <div className="flex items-center justify-end space-x-2">
-                  <div className="relative flex items-end space-x-2">
-                    <p className="text-xs text-gray-500">{dayjs(msg.messageTime).format("YY.MM.DD · HH:mm")}</p>
-                    <div className="max-w-40 rounded-lg bg-main-400 p-2 text-white">
-                      {/* 수신한 내용 */}
-                      <img src={msg.messageImage} alt="" className="mt-2 max-w-full" />
-                      <div className="text-right">{msg.messageContent}</div>
+                    {/* 메시지 내용 */}
+                    <div className="relative flex items-center space-x-2">
+                      <div className="max-w-48 rounded-lg bg-main-100 p-2 text-black">
+                        {/* 수신한 내용 */}
+                        {msg.messageImage && <img src={msg.messageImage} alt="" className="mt-2 max-w-40" />}
+                        <div className="text-right">{msg.messageContent}</div>
 
-                      {/* 송신한 내용 */}
-                      {msg.imageUrl && <img src={msg.imageUrl} alt="" className="mt-2 max-w-full" />}
-                      <div className="text-right">{msg.content}</div>
+                        {/* 송신한 내용 */}
+                        {msg.imageUrl && <img src={msg.imageUrl} alt="" className="mt-2 max-w-full" />}
+                        <div className="text-right">{msg.content}</div>
+                      </div>
+                      <p className="text-xs text-gray-500">{dayjs(msg.messageTime).format("YY-MM-DD HH:mm")}</p>
                     </div>
                   </div>
-                  {/* 고객 자신은 자신의 프로필 안 봐도 될 것 같아서 일단 주석처리함. */}
-                  {/* <div className="flex flex-col items-center">
-                    <img
-                      src={customerInfo.customerProfileImage}
-                      alt={customerInfo.customerName}
-                      className="mb-1 h-12 w-12 rounded-full object-cover"
-                    />
-                    <div className="text-xs font-semibold text-gray-700">{customerInfo.customerName}</div>
-                  </div> */}
-                </div>
-              )}
-            </div>
-          ))}
+                )}
+
+                {/* 오른쪽 메시지 */}
+                {isRight && (
+                  <div className="flex items-center justify-end space-x-2">
+                    <div className="relative flex items-end space-x-2">
+                      <p className="text-xs text-gray-500">{dayjs(msg.messageTime).format("YY.MM.DD · HH:mm")}</p>
+                      <div className="max-w-40 rounded-lg bg-main-400 p-2 text-white">
+                        {/* 수신한 내용 */}
+                        {msg.messageImage && <img src={msg.messageImage} alt="" className="mt-2 max-w-full" />}
+                        <div className="text-right">{msg.messageContent}</div>
+
+                        {/* 송신한 내용 */}
+                        {msg.imageUrl && <img src={msg.imageUrl} alt="" className="mt-2 max-w-full" />}
+                        <div className="text-right">{msg.content}</div>
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
+            );
+          })}
           <div ref={messagesEndRef} />
         </div>
 

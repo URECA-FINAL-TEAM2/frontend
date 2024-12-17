@@ -54,13 +54,14 @@ const ShopDetailPage = () => {
       // 스크롤을 화면 상단으로 이동
       targetRef.scrollIntoView({ behavior: "smooth", block: "start" });
 
-      // 스크롤 위치를 추가로 조정 (예: 200px 아래로 이동)
+      // scrollIntoView 완료 후 margin-top 만큼 추가 스크롤 조정
       setTimeout(() => {
         window.scrollBy({
-          top: 150, // 상단에서 200px 떨어지게
-          behavior: "center"
+          top: -75, // 75px 위로 이동
+          left: 0,
+          behavior: "smooth"
         });
-      }, 300); // scrollIntoView 완료 후 실행
+      }, 300);
     }
   };
 
@@ -83,11 +84,10 @@ const ShopDetailPage = () => {
   return (
     <div className="absolute inset-0 z-20 mt-[--header-height] w-[400px] overflow-y-scroll bg-white scrollbar-hide">
       <SubHeader title={shopDetail.shopName} navigate={-1} />
-
       <div>
         <ShopIntro shopDetail={shopDetail} />
       </div>
-      <div className="sticky top-0 z-10 bg-white">
+      <div className="sticky -top-0 z-40 bg-white">
         <ShopMenuBar
           shopId={shopId}
           isCustomer={true}

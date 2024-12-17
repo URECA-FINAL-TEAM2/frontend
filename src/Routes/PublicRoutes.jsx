@@ -1,6 +1,7 @@
 import OAuth2RedirectPage from "@/components/Login/Oauth2RedirectPage";
 import Chat from "@/pages/Chat/Chat";
 import ChatClient from "@/pages/Chat/ChatClient";
+import MeongAI from "@/pages/Chat/MeongAI";
 import BestReviews from "@/pages/Main/BestReviews";
 import InfoRequired from "@/pages/Main/InfoRequired";
 import Login from "@/pages/Main/Login";
@@ -27,6 +28,7 @@ const PublicRoutes = () => {
       <Route path="selectRole" element={<SelectRole />} />
       <Route path="infoRequired" element={<InfoRequired />} />
       <Route path="bestReviews" element={<BestReviews />} />
+      <Route path="/MeongAI" element={<MeongAI />} />
 
       <Route path="*" element={<NotFound />} />
     </Routes>

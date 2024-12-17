@@ -4,10 +4,14 @@ import { GoStarFill } from "react-icons/go";
 import Modal from "../../common/modal/modal";
 import { useNavigate } from "react-router-dom";
 import { deleteReview } from "@/queries/reviewQuery";
+import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
+import ImageModal from "@/components/common/modal/ImageModal";
 
 const ReviewBox = ({ review }) => {
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedImageIndex, setSelectedImageIndex] = useState(0);
+  const [isImgModalOpen, setIsImgModalOpen] = useState(false);
 
   const handleDelete = async () => {
     setIsModalOpen(false);
@@ -20,6 +24,24 @@ const ReviewBox = ({ review }) => {
 
   const handleCloseModal = () => {
     setIsModalOpen(false);
+  };
+
+  const handleImageClick = (index) => {
+    setSelectedImageIndex(index);
+    setIsImgModalOpen(true);
+  };
+
+  const handleCloseImgModal = () => {
+    setIsImgModalOpen(false);
+    setSelectedImageIndex(0);
+  };
+
+  const handlePrevImage = () => {
+    setSelectedImageIndex((prevIndex) => (prevIndex === 0 ? imageList.length - 1 : prevIndex - 1));
+  };
+
+  const handleNextImage = () => {
+    setSelectedImageIndex((prevIndex) => (prevIndex === imageList.length - 1 ? 0 : prevIndex + 1));
   };
 
   const imageList = [testImg, testImg, testImg]; //TODO 수정필요
@@ -41,13 +63,14 @@ const ReviewBox = ({ review }) => {
         <div className="grid grid-cols-3">
           {imageList.map((imgSrc, index) => (
             <img
-              key={index} // 고유 키 설정
-              className="my-2 rounded-xl px-1"
+              key={index}
+              className="my-2 cursor-pointer rounded-xl px-1"
               src={imgSrc}
               loading="lazy"
-              alt={`dog Img ${index + 1}`} // alt에 고유 텍스트 추가
+              alt={`dog Img ${index + 1}`}
+              onClick={() => handleImageClick(index)}
             />
-          ))}{" "}
+          ))}
         </div>
         <div className="py-2 text-sm">{review.content}</div>
         <div>
@@ -62,6 +85,45 @@ const ReviewBox = ({ review }) => {
           </button>
         </div>
       </div>
+
+      {/* Image Modal with Navigation */}
+      {imageList.length > 0 && (
+        <ImageModal isOpen={isImgModalOpen} onClose={handleCloseImgModal}>
+          <div className="relative flex w-full items-center justify-center">
+            {/* Navigation buttons for multiple images */}
+            {imageList.length > 1 && (
+              <>
+                <button
+                  onClick={handlePrevImage}
+                  className="absolute left-2 top-1/2 z-30 -translate-y-1/2 transform rounded-full bg-gray-200 bg-opacity-50 p-2"
+                >
+                  <FaChevronLeft className="text-white" />
+                </button>
+                <button
+                  onClick={handleNextImage}
+                  className="absolute right-2 top-1/2 z-30 -translate-y-1/2 transform rounded-full bg-gray-200 bg-opacity-50 p-2"
+                >
+                  <FaChevronRight className="text-white" />
+                </button>
+              </>
+            )}
+
+            {/* Selected Image */}
+            <img
+              src={imageList[selectedImageIndex]}
+              alt={`선택된 이미지 ${selectedImageIndex + 1}`}
+              className="w-[300px] rounded-md object-contain"
+            />
+
+            {/* Image Counter */}
+            {imageList.length > 1 && (
+              <div className="absolute bottom-2 left-1/2 z-30 -translate-x-1/2 transform rounded-full bg-gray-200 bg-opacity-50 px-3 py-1 text-sm text-white">
+                {selectedImageIndex + 1} / {imageList.length}
+              </div>
+            )}
+          </div>
+        </ImageModal>
+      )}
 
       <Modal
         isOpen={isModalOpen}

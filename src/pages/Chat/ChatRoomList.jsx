@@ -45,8 +45,9 @@ const ChatRoomList = () => {
           lastMessage: room.lastMessage || "",
           lastMessageTime: room.lastMessageTime || "",
           groomerName: room.groomerName || "",
+          customerName: room.customerName || "",
           shopName: room.shopName || "",
-          shopAddress: room.shopAddress || "주소",
+          shopAddress: room.shopAddress || "",
           profileImage: room.profileImage || "/default-profile.png" // 기본 프로필 이미지 설정
         }));
         setChatRooms(sanitizedChatRooms);
@@ -64,6 +65,7 @@ const ChatRoomList = () => {
   // 검색어로 채팅 목록 필터링
   const filteredChatRooms = chatRooms.filter((chatRoomData) => {
     const groomerName = chatRoomData.groomerName || ""; // undefined 방지
+    const customerName = chatRoomData.customerName || ""; // undefined 방지
     const shopName = chatRoomData.shopName || ""; // undefined 방지
     const lastMessage = chatRoomData.lastMessage || ""; // undefined 방지
 
@@ -122,8 +124,8 @@ const ChatRoomList = () => {
                   <div className="text-xs text-gray-500">{formatDate(chatRoomData.lastMessageTime)}</div>
                 </div>
                 {/* 매장 정보 */}
-                <div className="text-xs text-main-500">
-                  {chatRoomData.shopName} · {chatRoomData.shopAddress}
+                <div className="text-xs text-gray-500">
+                  <span className="font-bold text-main-500">{chatRoomData.shopName}</span> {chatRoomData.shopAddress}
                 </div>
                 {/* 마지막 메시지 */}
                 <div className="text-xs">{chatRoomData.lastMessage}</div>

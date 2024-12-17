@@ -14,6 +14,7 @@ function App() {
   const { isLoggedIn, DefaultRole, id } = useAuthStore();
   const { setNotifications, addNotification, setUnreadCount } = useNotificationStore();
   const sseSource = useRef(null);
+
   useEffect(() => {
     const connectSse = () => {
       if (sseSource.current) {
@@ -23,13 +24,14 @@ function App() {
       const token = localStorage.getItem("accessToken");
       if (!token || !id?.userId || !DefaultRole) return;
 
-      const url = `https://www.beautymeongdang.com/notifications/connect?userId=${id.userId}&roleType=${DefaultRole}&token=${encodeURIComponent(token)}&timestamp=${new Date().getTime()}`;
+      const url = `https://www.beautymeongdang.com/notifications/connect?userId=${id.userId}&roleType=${DefaultRole}&token=${encodeURIComponent(token)}`;
+
       console.log("SSE 연결 URL:", url);
 
       const eventSource = new EventSource(url);
-
       eventSource.onopen = () => {
         console.log("SSE 연결이 열렸습니다.");
+        console.log("readyState:", eventSource.readyState); // 1이면 OPEN 상태
       };
 
       eventSource.onmessage = (event) => {
@@ -42,8 +44,9 @@ function App() {
         }
       };
 
-      eventSource.onerror = () => {
-        console.error("SSE 연결 오류. 다시 연결 시도 중...");
+      eventSource.onerror = (error) => {
+        console.error("SSE 연결 오류:", error);
+        console.log("readyState:", eventSource.readyState);
         eventSource.close();
         setTimeout(connectSse, 5000);
       };

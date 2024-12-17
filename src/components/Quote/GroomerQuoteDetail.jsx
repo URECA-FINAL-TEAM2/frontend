@@ -44,13 +44,11 @@ function GroomerQuoteDetail({ requestId }) {
 
   // Navigate to previous image
   const handlePrevImage = () => {
-    if (!quoteData?.quote?.requestImage?.length) return;
     setSelectedImageIndex((prevIndex) => (prevIndex === 0 ? quoteData.quote.requestImage.length - 1 : prevIndex - 1));
   };
 
   // Navigate to next image
   const handleNextImage = () => {
-    if (!quoteData?.quote?.requestImage?.length) return;
     setSelectedImageIndex((prevIndex) => (prevIndex === quoteData.quote.requestImage.length - 1 ? 0 : prevIndex + 1));
   };
 

@@ -89,11 +89,11 @@ const GroomerStore = () => {
     return (
       <EmptyPage
         content={
-          <div className="pb-24 text-center">
+          <div className="text-center">
             <span className="block text-lg">등록된 매장이 없습니다.</span>
             <button
               onClick={() => navigate("/groomer/createstore", { state: { update: false } })}
-              className="mt-2 rounded-xl bg-main px-5 py-1 text-lg text-white hover:bg-main-300"
+              className="mt-2 rounded-lg bg-main px-4 py-[3px] text-white hover:bg-main-300"
             >
               매장 등록하기
             </button>

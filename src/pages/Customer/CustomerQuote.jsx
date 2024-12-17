@@ -58,7 +58,9 @@ const CustomerQuote = () => {
 
   return (
     <div>
-      <SubHeader title="받은 견적서" navigate={-1} />
+      <div className="fixed top-0 z-30 grid h-[var(--header-height)] w-[400px] items-center bg-white px-5 text-center">
+        <span className="text-lg">받은 견적서</span>
+      </div>
       <button
         onClick={() => {
           navigate("/customer/quotes/request");

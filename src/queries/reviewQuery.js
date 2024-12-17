@@ -74,8 +74,13 @@ export const postReviewRecommend = async (customerId, reviewId) => {
     });
 
     console.log(response.status === 200 ? "요청 성공" : `요청 실패: ${response.status}`);
+    return response.status;
   } catch (error) {
+    if (error.response && error.response.status === 400) {
+      return 400; // 400 상태 반환 - 본인 리뷰인 경우 추천 불가
+    }
     console.error("요청 실패:", error);
+    return null; // 다른 오류
   }
 };
 
@@ -89,7 +94,9 @@ export const deleteReviewRecommend = async (customerId, reviewId) => {
     });
 
     console.log(response.status === 200 ? "요청 성공" : `요청 실패: ${response.status}`);
+    return response.status;
   } catch (error) {
     console.error("요청 실패:", error);
+    return null; // 실패 시 null 반환
   }
 };

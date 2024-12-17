@@ -6,17 +6,18 @@ import useAuthStore from "@/store/authStore";
 import Modal from "@/components/common/modal/modal";
 import { RequestReject } from "@/queries/quoteRequestQuery";
 
-function GroomerShopRequests({ Infos }) {
+function GroomerShopRequests({ Infos, onRequestReject }) {
+  if (Infos == null) return <></>;
   return (
     <>
       {Infos.map((Info) => {
-        return <GroomerEstimate Info={Info} />;
+        return <GroomerEstimate Info={Info} onRequestReject={onRequestReject} />;
       })}
     </>
   );
 }
 
-const GroomerEstimate = ({ Info }) => {
+const GroomerEstimate = ({ Info, onRequestReject }) => {
   const { id } = useAuthStore();
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -45,6 +46,7 @@ const GroomerEstimate = ({ Info }) => {
       };
       const response = await RequestReject(rejectData);
       console.log("거절 성공: " + response);
+      onRequestReject(Info.requestId);
       setIsModalOpen(false);
       setRejectReason("");
     } catch (error) {

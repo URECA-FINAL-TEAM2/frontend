@@ -130,10 +130,11 @@ const NotiComponents = () => {
   const [filterType, setFilterType] = useState("all"); // "all" 또는 "unread"
 
   // 알림 필터링
-  const filteredNotifications =
-    filterType === "unread"
+  const filteredNotifications = Array.isArray(notifications)
+    ? filterType === "unread"
       ? notifications.filter((noti) => !noti.readCheckYn) // 읽지 않은 알림만
-      : notifications; // 전체 알림
+      : notifications // 전체 알림
+    : []; // notifications가 배열이 아닐 경우 빈 배열 사용
 
   // 알림 읽음 처리
   const showNotificationDetail = async (notificationId, notifyType) => {
@@ -218,7 +219,7 @@ const NotiComponents = () => {
                     if (a.readCheckYn !== b.readCheckYn) {
                       return a.readCheckYn ? 1 : -1; // false가 앞쪽, true가 뒤쪽
                     }
-                    // 2. createdAt 기준 정렬 (오름차순: 오래된 날짜가 앞쪽)
+                    // 2. createdAt 기준 정렬 (최신 날짜가 앞쪽)
                     return new Date(b.createdAt) - new Date(a.createdAt);
                   })
                   .map((noti) => (

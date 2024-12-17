@@ -18,19 +18,27 @@ const ShopMenuBar = ({ shopId, isCustomer, isFavorite, favoriteCount, scrollToSe
     if (isCustomer) setIsFill(isFavorite);
   }, []);
 
-  const handleFavoriteClick = () => {
-    // isFavorite 변경, favorite(찜 개수) 변경
+  const handleFavoriteClick = async () => {
     if (!isCustomer) return;
+
     if (isFill) {
       // 찜 취소
-      setFavCnt(favCnt - 1);
-      setIsFill(false);
-      deleteFavorite(id.customerId, shopId);
+      const status = await deleteFavorite(id.customerId, shopId);
+      if (status === 200) {
+        setFavCnt((prev) => prev - 1);
+        setIsFill(false);
+      } else {
+        console.error("찜 취소 실패");
+      }
     } else {
       // 찜 등록
-      setFavCnt(favCnt + 1);
-      setIsFill(true);
-      postFavorite(id.customerId, shopId);
+      const status = await postFavorite(id.customerId, shopId);
+      if (status === 200) {
+        setFavCnt((prev) => prev + 1);
+        setIsFill(true);
+      } else {
+        console.error("찜 등록 실패");
+      }
     }
   };
 

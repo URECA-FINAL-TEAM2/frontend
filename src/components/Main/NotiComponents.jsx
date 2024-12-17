@@ -211,7 +211,7 @@ const NotiComponents = () => {
                 </button>
               </div>
 
-              <div className="mx-auto h-[90vh] overflow-y-scroll">
+              <div className="mx-auto h-[90vh] overflow-y-scroll scrollbar-hide">
                 {[...filteredNotifications]
                   .sort((a, b) => {
                     // 1. readCheckYn 기준 정렬

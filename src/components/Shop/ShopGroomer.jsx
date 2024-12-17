@@ -20,22 +20,27 @@ function ShopGroomer({ shopDetail, isCustomer }) {
       console.log("Groomer ID:", groomerId);
 
       // 2. 기존 채팅방 여부 확인
+      let roomId = null;
       const existingChatRoom = chatRoomList?.find((room) => room.groomerId === groomerId);
 
-      let roomId;
       if (existingChatRoom) {
         // 기존 채팅방이 존재할 경우
         roomId = existingChatRoom.roomId;
         console.log(`Existing chat room found: ${roomId}`);
       } else {
         // 기존 채팅방이 없을 경우 새로 생성
-        const chatRoom = await createChatRoom(customerId, groomerId);
-        roomId = chatRoom?.data?.roomId;
+        const chatRoomResponse = await createChatRoom(customerId, groomerId);
+        roomId = chatRoomResponse?.data?.chatId;
+        if (!roomId) {
+          throw new Error("Failed to create a new chat room. Room ID is undefined.");
+        }
         console.log(`New chat room created: ${roomId}`);
       }
 
-      // 3. 채팅 페이지로 이동
-      navigate(`/chat/${roomId}`);
+      // 3. roomId가 유효할 경우에만 채팅 페이지로 이동
+      if (roomId) {
+        navigate(`/chat/${roomId}`);
+      }
     } catch (error) {
       console.error("Error starting chat:", error);
     }

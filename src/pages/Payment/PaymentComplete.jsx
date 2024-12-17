@@ -41,7 +41,10 @@ function PaymentComplete() {
 
   return (
     <div>
-      <SubHeader title="결제 완료" />
+      <div className="fixed top-0 z-30 grid h-[75px] w-[400px] items-center bg-white px-5 text-center">
+        <span className="text-xl">결제 완료</span>
+      </div>
+
       <div className="my-6 mt-20 flex flex-col items-center">
         <Lottie animationData={PaymentCompleteAnimation} loop style={{ height: "180px", width: "180px" }} />
         <p className="mt-4 text-center font-bold">
@@ -50,7 +53,7 @@ function PaymentComplete() {
         </p>
       </div>
       {/* 정보 섹션 */}
-      <div className="p-4">
+      <div className="mx-6 p-4">
         {/* 고객정보 */}
         <div className="space-y-2">
           <div className="flex justify-between">
@@ -81,7 +84,7 @@ function PaymentComplete() {
           </div>
           <div className="flex justify-between">
             <span className="font-bold text-gray-700">매장 주소</span>
-            <span className="text-gray-500">{reservationDetail.address}</span>
+            <span className="text-sm text-gray-500">{reservationDetail.address}</span>
           </div>
           <div className="flex justify-between">
             <span className="font-bold text-gray-700">디자이너</span>
@@ -108,7 +111,7 @@ function PaymentComplete() {
 
       <div className="mb-[80px] mt-5 flex justify-center">
         <button
-          className="w-[65%] rounded-lg bg-main-400 py-2 text-white shadow hover:bg-main-300"
+          className="w-[80%] rounded-lg bg-main-400 py-2 text-white shadow hover:bg-main-300"
           onClick={() => navigate("/customer/reservation")}
         >
           예약 내역 확인

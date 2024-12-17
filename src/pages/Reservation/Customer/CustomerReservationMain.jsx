@@ -5,11 +5,10 @@ import { useNavigate } from "react-router-dom";
 
 const CustomerReservationMain = () => {
   const [reservations, setReservations] = useState([]);
-  const [activeTab, setActiveTab] = useState("completed");
+  const [activeTab, setActiveTab] = useState("reserved");
   const navigate = useNavigate();
   const authStorage = JSON.parse(localStorage.getItem("auth-storage"));
   const customerId = authStorage?.state?.id?.customerId;
-  const groomerId = authStorage?.state?.id?.groomerId;
 
   useEffect(() => {
     const fetchReservations = async () => {
@@ -95,17 +94,31 @@ const CustomerReservationMain = () => {
                 </div>
               </div>
 
-              {/* 리뷰 쓰기 버튼 */}
               {activeTab === "completed" && (
-                <button className="mt-4 w-full rounded-full bg-main-200 py-1 font-medium text-main-400">
-                  리뷰 쓰기
-                </button>
+                <div className="mt-4 flex w-[330px] space-x-4">
+                  {/* 리뷰 쓰기 버튼 */}
+                  <button className="w-full rounded-[10px] bg-main-200 py-1 font-medium text-main-400">
+                    리뷰 쓰기
+                  </button>
+
+                  {/* 예약 상세 버튼 */}
+                  <button
+                    className="w-full rounded-[10px] bg-main-400 py-1 font-medium text-white"
+                    onClick={() =>
+                      navigate("detail", {
+                        state: { selectedQuoteId: item.selectedQuoteId, status: item.status }
+                      })
+                    }
+                  >
+                    예약 상세
+                  </button>
+                </div>
               )}
 
               {/* 예약 상세 버튼 */}
               {activeTab === "reserved" && (
                 <button
-                  className="mt-4 w-full rounded-full bg-main-200 py-1 font-medium text-main-400"
+                  className="mt-4 w-full rounded-[10px] bg-main-200 py-1 font-medium text-main-400"
                   onClick={() =>
                     navigate("detail", {
                       state: { selectedQuoteId: item.selectedQuoteId, status: item.status }
@@ -119,7 +132,7 @@ const CustomerReservationMain = () => {
               {/* 취소 예약 상세 버튼 */}
               {activeTab === "canceled" && (
                 <button
-                  className="mt-4 w-full rounded-full bg-gray-300 py-1 font-medium text-white"
+                  className="mt-4 w-full rounded-[10px] bg-gray-300 py-1 font-medium text-white"
                   onClick={() =>
                     navigate("detail", {
                       state: { selectedQuoteId: item.selectedQuoteId, status: item.status }

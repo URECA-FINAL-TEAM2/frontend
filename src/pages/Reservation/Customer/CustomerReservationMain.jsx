@@ -42,27 +42,33 @@ const CustomerReservationMain = () => {
           <button
             onClick={() => setActiveTab("completed")}
             className={`flex-1 py-2 ${
-              activeTab === "completed" ? "border-b-4 text-black" : "border-b-4 border-transparent text-gray-500"
+              activeTab === "completed"
+                ? "border-b-2 border-solid border-black font-semibold text-black"
+                : "text-gray-300 hover:bg-gray-100"
             }`}
-            style={activeTab === "completed" ? { borderColor: "#ff8e8e" } : {}}
+            style={activeTab === "completed" ? { borderColor: "black" } : {}}
           >
             완료
           </button>
           <button
             onClick={() => setActiveTab("reserved")}
             className={`flex-1 py-2 ${
-              activeTab === "reserved" ? "border-b-4 text-black" : "border-b-4 border-transparent text-gray-500"
+              activeTab === "reserved"
+                ? "border-b-2 border-solid border-black font-semibold text-black"
+                : "text-gray-300 hover:bg-gray-100"
             }`}
-            style={activeTab === "reserved" ? { borderColor: "#ff8e8e" } : {}}
+            style={activeTab === "reserved" ? { borderColor: "black" } : {}}
           >
             예약
           </button>
           <button
             onClick={() => setActiveTab("canceled")}
             className={`flex-1 py-2 ${
-              activeTab === "canceled" ? "border-b-4 text-black" : "border-b-4 border-transparent text-gray-500"
+              activeTab === "canceled"
+                ? "border-b-2 border-solid border-black font-semibold text-black"
+                : "text-gray-300 hover:bg-gray-100"
             }`}
-            style={activeTab === "canceled" ? { borderColor: "#ff8e8e" } : {}}
+            style={activeTab === "canceled" ? { borderColor: "black" } : {}}
           >
             취소
           </button>
@@ -96,10 +102,18 @@ const CustomerReservationMain = () => {
 
               {activeTab === "completed" && (
                 <div className="mt-4 flex w-[330px] space-x-4">
-                  {/* 리뷰 쓰기 */}
-                  <button className="w-full rounded-[10px] bg-main-200 py-1 font-medium text-main-400">
-                    리뷰 쓰기
-                  </button>
+                <button
+                  onClick={() => {
+                    console.log(customerId, item?.groomerId, item?.selectedQuoteId);
+                    navigate(`/customer/postReview/${customerId}`, {
+                      //TODO groomerId 받아서 넘기기
+                      state: { item } // 원하는 state를 담음
+                    });
+                  }}
+                  className="mt-4 w-full rounded-full bg-main-200 py-1 font-medium text-main-400"
+                >
+                  리뷰 쓰기
+                </button>
 
                   {/* 예약 상세 */}
                   <button

@@ -55,7 +55,7 @@ const CustomerRoutes = () => {
       <Route path="reservation/detail" element={<CustomerReservationDetail />} />
       <Route path="payment/complete" element={<PaymentComplete />} />
       <Route path="payment/cancel" element={<PaymentCancel />} />
-      <Route path="postreview" element={<PostReview />} />
+      <Route path="postreview/:customerId" element={<PostReview />} />
 
       <Route path="*" element={<NotFound />} />
     </Routes>

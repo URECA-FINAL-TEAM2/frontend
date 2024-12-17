@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Region, Schedule, Note, Won, Description } from "/public/Icons";
 import { MdExpandLess, MdExpandMore } from "react-icons/md";
+import ThemeDropdown from "@/components/common/ThemeDropdown";
 
 const CustomerEstimate = ({ Info, expandedQuoteRequestId, setExpandedQuoteRequestId }) => {
   const isExpanded = Info.quoteRequestId === expandedQuoteRequestId;
@@ -24,12 +25,7 @@ const CustomerEstimate = ({ Info, expandedQuoteRequestId, setExpandedQuoteReques
       case "마감":
         return {
           className: "bg-gray-200",
-          text: "마감"
-        };
-      case "제안 완료":
-        return {
-          className: "bg-gray-200",
-          text: "예약 완료"
+          text: "완료"
         };
       default:
         return {
@@ -48,7 +44,7 @@ const CustomerEstimate = ({ Info, expandedQuoteRequestId, setExpandedQuoteReques
         };
       case "수락":
         return {
-          className: "bg-gray-200",
+          className: "bg-main text-white",
           text: "예약 완료"
         };
       case "마감":
@@ -101,17 +97,17 @@ const CustomerEstimate = ({ Info, expandedQuoteRequestId, setExpandedQuoteReques
             onClick={() => {
               navigate(`/customer/quotes/request/detail/${Info.quoteRequestId}`);
             }}
-            className="flex h-[35px] w-full cursor-pointer items-center justify-center rounded-lg bg-gray-200 text-center text-sm"
+            className="flex h-[32px] w-full cursor-pointer items-center justify-center rounded-lg bg-gray-200 text-center text-sm"
           >
             견적 요청 보기
           </div>
-          <div className="flex h-[35px] w-full cursor-pointer items-center justify-center rounded-lg bg-gray-200 text-center text-sm">
+          {/* <div className="flex h-[32px] w-full cursor-pointer items-center justify-center rounded-lg bg-gray-200 text-center text-sm">
             견적 그만 받기
-          </div>
+          </div> */}
         </div>
       </div>
       {isExpanded && (
-        <div className="border-t-2 px-4">
+        <div className="border-t-2 px-4 pt-1">
           {Info.quotes.map((quote) => (
             <div key={quote.quoteId} className="border-b-2 py-3">
               <div className="flex">
@@ -141,7 +137,7 @@ const CustomerEstimate = ({ Info, expandedQuoteRequestId, setExpandedQuoteReques
                 </div>
               </div>
               {quote.quoteStatus !== "마감" && (
-                <div className="mt-3 flex justify-between gap-2">
+                <div className="mb-1 mt-3 flex justify-between gap-2">
                   <div
                     onClick={() => {
                       if (quote.quoteStatus === "제안") {
@@ -150,7 +146,7 @@ const CustomerEstimate = ({ Info, expandedQuoteRequestId, setExpandedQuoteReques
                         navigate("/customer/reservation");
                       }
                     }}
-                    className={`flex h-[35px] w-full cursor-pointer items-center justify-center rounded-lg text-center text-sm ${
+                    className={`flex h-[32px] w-full cursor-pointer items-center justify-center rounded-lg text-center text-sm ${
                       quote.quoteStatus === "제안"
                         ? "bg-main-200 text-main-600"
                         : quote.quoteStatus === "수락"
@@ -169,7 +165,7 @@ const CustomerEstimate = ({ Info, expandedQuoteRequestId, setExpandedQuoteReques
                       }
                     }}
                     className={
-                      "flex h-[35px] w-full cursor-pointer items-center justify-center rounded-lg bg-main text-center text-sm text-white"
+                      "flex h-[30px] w-full cursor-pointer items-center justify-center rounded-lg bg-main text-center text-sm text-white"
                     }
                   >
                     매장 상세보기
@@ -184,7 +180,7 @@ const CustomerEstimate = ({ Info, expandedQuoteRequestId, setExpandedQuoteReques
       {Info.quotes.length > 0 && (
         <div
           onClick={handleExpandCollapse}
-          className="flex h-[35px] w-full cursor-pointer items-center justify-center border-t-2 text-center text-xs hover:bg-gray-100"
+          className="flex h-[32px] w-full cursor-pointer items-center justify-center border-t-2 text-center text-xs hover:bg-gray-100"
         >
           {isExpanded ? "접기" : `견적서 보기 (${Info.quotes.length}건)`}{" "}
           <span className="text-base">{isExpanded ? <MdExpandLess /> : <MdExpandMore />}</span>
@@ -196,10 +192,60 @@ const CustomerEstimate = ({ Info, expandedQuoteRequestId, setExpandedQuoteReques
 
 function TotalQuoteRequestList({ Infos }) {
   const [expandedQuoteRequestId, setExpandedQuoteRequestId] = useState(null);
+  const [status, setStatus] = useState("전체");
+  const [isOpen, setIsOpen] = useState(false);
+
+  // Theme selection items
+  const themeItems = [
+    {
+      label: "전체",
+      onClick: () => {
+        setStatus("전체");
+        setIsOpen(false);
+      }
+    },
+    {
+      label: "견적 요청 중",
+      onClick: () => {
+        setStatus("견적 요청 중");
+        setIsOpen(false);
+      }
+    },
+    {
+      label: "완료",
+      onClick: () => {
+        setStatus("완료");
+        setIsOpen(false);
+      }
+    }
+  ];
+
+  const filteredItems = () => {
+    let items;
+    if (status === "전체") {
+      items = Infos; // 모든 아이템 반환
+    } else {
+      // 선택된 상태와 일치하는 아이템만 필터링
+      items = Infos.filter((request) => {
+        switch (status) {
+          case "견적 요청 중":
+            return request.requestStatus === "요청";
+          case "완료":
+            return request.requestStatus === "마감";
+          default:
+            return true;
+        }
+      });
+    }
+
+    // expireDate 최신순으로 정렬 (최신 날짜가 먼저 오도록)
+    return items.sort((a, b) => new Date(b.expireDate) - new Date(a.expireDate));
+  };
 
   return (
     <>
-      {Infos?.map((Info) => (
+      <ThemeDropdown status={status} isOpen={isOpen} setIsOpen={setIsOpen} themeItems={themeItems} />
+      {filteredItems().map((Info) => (
         <CustomerEstimate
           key={Info.quoteRequestId}
           Info={Info}

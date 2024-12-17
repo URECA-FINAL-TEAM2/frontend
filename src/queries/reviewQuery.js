@@ -1,4 +1,5 @@
 import axiosInstance from "@/api/axiosInstance";
+import toast from "react-hot-toast";
 
 export const getCustomerReviewList = async (id) => {
   try {
@@ -38,9 +39,12 @@ export const insertReview = async (reviewData) => {
 
   try {
     const response = await axiosInstance.post("/reviews", formData);
-    console.log("리뷰 작성 성공:", response.data);
+    toast.success("리뷰등록이 완료되었습니다.", { icon: "👏🏻" });
+    return response;
   } catch (error) {
+    toast.success("리뷰 작성을 실패하였습니다.", { icon: "❌" });
     console.error("리뷰 작성 실패:", error);
+    return error;
   }
 };
 

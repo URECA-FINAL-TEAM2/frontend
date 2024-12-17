@@ -16,7 +16,7 @@ const ProfileImage = ({ formData, setFormData, onlyRead = false }) => {
       setIsDefault(true);
     }
 
-    if (location.pathname.includes("mystore")) {
+    if (location.pathname.includes("mystore") || location.pathname.includes("store")) {
       setImagePreview(formData?.profileImage ? formData?.profileImage : DefaultStoreProfile);
     } else if (location.pathname.includes("info")) {
       setImagePreview(formData?.profileImage ? formData?.profileImage : DefaultCustomerProfile);

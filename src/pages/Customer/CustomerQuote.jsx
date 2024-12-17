@@ -1,15 +1,16 @@
 import CustomerBottom from "@/components/common/CustomerBottom";
-import SubHeader from "@/components/common/SubHeader";
 import ShopQuoteRequestList from "@/components/QuoteRequest/Customer/ShopQuoteRequestList";
 import TotalQuoteRequestList from "@/components/QuoteRequest/Customer/TotalQuoteRequestList";
 import { getQuotesAll, getQuotesGroomer } from "@/queries/quoteQuery";
 import useAuthStore from "@/store/authStore";
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const CustomerQuote = () => {
   const { id } = useAuthStore();
-  const [activeSection, setActiveSection] = useState("section1");
+  const location = useLocation();
+  const { activeTab } = location.state || {};
+  const [activeSection, setActiveSection] = useState(activeTab === 2 ? "section2" : "section1");
   const [shopRequests, setShopRequests] = useState(null);
   const [totalRequests, setTotalRequests] = useState(null);
 

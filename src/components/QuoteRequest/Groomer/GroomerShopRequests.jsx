@@ -8,9 +8,15 @@ import { RequestReject } from "@/queries/quoteRequestQuery";
 
 function GroomerShopRequests({ Infos, onRequestReject }) {
   if (Infos == null) return <></>;
+
+  const filteredItems = () => {
+    // expireDate 최신순으로 정렬 (최신 날짜가 먼저 오도록)
+    return Infos.sort((a, b) => new Date(b.expiryDate) - new Date(a.expiryDate));
+  };
+
   return (
     <>
-      {Infos.map((Info) => {
+      {filteredItems().map((Info) => {
         return <GroomerEstimate Info={Info} onRequestReject={onRequestReject} />;
       })}
     </>
@@ -86,13 +92,13 @@ const GroomerEstimate = ({ Info, onRequestReject }) => {
           onClick={() => {
             navigate(`/groomer/quotes/request/detail/${Info.requestId}`);
           }}
-          className="flex h-[35px] w-3/4 cursor-pointer items-center justify-center rounded-lg bg-gray-200 text-center text-sm"
+          className="flex h-[32px] w-3/4 cursor-pointer items-center justify-center rounded-lg bg-gray-200 text-center text-sm"
         >
           상세보기
         </div>
         <div
           onClick={openModal}
-          className="flex h-[35px] w-1/4 cursor-pointer items-center justify-center rounded-lg bg-gray-300 text-center text-sm text-white"
+          className="flex h-[32px] w-1/4 cursor-pointer items-center justify-center rounded-lg bg-gray-300 text-center text-sm text-white"
         >
           거절하기
         </div>

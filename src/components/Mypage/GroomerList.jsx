@@ -16,13 +16,13 @@ const GroomerList = () => {
         </Link>
         <Link to="/groomer/editportfolio">
           <li className="flex items-center border-b-2 border-gray-200 py-4">
-            <PiImagesSquareLight className="mr-3" size={25} color="#ff8e8e" />
+            <PiImagesSquareLight className="-ml-1 mr-2" size={26} color="#ff8e8e" />
             <span className="text-lg">포트폴리오 관리</span>
           </li>
         </Link>
         <Link to="/groomer/reservation">
           <li className="flex items-center border-b-2 border-gray-200 py-4">
-            <IoCalendarOutline size={22} className="mr-2" color="#ff8e8e" />
+            <IoCalendarOutline size={22} className="mr-3" color="#ff8e8e" />
             <span className="text-lg">예약내역</span>
           </li>
         </Link>

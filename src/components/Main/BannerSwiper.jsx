@@ -26,19 +26,19 @@ const BannerSwiper = () => {
         scrollbar={{ draggable: true }}
       >
         <SwiperSlide>
-          <img src={banner01} alt="Banner 01" className="h-[250px] w-[350px] rounded-xl object-fill" />
+          <img src={banner01} alt="Banner 01" className="h-[260px] w-[350px] rounded-xl object-cover" />
         </SwiperSlide>
         <SwiperSlide>
-          <img src={banner02} alt="Banner 02" className="h-[250px] w-[350px] rounded-xl object-fill" />
+          <img src={banner02} alt="Banner 02" className="h-[260px] w-[350px] rounded-xl object-cover" />
         </SwiperSlide>
         <SwiperSlide>
-          <img src={banner03} alt="Banner 03" className="h-[250px] w-[350px] rounded-xl object-fill" />
+          <img src={banner05} alt="Banner 04" className="h-[260px] w-[350px] rounded-xl object-cover" />
         </SwiperSlide>
         <SwiperSlide>
-          <img src={banner04} alt="Banner 04" className="h-[250px] w-[350px] rounded-xl object-fill" />
+          <img src={banner03} alt="Banner 03" className="h-[260px] w-[350px] rounded-xl object-cover" />
         </SwiperSlide>
         <SwiperSlide>
-          <img src={banner05} alt="Banner 04" className="h-[250px] w-[350px] rounded-xl object-fill" />
+          <img src={banner04} alt="Banner 04" className="h-[260px] w-[350px] rounded-xl object-cover" />
         </SwiperSlide>
       </Swiper>
     </div>

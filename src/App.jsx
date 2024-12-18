@@ -15,6 +15,12 @@ function App() {
   const { setNotifications, addNotification, setUnreadCount } = useNotificationStore();
   const sseSource = useRef(null);
 
+  if (import.meta.env.MODE === "production") {
+    console.log = function no_console() {};
+    console.warn = function no_console() {};
+    console.error = function no_console() {};
+  }
+
   useEffect(() => {
     const connectSse = () => {
       if (sseSource.current) {

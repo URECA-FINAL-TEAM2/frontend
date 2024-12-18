@@ -71,9 +71,9 @@ const CustomerQuote = () => {
         onClick={() => {
           navigate("/customer/quotes/request");
         }}
-        className="fixed top-0 z-50 ml-[275px] mt-[24px] rounded-full border-2 border-main bg-main-100 px-2 py-1 text-sm font-semibold text-main hover:bg-main hover:text-white"
+        className="fixed top-0 z-50 ml-[275px] mt-[24px] rounded-lg bg-main px-2 py-1 text-sm font-semibold text-white hover:bg-main-300"
       >
-        + 새 견적 요청
+        견적 공고 등록
       </button>
       {/* Menu Bar */}
       <div className="fixed top-[--header-height] z-50 flex h-10 w-[400px] border-b bg-white">

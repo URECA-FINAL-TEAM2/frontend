@@ -131,11 +131,11 @@ const CustomerEstimate = ({ Info }) => {
             {Info.status === "거절" ? (
               <div className="relative">
                 <span
-                  className={`rounded-full px-2 py-[3px] text-center text-xs ${statusClassName}`}
+                  className={`flex rounded-full px-2 py-[3px] text-center text-xs ${statusClassName}`}
                   onClick={() => setShowRejectionReason(!showRejectionReason)}
                 >
                   {statusText}
-                  {statusIcon && <span className="ml-0.5 text-xs">{statusIcon}</span>}
+                  {statusIcon && <span className="ml-0.5 pt-0.5 text-xs">{statusIcon}</span>}
                 </span>
                 {showRejectionReason && (
                   <div className="absolute right-0 top-full z-10 mt-1 w-56 rounded-lg border border-gray-200 bg-white px-4 py-3 shadow-lg">

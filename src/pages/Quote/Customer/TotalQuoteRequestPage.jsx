@@ -5,7 +5,7 @@ import React from "react";
 function TotalQuoteRequestPage(props) {
   return (
     <div>
-      <SubHeader title="새 견적 요청" navigate={-1} />
+      <SubHeader title="새 견적 공고" navigate={-1} />
       <TotalQuoteRequestForm />
     </div>
   );

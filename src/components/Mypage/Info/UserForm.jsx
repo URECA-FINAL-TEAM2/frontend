@@ -21,30 +21,36 @@ const UserForm = ({
 }) => {
   const location = useLocation();
   const [pathname, setPathname] = useState();
+  const [init, setInit] = useState(false);
 
   useEffect(() => {
     setPathname(location.pathname);
   }, [location]);
 
-  const [init, setInit] = useState(false);
-
   // 닉네임 유효성 검사 (onChange에서 호출)
-  const handleNicknameValidation = (nickname) => {
+  const handleNicknameValidation = (value) => {
     const nicknameRegex = /^(?=.*[a-zA-Z가-힣])[a-zA-Z가-힣0-9_-]{2,10}$/;
 
-    if (!nickname.trim()) {
+    // Check if the value is the same as the initial value from userInfo
+    if (value === formData?.nickname) {
+      setNickname("possible");
+      setInit(true);
+      return;
+    }
+
+    if (!value.trim()) {
       setNickname("required");
-      setInit(false); // 버튼 비활성화
+      setInit(false);
       return;
     }
 
-    if (!nicknameRegex.test(nickname.trim())) {
+    if (!nicknameRegex.test(value.trim())) {
       setNickname("impossible");
-      setInit(false); // 버튼 비활성화
+      setInit(false);
       return;
     }
 
-    setNickname("yet"); // 유효성 검사 통과, 버튼 활성화
+    setNickname("yet");
     setInit(true);
   };
 

@@ -9,7 +9,7 @@ const GroomerReservationMain = () => {
   const [reservations, setReservations] = useState([]);
   const location = useLocation();
   const { activeQuotesTab } = location.state || {};
-  const [activeTab, setActiveTab] = useState("today");
+  const [activeTab, setActiveTab] = useState("reserved");
   const today = dayjs();
   const navigate = useNavigate();
   const authStorage = JSON.parse(localStorage.getItem("auth-storage"));

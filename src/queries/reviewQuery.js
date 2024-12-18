@@ -14,7 +14,7 @@ export const getCustomerReviewList = async (id) => {
 export const deleteReview = async (reviewId) => {
   try {
     const response = await axiosInstance.put(`/reviews/delete/${reviewId}`);
-    console.log(response);
+    return response;
   } catch (error) {
     if (error.response?.status === 404) {
       console.log("찾으시는 리뷰가 없습니다.");
@@ -49,16 +49,24 @@ export const insertReview = async (reviewData) => {
 };
 
 export const updateReview = async (reviewId, reviewData) => {
-  console.log(reviewData, "update review");
+  const formData = new FormData();
   const { images, previewImages, ...jsonData } = reviewData;
 
-  const formData = new FormData();
-  formData.append("requestDto", JSON.stringify(jsonData));
-  if (images && images.length > 0) {
-    images.forEach((image) => {
-      formData.append("images", image); // 키를 동일하게 추가하여 배열처럼 전송
+  const imageUrls = images.filter((image) => typeof image === "string");
+
+  const requestDto = {
+    ...jsonData,
+    imageUrl: imageUrls // 이미지 URL 추가
+  };
+
+  const jsonBlob = new Blob([JSON.stringify(requestDto)], { type: "application/json" });
+  formData.append("requestDto", jsonBlob);
+
+  images
+    .filter((image) => image instanceof File) // 파일 객체만 필터링
+    .forEach((file) => {
+      formData.append("images", file);
     });
-  }
 
   try {
     const response = await axiosInstance.put(`/reviews/${reviewId}`, formData);

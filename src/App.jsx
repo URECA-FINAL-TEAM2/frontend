@@ -16,9 +16,9 @@ function App() {
   const sseSource = useRef(null);
 
   if (import.meta.env.MODE === "production") {
-    console.log = () => {};
-    console.warn = () => {};
-    console.error = () => {};
+    console.log = function no_console() {};
+    console.warn = function no_console() {};
+    console.error = function () {};
   }
 
   useEffect(() => {

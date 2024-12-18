@@ -22,19 +22,21 @@ const UserForm = ({
   const location = useLocation();
   const [pathname, setPathname] = useState();
   const [init, setInit] = useState(false);
+  const [originalNickname, setOriginalNickname] = useState(formData?.nickname);
 
   useEffect(() => {
     setPathname(location.pathname);
-  }, [location]);
+    setOriginalNickname(formData?.nickname);
+  }, [formData?.nickname]);
 
   // 닉네임 유효성 검사 (onChange에서 호출)
   const handleNicknameValidation = (value) => {
     const nicknameRegex = /^(?=.*[a-zA-Z가-힣])[a-zA-Z가-힣0-9_-]{2,10}$/;
 
-    // Check if the value is the same as the initial value from userInfo
-    if (value === formData?.nickname) {
+    // Check if the value is exactly the same as the original nickname
+    if (value === originalNickname) {
       setNickname("possible");
-      setInit(true);
+      setInit(false);
       return;
     }
 

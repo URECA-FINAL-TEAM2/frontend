@@ -62,7 +62,6 @@ const RegionSelectModal = ({ isOpen, onClose, onConfirm, sidoName, sigunguName }
 
   const handleConfirm = () => {
     if (!selectedSido || !selectedSigungu) {
-      alert("시/도와 시/군/구를 모두 선택해주세요.");
       return;
     }
 

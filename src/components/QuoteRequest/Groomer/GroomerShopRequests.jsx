@@ -5,6 +5,7 @@ import { Schedule, Corgi, Note } from "/public/Icons";
 import useAuthStore from "@/store/authStore";
 import Modal from "@/components/common/modal/modal";
 import { RequestReject } from "@/queries/quoteRequestQuery";
+import toast, { Toaster } from "react-hot-toast";
 
 function GroomerShopRequests({ Infos, onRequestReject }) {
   if (Infos == null) return <></>;
@@ -40,7 +41,7 @@ const GroomerEstimate = ({ Info, onRequestReject }) => {
 
   const handleReject = async () => {
     if (rejectReason.trim() === "") {
-      alert("거절 사유를 입력해주세요.");
+      toast.error("거절 사유를 입력하세요.");
       return;
     }
 
@@ -115,6 +116,7 @@ const GroomerEstimate = ({ Info, onRequestReject }) => {
           />
         </div>
       </Modal>
+      <Toaster />
     </div>
   );
 };

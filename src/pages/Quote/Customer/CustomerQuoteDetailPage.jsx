@@ -6,6 +6,7 @@ import { MdExpandMore } from "react-icons/md";
 import { RequestPayment } from "@/queries/paymentQuery";
 import { ArrowDown } from "/public/Icons";
 import useAuthStore from "@/store/authStore";
+import toast, { Toaster } from "react-hot-toast";
 
 function CustomerQuoteDetailPage(props) {
   const quotesId = Number(useParams().quotesId);
@@ -17,7 +18,6 @@ function CustomerQuoteDetailPage(props) {
   const [isExpanded, setIsExpanded] = useState(false);
   const [amount, setAmount] = useState(null);
   const [shopName, setShopName] = useState("");
-  const [errorMessage, setErrorMessage] = useState("");
 
   // Create a ref for the expandable div
   const expandableRef = useRef(null);
@@ -60,11 +60,9 @@ function CustomerQuoteDetailPage(props) {
       !agreements.personalInfoConsent ||
       !agreements.thirdPartyConsent
     ) {
-      setErrorMessage("모든 사항에 동의해야 결제를 진행할 수 있습니다");
       return;
     }
-    setErrorMessage("");
-    console.log("결제 진행:", { amount, shopName });
+    // console.log("결제 진행:", { amount, shopName });
     const requestData = {
       amount: amount,
       shopName: shopName,
@@ -73,14 +71,19 @@ function CustomerQuoteDetailPage(props) {
     };
     try {
       const result = await RequestPayment(requestData);
-      console.log("결제 요청 성공:", result);
-      console.log(requestData);
-
-      navigate("/customer/payment/complete", {
-        state: { selectedQuoteId: result.data.selectedQuoteId }
-      });
+      // console.log("결제 요청 성공:", result);
+      // console.log(requestData);
+      toast.success("결제 완료!");
+      setTimeout(() => {
+        navigate("/customer/payment/complete", {
+          state: { selectedQuoteId: result.data.selectedQuoteId }
+        });
+      }, 1000);
     } catch (error) {
-      console.error("결제 요청 실패:", error);
+      // console.error("결제 요청 실패:", error);
+      toast("결제에 실패했습니다.", {
+        icon: "❌"
+      });
     }
   };
 
@@ -119,7 +122,7 @@ function CustomerQuoteDetailPage(props) {
     <div>
       <SubHeader
         title="견적서 상세보기"
-        navigate={() => navigate("/customer/quotes", { state: { activeTab: activeTab } })} // [ ] 왜안됨
+        navigate={() => navigate("/customer/quotes", { state: { activeTab: activeTab } })} // [x]
       />
       <CustomerQuoteDetail quotesId={quotesId} onDataLoad={handleDataLoad} />
       <div
@@ -204,17 +207,29 @@ function CustomerQuoteDetailPage(props) {
                 </label>
               </div>
             </div>
-            <div className="h-4 text-xs text-red-500">{errorMessage && <p>{errorMessage}</p>}</div>
-
             <button
               onClick={payHandle}
-              className="mt-2 w-full rounded bg-white p-2 text-lg font-semibold text-main-400 hover:bg-gray-100"
+              disabled={
+                !agreements.noCancelRefund ||
+                !agreements.orderConfirmation ||
+                !agreements.personalInfoConsent ||
+                !agreements.thirdPartyConsent
+              }
+              className={`mt-2 w-full rounded p-2 text-lg font-semibold ${
+                agreements.noCancelRefund &&
+                agreements.orderConfirmation &&
+                agreements.personalInfoConsent &&
+                agreements.thirdPartyConsent
+                  ? "cursor-pointer bg-white text-main hover:bg-main-100"
+                  : "cursor-not-allowed bg-gray-100 text-gray-400"
+              }`}
             >
               결제 진행
             </button>
           </div>
         )}
       </div>
+      <Toaster />
     </div>
   );
 }

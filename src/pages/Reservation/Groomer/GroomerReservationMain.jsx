@@ -8,7 +8,8 @@ import { useLocation, useNavigate } from "react-router-dom";
 const GroomerReservationMain = () => {
   const [reservations, setReservations] = useState([]);
   const location = useLocation();
-  const [activeTab, setActiveTab] = useState(location.state?.initialTab || "today");
+  const { activeQuotesTab } = location.state || {};
+  const [activeTab, setActiveTab] = useState("today");
   const today = dayjs();
   const navigate = useNavigate();
   const authStorage = JSON.parse(localStorage.getItem("auth-storage"));
@@ -42,7 +43,16 @@ const GroomerReservationMain = () => {
 
   return (
     <div>
-      <SubHeader title="예약 내역" />
+      <SubHeader
+        title="예약 내역"
+        navigate={() => {
+          if (activeQuotesTab) {
+            navigate("/groomer/quotes", { state: { activeTab: activeQuotesTab } });
+          } else {
+            navigate(-1); // activeQuotesTab이 없으면 단순히 뒤로가기
+          }
+        }}
+      />
       <div className="mx-auto mb-[80px] max-w-lg bg-white px-4">
         {/* 상단 탭 */}
         <div className="jusify-around mb-4 mt-[--header-height] flex border-b">
@@ -101,7 +111,7 @@ const GroomerReservationMain = () => {
               style={{ borderColor: activeTab === "canceled" ? "#858585" : "#ff8e8e" }}
             >
               <div className="flex w-full items-center">
-                <img src={item.profileImage} className="mr-6 h-24 w-24 rounded-lg" />
+                <img src={item.profileImage} className="mr-6 h-24 w-24 min-w-24 rounded-lg" />
                 <div className="flex w-full flex-col">
                   <p className="mb-1 text-lg font-bold">{item.dogName}</p>
                   <div className="flex justify-between text-sm text-gray-500">

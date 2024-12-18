@@ -84,17 +84,17 @@ const GroomerEstimate = ({ Info }) => {
     switch (status) {
       case "제안":
         return {
-          className: "bg-main-100 text-main-500",
+          className: "text-green-900 bg-green-100",
           text: "수락 대기중"
         };
       case "수락":
         return {
-          className: "bg-main text-white",
+          className: "text-white bg-green-500",
           text: "예약 완료"
         };
       case "마감":
         return {
-          className: "bg-gray-200",
+          className: "bg-gray-250 text-gray-600",
           text: "마감"
         };
       default:
@@ -116,7 +116,7 @@ const GroomerEstimate = ({ Info }) => {
               <span className="flex items-center rounded-md bg-main px-1.5 text-xs text-white">1:1 맞춤 요청</span>
             ) : null}
           </div>
-          <span className={`rounded-sm px-1 py-[1px] text-xs ${getStatusProps(Info.status).className}`}>
+          <span className={`rounded-full px-2 py-[1px] text-xs ${getStatusProps(Info.status).className}`}>
             {getStatusProps(Info.status).text}
           </span>
         </div>

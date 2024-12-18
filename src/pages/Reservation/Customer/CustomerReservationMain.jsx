@@ -94,7 +94,7 @@ const CustomerReservationMain = () => {
               style={{ borderColor: activeTab === "canceled" ? "#858585" : "#ff8e8e" }}
             >
               <div className="flex w-full items-center">
-                <img src={item.profileImage} alt={item.shopName} className="mr-6 h-24 w-24 rounded-lg" />
+                <img src={item.profileImage} alt={item.shopName} className="mr-6 h-24 w-24 min-w-24 rounded-lg" />
                 <div className="flex w-full flex-col">
                   <p className="mb-1 font-bold">
                     {item.shopName} - {item.groomerName} 디자이너

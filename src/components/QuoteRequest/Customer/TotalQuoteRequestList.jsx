@@ -19,12 +19,12 @@ const CustomerEstimate = ({ Info, expandedQuoteRequestId, setExpandedQuoteReques
     switch (status) {
       case "요청":
         return {
-          className: "bg-main text-white",
+          className: "text-green-900 bg-green-100",
           text: "견적 요청 중"
         };
       case "마감":
         return {
-          className: "bg-gray-200",
+          className: "text-white bg-green-500",
           text: "완료"
         };
       default:
@@ -39,17 +39,17 @@ const CustomerEstimate = ({ Info, expandedQuoteRequestId, setExpandedQuoteReques
     switch (status) {
       case "제안":
         return {
-          className: "bg-main-100 text-main-500",
+          className: "text-green-900 bg-green-100",
           text: `${formatDate(expireDate)}까지`
         };
       case "수락":
         return {
-          className: "bg-main text-white",
+          className: "text-white bg-green-500",
           text: "예약 완료"
         };
       case "마감":
         return {
-          className: "bg-gray-200",
+          className: "bg-gray-250 text-gray-600",
           text: "마감"
         };
       default:
@@ -75,7 +75,7 @@ const CustomerEstimate = ({ Info, expandedQuoteRequestId, setExpandedQuoteReques
             <div className="mb-1.5 flex justify-between">
               <p className="px-1 text-[16px] font-semibold leading-snug">{Info.dogName}</p>
               <span
-                className={`rounded px-2 py-[3px] text-center text-xs ${getQuoteRequestStatusProps(Info.requestStatus).className}`}
+                className={`rounded-full px-2 py-[3px] text-center text-xs ${getQuoteRequestStatusProps(Info.requestStatus).className}`}
               >
                 {getQuoteRequestStatusProps(Info.requestStatus).text}
               </span>{" "}

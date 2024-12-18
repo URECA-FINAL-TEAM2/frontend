@@ -6,6 +6,7 @@ import EditReviewImage from "@/components/Mypage/Review/EditReviewImage";
 import { useLocation, useNavigate } from "react-router-dom";
 import { insertReview, updateReview } from "@/queries/reviewQuery";
 import toast, { Toaster } from "react-hot-toast";
+import { formatDateOnly } from "@/utils/formatDate";
 
 const WriteReviews = () => {
   const navigate = useNavigate();
@@ -17,8 +18,8 @@ const WriteReviews = () => {
   const [reviewData, setReviewData] = useState({
     starScore: review?.starScore || 4.5,
     content: review?.content || "",
-    images: review?.images || [], // 이미지 파일 객체
-    previewImages: review?.images?.map((file) => URL.createObjectURL(file)) || [] // 미리보기용 URL
+    images: review?.reviewImages || [], // 이미지 파일 객체
+    previewImages: review?.reviewImages?.map((file) => URL.createObjectURL(file)) || [] // 미리보기용 URL
   });
 
   // 별점 변경
@@ -68,11 +69,11 @@ const WriteReviews = () => {
     setIsModalOpen(false);
 
     await updateReview(review?.reviewId, reviewData);
-    toast("수정이 완료되었습니다.", { icon: "👏🏻" });
+    toast("수정이 완료되었습니다.", { icon: "👏🏻", position: "top-center", duration: 1000 });
 
     setTimeout(() => {
       navigate(-1);
-    }, 500);
+    }, 1000);
   };
 
   // 별 렌더링 함수
@@ -118,7 +119,7 @@ const WriteReviews = () => {
                 ))}
               </select>
             </div>
-            <div className="ml-3 text-xs text-gray-400">{review.reviewDate}</div>
+            <div className="ml-3 text-xs text-gray-400">{formatDateOnly(review.reviewDate)} 방문</div>
           </div>
 
           <EditReviewImage

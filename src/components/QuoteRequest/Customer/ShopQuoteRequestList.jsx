@@ -92,23 +92,23 @@ const CustomerEstimate = ({ Info }) => {
     switch (Info.status) {
       case "요청":
         return {
-          className: "bg-main text-white",
+          className: "text-green-900 bg-green-100",
           text: "견적 요청 중"
         };
       case "거절":
         return {
-          className: "bg-gray-200 cursor-pointer",
+          className: "bg-gray-250 hover:bg-gray-300 text-gray-600 cursor-pointer",
           text: "견적 거절됨",
-          icon: <BsQuestionCircleFill className="text-gray-500" />
+          icon: <BsQuestionCircleFill className="text-gray-600" />
         };
       case "마감":
         return {
-          className: "bg-gray-200",
+          className: "bg-gray-250 text-gray-600",
           text: "기한 마감됨"
         };
       case "제안 완료":
         return {
-          className: "bg-main-100 text-main-600",
+          className: "text-white bg-green-500",
           text: "견적서 수령"
         };
       default:
@@ -118,7 +118,7 @@ const CustomerEstimate = ({ Info }) => {
         };
     }
   };
-
+  ``;
   const { className: statusClassName, text: statusText, icon: statusIcon } = getStatusProps();
 
   return (
@@ -131,7 +131,7 @@ const CustomerEstimate = ({ Info }) => {
             {Info.status === "거절" ? (
               <div className="relative">
                 <span
-                  className={`flex items-center rounded px-2 py-[3px] text-xs ${statusClassName}`}
+                  className={`rounded-full px-2 py-[3px] text-center text-xs ${statusClassName}`}
                   onClick={() => setShowRejectionReason(!showRejectionReason)}
                 >
                   {statusText}
@@ -156,7 +156,7 @@ const CustomerEstimate = ({ Info }) => {
                 )}
               </div>
             ) : (
-              <span className={`flex items-center rounded px-2 text-xs ${statusClassName}`}>
+              <span className={`rounded-full px-2 py-[3px] text-center text-xs ${statusClassName}`}>
                 {statusText}
                 {statusIcon && <span className="ml-0.5 text-xs">{statusIcon}</span>}
               </span>

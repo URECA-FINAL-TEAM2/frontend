@@ -63,7 +63,7 @@ const MeongAI = () => {
       <MeongChatHeader />
       <div className="flex h-screen flex-col bg-gray-50 pt-[80px]">
         {/* 채팅창 */}
-        <div className="flex-1 space-y-4 overflow-y-auto p-4">
+        <div className="flex-1 space-y-4 overflow-y-auto p-4 scrollbar-hide">
           <div className={`flex items-start space-x-2`}>
             <img
               src={logo}
@@ -72,7 +72,7 @@ const MeongAI = () => {
             />
             <div className={`max-w-xs`}>
               <div className={`rounded-lg bg-main-100 px-4 py-2`}>
-                <TypingEffect text="  반가워요! 저는 멍당AI라고 해요. 저에게 무엇이든 물어보세요!" speed={150} />
+                <TypingEffect text="  반가워요! 저는 멍당AI라고 해요. 저에게 무엇이든 물어보세요!" speed={130} />
               </div>
             </div>
           </div>

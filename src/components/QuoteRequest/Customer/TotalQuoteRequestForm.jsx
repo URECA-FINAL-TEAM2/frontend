@@ -212,7 +212,9 @@ const TotalQuoteRequestForm = () => {
       {/* 지역 */}
       <div className="mb-1.5 flex items-center space-x-1">
         <img src={Region} alt="Description" className="h-5 w-5" />
-        <h2 className="text-lg font-semibold leading-none">지역</h2>
+        <h2 className="text-lg font-semibold leading-none">
+          지역 <span className="text-main-500">*</span>
+        </h2>
         {location && (
           <RiEditLine size={20} className="cursor-pointer py-0.5 text-gray-500" onClick={openLocationModal} />
         )}
@@ -229,7 +231,9 @@ const TotalQuoteRequestForm = () => {
       {/* 미용 일시 */}
       <div className="mb-1.5 flex items-center space-x-1">
         <img src={Schedule} alt="Description" className="h-5 w-5" />
-        <h2 className="text-lg font-semibold leading-none">미용 일시</h2>
+        <h2 className="text-lg font-semibold leading-none">
+          미용 일시 <span className="text-main-500">*</span>
+        </h2>
       </div>
 
       <div className="mb-6 rounded-lg">
@@ -258,7 +262,9 @@ const TotalQuoteRequestForm = () => {
       <div className="mb-1.5 flex items-center space-x-1">
         {/* <BiSolidDog size={24} color="black" /> */}
         <img src={Corgi} alt="Description" className="h-5 w-5" />
-        <h2 className="text-lg font-semibold leading-none">반려견 정보</h2>
+        <h2 className="text-lg font-semibold leading-none">
+          반려견 정보 <span className="text-main-500">*</span>
+        </h2>
         {petInfo && <RiEditLine size={20} className="cursor-pointer py-0.5 text-gray-500" onClick={openModal} />}{" "}
       </div>
 
@@ -308,7 +314,9 @@ const TotalQuoteRequestForm = () => {
       {/* 요청 내용 */}
       <div className="mb-1.5 flex items-center space-x-1">
         <img src={Note} alt="Description" className="h-5 w-5" />
-        <h2 className="text-lg font-semibold leading-none">요청 내용</h2>
+        <h2 className="text-lg font-semibold leading-none">
+          요청 내용 <span className="text-main-500">*</span>
+        </h2>
       </div>
 
       <div className="mb-6 rounded-lg border border-main-400 p-4 leading-tight">

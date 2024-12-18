@@ -69,7 +69,7 @@ const EditShop = ({ shopInfo, id }) => {
     toast("수정이 완료되었습니다.", { icon: "👏🏻" });
 
     setTimeout(() => {
-      navigate("/groomer/mypage");
+      navigate(-1);
     }, 500);
   };
 

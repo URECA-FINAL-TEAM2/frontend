@@ -3,7 +3,7 @@ import { Schedule, Corgi, Note } from "/public/Icons";
 
 const GrommerTotalRequest = ({ request }) => {
   return (
-    <div className="my-4 rounded-xl bg-white p-5 shadow-sm">
+    <div className="my-4 rounded-xl bg-white p-5 shadow-lg">
       <div className="mb-3 flex">
         <img src={request.profileImage} alt="고객 프로필" className="mr-3 h-10 w-10 rounded-lg object-cover" />
         <div>

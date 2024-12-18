@@ -127,7 +127,7 @@ function GroomerQuoteForm({ requestId }) {
       duration: 1000
     });
     setTimeout(() => {
-      navigate("/groomer/quotes");
+      navigate("/groomer/quotes", { state: { activeTab: 3 } });
     }, 1000);
   };
 

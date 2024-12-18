@@ -110,7 +110,7 @@ const GroomerHome = () => {
             <div className="flex items-center justify-between px-3">
               <h2 className="text-lg">우리동네 견적 공고</h2>
               <div
-                className="text-xs"
+                className="cursor-pointer text-xs"
                 onClick={() => {
                   navigate("/groomer/quotes", { state: { activeTab: 2 } }); // [x]
                 }}

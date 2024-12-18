@@ -27,6 +27,7 @@ export default {
         gray: {
           100: "#FAFAFA",
           200: "#F5F5F5",
+          250: "#E5E7EB",
           300: "#AAAAAA"
         }
       },

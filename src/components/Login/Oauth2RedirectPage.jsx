@@ -52,7 +52,7 @@ function OAuth2RedirectPage() {
         const accessToken = result?.accessToken;
         const email = result?.email;
         const userName = result?.user.username;
-        const userId = result?.user.userId;
+        const userId = result?.user.id;
         localStorage.setItem("accessToken", accessToken);
         updateUserInfoState({ email: email, userName: userName });
         updateId({ userId: userId });

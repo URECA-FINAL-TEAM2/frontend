@@ -118,7 +118,7 @@ const CustomerEstimate = ({ Info }) => {
         };
     }
   };
-
+  ``;
   const { className: statusClassName, text: statusText, icon: statusIcon } = getStatusProps();
 
   return (
@@ -131,7 +131,7 @@ const CustomerEstimate = ({ Info }) => {
             {Info.status === "거절" ? (
               <div className="relative">
                 <span
-                  className={`flex items-center rounded px-2 py-[3px] text-xs ${statusClassName}`}
+                  className={`flex items-center rounded-full px-2 py-[3px] text-xs ${statusClassName}`}
                   onClick={() => setShowRejectionReason(!showRejectionReason)}
                 >
                   {statusText}

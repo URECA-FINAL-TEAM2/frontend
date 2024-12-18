@@ -116,7 +116,7 @@ const GroomerEstimate = ({ Info }) => {
               <span className="flex items-center rounded-md bg-main px-1.5 text-xs text-white">1:1 맞춤 요청</span>
             ) : null}
           </div>
-          <span className={`rounded-sm px-1 py-[1px] text-xs ${getStatusProps(Info.status).className}`}>
+          <span className={`rounded-full px-2 py-[1px] text-xs ${getStatusProps(Info.status).className}`}>
             {getStatusProps(Info.status).text}
           </span>
         </div>

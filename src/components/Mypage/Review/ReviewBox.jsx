@@ -70,13 +70,14 @@ const ReviewBox = ({ review, setReviews }) => {
           <div className="ml-3 text-xs">{formatDateOnly(review.reviewDate)} 방문</div>
         </div>
         <div className="grid grid-cols-3">
-          {imageList.map((imgSrc, index) => (
+          {review.reviewImages.map((imgSrc, index) => (
+            // {imageList.map((imgSrc, index) => (
             <img
               key={index}
               className="my-2 cursor-pointer rounded-xl px-1"
               src={imgSrc}
               loading="lazy"
-              alt={`dog Img ${index + 1}`}
+              alt={`리뷰이미지`}
               onClick={() => handleImageClick(index)}
             />
           ))}

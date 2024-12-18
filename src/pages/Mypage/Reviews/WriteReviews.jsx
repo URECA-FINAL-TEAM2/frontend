@@ -18,8 +18,8 @@ const WriteReviews = () => {
   const [reviewData, setReviewData] = useState({
     starScore: review?.starScore || 4.5,
     content: review?.content || "",
-    images: review?.images || [], // 이미지 파일 객체
-    previewImages: review?.images?.map((file) => URL.createObjectURL(file)) || [] // 미리보기용 URL
+    images: review?.reviewImages || [], // 이미지 파일 객체
+    previewImages: review?.reviewImages?.map((file) => URL.createObjectURL(file)) || [] // 미리보기용 URL
   });
 
   // 별점 변경

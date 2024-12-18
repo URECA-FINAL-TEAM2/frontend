@@ -54,7 +54,7 @@ const ShopDetailPage = () => {
 
     if (targetRef) {
       // 스크롤을 화면 상단으로 이동
-      targetRef.scrollIntoView({ behavior: "smooth", block: "start" });
+      targetRef.scrollIntoView({ behavior: "smooth", block: "center" });
 
       // scrollIntoView 완료 후 margin-top 만큼 추가 스크롤 조정
       setTimeout(() => {

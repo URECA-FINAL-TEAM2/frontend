@@ -25,7 +25,7 @@ const ReviewBox = ({ review, setReviews }) => {
         duration: 1000
       });
       setTimeout(() => {
-        navigate(-1);
+        navigate("/customer/mypage");
       }, 1000);
 
       setReviews((prevReviews) => prevReviews.filter((item) => item.reviewId !== review.reviewId));

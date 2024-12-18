@@ -1,5 +1,4 @@
 import { useState } from "react";
-import testImg from "/Test/dog.jpg";
 import { GoStarFill } from "react-icons/go";
 import Modal from "../../common/modal/modal";
 import { useNavigate } from "react-router-dom";
@@ -46,14 +45,12 @@ const ReviewBox = ({ review, setReviews }) => {
   };
 
   const handlePrevImage = () => {
-    setSelectedImageIndex((prevIndex) => (prevIndex === 0 ? imageList.length - 1 : prevIndex - 1));
+    setSelectedImageIndex((prevIndex) => (prevIndex === 0 ? review.reviewImages.length - 1 : prevIndex - 1));
   };
 
   const handleNextImage = () => {
-    setSelectedImageIndex((prevIndex) => (prevIndex === imageList.length - 1 ? 0 : prevIndex + 1));
+    setSelectedImageIndex((prevIndex) => (prevIndex === review.reviewImages.length - 1 ? 0 : prevIndex + 1));
   };
-
-  const imageList = [testImg, testImg, testImg]; //TODO 수정필요
 
   return (
     <>
@@ -69,12 +66,12 @@ const ReviewBox = ({ review, setReviews }) => {
           </div>
           <div className="ml-3 text-xs">{formatDateOnly(review.reviewDate)} 방문</div>
         </div>
-        <div className="grid grid-cols-3">
+        <div className="grid grid-cols-3 gap-2">
           {review.reviewImages.map((imgSrc, index) => (
-            // {imageList.map((imgSrc, index) => (
+            // {review.reviewImages.map((imgSrc, index) => (
             <img
               key={index}
-              className="my-2 cursor-pointer rounded-xl px-1"
+              className="h-full w-full cursor-pointer object-cover"
               src={imgSrc}
               loading="lazy"
               alt={`리뷰이미지`}
@@ -97,10 +94,10 @@ const ReviewBox = ({ review, setReviews }) => {
       </div>
 
       {/* Image Modal with Navigation */}
-      {imageList.length > 0 && (
+      {review.reviewImages.length > 0 && (
         <ImageModal isOpen={isImgModalOpen} onClose={handleCloseImgModal}>
           <div className="relative flex w-full items-center justify-center">
-            {imageList.length > 1 && (
+            {review.reviewImages.length > 1 && (
               <>
                 <button
                   onClick={handlePrevImage}
@@ -119,15 +116,15 @@ const ReviewBox = ({ review, setReviews }) => {
 
             {/* Selected Image */}
             <img
-              src={imageList[selectedImageIndex]}
+              src={review.reviewImages[selectedImageIndex]}
               alt={`선택된 이미지 ${selectedImageIndex + 1}`}
               className="w-[300px] rounded-md object-contain"
             />
 
             {/* Image Counter */}
-            {imageList.length > 1 && (
+            {review.reviewImages.length > 1 && (
               <div className="absolute bottom-2 left-1/2 z-30 -translate-x-1/2 transform rounded-full bg-gray-200 bg-opacity-50 px-3 py-1 text-sm text-white">
-                {selectedImageIndex + 1} / {imageList.length}
+                {selectedImageIndex + 1} / {review.reviewImages.length}
               </div>
             )}
           </div>

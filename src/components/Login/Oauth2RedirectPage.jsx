@@ -53,14 +53,12 @@ function OAuth2RedirectPage() {
         const email = result?.email;
         const userName = result?.user.username;
 
-        console.log("user.id", result?.user.id);
-        console.log("user.userId", result?.user.userId);
-
-        const userId = result?.user.id;
+        const userId = result?.user.userId;
+        const id = result?.user.id;
         localStorage.setItem("accessToken", accessToken);
         updateUserInfoState({ email: email, userName: userName });
         updateId({ userId: userId });
-        navigate("/selectRole", { state: { email: email, userName: userName } });
+        navigate("/selectRole", { state: { email: email, userName: userName, userId: userId, id: id } });
       } else {
         console.error("Error sending code to backend:", error);
       }

@@ -60,6 +60,8 @@ const CustomerEstimate = ({ Info, expandedQuoteRequestId, setExpandedQuoteReques
     }
   };
 
+  const sortedQuotes = [...Info.quotes].sort((a, b) => new Date(b.expireDate) - new Date(a.expireDate));
+
   return (
     <div className="m-5 rounded-xl bg-white">
       <div className="p-4">
@@ -108,7 +110,7 @@ const CustomerEstimate = ({ Info, expandedQuoteRequestId, setExpandedQuoteReques
       </div>
       {isExpanded && (
         <div className="border-t-2 px-4 pt-1">
-          {Info.quotes.map((quote) => (
+          {sortedQuotes.map((quote) => (
             <div key={quote.quoteId} className="border-b-2 py-3">
               <div className="flex">
                 <img src={quote.shopLogo} className="mr-2 h-10 w-10 rounded-lg" />
@@ -117,7 +119,7 @@ const CustomerEstimate = ({ Info, expandedQuoteRequestId, setExpandedQuoteReques
                     {quote.shopName} - {quote.groomerName} 디자이너
                   </p>
                   <span
-                    className={`rounded-md px-1.5 py-0.5 text-xs ${getQuoteStatusProps(quote.quoteStatus).className}`}
+                    className={`rounded-md px-[5px] py-[1px] text-xs ${getQuoteStatusProps(quote.quoteStatus).className}`}
                   >
                     {getQuoteStatusProps(quote.quoteStatus, quote.expireDate).text}
                   </span>

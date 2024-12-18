@@ -19,7 +19,8 @@ const WriteReviews = () => {
     starScore: review?.starScore || 4.5,
     content: review?.content || "",
     images: review?.reviewImages || [], // 이미지 파일 객체
-    previewImages: review?.reviewImages?.map((file) => URL.createObjectURL(file)) || [] // 미리보기용 URL
+    previewImages:
+      review?.reviewImages?.map((image) => (typeof image === "string" ? image : URL.createObjectURL(image))) || [] // 미리보기용 URL
   });
 
   // 별점 변경

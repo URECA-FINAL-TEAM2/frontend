@@ -68,10 +68,9 @@ const ReviewBox = ({ review, setReviews }) => {
         </div>
         <div className="grid grid-cols-3 gap-2">
           {review.reviewImages.map((imgSrc, index) => (
-            // {review.reviewImages.map((imgSrc, index) => (
             <img
               key={index}
-              className="h-full w-full cursor-pointer object-cover"
+              className="mx-auto my-2 h-[100px] w-[100px] cursor-pointer rounded-xl text-center"
               src={imgSrc}
               loading="lazy"
               alt={`리뷰이미지`}

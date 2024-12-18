@@ -8,8 +8,7 @@ import dayjs from "dayjs";
 
 const Chat = () => {
   const location = useLocation();
-  const headerData = location.state || {};
-
+  const { address } = location.state || {};
   const { roomId } = useParams(); // URL에서 roomId 가져오기
   const stompClientRef = useRef(null);
   const currentSubscriptionRef = useRef(null);
@@ -27,6 +26,7 @@ const Chat = () => {
   const userType = authStorage?.state?.DefaultRole === "customer";
 
   const DefaultRole = authStorage?.state?.DefaultRole; // sh
+  const [shopInfo, setShopInfo] = useState([]);
 
   //스크롤 자동 이동
   const scrollToBottom = () => {
@@ -59,6 +59,7 @@ const Chat = () => {
         setMessages(chatData.data?.messages || []);
         setGroomerInfo(chatData.data?.groomerInfo);
         setCustomerInfo(chatData.data?.customerInfo);
+        setShopInfo(chatData.data?.shopInfo);
         // 3. 채팅방 구독 설정
         subscribeToChatRoom(stompClientRef, currentSubscriptionRef, roomId, setMessages);
         console.log("Subscribed to chat and loaded previous messages.");
@@ -115,7 +116,13 @@ const Chat = () => {
 
   return (
     <>
-      <ChatHeader DefaultRole={DefaultRole} groomerInfo={groomerInfo} customerInfo={customerInfo} />
+      <ChatHeader
+        addressLink={address}
+        DefaultRole={DefaultRole}
+        shopInfo={shopInfo}
+        groomerInfo={groomerInfo}
+        customerInfo={customerInfo}
+      />
       <div className="flex h-screen flex-col bg-gray-50 pt-[80px]">
         <div className="flex-1 space-y-4 overflow-y-auto p-4">
           {messages.map((msg, index) => {

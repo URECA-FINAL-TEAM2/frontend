@@ -109,6 +109,7 @@ const ChatRoomList = () => {
           filteredChatRooms.map((chatRoomData) => (
             <Link
               to={`/chat/${chatRoomData.id}`}
+              state={{ address: chatRoomData?.shopAddress }} // `state`는 `to`와 별도로 작성
               key={chatRoomData.id}
               className="flex items-center border-b-4 border-gray-200 px-6 py-4"
             >

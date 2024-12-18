@@ -4,13 +4,20 @@
 import SubHeader from "@/components/common/SubHeader";
 import GroomerQuoteForm from "@/components/Quote/GroomerQuoteForm";
 import React from "react";
-import { useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 
 function GroomerQuoteRequestPage(props) {
   const requestId = useParams().requestId;
+  const location = useLocation();
+  const { activeTab } = location.state || {};
+  const navigate = useNavigate();
+
   return (
     <div>
-      <SubHeader title="견적서 보내기" navigate={-1} />
+      <SubHeader
+        title="견적서 보내기"
+        navigate={() => navigate("/groomer/quotes", { state: { activeTab: activeTab } })} // [x]
+      />
       <GroomerQuoteForm requestId={requestId} />
     </div>
   );

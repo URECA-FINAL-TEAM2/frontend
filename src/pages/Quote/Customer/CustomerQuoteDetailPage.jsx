@@ -1,7 +1,7 @@
 import SubHeader from "@/components/common/SubHeader";
 import CustomerQuoteDetail from "@/components/Quote/CustomerQuoteDetail";
 import React, { useState, useRef, useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { MdExpandMore } from "react-icons/md";
 import { RequestPayment } from "@/queries/paymentQuery";
 import { ArrowDown } from "/public/Icons";
@@ -10,7 +10,9 @@ import useAuthStore from "@/store/authStore";
 function CustomerQuoteDetailPage(props) {
   const quotesId = Number(useParams().quotesId);
   const { id } = useAuthStore();
+  const location = useLocation();
   const navigate = useNavigate();
+  const { activeTab } = location.state || {};
 
   const [isExpanded, setIsExpanded] = useState(false);
   const [amount, setAmount] = useState(null);
@@ -115,7 +117,10 @@ function CustomerQuoteDetailPage(props) {
 
   return (
     <div>
-      <SubHeader title="견적서 상세보기" navigate={-1} />
+      <SubHeader
+        title="견적서 상세보기"
+        navigate={() => navigate("/customer/quotes", { state: { activeTab: activeTab } })} // [ ] 왜안됨
+      />
       <CustomerQuoteDetail quotesId={quotesId} onDataLoad={handleDataLoad} />
       <div
         ref={expandableRef}

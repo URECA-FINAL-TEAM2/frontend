@@ -47,6 +47,7 @@ const CustomerMyPageComponent = ({ userInfo, myPets, counts }) => {
           secondValue={counts.confirmedReservations}
           thirdName={"작성한 리뷰"}
           thirdValue={counts.myReviews}
+          navigate={"/customer/reservation"}
         />
       </div>
       {/* 반려견 정보 */}

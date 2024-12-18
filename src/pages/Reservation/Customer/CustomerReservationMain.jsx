@@ -42,15 +42,15 @@ const CustomerReservationMain = () => {
         title="예약 내역"
         navigate={() => {
           if (activeQuotesTab) {
-            navigate(-1, { state: { activeTab: activeQuotesTab } });
+            navigate("/customer/quotes", { state: { activeTab: activeQuotesTab } });
           } else {
             navigate(-1); // activeQuotesTab이 없으면 단순히 뒤로가기
           }
         }}
       />
-      <div className="mx-auto mb-[80px] max-w-lg bg-white p-4">
+      <div className="mx-auto max-w-lg bg-white px-4 pb-4">
         {/* 상단 탭 */}
-        <div className="mb-4 mt-12 flex justify-around border-b">
+        <div className="mb-4 mt-[--header-height] flex justify-around border-b">
           <button
             onClick={() => setActiveTab("completed")}
             className={`flex-1 py-2 ${

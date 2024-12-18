@@ -2,12 +2,13 @@ import React, { useEffect, useState } from "react";
 import { getGroomerList } from "@/queries/reservationQuery";
 import SubHeader from "@/components/common/SubHeader";
 import dayjs from "dayjs";
-import { useNavigate } from "react-router-dom";
 import GroomerBottom from "@/components/common/GroomerBottom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const GroomerReservationMain = () => {
   const [reservations, setReservations] = useState([]);
-  const [activeTab, setActiveTab] = useState("today");
+  const location = useLocation();
+  const [activeTab, setActiveTab] = useState(location.state?.initialTab || "today");
   const today = dayjs();
   const navigate = useNavigate();
   const authStorage = JSON.parse(localStorage.getItem("auth-storage"));
@@ -44,7 +45,7 @@ const GroomerReservationMain = () => {
       <SubHeader title="예약 내역" />
       <div className="mx-auto mb-[80px] max-w-lg bg-white px-4">
         {/* 상단 탭 */}
-        <div className="jusify-around mb-4 mt-[75px] flex border-b">
+        <div className="jusify-around mb-4 mt-[--header-height] flex border-b">
           <button
             onClick={() => setActiveTab("today")}
             className={`flex-1 py-2 ${

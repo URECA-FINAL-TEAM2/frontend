@@ -179,7 +179,7 @@ const TotalQuoteRequestForm = () => {
         duration: 3000 // 표시 시간 지정
       });
 
-      navigate("/customer/quotes");
+      navigate("/customer/quotes", { state: { activeTab: 2 } });
     } catch (error) {
       // 실패 토스트
       toast.error("견적 요청 중 오류가 발생했습니다.", {

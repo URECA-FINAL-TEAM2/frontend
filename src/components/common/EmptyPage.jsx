@@ -3,7 +3,7 @@ const EmptyPage = ({ content }) => {
   // [x] GroomerHome
   // [x] GroomerQuote
   // [x] GroomerStore
-  // [ ] BookmakredStore
+  // [x] BookmakredStore
   // [x] MyStore
   return (
     <div className="flex h-[calc(100vh-var(--header-height)-var(--bottom-bar-height))] flex-col items-center justify-center bg-main-100">

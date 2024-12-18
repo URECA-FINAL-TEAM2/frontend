@@ -51,7 +51,7 @@ const GroomerEstimate = ({ Info }) => {
       </div>
       <div
         onClick={() => {
-          navigate(`/groomer/quotes/request/detail/${Info.requestId}`);
+          navigate(`/groomer/quotes/request/detail/${Info.requestId}`, { state: { activeTab: 2 } }); // [x]
         }}
         className="flex h-[32px] cursor-pointer items-center justify-center rounded-lg bg-gray-200 text-center text-sm"
       >

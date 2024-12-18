@@ -29,7 +29,11 @@ const BookmarkedStore = () => {
           })}
         </main>
       ) : (
-        <EmptyPage content={"찜한 매장이 없습니다."} />
+        <>
+          <div className="h-[--header-height]"></div>
+          <EmptyPage content={"찜한 매장이 없습니다."} />
+          <div className="h-[--bottom-bar-height] bg-main-100"></div>
+        </>
       )}
     </div>
   );

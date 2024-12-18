@@ -89,7 +89,7 @@ const GroomerEstimate = ({ Info }) => {
         };
       case "수락":
         return {
-          className: "bg-gray-200",
+          className: "bg-main text-white",
           text: "예약 완료"
         };
       case "마감":
@@ -116,9 +116,7 @@ const GroomerEstimate = ({ Info }) => {
               <span className="flex items-center rounded-md bg-main px-1.5 text-xs text-white">1:1 맞춤 요청</span>
             ) : null}
           </div>
-          <span
-            className={`rounded-md bg-main-100 px-1 py-[1px] text-xs text-main-500 ${getStatusProps(Info.status).className}`}
-          >
+          <span className={`rounded-sm px-1 py-[1px] text-xs ${getStatusProps(Info.status).className}`}>
             {getStatusProps(Info.status).text}
           </span>
         </div>
@@ -139,14 +137,26 @@ const GroomerEstimate = ({ Info }) => {
           <p className="line-clamp-1">{Info.requestContent}</p>
         </div>
       </div>
-      <div
-        onClick={() => {
-          navigate(`/groomer/quotes/detail/${Info.requestId}`);
-        }}
-        className="flex h-[32px] w-full cursor-pointer items-center justify-center rounded-lg bg-gray-200 text-center text-sm"
-      >
-        보낸 견적서 확인하기
-      </div>
+
+      {Info.status === "수락" ? (
+        <div
+          onClick={() => {
+            navigate(`/groomer/reservation`, { state: { initialTab: "reserved" } }); // [x]
+          }}
+          className="flex h-[32px] w-full cursor-pointer items-center justify-center rounded-lg bg-main text-center text-sm text-white"
+        >
+          예약 내역 확인하기
+        </div>
+      ) : (
+        <div
+          onClick={() => {
+            navigate(`/groomer/quotes/detail/${Info.requestId}`, { state: { activeTab: 3 } }); //[x]
+          }}
+          className="flex h-[32px] w-full cursor-pointer items-center justify-center rounded-lg bg-gray-200 text-center text-sm"
+        >
+          보낸 견적서 확인하기
+        </div>
+      )}
     </div>
   );
 };

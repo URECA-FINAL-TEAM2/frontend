@@ -45,7 +45,7 @@ function PaymentComplete() {
         <span className="text-xl">결제 완료</span>
       </div>
 
-      <div className="my-6 mt-20 flex flex-col items-center">
+      <div className="my-6 mt-12 flex flex-col items-center">
         <Lottie animationData={PaymentCompleteAnimation} loop style={{ height: "180px", width: "180px" }} />
         <p className="mt-4 text-center font-bold">
           예약 완료! <br />
@@ -114,7 +114,7 @@ function PaymentComplete() {
           className="w-[80%] rounded-lg bg-main-400 py-2 text-white shadow hover:bg-main-300"
           onClick={() => navigate("/customer/reservation")}
         >
-          예약 내역 확인
+          예약 내역 바로가기
         </button>
       </div>
       <CustomerBottom />

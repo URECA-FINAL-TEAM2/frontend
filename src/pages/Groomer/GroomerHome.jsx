@@ -109,9 +109,14 @@ const GroomerHome = () => {
           <section>
             <div className="flex items-center justify-between px-3">
               <h2 className="text-lg">우리동네 견적 공고</h2>
-              <Link to="/groomer/quotes">
-                <div className="text-xs">더보기</div>
-              </Link>
+              <div
+                className="text-xs"
+                onClick={() => {
+                  navigate("/groomer/quotes", { state: { activeTab: 2 } }); // [x]
+                }}
+              >
+                더보기
+              </div>
             </div>
 
             {totalRequest.map((request) => {

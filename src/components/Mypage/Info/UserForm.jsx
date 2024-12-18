@@ -22,13 +22,31 @@ const UserForm = ({
   const location = useLocation();
   const [pathname, setPathname] = useState();
 
-  console.log(formData, "ggg");
   useEffect(() => {
     setPathname(location.pathname);
-    console.log(nickname);
   }, [location]);
 
   const [init, setInit] = useState(false);
+
+  // 닉네임 유효성 검사 (onChange에서 호출)
+  const handleNicknameValidation = (nickname) => {
+    const nicknameRegex = /^(?=.*[a-zA-Z가-힣])[a-zA-Z가-힣0-9_-]{2,10}$/;
+
+    if (!nickname.trim()) {
+      setNickname("required");
+      setInit(false); // 버튼 비활성화
+      return;
+    }
+
+    if (!nicknameRegex.test(nickname.trim())) {
+      setNickname("impossible");
+      setInit(false); // 버튼 비활성화
+      return;
+    }
+
+    setNickname("yet"); // 유효성 검사 통과, 버튼 활성화
+    setInit(true);
+  };
 
   return (
     <>
@@ -60,7 +78,11 @@ const UserForm = ({
               id="nickname"
               name="nickname"
               value={formData?.nickname}
-              onChange={handleChange}
+              onChange={(e) => {
+                const { value } = e.target;
+                setFormData((prev) => ({ ...prev, nickname: value })); // 닉네임 업데이트
+                handleNicknameValidation(value); // 유효성 검사 실행
+              }}
               placeholder="닉네임을 입력해주세요."
               className=""
               required
@@ -69,9 +91,11 @@ const UserForm = ({
               type="button"
               className={`rounded-xl px-2 text-[10px] text-white ${init ? "bg-main" : "bg-[#ccc]"}`}
               onClick={() => {
-                setInit(true);
-                handleNicknameCheck(formData?.nickName || formData?.nickname, setNickname);
+                if (init) {
+                  handleNicknameCheck(formData?.nickname, setNickname);
+                }
               }}
+              disabled={!init} // 버튼 활성화 상태에 따라 비활성화 처리
             >
               중복확인
             </button>

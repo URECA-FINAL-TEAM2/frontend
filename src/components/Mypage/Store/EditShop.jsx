@@ -26,11 +26,11 @@ const EditShop = ({ shopInfo, id }) => {
 
   const handleDeleteShop = async (shopId, id) => {
     await deleteGroomerShop(shopId, id);
-    toast("매장이 삭제되었습니다.", { icon: "👋🏻" });
+    toast("매장이 삭제되었습니다.", { icon: "👋🏻", position: "top-center", duration: 1000 });
 
     setTimeout(() => {
       navigate("/groomer/mypage");
-    }, 500);
+    }, 1000);
   };
 
   useEffect(() => {
@@ -66,11 +66,11 @@ const EditShop = ({ shopInfo, id }) => {
     setIsModalOpen(false);
 
     await updateGroomerShop(id, formData, isUpdate);
-    toast("수정이 완료되었습니다.", { icon: "👏🏻" });
+    toast("수정이 완료되었습니다.", { icon: "👏🏻", position: "top-center", duration: 1000 });
 
     setTimeout(() => {
       navigate(-1);
-    }, 500);
+    }, 1000);
   };
 
   return (

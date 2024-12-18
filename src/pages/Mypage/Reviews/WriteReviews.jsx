@@ -68,11 +68,11 @@ const WriteReviews = () => {
     setIsModalOpen(false);
 
     await updateReview(review?.reviewId, reviewData);
-    toast("수정이 완료되었습니다.", { icon: "👏🏻" });
+    toast("수정이 완료되었습니다.", { icon: "👏🏻", position: "top-center", duration: 1000 });
 
     setTimeout(() => {
       navigate(-1);
-    }, 500);
+    }, 1000);
   };
 
   // 별 렌더링 함수

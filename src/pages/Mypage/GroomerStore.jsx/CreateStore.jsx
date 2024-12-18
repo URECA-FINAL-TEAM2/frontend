@@ -65,11 +65,11 @@ const CreateStore = () => {
 
     try {
       await updateGroomerShop(id, formData, isUpdate);
-      toast("매장등록이 완료되었습니다.", { icon: "👏🏻" });
 
+      toast("매장등록이 완료되었습니다.", { icon: "👏🏻", position: "top-center", duration: 1000 });
       setTimeout(() => {
         navigate("/groomer/mypage");
-      }, 500);
+      }, 1000);
     } catch (error) {
       toast("매장정보가 올바른지 확인하세요.", { icon: "❌" });
     }

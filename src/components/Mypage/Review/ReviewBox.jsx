@@ -6,6 +6,7 @@ import { deleteReview } from "@/queries/reviewQuery";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import ImageModal from "@/components/common/modal/ImageModal";
 import { formatDateOnly } from "@/utils/formatDate";
+import toast, { Toaster } from "react-hot-toast";
 
 const ReviewBox = ({ review, setReviews }) => {
   const navigate = useNavigate();
@@ -16,13 +17,28 @@ const ReviewBox = ({ review, setReviews }) => {
   const handleDelete = async () => {
     try {
       setIsModalOpen(false);
-      await deleteReview(review.reviewId);
+      const response = await deleteReview(review.reviewId);
+      console.log(response);
+      toast("리뷰가 삭제되었습니다.", {
+        icon: "👋🏻",
+        position: "top-center",
+        duration: 1000
+      });
+      setTimeout(() => {
+        navigate(-1);
+      }, 1000);
 
-      // 삭제된 리뷰를 상태에서 제거
       setReviews((prevReviews) => prevReviews.filter((item) => item.reviewId !== review.reviewId));
     } catch (error) {
       console.error("리뷰 삭제 실패:", error);
-      alert("리뷰 삭제에 실패했습니다.");
+      toast("리뷰 삭제를 실패하였습니다.", {
+        icon: "❌",
+        position: "top-center",
+        duration: 1000
+      });
+      setTimeout(() => {
+        navigate(-1);
+      }, 1000);
     }
   };
 
@@ -139,6 +155,7 @@ const ReviewBox = ({ review, setReviews }) => {
       >
         리뷰를 삭제하시겠습니까?
       </Modal>
+      <Toaster />
     </>
   );
 };

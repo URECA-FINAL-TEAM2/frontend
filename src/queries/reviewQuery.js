@@ -14,7 +14,7 @@ export const getCustomerReviewList = async (id) => {
 export const deleteReview = async (reviewId) => {
   try {
     const response = await axiosInstance.put(`/reviews/delete/${reviewId}`);
-    console.log(response);
+    return response;
   } catch (error) {
     if (error.response?.status === 404) {
       console.log("찾으시는 리뷰가 없습니다.");

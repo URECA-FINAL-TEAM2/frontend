@@ -3,6 +3,7 @@ import ReviewBox from "../../../components/Mypage/Review/ReviewBox";
 import { useEffect, useState } from "react";
 import { getCustomerReviewList } from "@/queries/reviewQuery";
 import useAuthStore from "@/store/authStore";
+import { Toaster } from "react-hot-toast";
 
 const MyReviews = () => {
   const [reviews, setReviews] = useState([]); // 리뷰 리스트 상태const [isLoading, setIsLoading] = useState(true);
@@ -35,11 +36,12 @@ const MyReviews = () => {
       {/* 리뷰 리스트 렌더링 */}
       {reviews.length > 0 ? (
         reviews.map((review) => (
-          <ReviewBox key={review.reviewId} review={review} /> // 각 리뷰 데이터를 전달
+          <ReviewBox key={review.reviewId} review={review} setReviews={setReviews} /> // 각 리뷰 데이터를 전달
         ))
       ) : (
         <div className="text-center text-gray-500">작성된 리뷰가 없습니다.</div>
       )}
+      <Toaster />
     </div>
   );
 };

@@ -74,15 +74,18 @@ const PostReview = () => {
 
     try {
       const response = await insertReview(reviewData);
-      // console.log(response);
-      // toast.success("수정이 완료되었습니다.", { icon: "👏🏻" });
+      toast("리뷰가 작성되었습니다.", {
+        icon: "👋🏻",
+        position: "top-center",
+        duration: 1000
+      });
     } catch (error) {
       console.error("리뷰 수정 중 에러 발생:", error.message);
       toast.error(`리뷰 수정에 실패했습니다: ${error.message}`, { icon: "⚠️", position: "top-center", duration: 1000 });
     }
 
     setTimeout(() => {
-      navigate(-1);
+      navigate("/customer/myreviews");
     }, 1000);
   };
 

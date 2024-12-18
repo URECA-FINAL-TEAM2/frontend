@@ -24,7 +24,7 @@ const CustomerEstimate = ({ Info, expandedQuoteRequestId, setExpandedQuoteReques
         };
       case "마감":
         return {
-          className: "text-white bg-green-600",
+          className: "text-white bg-green-500",
           text: "완료"
         };
       default:
@@ -44,7 +44,7 @@ const CustomerEstimate = ({ Info, expandedQuoteRequestId, setExpandedQuoteReques
         };
       case "수락":
         return {
-          className: "text-white bg-green-600",
+          className: "text-white bg-green-500",
           text: "예약 완료"
         };
       case "마감":

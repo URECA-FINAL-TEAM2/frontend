@@ -51,11 +51,13 @@ const UserInfo = () => {
       await deleteUserInfo(role, id);
       logout();
       toast("정보가 삭제되었습니다.\n 자동 로그아웃 처리됩니다.", {
-        icon: "👋🏻"
+        icon: "👋🏻",
+        position: "top-center",
+        duration: 1000
       });
       setTimeout(() => {
         navigate("/");
-      }, 500);
+      }, 1000);
     } catch (error) {
       console.error("정보 삭제를 실패했습니다.");
     }
@@ -85,18 +87,22 @@ const UserInfo = () => {
           await updateUserInfo(role, formData, id);
           updateUserInfoState({ nickname: formData.nickName || formData.nickname });
           toast("수정 완료되었습니다.", {
-            icon: "👏🏻"
+            icon: "👏🏻",
+            position: "top-center",
+            duration: 1000
           });
           setTimeout(() => {
             navigate(-1);
-          }, 500);
+          }, 1000);
         } catch (error) {
           toast("담당자에게 문의하세요.", {
-            icon: "❌"
+            icon: "❌",
+            position: "top-center",
+            duration: 1000
           });
           setTimeout(() => {
             navigate(-1);
-          }, 500);
+          }, 1000);
         }
       }
     } else {

@@ -77,12 +77,12 @@ const PostReview = () => {
       // toast.success("수정이 완료되었습니다.", { icon: "👏🏻" });
     } catch (error) {
       console.error("리뷰 수정 중 에러 발생:", error.message);
-      toast.error(`리뷰 수정에 실패했습니다: ${error.message}`, { icon: "⚠️" });
+      toast.error(`리뷰 수정에 실패했습니다: ${error.message}`, { icon: "⚠️", position: "top-center", duration: 1000 });
     }
 
     setTimeout(() => {
       navigate(-1);
-    }, 500);
+    }, 1000);
   };
 
   // 별 렌더링 함수

@@ -43,21 +43,25 @@ const EditPortfolio = () => {
       await insertGroomerPortfolio(rawImages, id);
       setIsModalOpen(false);
       toast("수정 완료되었습니다.", {
-        icon: "👏🏻"
+        icon: "👏🏻",
+        position: "top-center",
+        duration: 1000
       });
 
       setTimeout(() => {
         navigate(-1);
-      }, 500);
+      }, 1000);
     } catch (error) {
       console.error(error);
       toast("담당자에게 문의하세요", {
-        icon: "❌"
+        icon: "❌",
+        position: "top-center",
+        duration: 1000
       });
 
       setTimeout(() => {
         navigate(-1);
-      }, 500);
+      }, 1000);
     }
   };
 

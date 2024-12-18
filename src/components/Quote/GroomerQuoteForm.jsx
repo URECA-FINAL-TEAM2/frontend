@@ -31,7 +31,7 @@ function GroomerQuoteForm({ requestId }) {
         setRequestInfo(data);
       } catch (error) {
         console.error("Error fetching requestInfo:", error);
-        setError(err);
+        setError(error);
       } finally {
         setIsLoading(false);
       }

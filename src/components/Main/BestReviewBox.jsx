@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { FaStar } from "react-icons/fa";
 import { MdThumbUpAlt } from "react-icons/md";
+import { formatDate } from "@/queries/mainQuery";
 
 const BestReviewBox = ({ bestReview }) => {
   const navigate = useNavigate();
@@ -29,7 +30,7 @@ const BestReviewBox = ({ bestReview }) => {
           </div>
         </div>
         <div className="my-[-1px] flex items-center gap-0.5">
-          <p className="w-18 text-[12px] font-normal text-gray-300">{bestReview.createdAt}</p>
+          <p className="w-18 text-[12px] font-normal text-gray-300">{formatDate(bestReview.createdAt)}</p>
         </div>
         <div className="h-[30px] w-[180px] overflow-hidden text-ellipsis text-start text-xs">{bestReview.content}</div>
       </div>

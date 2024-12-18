@@ -114,22 +114,18 @@ const CustomerReservationMain = () => {
 
               {activeTab === "completed" && (
                 <div className="mt-4 flex w-[330px] space-x-4">
-                  <button
-                    onClick={() => {
-                      if (item.reviewCheck) {
-                        // 리뷰 관리 페이지로 이동
-                        navigate(`/customer/myreviews`);
-                      } else {
-                        // 리뷰 작성 페이지로 이동
-                        navigate(`/customer/postReview/${customerId}`, {
-                          state: { item } // 원하는 state를 담음
-                        });
-                      }
-                    }}
-                    className="w-full rounded-[10px] bg-main-200 py-1 font-medium text-main-400"
-                  >
-                    {item.reviewCheck ? "리뷰 관리" : "리뷰 쓰기"}
-                  </button>
+                <button
+                  onClick={() => {
+                    console.log(customerId, item?.groomerId, item?.selectedQuoteId);
+                    navigate(`/customer/postReview/${customerId}`, {
+                      //TODO groomerId 받아서 넘기기
+                      state: { item } // 원하는 state를 담음
+                    });
+                  }}
+                  className="mt-4 w-full rounded-full bg-main-200 py-1 font-medium text-main-400"
+                >
+                  리뷰 쓰기
+                </button>
 
                   {/* 예약 상세 */}
                   <button

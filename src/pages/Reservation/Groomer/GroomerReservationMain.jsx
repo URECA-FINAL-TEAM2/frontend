@@ -42,7 +42,7 @@ const GroomerReservationMain = () => {
   return (
     <div>
       <SubHeader title="예약 내역" />
-      <div className="mx-auto max-w-lg bg-white">
+      <div className="mx-auto max-w-lg bg-white p-4">
         {/* 상단 탭 */}
         <div className="jusify-around mb-4 mt-[--header-height] flex border-b">
           <button

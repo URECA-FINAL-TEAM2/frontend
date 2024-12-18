@@ -220,13 +220,13 @@ const NotiComponents = () => {
                     onClick={() => setFilterType("all")}
                     className="mr-2 rounded-2xl border border-main-200 px-2 py-1 shadow-sm"
                   >
-                    전체 알림 ({notifications.length})
+                    전체 알림
                   </button>
                   <button
                     onClick={() => setFilterType("unread")}
                     className="rounded-2xl border border-main-200 px-2 py-1 shadow-sm"
                   >
-                    읽지 않은 알림 ({unreadCount})
+                    읽지 않은 알림
                   </button>
                 </div>
                 <button onClick={() => setIsModalOpen(true)} className="flex items-center justify-start text-[red]">
@@ -275,7 +275,7 @@ const NotiComponents = () => {
                     </div>
                   ))
                 ) : (
-                  <div className="text-center text-gray-500">알림이 없습니다.</div>
+                  <div className="mt-8 text-center text-gray-500">알림이 없습니다.</div>
                 )}
               </div>
             </div>

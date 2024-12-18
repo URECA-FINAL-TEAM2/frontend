@@ -17,14 +17,16 @@ const useShopStore = create((set, get) => ({
       searchQuery: "" // Reset search query
     }),
 
-  setSelectedShop: (shop) =>
+  setSelectedShop: (shop) => {
+    if (!shop) return;
     set({
       selectedShop: {
         shopId: shop.shopId,
         latitude: shop.latitude,
         longitude: shop.longitude
       }
-    }),
+    });
+  },
 
   // Sort action
   setSortType: (sortType) => {

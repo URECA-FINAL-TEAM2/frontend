@@ -1,5 +1,5 @@
 import { useState, useCallback, useRef, useEffect } from "react";
-import { GoogleMap, MarkerF } from "@react-google-maps/api";
+import { GoogleMap } from "@react-google-maps/api";
 import useShopStore from "../../store/shopStore";
 import { useMapSetup } from "./MapBase";
 import useListPositionStore from "../../store/listPositionStore";
@@ -15,7 +15,9 @@ const InteractiveMap = () => {
   const { sidoName, sigunguName } = useRegionStore();
   const address = `${sidoName} ${sigunguName}`;
 
+  const [isMapLoaded, setIsMapLoaded] = useState(false);
   const mapRef = useRef(null);
+  const markerRefs = useRef([]); // AdvancedMarkerElement 참조를 위한 배열
   const [mapCenter, setMapCenter] = useState({
     lat: 37.5665,
     lng: 126.978
@@ -108,6 +110,9 @@ const InteractiveMap = () => {
 
           const offset = calculateMapOffset();
           smoothlyAnimateToPosition(location.toJSON(), offset);
+
+          // 맵 로드가 완료되었음을 표시
+          setIsMapLoaded(true);
         } else {
           setLocationError("주소를 찾을 수 없습니다.");
           console.error("Geocoding error:", status);
@@ -119,13 +124,10 @@ const InteractiveMap = () => {
 
   const navigate = useNavigate();
 
-  const handleShopClick = useCallback(
-    (shopInfo) => {
-      setSelectedShop({ shopId: shopInfo.shopId, latitude: shopInfo.latitude, longitude: shopInfo.longitude });
-      navigate(`/customer/shop/${shopInfo.shopId}`);
-    },
-    [setSelectedShop]
-  );
+  const handleShopClick = (shopInfo) => {
+    setSelectedShop({ shopId: shopInfo.shopId, latitude: shopInfo.latitude, longitude: shopInfo.longitude });
+    navigate(`/customer/shop/${shopInfo.shopId}`);
+  };
 
   // selectedShop 변경 감지를 위한 useEffect 추가
   useEffect(() => {
@@ -167,29 +169,63 @@ const InteractiveMap = () => {
     });
   }, [address, calculateMapOffset, smoothlyAnimateToPosition]);
 
-  // 마커를 다시 그리도록 하는 useEffect
   useEffect(() => {
-    if (mapRef.current && shops.length > 0) {
-      const map = mapRef.current;
-      // 마커들을 지워줍니다
-      const markers = [];
-      shops.forEach((shop) => {
-        const marker = new google.maps.Marker({
-          position: { lat: shop.latitude, lng: shop.longitude },
-          map: map,
-          title: shop.shopName
-        });
+    if (!isMapLoaded) return;
 
-        marker.addListener("click", () => handleShopClick(shop));
-        markers.push(marker);
+    console.log("shops", shops);
+    const map = mapRef.current;
+
+    // 마커를 초기화
+    markerRefs.current.forEach((marker) => marker?.setMap(null));
+    markerRefs.current = [];
+
+    // Custom Advanced Marker 생성
+    shops.forEach((shop) => {
+      const markerContent = document.createElement("div");
+      markerContent.className = "shop-marker";
+      markerContent.innerHTML = `
+        <div style="
+          background-color: #FFFFFF;
+          // border: 2px solid #FF8E8E;
+          border-radius: 8px;
+          color: #FC7272;
+          font-size: 14px;
+          padding: 4px 8px;
+          position: relative;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+          transition: transform 0.2s;
+          font-family: 'Pretendard', sans-serif;
+        ">
+          ${shop.shopName}
+          <div style="
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 100%;
+            transform: translate(-50%, 0);
+            width: 0;
+            height: 0;
+            border-left: 6px solid transparent;
+            border-right: 6px solid transparent;
+            border-top: 6px solid #FFFFFF;
+          "></div>
+        </div>
+      `;
+
+      const marker = new google.maps.marker.AdvancedMarkerElement({
+        position: { lat: shop.latitude, lng: shop.longitude },
+        map: map,
+        content: markerContent
       });
 
-      // 이전 마커들을 제거합니다
-      return () => {
-        markers.forEach((marker) => marker.setMap(null));
-      };
-    }
-  }, [shops, handleShopClick]); // shops가 변경될 때마다 마커를 다시 그리도록 설정
+      // 클로저 문제를 피하기 위해 화살표 함수를 사용
+      marker.addListener("click", () => handleShopClick(shop));
+      markerRefs.current.push(marker);
+    });
+  }, [shops, isMapLoaded]);
 
   if (!isLoaded || !window.google) return error;
 
@@ -204,23 +240,10 @@ const InteractiveMap = () => {
       <GoogleMap
         mapContainerStyle={mapContainerStyle}
         center={mapCenter}
-        options={options}
+        options={{ ...options, mapId: import.meta.env.VITE_GOOGLE_MAP_ID }}
         onLoad={onMapLoad}
         onClick={() => setSelectedShop(null)}
-      >
-        {/* shops에 변경이 있을 때마다 마커를 그리도록 설정 */}
-        {shops.map(
-          (shop) =>
-            window.google && (
-              <MarkerF
-                key={shop.shopName}
-                position={{ lat: shop.latitude, lng: shop.longitude }}
-                onClick={() => handleShopClick(shop)}
-                title={shop.shopName}
-              />
-            )
-        )}
-      </GoogleMap>
+      />
     </div>
   );
 };

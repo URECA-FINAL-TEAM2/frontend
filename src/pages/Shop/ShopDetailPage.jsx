@@ -87,7 +87,9 @@ const ShopDetailPage = () => {
     <div className="absolute inset-0 z-20 mt-[--header-height] w-[400px] overflow-y-scroll bg-white scrollbar-hide">
       <SubHeader
         title={shopDetail.shopName}
-        navigate={() => navigate("/customer/quotes", { state: { activeTab: activeTab } })}
+        navigate={() => {
+          activeTab ? navigate("/customer/quotes", { state: { activeTab: activeTab } }) : navigate(-1);
+        }}
       />
       <div>
         <ShopIntro shopDetail={shopDetail} />

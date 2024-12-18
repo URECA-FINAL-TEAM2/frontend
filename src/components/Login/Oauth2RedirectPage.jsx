@@ -52,6 +52,10 @@ function OAuth2RedirectPage() {
         const accessToken = result?.accessToken;
         const email = result?.email;
         const userName = result?.user.username;
+
+        console.log("user.id", result?.user.id);
+        console.log("user.userId", result?.user.userId);
+
         const userId = result?.user.id;
         localStorage.setItem("accessToken", accessToken);
         updateUserInfoState({ email: email, userName: userName });

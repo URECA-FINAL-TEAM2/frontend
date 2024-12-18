@@ -95,7 +95,7 @@ const CustomerEstimate = ({ Info, expandedQuoteRequestId, setExpandedQuoteReques
         <div className="flex justify-between gap-2">
           <div
             onClick={() => {
-              navigate(`/customer/quotes/request/detail/${Info.quoteRequestId}`);
+              navigate(`/customer/quotes/request/detail/${Info.quoteRequestId}`, { state: { activeTab: 2 } }); // [x]
             }}
             className="flex h-[32px] w-full cursor-pointer items-center justify-center rounded-lg bg-gray-200 text-center text-sm"
           >
@@ -141,9 +141,9 @@ const CustomerEstimate = ({ Info, expandedQuoteRequestId, setExpandedQuoteReques
                   <div
                     onClick={() => {
                       if (quote.quoteStatus === "제안") {
-                        navigate(`/customer/quotes/detail/${quote.quoteId}`);
+                        navigate(`/customer/quotes/detail/${quote.quoteId}`, { state: { activeTab: 2 } }); // [x]
                       } else if (quote.quoteStatus === "수락") {
-                        navigate("/customer/reservation");
+                        navigate("/customer/reservation", { state: { activeQuotesTab: 2 } }); // [x]
                       }
                     }}
                     className={`flex h-[32px] w-full cursor-pointer items-center justify-center rounded-lg text-center text-sm ${
@@ -159,7 +159,7 @@ const CustomerEstimate = ({ Info, expandedQuoteRequestId, setExpandedQuoteReques
                   <div
                     onClick={() => {
                       if (quote.shopId) {
-                        navigate(`/customer/shop/${quote.shopId}`);
+                        navigate(`/customer/shop/${quote.shopId}`, { state: { activeTab: 2 } }); // [x]
                       } else {
                         console.log("유효하지 않은 shopId입니다.");
                       }

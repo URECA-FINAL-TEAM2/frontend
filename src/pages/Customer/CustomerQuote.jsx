@@ -10,11 +10,18 @@ const CustomerQuote = () => {
   const { id } = useAuthStore();
   const location = useLocation();
   const { activeTab } = location.state || {};
-  const [activeSection, setActiveSection] = useState(activeTab === 2 ? "section2" : "section1");
+  const [activeSection, setActiveSection] = useState("section1");
   const [shopRequests, setShopRequests] = useState(null);
   const [totalRequests, setTotalRequests] = useState(null);
-
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (activeTab === 2) {
+      setActiveSection("section2");
+    } else {
+      setActiveSection("section1");
+    }
+  }, [activeTab]);
 
   useEffect(() => {
     const fetchShopRequests = async () => {
@@ -43,10 +50,8 @@ const CustomerQuote = () => {
     fetchTotalRequests();
   }, []);
 
-  if (!shopRequests) return "1:1 맞춤 견적 데이터를 가져오는중...";
-  if (!totalRequests) return "내 견적 공고 데이터를 가져오는중...";
-
   const renderContent = () => {
+    if (!shopRequests || !totalRequests) return null;
     switch (activeSection) {
       case "section1":
         return <ShopQuoteRequestList Infos={shopRequests} />;

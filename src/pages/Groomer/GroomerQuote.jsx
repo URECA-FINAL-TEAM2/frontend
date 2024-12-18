@@ -1,21 +1,34 @@
 import React, { useEffect, useState } from "react";
 import GroomerBottom from "@/components/common/GroomerBottom";
-import SubHeader from "@/components/common/SubHeader";
 import GroomerTotalRequests from "@/components/QuoteRequest/Groomer/GroomerTotalRequests";
 import GroomerShopRequests from "@/components/QuoteRequest/Groomer/GroomerShopRequests";
 import GroomerSentRequests from "@/components/QuoteRequest/Groomer/GroomerSentRequests";
 import useAuthStore from "@/store/authStore";
 import { getGroomerQuoteDirect, getGroomerQuoteSend, getGroomerQuoteTotal } from "@/queries/quoteRequestQuery";
 import EmptyPage from "@/components/common/EmptyPage";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const GroomerQuote = () => {
   const { id } = useAuthStore();
+  const location = useLocation();
+  const { activeTab = 1 } = location.state || {};
   const [activeSection, setActiveSection] = useState("section1");
   const [shopRequests, setShopRequests] = useState(null);
   const [totalRequests, setTotalRequests] = useState(null);
   const [sentQuotes, setSentQuotes] = useState(null);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (activeTab === 1) {
+      setActiveSection("section1");
+    } else if (activeTab === 2) {
+      setActiveSection("section2");
+    } else if (activeTab === 3) {
+      setActiveSection("section3");
+    } else {
+      setActiveSection("section1");
+    }
+  }, [activeTab]);
 
   // Fetch shopRequests on mount
   useEffect(() => {

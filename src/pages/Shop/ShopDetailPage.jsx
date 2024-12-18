@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import SubHeader from "../../components/common/SubHeader";
 import { getShopDetail } from "../../queries/shopQuery";
 import BottomButton from "../../components/common/button/BottomButton";
@@ -16,7 +16,9 @@ const ShopDetailPage = () => {
   const { id } = useAuthStore();
   const [shopDetail, setShopDetail] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  const location = useLocation();
   const navigate = useNavigate();
+  const { activeTab } = location.state || {};
 
   useEffect(() => {
     const fetchShopDetail = async () => {
@@ -83,7 +85,10 @@ const ShopDetailPage = () => {
 
   return (
     <div className="absolute inset-0 z-20 mt-[--header-height] w-[400px] overflow-y-scroll bg-white scrollbar-hide">
-      <SubHeader title={shopDetail.shopName} navigate={-1} />
+      <SubHeader
+        title={shopDetail.shopName}
+        navigate={() => navigate("/customer/quotes", { state: { activeTab: activeTab } })}
+      />
       <div>
         <ShopIntro shopDetail={shopDetail} />
       </div>

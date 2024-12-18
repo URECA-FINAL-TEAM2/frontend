@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { getCustomerList } from "@/queries/reservationQuery";
 import SubHeader from "@/components/common/SubHeader";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const CustomerReservationMain = () => {
+  const location = useLocation();
+  const { activeQuotesTab } = location.state || {};
+  console.log("acT: ", activeQuotesTab);
   const [reservations, setReservations] = useState([]);
   const [activeTab, setActiveTab] = useState("reserved");
   const navigate = useNavigate();
@@ -35,10 +38,19 @@ const CustomerReservationMain = () => {
 
   return (
     <div>
-      <SubHeader title="예약 내역" />;
-      <div className="mx-auto max-w-lg bg-white p-4">
+      <SubHeader
+        title="예약 내역"
+        navigate={() => {
+          if (activeQuotesTab) {
+            navigate("/customer/quotes", { state: { activeTab: activeQuotesTab } });
+          } else {
+            navigate(-1); // activeQuotesTab이 없으면 단순히 뒤로가기
+          }
+        }}
+      />
+      <div className="mx-auto max-w-lg bg-white px-4 pb-4">
         {/* 상단 탭 */}
-        <div className="mb-4 mt-6 flex justify-around border-b">
+        <div className="mb-4 mt-[--header-height] flex justify-around border-b">
           <button
             onClick={() => setActiveTab("completed")}
             className={`flex-1 py-2 ${

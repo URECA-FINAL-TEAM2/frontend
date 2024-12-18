@@ -155,10 +155,14 @@ const GroomerReservationDetail = () => {
         <div className={`mb-6 rounded-lg border ${bgColor} ${borderColor} p-4`}>
           <div className="flex items-center">
             <div className="mr-4 self-center">
-              <img src={detail.profileImage} alt="반려견 사진" className="h-24 w-24 rounded-lg object-cover pt-0.5" />
+              <img
+                src={detail.profileImage}
+                alt="반려견 사진"
+                className="h-28 w-28 max-w-28 rounded-lg object-cover pt-0.5"
+              />
               <p className="mt-1 text-center font-semibold">{detail.dogName}</p>
             </div>
-            <div className="self-center text-base leading-tight">
+            <div className="self-center text-sm leading-snug">
               <p>
                 <span className="mr-2 font-semibold">견종</span>
                 <span>{detail.dogBreed}</span>

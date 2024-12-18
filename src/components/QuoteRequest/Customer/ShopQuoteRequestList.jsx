@@ -182,7 +182,7 @@ const CustomerEstimate = ({ Info }) => {
         {Info.status === "제안 완료" ? (
           <div
             onClick={() => {
-              navigate(`/customer/quotes/detail/${Info.quoteId}`);
+              navigate(`/customer/quotes/detail/${Info.quoteId}`, { state: { activeTab: 1 } }); //[x]
             }}
             className="flex h-[32px] w-full cursor-pointer items-center justify-center rounded-lg bg-main-200 text-center text-sm text-main-600"
           >
@@ -191,7 +191,7 @@ const CustomerEstimate = ({ Info }) => {
         ) : (
           <div
             onClick={() => {
-              navigate(`/customer/quotes/request/detail/${Info.quoteRequestId}`);
+              navigate(`/customer/quotes/request/detail/${Info.quoteRequestId}`, { state: { activeTab: 1 } }); // [x]
             }}
             className="flex h-[32px] w-full cursor-pointer items-center justify-center rounded-lg bg-gray-200 text-center text-sm"
           >
@@ -200,7 +200,7 @@ const CustomerEstimate = ({ Info }) => {
         )}
         <div
           onClick={() => {
-            navigate(`/customer/shop/${Info.shopId}`);
+            navigate(`/customer/shop/${Info.shopId}`, { state: { activeTab: 1 } }); // [ ]
           }}
           className="flex h-[32px] w-full cursor-pointer items-center justify-center rounded-lg bg-main text-center text-sm text-white"
         >

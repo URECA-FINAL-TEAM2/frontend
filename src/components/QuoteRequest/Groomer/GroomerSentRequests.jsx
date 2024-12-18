@@ -107,8 +107,10 @@ const GroomerEstimate = ({ Info }) => {
 
   return (
     <div className="m-5 rounded-xl bg-white p-4">
-      <div className="mb-3 flex">
-        <img src={Info.userProfileImage} alt="고객 프로필" className="mr-3 h-10 w-10 rounded-lg object-cover" />
+      <div className="mb-3 flex flex-shrink-0">
+        <div class="mr-3 flex h-10 w-10 flex-shrink-0">
+          <img src={Info.userProfileImage} alt="고객 프로필" className="h-full w-full rounded-lg object-cover" />
+        </div>
         <div className="w-full">
           <div className="flex gap-1">
             <p className="line-clamp-1 px-0.5 font-semibold leading-[1.1]">{Info.userName} 고객님</p>

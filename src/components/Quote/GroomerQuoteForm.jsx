@@ -267,7 +267,9 @@ function GroomerQuoteForm({ requestId }) {
         {/* 견적 설명 */}
         <div className="mb-1.5 flex items-center space-x-1">
           <img src={Description} alt="Description Icon" className="h-5 w-5" />
-          <h2 className="text-lg font-semibold leading-none">견적 설명</h2>
+          <h2 className="text-lg font-semibold leading-none">
+            견적 설명 <span className="text-main-500">*</span>
+          </h2>
         </div>
         <div className="mb-6 rounded-lg border border-main-400 p-4 leading-tight">
           <textarea
@@ -283,7 +285,9 @@ function GroomerQuoteForm({ requestId }) {
         <div className="flex justify-between">
           <div className="flex items-center space-x-1">
             <img src={Won} alt="Won Icon" className="h-5 w-5" />
-            <h2 className="text-lg font-semibold leading-none">금액</h2>
+            <h2 className="text-lg font-semibold leading-none">
+              금액 <span className="text-main-500">*</span>
+            </h2>
           </div>
           <div>
             <div className="flex">

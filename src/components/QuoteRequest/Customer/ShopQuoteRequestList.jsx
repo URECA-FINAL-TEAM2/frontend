@@ -156,7 +156,7 @@ const CustomerEstimate = ({ Info }) => {
                 )}
               </div>
             ) : (
-              <span className={`flex items-center rounded px-2 text-xs ${statusClassName}`}>
+              <span className={`flex items-center rounded-full px-2 text-xs ${statusClassName}`}>
                 {statusText}
                 {statusIcon && <span className="ml-0.5 text-xs">{statusIcon}</span>}
               </span>

@@ -7,6 +7,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import useAuthStore from "@/store/authStore";
 import { insertReview } from "@/queries/reviewQuery";
 import toast, { Toaster } from "react-hot-toast";
+import { formatDateOnly } from "@/utils/formatDate";
 
 const PostReview = () => {
   const navigate = useNavigate();
@@ -111,7 +112,7 @@ const PostReview = () => {
         <div className="mx-auto mb-4 h-auto w-11/12 rounded-xl bg-white p-4">
           <div className="flex items-center justify-between text-lg">
             <span>{item.shopName}</span>
-            <div className="text-sm">{item.beautyDate}</div>
+            <div className="text-sm">formatDateOnly{item.beautyDate} 방문</div>
           </div>
 
           <div className="mb-2 flex items-center">

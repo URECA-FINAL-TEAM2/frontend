@@ -6,6 +6,7 @@ import EditReviewImage from "@/components/Mypage/Review/EditReviewImage";
 import { useLocation, useNavigate } from "react-router-dom";
 import { insertReview, updateReview } from "@/queries/reviewQuery";
 import toast, { Toaster } from "react-hot-toast";
+import { formatDateOnly } from "@/utils/formatDate";
 
 const WriteReviews = () => {
   const navigate = useNavigate();
@@ -118,7 +119,7 @@ const WriteReviews = () => {
                 ))}
               </select>
             </div>
-            <div className="ml-3 text-xs text-gray-400">{review.reviewDate}</div>
+            <div className="ml-3 text-xs text-gray-400">{formatDateOnly(review.reviewDate)}일 방문</div>
           </div>
 
           <EditReviewImage

@@ -18,7 +18,7 @@ function App() {
   if (import.meta.env.MODE === "production") {
     console.log = function no_console() {};
     console.warn = function no_console() {};
-    console.error = function () {};
+    console.error = function no_console() {};
   }
 
   useEffect(() => {

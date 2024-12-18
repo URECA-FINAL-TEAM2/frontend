@@ -6,7 +6,7 @@ import BottomButton from "../common/button/BottomButton";
 import { insertQuote } from "@/queries/quoteQuery";
 import useAuthStore from "@/store/authStore";
 import { useNavigate } from "react-router-dom";
-import toast from "react-hot-toast";
+import toast, { Toaster } from "react-hot-toast";
 import ImageModal from "../common/modal/ImageModal";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 
@@ -122,9 +122,13 @@ function GroomerQuoteForm({ requestId }) {
     });
 
     toast("견적서가 발송되었습니다.", {
-      icon: "📨" // TODO
+      icon: "📨",
+      position: "top-center",
+      duration: 1000
     });
-    navigate("/groomer/quotes");
+    setTimeout(() => {
+      navigate("/groomer/quotes");
+    }, 1000);
   };
 
   if (isLoading) {
@@ -343,6 +347,7 @@ function GroomerQuoteForm({ requestId }) {
           </div>
         </ImageModal>
       )}
+      <Toaster />
     </>
   );
 }

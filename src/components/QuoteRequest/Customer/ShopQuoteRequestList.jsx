@@ -108,7 +108,7 @@ const CustomerEstimate = ({ Info }) => {
         };
       case "제안 완료":
         return {
-          className: "bg-main-100 text-main",
+          className: "bg-main-100 text-main-600",
           text: "견적서 수령"
         };
       default:

@@ -225,9 +225,8 @@ function TotalQuoteRequestList({ Infos }) {
   const filteredItems = () => {
     let items;
     if (status === "전체") {
-      items = Infos; // 모든 아이템 반환
+      items = Infos;
     } else {
-      // 선택된 상태와 일치하는 아이템만 필터링
       items = Infos.filter((request) => {
         switch (status) {
           case "견적 요청 중":
@@ -240,8 +239,28 @@ function TotalQuoteRequestList({ Infos }) {
       });
     }
 
-    // expireDate 최신순으로 정렬 (최신 날짜가 먼저 오도록)
-    return items.sort((a, b) => new Date(b.expireDate) - new Date(a.expireDate));
+    // 견적서 내부 정렬: createdAt 최신순
+    items.forEach((item) => {
+      item.quotes = [...item.quotes].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+    });
+
+    // 견적 요청 정렬
+    return items.sort((a, b) => {
+      // 견적서 있는 경우 최신 견적서의 createdAt 비교
+      const latestQuoteA = a.quotes[0];
+      const latestQuoteB = b.quotes[0];
+
+      if (latestQuoteA && latestQuoteB) {
+        return new Date(latestQuoteB.createdAt) - new Date(latestQuoteA.createdAt);
+      }
+
+      // 견적서 없는 경우 하위로
+      if (latestQuoteA && !latestQuoteB) return -1;
+      if (!latestQuoteA && latestQuoteB) return 1;
+
+      // 모두 견적서 없으면 기본 정렬
+      return 0;
+    });
   };
 
   return (

@@ -5,6 +5,7 @@ import StarRating from "@/utils/StarRating";
 import React, { useState } from "react";
 import { FaRegThumbsUp, FaThumbsUp, FaChevronLeft, FaChevronRight } from "react-icons/fa6";
 import ImageModal from "../common/modal/ImageModal";
+import toast, { Toaster } from "react-hot-toast";
 
 function ShopReview({ groomerUsername, reviewData, isCustomer }) {
   const { id } = useAuthStore();
@@ -24,7 +25,7 @@ function ShopReview({ groomerUsername, reviewData, isCustomer }) {
       setRecCnt((prev) => prev + 1);
     } else if (status === 400) {
       // 본인의 리뷰인 경우
-      alert("본인의 리뷰는 추천할 수 없습니다."); // TODO: 토스트
+      toast.error("본인의 리뷰는 추천할 수 없습니다.");
     } else {
       console.error("추천 등록 실패");
     }
@@ -156,6 +157,7 @@ function ShopReview({ groomerUsername, reviewData, isCustomer }) {
           </div>
         </ImageModal>
       )}
+      <Toaster />
     </>
   );
 }

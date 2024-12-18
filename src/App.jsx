@@ -90,9 +90,9 @@ function App() {
           <Route
             path="/groomer/*"
             element={
-              <PrivateRoute isLoggedIn={isLoggedIn} role="groomer" userRole={DefaultRole}>
-                <GroomerRoutes />
-              </PrivateRoute>
+              // <PrivateRoute isLoggedIn={isLoggedIn} role="groomer" userRole={DefaultRole}>
+              <GroomerRoutes />
+              // </PrivateRoute>
             }
           />
           <Route path="/customer/mypage" element={<MypageBoth />} />

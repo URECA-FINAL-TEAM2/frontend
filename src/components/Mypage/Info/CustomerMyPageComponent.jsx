@@ -70,7 +70,7 @@ const CustomerMyPageComponent = ({ userInfo, myPets, counts }) => {
             <Link to="/customer/mypet">
               <div className="flex w-[70px] flex-col p-2 text-center">
                 <img src={addPetIcons} alt="" className="mx-auto mb-2 aspect-square w-[65px] rounded-[50%]" />
-                <span className="text-xs">추가</span>
+                <span className="mt-[1px] text-[11px]">반려견 등록</span>
               </div>
             </Link>
           )}

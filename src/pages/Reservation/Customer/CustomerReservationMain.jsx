@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { getCustomerList } from "@/queries/reservationQuery";
 import SubHeader from "@/components/common/SubHeader";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import CustomerBottom from "@/components/common/CustomerBottom";
 
 const CustomerReservationMain = () => {
+  const location = useLocation();
+  const { activeQuotesTab } = location.state || {};
   const [reservations, setReservations] = useState([]);
   const [activeTab, setActiveTab] = useState("reserved");
   const navigate = useNavigate();
@@ -35,10 +38,19 @@ const CustomerReservationMain = () => {
 
   return (
     <div>
-      <SubHeader title="예약 내역" />;
-      <div className="mx-auto max-w-lg bg-white p-4">
+      <SubHeader
+        title="예약 내역"
+        navigate={() => {
+          if (activeQuotesTab) {
+            navigate(-1, { state: { activeTab: activeQuotesTab } });
+          } else {
+            navigate(-1); // activeQuotesTab이 없으면 단순히 뒤로가기
+          }
+        }}
+      />
+      <div className="mx-auto mb-[80px] max-w-lg bg-white p-4">
         {/* 상단 탭 */}
-        <div className="mb-4 mt-6 flex justify-around border-b">
+        <div className="mb-4 mt-12 flex justify-around border-b">
           <button
             onClick={() => setActiveTab("completed")}
             className={`flex-1 py-2 ${
@@ -102,18 +114,22 @@ const CustomerReservationMain = () => {
 
               {activeTab === "completed" && (
                 <div className="mt-4 flex w-[330px] space-x-4">
-                <button
-                  onClick={() => {
-                    console.log(customerId, item?.groomerId, item?.selectedQuoteId);
-                    navigate(`/customer/postReview/${customerId}`, {
-                      //TODO groomerId 받아서 넘기기
-                      state: { item } // 원하는 state를 담음
-                    });
-                  }}
-                  className="mt-4 w-full rounded-full bg-main-200 py-1 font-medium text-main-400"
-                >
-                  리뷰 쓰기
-                </button>
+                  <button
+                    onClick={() => {
+                      if (item.reviewCheck) {
+                        // 리뷰 관리 페이지로 이동
+                        navigate(`/customer/myreviews`);
+                      } else {
+                        // 리뷰 작성 페이지로 이동
+                        navigate(`/customer/postReview/${customerId}`, {
+                          state: { item } // 원하는 state를 담음
+                        });
+                      }
+                    }}
+                    className="w-full rounded-[10px] bg-main-200 py-1 font-medium text-main-400"
+                  >
+                    {item.reviewCheck ? "리뷰 관리" : "리뷰 쓰기"}
+                  </button>
 
                   {/* 예약 상세 */}
                   <button
@@ -161,6 +177,7 @@ const CustomerReservationMain = () => {
           {tabs[activeTab]?.length === 0 && <p className="mt-10 text-center text-gray-500">내용이 없습니다.</p>}
         </div>
       </div>
+      <CustomerBottom />
     </div>
   );
 };

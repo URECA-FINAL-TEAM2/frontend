@@ -3,6 +3,7 @@ import { getGroomerList } from "@/queries/reservationQuery";
 import SubHeader from "@/components/common/SubHeader";
 import dayjs from "dayjs";
 import { useNavigate } from "react-router-dom";
+import GroomerBottom from "@/components/common/GroomerBottom";
 
 const GroomerReservationMain = () => {
   const [reservations, setReservations] = useState([]);
@@ -41,7 +42,7 @@ const GroomerReservationMain = () => {
   return (
     <div>
       <SubHeader title="예약 내역" />
-      <div className="mx-auto max-w-lg bg-white p-4">
+      <div className="mx-auto mb-[80px] max-w-lg bg-white px-4">
         {/* 상단 탭 */}
         <div className="jusify-around mb-4 mt-[75px] flex border-b">
           <button
@@ -158,11 +159,26 @@ const GroomerReservationMain = () => {
                   예약 상세
                 </button>
               )}
+
+              {/* 투데이-예약 상세 버튼 */}
+              {activeTab === "today" && (
+                <button
+                  className="mt-4 w-full rounded-full bg-main-200 py-1 font-medium text-main-400"
+                  onClick={() =>
+                    navigate("detail", {
+                      state: { selectedQuoteId: item.selectedQuoteId, status: item.status }
+                    })
+                  }
+                >
+                  예약 상세
+                </button>
+              )}
             </div>
           ))}
           {tabs[activeTab]?.length === 0 && <p className="mt-10 text-center text-gray-500">내용이 없습니다.</p>}
         </div>
       </div>
+      <GroomerBottom />
     </div>
   );
 };

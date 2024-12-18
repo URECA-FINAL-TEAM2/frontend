@@ -250,7 +250,7 @@ const NotiComponents = () => {
                             onClick={() => showNotificationDetail(noti.id, noti.notifyType)}
                             className="ml-5 text-xs text-gray-500"
                           >
-                            견적 내용을 자세히 확인해보세요.
+                            알림 내용을 자세히 확인해보세요.
                           </button>
                           <button onClick={() => handleDelete(noti.id)}>
                             <GoTrash color="red" size={13} className="ml-1" />

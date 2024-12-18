@@ -28,6 +28,8 @@ const UserForm = ({
     console.log(nickname);
   }, [location]);
 
+  const [init, setInit] = useState(false);
+
   return (
     <>
       <form action="" className="mb-[--bottom-bar-height] mt-5 grow" method="PUT">
@@ -65,13 +67,16 @@ const UserForm = ({
             />
             <button
               type="button"
-              className="rounded-xl bg-main px-2 text-xs text-white"
-              onClick={() => handleNicknameCheck(formData?.nickName || formData?.nickname, setNickname)}
+              className={`rounded-xl px-2 text-xs text-white ${init ? "bg-main" : "bg-[#ccc]"}`}
+              onClick={() => {
+                setInit(true);
+                handleNicknameCheck(formData?.nickName || formData?.nickname, setNickname);
+              }}
             >
               중복확인
             </button>
           </div>
-          <NicknameCheck nickname={nickname} />
+          <NicknameCheck nickname={nickname} setInit={setInit} />
         </div>
         {/* Phone */}
         <div>

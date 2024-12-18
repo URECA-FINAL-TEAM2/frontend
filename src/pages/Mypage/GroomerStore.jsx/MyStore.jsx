@@ -31,26 +31,26 @@ const MyStore = () => {
 
   return (
     <>
-      {storeExists ? (
-        <div>
-          <SubHeader title="내 매장" />
-          <div className="mt-[90px]">
-            <div>
-              {activeComponent === "info" && <EditShop shopInfo={shopInfo} id={id} />}
-              {activeComponent === "portfolio" && <StorePortfolio portfolioImg={portfolioImg} />}
-            </div>
-
-            {activeComponent === "portfolio" && (
-              <button
-                onClick={() => navigate("/groomer/editportfolio", { state: { portfolioImg: portfolioImg } })}
-                className="bottomButtonPink"
-              >
-                포트폴리오 수정
-              </button>
-            )}
+      {/* {storeExists ? ( */}
+      <div>
+        <SubHeader title="내 매장" />
+        <div className="mt-[90px]">
+          <div>
+            {activeComponent === "info" && <EditShop shopInfo={shopInfo} id={id} />}
+            {activeComponent === "portfolio" && <StorePortfolio portfolioImg={portfolioImg} />}
           </div>
+
+          {activeComponent === "portfolio" && (
+            <button
+              onClick={() => navigate("/groomer/editportfolio", { state: { portfolioImg: portfolioImg } })}
+              className="bottomButtonPink"
+            >
+              포트폴리오 수정
+            </button>
+          )}
         </div>
-      ) : (
+      </div>
+      {/* ) : (
         <>
           <SubHeader title="내 매장" />
           <div className="h-[--header-height]"></div>
@@ -69,7 +69,7 @@ const MyStore = () => {
           />
           <div className="h-[--bottom-bar-height] bg-main-100"></div>
         </>
-      )}
+      )} */}
     </>
   );
 };

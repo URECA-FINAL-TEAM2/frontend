@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import useAuthStore from "@/store/authStore";
 import CustomerMyPageComponent from "@/components/Mypage/Info/CustomerMyPageComponent";
 import GroomerMyPageComponent from "@/components/Mypage/Info/GroomerMyPageComponent";
+import Header from "@/components/common/Header";
 
 const MypageBoth = () => {
   const { id, DefaultRole } = useAuthStore();
@@ -54,7 +55,8 @@ const MypageBoth = () => {
 
   return (
     <>
-      <SubHeader title={"마이페이지"} navigate="/customer/home" />
+      {/* <SubHeader title={"마이페이지"} /> */}
+      <Header />
       <main className="mt-[75px]">
         <div className="flex items-center justify-end bg-main-200 px-6">
           <Toggle isChecked={isChecked} setIsChecked={setIsChecked} />

@@ -26,7 +26,7 @@ const CustomerBottom = () => {
   }, [location.pathname]);
 
   return (
-    <div className="fixed bottom-0 z-20 h-[var(--bottom-bar-height)] w-[400px] bg-white px-2">
+    <div className="fixed bottom-0 z-20 h-[var(--bottom-bar-height)] w-[400px] border-t bg-white px-2 shadow-inner">
       <div className="grid h-full grid-cols-5 items-center justify-items-center">
         <Link to="/customer/home">
           <div className={`bottom ${active === "home" && "bottom-active"}`}>

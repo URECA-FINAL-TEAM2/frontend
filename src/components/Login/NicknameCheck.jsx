@@ -1,4 +1,15 @@
-const NicknameCheck = ({ nickname }) => {
+import { useEffect } from "react";
+
+const NicknameCheck = ({ nickname, setInit }) => {
+  // nickname 값에 따라 setInit 업데이트
+  useEffect(() => {
+    if (nickname === "possible") {
+      setInit(true); // 사용 가능한 닉네임일 때 true
+    } else {
+      setInit(false); // 다른 모든 경우 false
+    }
+  }, [nickname, setInit]);
+
   return (
     <>
       {nickname === "possible" && (

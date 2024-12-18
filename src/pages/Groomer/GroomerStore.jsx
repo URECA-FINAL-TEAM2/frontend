@@ -142,7 +142,7 @@ const EditStoreButton = ({ onClick }) => {
   return (
     <button
       onClick={onClick}
-      className="fixed bottom-20 z-50 ml-[340px] mt-[24px] flex h-12 w-12 transform items-center justify-center rounded-full bg-main p-3 text-white shadow-lg transition-colors duration-300 hover:bg-main-300"
+      className="fixed bottom-20 z-30 ml-[340px] mt-[24px] flex h-12 w-12 transform items-center justify-center rounded-full bg-main p-3 text-white shadow-lg transition-colors duration-300 hover:bg-main-300"
     >
       <img src={EditShop} className="ml-1 h-6 w-6" />
     </button>
@@ -153,7 +153,7 @@ const EditPortfolioButton = ({ onClick }) => {
   return (
     <button
       onClick={onClick}
-      className="fixed bottom-32 z-50 mb-2 ml-[340px] mt-[24px] flex h-12 w-12 transform items-center justify-center rounded-full bg-main p-3 text-white shadow-lg transition-colors duration-300 hover:bg-main-300"
+      className="fixed bottom-32 z-30 mb-2 ml-[340px] mt-[24px] flex h-12 w-12 transform items-center justify-center rounded-full bg-main p-3 text-white shadow-lg transition-colors duration-300 hover:bg-main-300"
     >
       <RiImageEditFill size={23} />
     </button>

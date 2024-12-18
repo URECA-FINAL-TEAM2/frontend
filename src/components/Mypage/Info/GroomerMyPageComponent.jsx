@@ -43,6 +43,7 @@ const GroomerMyPageComponent = ({ userInfo, counts }) => {
           secondValue={counts.confirmedReservations}
           thirdName={"내 매장 리뷰"}
           thirdValue={counts.myReviews}
+          navigate={"/groomer/reservation"}
         />
       </div>
       {/* 목록 */}

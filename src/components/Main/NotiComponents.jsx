@@ -6,7 +6,7 @@ import {
   readNotification
 } from "@/queries/notificationQuery";
 import useAuthStore from "@/store/authStore";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { VscBell } from "react-icons/vsc";
 import { GoTrash, GoDotFill } from "react-icons/go";
 import { IoCloseOutline } from "react-icons/io5";
@@ -63,16 +63,7 @@ const NotiComponents = () => {
     }
   };
 
-  // 개별 알림 삭제
-  const handleDelete = async (notificationId) => {
-    try {
-      await deleteNotification(roleType, userId, notificationId);
-      setNotifications((prev) => prev.filter((noti) => noti.id !== notificationId));
-      setUnreadCount((prev) => Math.max(0, prev - 1));
-    } catch (error) {
-      console.error("알림 삭제 중 오류:", error);
-    }
-  };
+  const [filterType, setFilterType] = useState("all"); // "all" 또는 "unread"
 
   // 전체 알림 삭제
   const handleClear = async () => {
@@ -127,14 +118,6 @@ const NotiComponents = () => {
     }
   };
 
-  const [filterType, setFilterType] = useState("all"); // "all" 또는 "unread"
-
-  // 알림 필터링
-  const filteredNotifications =
-    filterType === "unread"
-      ? notifications.filter((noti) => !noti.readCheckYn) // 읽지 않은 알림만
-      : notifications; // 전체 알림
-
   // 알림 읽음 처리
   const showNotificationDetail = async (notificationId, notifyType) => {
     try {
@@ -153,6 +136,47 @@ const NotiComponents = () => {
     }
   };
 
+  // 개별 알림 삭제
+  const handleDelete = async (notificationId) => {
+    // UI 업데이트 먼저 처리
+    const updatedNotifications = notifications.filter((noti) => noti.id !== notificationId);
+    setNotifications(updatedNotifications);
+    setUnreadCount((prev) => Math.max(0, prev - 1));
+
+    try {
+      // 백엔드 요청
+      await deleteNotification(roleType, userId, notificationId);
+    } catch (error) {
+      console.error("알림 삭제 중 오류:", error);
+
+      // 요청 실패 시 알림 복구
+      const deletedNotification = notifications.find((noti) => noti.id === notificationId);
+      if (deletedNotification) {
+        setNotifications((prev) => [...prev, deletedNotification]);
+      }
+      toast.error("알림 삭제에 실패했습니다.");
+    }
+  };
+
+  //  알림 필터링
+  const filteredNotifications = useMemo(() => {
+    if (!Array.isArray(notifications)) return []; // `notifications`가 배열이 아닌 경우 빈 배열 반환
+
+    const filtered =
+      filterType === "unread"
+        ? notifications.filter((noti) => !noti.readCheckYn) // 읽지 않은 알림만 필터링
+        : notifications; // 전체 알림
+
+    return filtered.sort((a, b) => {
+      // 1. readCheckYn 기준 정렬 (읽지 않은 알림이 먼저 오도록)
+      if (a.readCheckYn !== b.readCheckYn) {
+        return a.readCheckYn ? 1 : -1; // false가 앞쪽, true가 뒤쪽
+      }
+      // 2. createdAt 기준 정렬 (최신 날짜가 먼저 오도록)
+      return new Date(b.createdAt) - new Date(a.createdAt);
+    });
+  }, [notifications, filterType]);
+
   return (
     <div className="">
       {unreadCount > 0 ? (
@@ -169,9 +193,9 @@ const NotiComponents = () => {
       )}
 
       {isSidebarOpen && (
-        <div className="fixed left-0 right-0 top-0 z-50 flex items-center justify-center">
+        <div className="z-70 fixed left-0 right-0 top-0 flex items-center justify-center">
           <div className="min-h-screen w-[400px] overflow-y-scroll rounded-xl bg-white shadow-2xl scrollbar-hide">
-            <div className="">
+            <div className="pb-[80px]">
               {/* 헤더 */}
               <div className="grid h-[var(--header-height)] w-[400px] grid-cols-[1fr_2fr_1fr] items-center bg-white px-5 text-center">
                 <div></div>
@@ -196,13 +220,13 @@ const NotiComponents = () => {
                     onClick={() => setFilterType("all")}
                     className="mr-2 rounded-2xl border border-main-200 px-2 py-1 shadow-sm"
                   >
-                    전체 알림 ({notifications.length})
+                    전체 알림
                   </button>
                   <button
                     onClick={() => setFilterType("unread")}
                     className="rounded-2xl border border-main-200 px-2 py-1 shadow-sm"
                   >
-                    읽지 않은 알림 ({unreadCount})
+                    읽지 않은 알림
                   </button>
                 </div>
                 <button onClick={() => setIsModalOpen(true)} className="flex items-center justify-start text-[red]">
@@ -211,17 +235,9 @@ const NotiComponents = () => {
                 </button>
               </div>
 
-              <div className="mx-auto h-[90vh] overflow-y-scroll">
-                {[...filteredNotifications]
-                  .sort((a, b) => {
-                    // 1. readCheckYn 기준 정렬
-                    if (a.readCheckYn !== b.readCheckYn) {
-                      return a.readCheckYn ? 1 : -1; // false가 앞쪽, true가 뒤쪽
-                    }
-                    // 2. createdAt 기준 정렬 (오름차순: 오래된 날짜가 앞쪽)
-                    return new Date(b.createdAt) - new Date(a.createdAt);
-                  })
-                  .map((noti) => (
+              <div className="mx-auto h-[100vh] overflow-y-scroll scrollbar-hide">
+                {filteredNotifications.length > 0 ? (
+                  filteredNotifications.map((noti) => (
                     <div className="my-3 block rounded-xl bg-white p-4 px-6" key={noti.id}>
                       <div className="flex flex-col">
                         <button
@@ -249,7 +265,7 @@ const NotiComponents = () => {
                             onClick={() => showNotificationDetail(noti.id, noti.notifyType)}
                             className="ml-5 text-xs text-gray-500"
                           >
-                            견적 내용을 자세히 확인해보세요.
+                            알림 내용을 자세히 확인해보세요.
                           </button>
                           <button onClick={() => handleDelete(noti.id)}>
                             <GoTrash color="red" size={13} className="ml-1" />
@@ -257,8 +273,10 @@ const NotiComponents = () => {
                         </div>
                       </div>
                     </div>
-                  ))}
-                <div className="mb-28"></div>
+                  ))
+                ) : (
+                  <div className="mt-8 text-center text-gray-500">알림이 없습니다.</div>
+                )}
               </div>
             </div>
           </div>

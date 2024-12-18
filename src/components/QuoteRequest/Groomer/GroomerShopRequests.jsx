@@ -5,18 +5,26 @@ import { Schedule, Corgi, Note } from "/public/Icons";
 import useAuthStore from "@/store/authStore";
 import Modal from "@/components/common/modal/modal";
 import { RequestReject } from "@/queries/quoteRequestQuery";
+import toast, { Toaster } from "react-hot-toast";
 
-function GroomerShopRequests({ Infos }) {
+function GroomerShopRequests({ Infos, onRequestReject }) {
+  if (Infos == null) return <></>;
+
+  const filteredItems = () => {
+    // expireDate 최신순으로 정렬 (최신 날짜가 먼저 오도록)
+    return Infos.sort((a, b) => new Date(b.expiryDate) - new Date(a.expiryDate));
+  };
+
   return (
     <>
-      {Infos.map((Info) => {
-        return <GroomerEstimate Info={Info} />;
+      {filteredItems().map((Info) => {
+        return <GroomerEstimate Info={Info} onRequestReject={onRequestReject} />;
       })}
     </>
   );
 }
 
-const GroomerEstimate = ({ Info }) => {
+const GroomerEstimate = ({ Info, onRequestReject }) => {
   const { id } = useAuthStore();
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -33,7 +41,7 @@ const GroomerEstimate = ({ Info }) => {
 
   const handleReject = async () => {
     if (rejectReason.trim() === "") {
-      alert("거절 사유를 입력해주세요.");
+      toast.error("거절 사유를 입력하세요.");
       return;
     }
 
@@ -45,6 +53,7 @@ const GroomerEstimate = ({ Info }) => {
       };
       const response = await RequestReject(rejectData);
       console.log("거절 성공: " + response);
+      onRequestReject(Info.requestId);
       setIsModalOpen(false);
       setRejectReason("");
     } catch (error) {
@@ -84,13 +93,13 @@ const GroomerEstimate = ({ Info }) => {
           onClick={() => {
             navigate(`/groomer/quotes/request/detail/${Info.requestId}`);
           }}
-          className="flex h-[35px] w-3/4 cursor-pointer items-center justify-center rounded-lg bg-gray-200 text-center text-sm"
+          className="flex h-[32px] w-3/4 cursor-pointer items-center justify-center rounded-lg bg-gray-200 text-center text-sm"
         >
           상세보기
         </div>
         <div
           onClick={openModal}
-          className="flex h-[35px] w-1/4 cursor-pointer items-center justify-center rounded-lg bg-gray-300 text-center text-sm text-white"
+          className="flex h-[32px] w-1/4 cursor-pointer items-center justify-center rounded-lg bg-gray-300 text-center text-sm text-white"
         >
           거절하기
         </div>
@@ -107,6 +116,7 @@ const GroomerEstimate = ({ Info }) => {
           />
         </div>
       </Modal>
+      <Toaster />
     </div>
   );
 };

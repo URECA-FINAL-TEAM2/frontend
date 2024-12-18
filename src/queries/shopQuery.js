@@ -136,8 +136,10 @@ export const postFavorite = async (customerId, shopId) => {
     });
 
     console.log(response.status === 200 ? "요청 성공" : `요청 실패: ${response.status}`);
+    return response.status;
   } catch (error) {
     console.error("요청 실패:", error);
+    return null; // 실패 시 null 반환
   }
 };
 
@@ -151,8 +153,10 @@ export const deleteFavorite = async (customerId, shopId) => {
     });
 
     console.log(response.status === 200 ? "요청 성공" : `요청 실패: ${response.status}`);
+    return response.status;
   } catch (error) {
     console.error("요청 실패:", error);
+    return null; // 실패 시 null 반환
   }
 };
 

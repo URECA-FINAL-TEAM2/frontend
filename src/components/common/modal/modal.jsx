@@ -16,10 +16,10 @@ const Modal = ({
         <div></div>
         <div className="mb-3 w-full text-center">{children}</div>
         <div className="flex gap-4">
-          <button className="h-[35px] w-[152px] rounded-md bg-gray-100" onClick={onClose}>
+          <button className="h-[32px] w-[152px] rounded-md bg-gray-100" onClick={onClose}>
             {closeText}
           </button>
-          <button className="h-[35px] w-[152px] rounded-md bg-main-300 text-white" onClick={onConfirm}>
+          <button className="h-[32px] w-[152px] rounded-md bg-main-300 text-white" onClick={onConfirm}>
             {confirmText}
           </button>
         </div>

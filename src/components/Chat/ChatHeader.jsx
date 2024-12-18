@@ -3,7 +3,7 @@ import { IoIosHome } from "react-icons/io";
 import { VscChevronLeft } from "react-icons/vsc";
 import { useEffect, useState } from "react";
 
-const ChatHeader = ({ DefaultRole, groomerInfo, customerInfo }) => {
+const ChatHeader = ({ addressLink, DefaultRole, shopInfo, groomerInfo, customerInfo }) => {
   const [data, setData] = useState({
     image: "",
     name: "",
@@ -17,9 +17,9 @@ const ChatHeader = ({ DefaultRole, groomerInfo, customerInfo }) => {
       setData({
         image: groomerInfo?.groomerProfileImage,
         name: groomerInfo?.groomerName,
-        address: groomerInfo?.address,
-        shopName: groomerInfo?.shopName,
-        shopId: groomerInfo?.shopId
+        address: addressLink,
+        shopName: shopInfo?.shopName,
+        shopId: shopInfo?.shopId
       });
     } else if (DefaultRole === "groomer") {
       setData({
@@ -28,7 +28,7 @@ const ChatHeader = ({ DefaultRole, groomerInfo, customerInfo }) => {
         address: customerInfo?.address
       });
     }
-  }, [DefaultRole, groomerInfo, customerInfo]);
+  }, [DefaultRole, groomerInfo, customerInfo, shopInfo]);
 
   const navigate = useNavigate();
 
@@ -41,7 +41,10 @@ const ChatHeader = ({ DefaultRole, groomerInfo, customerInfo }) => {
         <img src={data?.image} alt="Profile" className="mx-3 h-12 w-12 rounded-full" />
         <div>
           <h1 className="text-md font-semibold">{data?.name}</h1>
-          <p className="text-xs text-gray-500">{data?.shopName}</p>
+
+          <div className="text-xs text-gray-500">
+            <span className="font-bold text-main-500">{data?.shopName}</span> {data?.address}
+          </div>
         </div>
       </div>
       {DefaultRole === "customer" && (

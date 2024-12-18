@@ -1,20 +1,34 @@
 import React, { useEffect, useState } from "react";
 import GroomerBottom from "@/components/common/GroomerBottom";
-import SubHeader from "@/components/common/SubHeader";
 import GroomerTotalRequests from "@/components/QuoteRequest/Groomer/GroomerTotalRequests";
 import GroomerShopRequests from "@/components/QuoteRequest/Groomer/GroomerShopRequests";
 import GroomerSentRequests from "@/components/QuoteRequest/Groomer/GroomerSentRequests";
 import useAuthStore from "@/store/authStore";
 import { getGroomerQuoteDirect, getGroomerQuoteSend, getGroomerQuoteTotal } from "@/queries/quoteRequestQuery";
+import EmptyPage from "@/components/common/EmptyPage";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const GroomerQuote = () => {
   const { id } = useAuthStore();
-  // 테스트용 groomerId : 5 도도한 몽이네
-  // const { id } = { id: { groomerId: 5 } };
+  const location = useLocation();
+  const { activeTab = 1 } = location.state || {};
   const [activeSection, setActiveSection] = useState("section1");
   const [shopRequests, setShopRequests] = useState(null);
   const [totalRequests, setTotalRequests] = useState(null);
   const [sentQuotes, setSentQuotes] = useState(null);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (activeTab === 1) {
+      setActiveSection("section1");
+    } else if (activeTab === 2) {
+      setActiveSection("section2");
+    } else if (activeTab === 3) {
+      setActiveSection("section3");
+    } else {
+      setActiveSection("section1");
+    }
+  }, [activeTab]);
 
   // Fetch shopRequests on mount
   useEffect(() => {
@@ -64,14 +78,38 @@ const GroomerQuote = () => {
     fetchData();
   }, []);
 
-  if (shopRequests === null) return "1:1 맞춤 견적 데이터를 가져오는중...";
-  if (totalRequests === null) return "견적 공고 데이터를 가져오는중...";
-  if (sentQuotes === null) return "보낸 견적서 데이터를 가져오는중...";
+  const handleRejectRequest = (requestId) => {
+    setShopRequests((prevRequests) => prevRequests.filter((request) => request.requestId !== requestId));
+  };
+
+  if (totalRequests === "404")
+    return (
+      <div>
+        <div className="fixed top-0 z-30 grid h-[var(--header-height)] w-[400px] items-center bg-white px-5 text-center">
+          <span className="text-lg">받은 견적 요청</span>
+        </div>
+        <div className="h-[--header-height]"></div>
+        <EmptyPage
+          content={
+            <div className="text-center">
+              <span className="block text-lg">등록된 매장이 없습니다.</span>
+              <button
+                onClick={() => navigate("/groomer/createstore", { state: { update: false } })}
+                className="mt-2 rounded-lg bg-main px-4 py-[3px] text-white hover:bg-main-300"
+              >
+                매장 등록하기
+              </button>
+            </div>
+          }
+        />
+        <GroomerBottom />
+      </div>
+    );
 
   const renderContent = () => {
     switch (activeSection) {
       case "section1":
-        return <GroomerShopRequests Infos={shopRequests} />; // GetRequestGroomer : 1:1 견적 요청
+        return <GroomerShopRequests Infos={shopRequests} onRequestReject={handleRejectRequest} />; // GetRequestGroomer : 1:1 견적 요청
       case "section2":
         return <GroomerTotalRequests Infos={totalRequests} />; // GetTotalRequestGroomer : 견적 공고
       case "section3":
@@ -79,12 +117,13 @@ const GroomerQuote = () => {
       default:
         return null;
     }
-    // TODO: 각각 빈 배열일 경우 빈화면 대신 결과가 없다는 텍스트라도 반환하기
   };
 
   return (
     <div>
-      <SubHeader title="받은 견적 요청" navigate={-1} />
+      <div className="fixed top-0 z-30 grid h-[var(--header-height)] w-[400px] items-center bg-white px-5 text-center">
+        <span className="text-lg">받은 견적 요청</span>
+      </div>
       {/* Menu Bar */}
       <div className="fixed top-[--header-height] flex h-10 w-[400px] border-b bg-white">
         <button

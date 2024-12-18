@@ -12,13 +12,14 @@ const PostReview = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { id } = useAuthStore(); // id.customerId
-  const { groomerId, customerId, selectedQuoteId } = location.state || {};
+  const { item } = location.state || {};
+  const customerId = id.customerId;
 
   const [reviewData, setReviewData] = useState({
-    groomerId: groomerId || null,
+    groomerId: item.groomerId || null,
     customerId: customerId || id.customerId,
-    selectedQuoteId: selectedQuoteId || null,
-    starScore: 4.5,
+    selectedQuoteId: item.selectedQuoteId || null,
+    starScore: 0,
     content: "",
     images: [], // 원본 파일
     previewImages: [] // 미리보기 URL
@@ -68,11 +69,16 @@ const PostReview = () => {
   };
 
   const handleConfirmModal = async () => {
-    console.log("리뷰 작성 완료", reviewData);
     setIsModalOpen(false);
 
-    await insertReview(reviewData);
-    toast("수정이 완료되었습니다.", { icon: "👏🏻" });
+    try {
+      const response = await insertReview(reviewData);
+      // console.log(response);
+      // toast.success("수정이 완료되었습니다.", { icon: "👏🏻" });
+    } catch (error) {
+      console.error("리뷰 수정 중 에러 발생:", error.message);
+      toast.error(`리뷰 수정에 실패했습니다: ${error.message}`, { icon: "⚠️" });
+    }
 
     setTimeout(() => {
       navigate(-1);
@@ -104,8 +110,8 @@ const PostReview = () => {
       <div className="mx-auto min-h-screen bg-main-100 pt-[90px]">
         <div className="mx-auto mb-4 h-auto w-11/12 rounded-xl bg-white p-4">
           <div className="flex items-center justify-between text-lg">
-            <span>매장명</span>
-            <div className="text-sm">2024.11.14</div>
+            <span>{item.shopName}</span>
+            <div className="text-sm">{item.beautyDate}</div>
           </div>
 
           <div className="mb-2 flex items-center">

@@ -31,37 +31,45 @@ const MyStore = () => {
 
   return (
     <>
+      {/* {storeExists ? ( */}
       <div>
         <SubHeader title="내 매장" />
-
-        {storeExists ? (
-          <div className="mt-[90px]">
-            <div>
-              {activeComponent === "info" && <EditShop shopInfo={shopInfo} id={id} />}
-              {activeComponent === "portfolio" && <StorePortfolio portfolioImg={portfolioImg} />}
-            </div>
-
-            {activeComponent === "portfolio" && (
-              <button
-                onClick={() => navigate("/groomer/editportfolio", { state: { portfolioImg: portfolioImg } })}
-                className="bottomButtonPink"
-              >
-                포트폴리오 수정
-              </button>
-            )}
-          </div>
-        ) : (
+        <div className="mt-[90px]">
           <div>
-            <EmptyPage content={"등록된 매장이 없습니다."} />
+            {activeComponent === "info" && <EditShop shopInfo={shopInfo} id={id} />}
+            {activeComponent === "portfolio" && <StorePortfolio portfolioImg={portfolioImg} />}
+          </div>
+
+          {activeComponent === "portfolio" && (
             <button
-              onClick={() => navigate("/groomer/createstore", { state: { update: false } })}
+              onClick={() => navigate("/groomer/editportfolio", { state: { portfolioImg: portfolioImg } })}
               className="bottomButtonPink"
             >
-              매장 등록하기
+              포트폴리오 수정
             </button>
-          </div>
-        )}
+          )}
+        </div>
       </div>
+      {/* ) : (
+        <>
+          <SubHeader title="내 매장" />
+          <div className="h-[--header-height]"></div>
+          <EmptyPage
+            content={
+              <div className="text-center">
+                <span className="block text-lg">등록된 매장이 없습니다.</span>
+                <button
+                  onClick={() => navigate("/groomer/createstore", { state: { update: false } })}
+                  className="mt-2 rounded-lg bg-main px-4 py-[3px] text-white hover:bg-main-300"
+                >
+                  매장 등록하기
+                </button>
+              </div>
+            }
+          />
+          <div className="h-[--bottom-bar-height] bg-main-100"></div>
+        </>
+      )} */}
     </>
   );
 };

@@ -6,7 +6,7 @@ import BottomButton from "../common/button/BottomButton";
 import { insertQuote } from "@/queries/quoteQuery";
 import useAuthStore from "@/store/authStore";
 import { useNavigate } from "react-router-dom";
-import toast from "react-hot-toast";
+import toast, { Toaster } from "react-hot-toast";
 import ImageModal from "../common/modal/ImageModal";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 
@@ -19,6 +19,7 @@ function GroomerQuoteForm({ requestId }) {
   const { id } = useAuthStore();
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
   const [isImgModalOpen, setIsImgModalOpen] = useState(false);
+  const [isAmountError, setIsAmountError] = useState(false);
 
   const navigate = useNavigate();
 
@@ -30,7 +31,7 @@ function GroomerQuoteForm({ requestId }) {
         setRequestInfo(data);
       } catch (error) {
         console.error("Error fetching requestInfo:", error);
-        setError(err);
+        setError(error);
       } finally {
         setIsLoading(false);
       }
@@ -61,29 +62,21 @@ function GroomerQuoteForm({ requestId }) {
     setSelectedImageIndex((prevIndex) => (prevIndex === requestInfo.requestImages.length - 1 ? 0 : prevIndex + 1));
   };
 
-  if (isLoading) {
-    return <div className="py-10 text-center">Loading...</div>;
-  }
-
-  if (error) {
-    return <div className="py-10 text-center text-red-500">Error loading request details</div>;
-  }
-
-  if (!requestInfo) {
-    return <div className="py-10 text-center">No request details found</div>;
-  }
-
   // Format date and time
-  const formattedDate = new Date(requestInfo.beautyDate).toLocaleDateString("ko-KR", {
-    year: "numeric",
-    month: "long",
-    day: "numeric"
-  });
+  const formattedDate = requestInfo?.beautyDate
+    ? new Date(requestInfo.beautyDate).toLocaleDateString("ko-KR", {
+        year: "numeric",
+        month: "long",
+        day: "numeric"
+      })
+    : "날짜 없음";
 
-  const formattedTime = new Date(requestInfo.beautyDate).toLocaleTimeString("ko-KR", {
-    hour: "2-digit",
-    minute: "2-digit"
-  });
+  const formattedTime = requestInfo?.beautyDate
+    ? new Date(requestInfo.beautyDate).toLocaleTimeString("ko-KR", {
+        hour: "2-digit",
+        minute: "2-digit"
+      })
+    : "시간 없음";
 
   // Format cost
   const formatNumber = (num) => {
@@ -101,6 +94,9 @@ function GroomerQuoteForm({ requestId }) {
     if (/^\d*$/.test(inputValue)) {
       setValue(formatNumber(inputValue));
     }
+
+    const numericValue = Number(inputValue);
+    setIsAmountError(numericValue > 0 && numericValue < 1000);
   };
 
   const handleBlur = (e) => {
@@ -109,20 +105,45 @@ function GroomerQuoteForm({ requestId }) {
   };
 
   const handleSubmitButton = async () => {
+    const numericValue = Number(value.replace(/,/g, ""));
+
+    if (numericValue < 1000) {
+      setIsAmountError(true);
+      return;
+    }
+
     await insertQuote({
       requestId: Number(requestId),
       groomerId: id.groomerId,
       dogId: requestInfo.dogId,
       quoteContent: quoteContent,
-      quoteCost: Number(value.replace(/,/g, "")),
+      quoteCost: numericValue,
       beautyDate: requestInfo.beautyDate
     });
 
     toast("견적서가 발송되었습니다.", {
-      icon: "📨"
+      icon: "📨",
+      position: "top-center",
+      duration: 1000
     });
-    navigate("/groomer/quotes");
+    setTimeout(() => {
+      navigate("/groomer/quotes");
+    }, 1000);
   };
+
+  if (isLoading) {
+    return <div className="py-10 text-center">Loading...</div>;
+  }
+
+  if (error) {
+    return <div className="py-10 text-center text-red-500">Error loading request details</div>;
+  }
+
+  if (!requestInfo) {
+    return <div className="py-10 text-center">No request details found</div>;
+  }
+
+  const isSubmitEnabled = quoteContent.trim() !== "" && value.trim() !== "" && Number(value.replace(/,/g, "")) >= 1000;
 
   return (
     <>
@@ -166,7 +187,11 @@ function GroomerQuoteForm({ requestId }) {
         <div className="mb-6 rounded-lg border border-main-400 p-4">
           <div className="flex items-center">
             <div className="mr-4 self-center">
-              <img src={requestInfo.dogProfileImage} alt="반려견 사진" className="h-28 w-28 rounded-lg object-cover" />
+              <img
+                src={requestInfo.dogProfileImage}
+                alt="반려견 사진"
+                className="h-28 w-28 min-w-28 rounded-lg object-cover"
+              />
               <p className="mt-1 text-center font-semibold">{requestInfo.dogName}</p>
             </div>
             <div className="text-sm leading-snug">
@@ -260,22 +285,30 @@ function GroomerQuoteForm({ requestId }) {
             <img src={Won} alt="Won Icon" className="h-5 w-5" />
             <h2 className="text-lg font-semibold leading-none">금액</h2>
           </div>
-          <div className="flex">
-            <div className="mr-1 w-48 rounded-lg border border-main-400 leading-tight">
-              <input
-                type="text"
-                value={value}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                className="w-full resize-none rounded-lg border-none px-0.5 pb-0 pt-1 text-end focus:outline-none"
-              />
+          <div>
+            <div className="flex">
+              <div className="mr-1 w-48 rounded-lg border border-main-400 leading-tight">
+                <input
+                  type="text"
+                  value={value}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  className="w-full resize-none rounded-lg border-none px-0.5 pb-0 pt-1 text-end focus:outline-none"
+                />
+              </div>
+              <p className="mt-1 text-xl font-semibold leading-none">원</p>
             </div>
-            <p className="mt-1 text-xl font-semibold leading-none">원</p>
+            {isAmountError && <p className="mt-1 text-xs text-red-500">금액은 1000원 이상으로 설정해야 합니다.</p>}
           </div>
         </div>
 
-        <BottomButton onClick={handleSubmitButton}>견적서 보내기</BottomButton>
+        {isSubmitEnabled ? (
+          <BottomButton onClick={handleSubmitButton}>견적서 보내기</BottomButton>
+        ) : (
+          <BottomButton styleType="gray">견적서 보내기</BottomButton>
+        )}
       </div>
+
       {/* Image Modal with Navigation */}
       {requestInfo.requestImages && requestInfo.requestImages.length > 0 && (
         <ImageModal isOpen={isImgModalOpen} onClose={handleCloseImgModal}>
@@ -314,6 +347,7 @@ function GroomerQuoteForm({ requestId }) {
           </div>
         </ImageModal>
       )}
+      <Toaster />
     </>
   );
 }

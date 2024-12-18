@@ -9,11 +9,11 @@ import { RequestCancel } from "@/queries/paymentQuery";
 import { useLocation, useNavigate } from "react-router-dom";
 import { User, Designer, Schedule, Corgi, Note, Photos, Description } from "/public/Icons";
 import StaticMap from "@/components/Map/StaticMap";
+import toast, { Toaster } from "react-hot-toast";
 
 const CustomerReservationDetail = () => {
   const location = useLocation();
   const { selectedQuoteId, status } = location.state || {};
-  // const { selectedQuoteId, status } = { selectedQuoteId: 139, status: "" }; // 예약 상태 테스트용
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [cancelReason, setCancelReason] = useState("");
   const [detail, setDetail] = useState(null);
@@ -57,11 +57,11 @@ const CustomerReservationDetail = () => {
 
   const handleConfirmModal = async () => {
     if (cancelReason.trim() === "") {
-      alert("취소 사유를 입력해주세요.");
+      toast.error("취소 사유를 입력해주세요.");
       return;
     }
     if (!detail || !detail.paymentKey) {
-      alert("유효한 결제 키가 없습니다. 예약을 취소할 수 없습니다.");
+      toast.error("유효한 결제 키가 없습니다. 예약을 취소할 수 없습니다.");
       return;
     }
 
@@ -72,15 +72,19 @@ const CustomerReservationDetail = () => {
       };
       const result = await RequestCancel(cancelData);
       console.log("취소 성공:", result);
-      alert("예약이 성공적으로 취소되었습니다.");
+      toast.success("예약이 취소되었습니다.");
       setIsModalOpen(false);
       setCancelReason("");
-      navigate("/customer/payment/cancel", {
-        state: { paymentKey: cancelData.paymentKey }
-      });
+      setTimeout(() => {
+        navigate("/customer/payment/cancel", {
+          state: { paymentKey: cancelData.paymentKey }
+        });
+      }, 1000);
     } catch (error) {
       console.error("취소 실패:", error);
-      alert("예약 취소에 실패했습니다. 다시 시도해주세요.");
+      toast("예약 취소에 실패했습니다. 다시 시도해주세요.", {
+        icon: "❌"
+      });
     }
   };
 
@@ -167,10 +171,14 @@ const CustomerReservationDetail = () => {
         <div className={`mb-6 rounded-lg border ${bgColor} ${borderColor} p-4`}>
           <div className="flex items-center">
             <div className="mr-4 self-center">
-              <img src={detail.profileImage} alt="반려견 사진" className="h-24 w-24 rounded-lg object-cover pt-0.5" />
+              <img
+                src={detail.profileImage}
+                alt="반려견 사진"
+                className="h-28 w-28 max-w-28 rounded-lg object-cover pt-0.5"
+              />
               <p className="mt-1 text-center font-semibold">{detail.dogName}</p>
             </div>
-            <div className="self-center text-base leading-tight">
+            <div className="self-center text-sm leading-snug">
               <p>
                 <span className="mr-2 font-semibold">견종</span>
                 <span>{detail.dogBreed}</span>
@@ -312,6 +320,7 @@ const CustomerReservationDetail = () => {
           </div>
         </Modal>
       </div>
+      <Toaster />
     </div>
   );
 };

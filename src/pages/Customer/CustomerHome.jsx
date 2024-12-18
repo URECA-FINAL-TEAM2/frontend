@@ -7,6 +7,8 @@ import useAuthStore from "@/store/authStore";
 import BannerSwiper from "@/components/Main/BannerSwiper";
 import toast, { Toaster } from "react-hot-toast";
 import { useToastStore } from "@/store/toastStore";
+import { MdThumbUpAlt } from "react-icons/md";
+import designer from "/Icons/Designer.svg";
 
 const CustomerHome = () => {
   const { toastMessage, toastIcon, clearToast } = useToastStore();
@@ -44,9 +46,9 @@ const CustomerHome = () => {
           <BannerSwiper />
         </section>
 
-        {/* BEST 미용후기 추천 */}
         <section className="mb-8">
-          <div className="flex items-center justify-between px-3">
+          <div className="flex items-center justify-start px-3">
+            <MdThumbUpAlt size={20} className="mr-1" />
             <h2 className="text-lg">BEST 미용 후기 추천</h2>
           </div>
 
@@ -58,7 +60,10 @@ const CustomerHome = () => {
         {/* 우리동네 디자이너 */}
         <section>
           <div className="flex items-center justify-between px-3">
-            <h2 className="text-lg">우리동네 디자이너</h2>
+            <h2 className="flex items-center text-lg">
+              <img src={designer} alt="" className="mr-1 w-[25px]" />
+              우리동네 디자이너
+            </h2>
             <Link to="/customer/shop">
               <div className="text-xs">더보기</div>
             </Link>

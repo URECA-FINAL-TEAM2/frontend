@@ -7,15 +7,23 @@ import { deleteReview } from "@/queries/reviewQuery";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import ImageModal from "@/components/common/modal/ImageModal";
 
-const ReviewBox = ({ review }) => {
+const ReviewBox = ({ review, setReviews }) => {
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
   const [isImgModalOpen, setIsImgModalOpen] = useState(false);
 
   const handleDelete = async () => {
-    setIsModalOpen(false);
-    await deleteReview(review.reviewId);
+    try {
+      setIsModalOpen(false);
+      await deleteReview(review.reviewId);
+
+      // 삭제된 리뷰를 상태에서 제거
+      setReviews((prevReviews) => prevReviews.filter((item) => item.reviewId !== review.reviewId));
+    } catch (error) {
+      console.error("리뷰 삭제 실패:", error);
+      alert("리뷰 삭제에 실패했습니다.");
+    }
   };
 
   const handleOpenModal = () => {
@@ -48,7 +56,7 @@ const ReviewBox = ({ review }) => {
 
   return (
     <>
-      <div className="mx-auto mb-4 w-11/12 rounded-xl bg-white p-4 shadow-md">
+      <div className="mx-auto my-4 w-11/12 rounded-xl border border-gray-200 bg-white p-4 shadow-xl">
         <div className="text-md flex items-center justify-between">
           <span>{review.shopName}</span>
           <span className="text-xs text-gray-400">{review.groomerName} 디자이너</span>
@@ -90,7 +98,6 @@ const ReviewBox = ({ review }) => {
       {imageList.length > 0 && (
         <ImageModal isOpen={isImgModalOpen} onClose={handleCloseImgModal}>
           <div className="relative flex w-full items-center justify-center">
-            {/* Navigation buttons for multiple images */}
             {imageList.length > 1 && (
               <>
                 <button

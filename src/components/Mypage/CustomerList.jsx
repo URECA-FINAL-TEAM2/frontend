@@ -16,7 +16,7 @@ const CustomerList = () => {
         </Link>
         <Link to="/customer/reservation">
           <li className="flex items-center border-b-2 border-gray-200 py-4">
-            <IoCalendarOutline size={22} className="mr-2" color="#ff8e8e" />
+            <IoCalendarOutline size={22} className="mr-3" color="#ff8e8e" />
             <span className="text-lg">예약내역</span>
           </li>
         </Link>

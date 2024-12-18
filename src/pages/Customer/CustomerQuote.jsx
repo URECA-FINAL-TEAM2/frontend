@@ -1,19 +1,27 @@
 import CustomerBottom from "@/components/common/CustomerBottom";
-import SubHeader from "@/components/common/SubHeader";
 import ShopQuoteRequestList from "@/components/QuoteRequest/Customer/ShopQuoteRequestList";
 import TotalQuoteRequestList from "@/components/QuoteRequest/Customer/TotalQuoteRequestList";
 import { getQuotesAll, getQuotesGroomer } from "@/queries/quoteQuery";
 import useAuthStore from "@/store/authStore";
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const CustomerQuote = () => {
   const { id } = useAuthStore();
+  const location = useLocation();
+  const { activeTab } = location.state || {};
   const [activeSection, setActiveSection] = useState("section1");
   const [shopRequests, setShopRequests] = useState(null);
   const [totalRequests, setTotalRequests] = useState(null);
-
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (activeTab === 2) {
+      setActiveSection("section2");
+    } else {
+      setActiveSection("section1");
+    }
+  }, [activeTab]);
 
   useEffect(() => {
     const fetchShopRequests = async () => {
@@ -42,10 +50,8 @@ const CustomerQuote = () => {
     fetchTotalRequests();
   }, []);
 
-  if (!shopRequests) return "1:1 맞춤 견적 데이터를 가져오는중...";
-  if (!totalRequests) return "내 견적 공고 데이터를 가져오는중...";
-
   const renderContent = () => {
+    if (!shopRequests || !totalRequests) return null;
     switch (activeSection) {
       case "section1":
         return <ShopQuoteRequestList Infos={shopRequests} />;
@@ -58,7 +64,9 @@ const CustomerQuote = () => {
 
   return (
     <div>
-      <SubHeader title="받은 견적서" navigate={-1} />
+      <div className="fixed top-0 z-30 grid h-[var(--header-height)] w-[400px] items-center bg-white px-5 text-center">
+        <span className="text-lg">받은 견적서</span>
+      </div>
       <button
         onClick={() => {
           navigate("/customer/quotes/request");

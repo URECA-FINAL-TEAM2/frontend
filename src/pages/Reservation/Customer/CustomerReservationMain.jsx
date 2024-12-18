@@ -1,15 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { getCustomerList } from "@/queries/reservationQuery";
 import SubHeader from "@/components/common/SubHeader";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import CustomerBottom from "@/components/common/CustomerBottom";
 
 const CustomerReservationMain = () => {
+  const location = useLocation();
+  const { activeQuotesTab } = location.state || {};
   const [reservations, setReservations] = useState([]);
-  const [activeTab, setActiveTab] = useState("completed");
+  const [activeTab, setActiveTab] = useState("reserved");
   const navigate = useNavigate();
   const authStorage = JSON.parse(localStorage.getItem("auth-storage"));
   const customerId = authStorage?.state?.id?.customerId;
-  const groomerId = authStorage?.state?.id?.groomerId;
 
   useEffect(() => {
     const fetchReservations = async () => {
@@ -36,34 +38,49 @@ const CustomerReservationMain = () => {
 
   return (
     <div>
-      <SubHeader title="예약 내역" />;
-      <div className="mx-auto max-w-lg bg-white p-4">
+      <SubHeader
+        title="예약 내역"
+        navigate={() => {
+          if (activeQuotesTab) {
+            navigate("/customer/quotes", { state: { activeTab: activeQuotesTab } });
+          } else {
+            navigate(-1); // activeQuotesTab이 없으면 단순히 뒤로가기
+          }
+        }}
+      />
+      <div className="mx-auto max-w-lg bg-white px-4 pb-4">
         {/* 상단 탭 */}
-        <div className="mb-4 mt-6 flex justify-around border-b">
+        <div className="mb-4 mt-[--header-height] flex justify-around border-b">
           <button
             onClick={() => setActiveTab("completed")}
             className={`flex-1 py-2 ${
-              activeTab === "completed" ? "border-b-4 text-black" : "border-b-4 border-transparent text-gray-500"
+              activeTab === "completed"
+                ? "border-b-2 border-solid border-black font-semibold text-black"
+                : "text-gray-300 hover:bg-gray-100"
             }`}
-            style={activeTab === "completed" ? { borderColor: "#ff8e8e" } : {}}
+            style={activeTab === "completed" ? { borderColor: "black" } : {}}
           >
             완료
           </button>
           <button
             onClick={() => setActiveTab("reserved")}
             className={`flex-1 py-2 ${
-              activeTab === "reserved" ? "border-b-4 text-black" : "border-b-4 border-transparent text-gray-500"
+              activeTab === "reserved"
+                ? "border-b-2 border-solid border-black font-semibold text-black"
+                : "text-gray-300 hover:bg-gray-100"
             }`}
-            style={activeTab === "reserved" ? { borderColor: "#ff8e8e" } : {}}
+            style={activeTab === "reserved" ? { borderColor: "black" } : {}}
           >
             예약
           </button>
           <button
             onClick={() => setActiveTab("canceled")}
             className={`flex-1 py-2 ${
-              activeTab === "canceled" ? "border-b-4 text-black" : "border-b-4 border-transparent text-gray-500"
+              activeTab === "canceled"
+                ? "border-b-2 border-solid border-black font-semibold text-black"
+                : "text-gray-300 hover:bg-gray-100"
             }`}
-            style={activeTab === "canceled" ? { borderColor: "#ff8e8e" } : {}}
+            style={activeTab === "canceled" ? { borderColor: "black" } : {}}
           >
             취소
           </button>
@@ -95,17 +112,43 @@ const CustomerReservationMain = () => {
                 </div>
               </div>
 
-              {/* 리뷰 쓰기 버튼 */}
               {activeTab === "completed" && (
-                <button className="mt-4 w-full rounded-full bg-main-200 py-1 font-medium text-main-400">
-                  리뷰 쓰기
-                </button>
+                <div className="mt-4 flex w-[330px] space-x-4">
+                  <button
+                    onClick={() => {
+                      if (item.reviewCheck) {
+                        // 리뷰 관리 페이지로 이동
+                        navigate(`/customer/myreviews`);
+                      } else {
+                        // 리뷰 작성 페이지로 이동
+                        navigate(`/customer/postReview/${customerId}`, {
+                          state: { item } // 원하는 state를 담음
+                        });
+                      }
+                    }}
+                    className="w-full rounded-[10px] bg-main-200 py-1 font-medium text-main-400"
+                  >
+                    {item.reviewCheck ? "리뷰 관리" : "리뷰 쓰기"}
+                  </button>
+
+                  {/* 예약 상세 */}
+                  <button
+                    className="w-full rounded-[10px] bg-main-400 py-1 font-medium text-white"
+                    onClick={() =>
+                      navigate("detail", {
+                        state: { selectedQuoteId: item.selectedQuoteId, status: item.status }
+                      })
+                    }
+                  >
+                    예약 상세
+                  </button>
+                </div>
               )}
 
               {/* 예약 상세 버튼 */}
               {activeTab === "reserved" && (
                 <button
-                  className="mt-4 w-full rounded-full bg-main-200 py-1 font-medium text-main-400"
+                  className="mt-4 w-full rounded-[10px] bg-main-200 py-1 font-medium text-main-400"
                   onClick={() =>
                     navigate("detail", {
                       state: { selectedQuoteId: item.selectedQuoteId, status: item.status }
@@ -119,7 +162,7 @@ const CustomerReservationMain = () => {
               {/* 취소 예약 상세 버튼 */}
               {activeTab === "canceled" && (
                 <button
-                  className="mt-4 w-full rounded-full bg-gray-300 py-1 font-medium text-white"
+                  className="mt-4 w-full rounded-[10px] bg-gray-300 py-1 font-medium text-white"
                   onClick={() =>
                     navigate("detail", {
                       state: { selectedQuoteId: item.selectedQuoteId, status: item.status }
@@ -134,6 +177,7 @@ const CustomerReservationMain = () => {
           {tabs[activeTab]?.length === 0 && <p className="mt-10 text-center text-gray-500">내용이 없습니다.</p>}
         </div>
       </div>
+      <CustomerBottom />
     </div>
   );
 };

@@ -4,10 +4,16 @@ import { useNavigate } from "react-router-dom";
 import { Schedule, Corgi, Note } from "/public/Icons";
 
 function GroomerTotalRequests({ Infos }) {
-  if (Infos === "404") return <div>매장정보없음</div>; // TODO: EmptyPage 사용
+  if (Infos == null) return <></>;
+
+  const filteredItems = () => {
+    // expireDate 최신순으로 정렬 (최신 날짜가 먼저 오도록)
+    return Infos.sort((a, b) => new Date(b.expiryDate) - new Date(a.expiryDate));
+  };
+
   return (
     <>
-      {Infos.map((Info) => {
+      {filteredItems().map((Info) => {
         return <GroomerEstimate Info={Info} />;
       })}
     </>
@@ -45,9 +51,9 @@ const GroomerEstimate = ({ Info }) => {
       </div>
       <div
         onClick={() => {
-          navigate(`/groomer/quotes/request/detail/${Info.requestId}`);
+          navigate(`/groomer/quotes/request/detail/${Info.requestId}`, { state: { activeTab: 2 } }); // [x]
         }}
-        className="flex h-[35px] cursor-pointer items-center justify-center rounded-lg bg-gray-200 text-center text-sm"
+        className="flex h-[32px] cursor-pointer items-center justify-center rounded-lg bg-gray-200 text-center text-sm"
       >
         상세보기
       </div>

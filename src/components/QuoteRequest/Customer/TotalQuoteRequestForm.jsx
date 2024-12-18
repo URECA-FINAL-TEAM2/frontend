@@ -173,20 +173,20 @@ const TotalQuoteRequestForm = () => {
 
       await sendCustomerQuote(id.customerId, requestDto, fileImages);
 
-      // 성공 토스트
-      toast.success("견적 요청이 발송되었습니다.", {
-        position: "top-center", // 위치 지정
-        duration: 3000 // 표시 시간 지정
+      toast("견적 요청이 발송되었습니다.", {
+        icon: "📨",
+        position: "top-center",
+        duration: 1000
       });
-
-      navigate("/customer/quotes");
+      setTimeout(() => {
+        navigate("/customer/quotes", { state: { activeTab: 2 } });
+      }, 1000);
     } catch (error) {
-      // 실패 토스트
       toast.error("견적 요청 중 오류가 발생했습니다.", {
         position: "top-center",
-        duration: 3000
+        duration: 1000
       });
-      console.error("견적 요청 실패:", error);
+      // console.error("견적 요청 실패:", error);
     }
   };
 
@@ -266,7 +266,7 @@ const TotalQuoteRequestForm = () => {
         {petInfo ? (
           <div className="flex items-start">
             <div className="mr-4 self-center">
-              <img src={petInfo?.image} alt="반려견 사진" className="h-28 w-28 rounded-lg object-cover" />
+              <img src={petInfo?.image} alt="반려견 사진" className="h-28 w-28 min-w-28 rounded-lg object-cover" />
               <p className="mt-1 text-center font-semibold">{petInfo?.name}</p>
             </div>
             <div className="text-sm leading-snug">
@@ -384,6 +384,8 @@ const TotalQuoteRequestForm = () => {
           sigunguName={location.sigunguName}
         ></RegionSelectModal>
       ) : null}
+
+      <Toaster />
     </div>
   );
 };

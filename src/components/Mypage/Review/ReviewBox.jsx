@@ -66,7 +66,7 @@ const ReviewBox = ({ review, setReviews }) => {
             <GoStarFill color="#F4B400" size={13} className="mr-1" />
             <span>{Number(review.starRating).toFixed(2)}</span>
           </div>
-          <div className="ml-3 text-xs">{review.reviewDate}</div>
+          <div className="ml-3 text-xs">{review.reviewDate}일 방문</div>
         </div>
         <div className="grid grid-cols-3">
           {imageList.map((imgSrc, index) => (

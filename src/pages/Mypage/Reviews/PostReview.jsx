@@ -112,7 +112,7 @@ const PostReview = () => {
         <div className="mx-auto mb-4 h-auto w-11/12 rounded-xl bg-white p-4">
           <div className="flex items-center justify-between text-lg">
             <span>{item.shopName}</span>
-            <div className="text-sm">formatDateOnly{item.beautyDate} 방문</div>
+            <div className="text-sm">{formatDateOnly(item.beautyDate)} 방문</div>
           </div>
 
           <div className="mb-2 flex items-center">

@@ -119,7 +119,7 @@ const WriteReviews = () => {
                 ))}
               </select>
             </div>
-            <div className="ml-3 text-xs text-gray-400">{formatDateOnly(review.reviewDate)}일 방문</div>
+            <div className="ml-3 text-xs text-gray-400">{formatDateOnly(review.reviewDate)} 방문</div>
           </div>
 
           <EditReviewImage

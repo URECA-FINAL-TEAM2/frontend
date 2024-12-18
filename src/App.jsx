@@ -79,7 +79,14 @@ function App() {
         <Routes>
           <Route path="/*" element={<PublicRoutes />} />
           <Route path="/chat/:roomId" element={<Chat />} />
-          <Route path="/customer/*" element={<CustomerRoutes />} />
+          <Route
+            path="/customer/*"
+            element={
+              <PrivateRoute isLoggedIn={isLoggedIn} role="customer" userRole={DefaultRole}>
+                <CustomerRoutes />
+              </PrivateRoute>
+            }
+          />
           <Route
             path="/groomer/*"
             element={

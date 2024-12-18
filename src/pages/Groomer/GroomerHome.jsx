@@ -78,7 +78,7 @@ const GroomerHome = () => {
       <div className="mx-auto w-11/12 pb-24 pt-6">
         {/* 오늘의 예약 */}
         <>
-          <section className="rounded-xl bg-white px-6 py-3 shadow-md">
+          <section className="rounded-lg bg-white px-6 py-3 shadow-md">
             <Link to="/groomer/reservation">
               <div className="flex items-center justify-between">
                 <span className="text-lg">오늘의 예약</span>
@@ -87,7 +87,7 @@ const GroomerHome = () => {
             </Link>
           </section>
           {/* 1:1 견적 요청 */}
-          <section className="my-4 rounded-xl bg-white px-6 py-3 shadow-md">
+          <section className="my-4 rounded-lg bg-white px-6 py-3 shadow-md">
             <Link to="/groomer/quotes">
               <div className="flex flex-col">
                 <span className="text-lg">1:1 견적 요청</span>

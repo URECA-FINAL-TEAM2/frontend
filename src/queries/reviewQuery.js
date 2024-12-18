@@ -56,7 +56,7 @@ export const updateReview = async (reviewId, reviewData) => {
 
   const requestDto = {
     ...jsonData,
-    images: imageUrls // 이미지 URL 추가
+    imageUrl: imageUrls // 이미지 URL 추가
   };
 
   const jsonBlob = new Blob([JSON.stringify(requestDto)], { type: "application/json" });

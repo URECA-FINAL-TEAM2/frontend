@@ -7,9 +7,7 @@ import { useEffect } from "react";
 const SelectRole = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const { email, username, userId, id } = location.state || {};
-
-  console.log(userId, id);
+  const { email, username } = location.state || {};
 
   useEffect(() => {
     Aos.init();

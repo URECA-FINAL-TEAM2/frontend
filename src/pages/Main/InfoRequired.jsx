@@ -32,8 +32,6 @@ const InfoRequired = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalState, setModalState] = useState("update");
 
-  console.log(role);
-
   const handleOpenModal = (state) => {
     setIsModalOpen(true);
     setModalState(state);
@@ -54,7 +52,6 @@ const InfoRequired = () => {
 
     if (validPhone === "possible" && nickname === "possible") {
       try {
-        console.log("회원가입시 formData", formData);
         const response = await registerUser(formData, role);
 
         const customerId = response?.customerId;

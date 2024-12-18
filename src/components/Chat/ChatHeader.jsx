@@ -13,9 +13,7 @@ const ChatHeader = ({ addressLink, DefaultRole, shopInfo, groomerInfo, customerI
   });
 
   useEffect(() => {
-    console.log(addressLink, "gg");
     if (DefaultRole === "customer") {
-      console.log("gg");
       setData({
         image: groomerInfo?.groomerProfileImage,
         name: groomerInfo?.groomerName,
@@ -24,7 +22,6 @@ const ChatHeader = ({ addressLink, DefaultRole, shopInfo, groomerInfo, customerI
         shopId: shopInfo?.shopId
       });
     } else if (DefaultRole === "groomer") {
-      console.log("gdsdgsd");
       setData({
         image: customerInfo?.customerProfileImage,
         name: customerInfo?.customerName,

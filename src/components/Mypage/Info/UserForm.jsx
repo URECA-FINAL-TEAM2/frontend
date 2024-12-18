@@ -67,7 +67,7 @@ const UserForm = ({
             />
             <button
               type="button"
-              className={`rounded-xl px-2 text-xs text-white ${init ? "bg-main" : "bg-[#ccc]"}`}
+              className={`rounded-xl px-2 text-[10px] text-white ${init ? "bg-main" : "bg-[#ccc]"}`}
               onClick={() => {
                 setInit(true);
                 handleNicknameCheck(formData?.nickName || formData?.nickname, setNickname);

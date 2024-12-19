@@ -108,6 +108,7 @@ const NotiComponents = () => {
         return `${basePath}/reservation`;
       case "견적서 알림":
       case "견적서 요청 알림":
+      case "견적서 요청 거절 알림":
         return `${basePath}/quotes`;
       case "리뷰 알림":
         return `${basePath}/store`;

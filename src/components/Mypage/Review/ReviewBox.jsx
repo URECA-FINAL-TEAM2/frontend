@@ -78,7 +78,7 @@ const ReviewBox = ({ review, setReviews }) => {
         <div className="flex items-start justify-between text-sm text-gray-400">
           <div className="flex items-center">
             <GoStarFill color="#F4B400" size={13} className="mr-1" />
-            <span>{Number(review.starRating).toFixed(2)}</span>
+            <span>{Number(review.starRating).toFixed(1)}</span>
           </div>
           <div className="ml-3 text-xs">{formatDateOnly(review.reviewDate)} 방문</div>
         </div>

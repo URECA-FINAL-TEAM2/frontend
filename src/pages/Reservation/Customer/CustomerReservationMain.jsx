@@ -48,7 +48,7 @@ const CustomerReservationMain = () => {
           }
         }}
       />
-      <div className="mx-auto max-w-lg bg-white px-4 pb-4">
+      <div className="mx-auto max-w-lg bg-white px-4 pb-[100px]">
         {/* 상단 탭 */}
         <div className="mb-4 mt-[--header-height] flex justify-around border-b">
           <button

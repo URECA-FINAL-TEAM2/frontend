@@ -1,6 +1,6 @@
 ## 🐶 반려견 미용을 위한 최적의 장소, 미용멍당
 
-<img src='public/Readme/main.png' >
+<img src='public/readme/main.png' >
 
 - **LG U+ URECA 최종융합프로젝트 2어조 미용멍당 서비스 FE**
 - 개발 기간 : 2024.11.12 ~ 2024.12.19
@@ -94,7 +94,7 @@
 
 ## Architecture
 
-<img src='public/Readme/Architecture.png'>
+<img src='public/readme/Architecture.png'>
 
 ## 💁🏻‍♀️ 역할 분담
 

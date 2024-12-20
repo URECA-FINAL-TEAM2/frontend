@@ -1,22 +1,29 @@
-## 🐶 반려견 미용을 위한 최적의 장소, 미용멍당
+# 🐶 반려견 미용을 위한 최적의 장소, 미용멍당
 
-<img src='public/readme/main.png' >
+<img src='public/Readme/main.png' >
 
-- **LG U+ URECA 최종융합프로젝트 2어조 미용멍당 서비스 FE**
 - 개발 기간 : 2024.11.12 ~ 2024.12.19
 - 전체 팀원 (총 7명)
-  - 프론트엔드 : 노승희, 서윤기, 홍시영
-  - 백엔드 : 김범수, 서민수, 이도림, 정시은
+  - FRONT-END : 노승희, 서윤기, 홍시영
+  - BACK-END : 김범수, 서민수, 이도림, 정시은
+
+<img src='public/Readme/main.png' >
+  
+## 📢 서비스 소개 : 강아지 미용 중계 서비스
+
+반려견의 견종, 스타일, 크기 등에 따라 맞춤형 미용 견적을 요청하고, 미용사와의 실시간 소통을 통해 투명하고 합리적인 미용 서비스를 제공받을 수 있는 **강아지 미용 중계 플랫폼**입니다. 😊
 
 ## 👥 TEAM
 
 |                                                                **노승희**                                                                 |                                                              **서윤기**                                                               |                                                             **홍시영**                                                             |
 | :---------------------------------------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------------------------------------: |
 | [<img src="https://avatars.githubusercontent.com/u/112852049?v=4" height=130 width=130> <br/> @seung-heee](https://github.com/seung-heee) | [<img src="https://avatars.githubusercontent.com/u/172252586?v=4" height=130 width=130> <br/> @Suh-code](https://github.com/Suh-code) | [<img src="https://avatars.githubusercontent.com/u/55655104?v=4" height=130 width=130> <br/> @hongsi0](https://github.com/hongsi0) |
+|                                                               **FRONT-END**                                                               |                                                             **FRONT-END**                                                             |                                                           **FRONT-END**                                                            |
 
-## 📢 서비스 소개 : 강아지 미용 중계 서비스
-
-반려견의 견종, 스타일, 크기 등에 따라 맞춤형 미용 견적을 요청하고, 미용사와의 실시간 소통을 통해 투명하고 합리적인 미용 서비스를 제공받을 수 있는 **강아지 미용 중계 플랫폼**입니다. 😊
+|                                                                 **김범수**                                                                 |                                                             **서민수**                                                             |                                                              **이도림**                                                              |                                                             **정시은**                                                             |
+| :----------------------------------------------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------------------------------------: |
+| [<img src="https://avatars.githubusercontent.com/u/88920973?v=4" height=130 width=130> <br/> @KIMBUMSU123](https://github.com/KIMBUMSU123) | [<img src="https://avatars.githubusercontent.com/u/89891511?v=4" height=130 width=130> <br/> @Minsu17](https://github.com/Minsu17) | [<img src="https://avatars.githubusercontent.com/u/65598286?v=4" height=130 width=130> <br/> @LeeDoRim](https://github.com/LeeDoRim) | [<img src="https://avatars.githubusercontent.com/u/80161733?v=4" height=130 width=130> <br/> @Sieun53](https://github.com/Sieun53) |
+|                                                                **BACK-END**                                                                |                                                            **BACK-END**                                                            |                                                             **BACK-END**                                                             |                                                            **BACK-END**                                                            |
 
 ## 🙋‍♀️ 주요 기능 및 서비스
 
@@ -69,6 +76,18 @@
 
 - 견적 요청/견적서 수신/실시간 채팅/예약 완료 등 알림 확인
 
+## 🗾 Architecture
+
+<img src='public/Readme/Architecture.png'>
+
+## ⎍ ERD
+
+<img src='public/Readme/ERD.png'>
+
+## 🎨 Figma
+
+<img src='public/Readme/figma.png'>
+
 ## 🧑🏻‍💻 프로젝트 관리 도구
 
 | **도구**   | **도입 이유**                                                                                                                       |
@@ -78,7 +97,7 @@
 | **Notion** | 작업 관리, 문서화, 데이터베이스 기능을 통합하여 모든 프로젝트 정보를 한곳에서 관리할 수 있는 환경을 제공하기 위해 선택.             |
 | **Github** | 버전 관리와 협업 기능을 통해 코드의 변경 내역을 효율적으로 추적하고, 팀원 간의 원활한 코드 공유와 협력을 지원하기 위해 사용.        |
 
-## 🛠 **기술 스택**
+## 🛠 FRONT-END 기술
 
 | **기술**            | **도입 이유**                                                                                                   |
 | ------------------- | --------------------------------------------------------------------------------------------------------------- |
@@ -94,7 +113,7 @@
 
 ## Architecture
 
-<img src='public/readme/Architecture.png'>
+<img src='public/Readme/Architecture.png'>
 
 ## 💁🏻‍♀️ 역할 분담
 
@@ -120,35 +139,35 @@
 - 미용 견적 입찰 관리
 - 프론트 배포(Vercel)
 
-## 🖥️ Project Setup
+#### 김범수
 
-### **Prerequisites**
+- 소셜 로그인
+- 회원가입
+- 고객, 미용사 마이페이지
+- Chat GPT Open AI
 
-- **Node.js**
-- **npm** (or **yarn**)
+#### 서민수
 
-### **Installation**
+- 고객 프로필 및 주소
+- PG 결제 시스템
+- 견적 예약 시스템
+- SSE 알림 구현
+- 백엔드 배포
 
-1. **Clone the Repository**
+#### 이도림
 
-   ```bash
-   git clone https://github.com/URECA-FINAL-TEAM2/frontend.git
-   cd frontend
-   ```
+- 미용 견적 입찰 시스템
+- 미용사 프로필 및 리뷰
+- 실시간 채팅 시스템
+- 백엔드 배포
 
-2. Install Dependencies
-   ```bash
-   yarn install (or yarn i)
-   ```
-3. Set Up Environment Variables
+#### 정시은
 
-   Please contact one of our members to obtain the variables
-
-4. Start the Server
-   ```bash
-   yarn dev
-   ```
-   The server should now be running at http://localhost:5173
+- 미용 견적 입찰 시스템
+- 매장 프로필
+- 반려견 프로필
+- 실시간 채팅 시스템
+- 리뷰 좋아요
 
 ### 🤙🏻 Git Commit Message Convention
 
@@ -198,3 +217,36 @@ footer (유형: #이슈번호)
 | **Related to**  | 해당 커밋에 관련된 이슈 번호 (아직 해결되지 않은 경우).                              |
 | **Resolves**    | 이슈를 해결했을 때 사용 (이슈 닫힘).                                                 |
 | **종료 키워드** | 커밋으로 이슈를 닫을 때 사용(close / closes / closed, resolve / resolves / resolved) |
+
+<!--
+
+## 🖥️ Project Setup
+
+### **Prerequisites**
+
+- **Node.js**
+- **npm** (or **yarn**)
+
+### **Installation**
+
+1. **Clone the Repository**
+
+   ```bash
+   git clone https://github.com/URECA-FINAL-TEAM2/frontend.git
+   cd frontend
+   ```
+
+2. Install Dependencies
+   ```bash
+   yarn install (or yarn i)
+   ```
+3. Set Up Environment Variables
+
+   Please contact one of our members to obtain the variables
+
+4. Start the Server
+   ```bash
+   yarn dev
+   ```
+   The server should now be running at http://localhost:5173
+ -->

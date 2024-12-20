@@ -7,8 +7,8 @@
   - FRONT-END : 노승희, 서윤기, 홍시영
   - BACK-END : 김범수, 서민수, 이도림, 정시은
 
-<img src='public/Readme/main.png' >
-  
+<img src='public/readme/main.png' >
+
 ## 📢 서비스 소개 : 강아지 미용 중계 서비스
 
 반려견의 견종, 스타일, 크기 등에 따라 맞춤형 미용 견적을 요청하고, 미용사와의 실시간 소통을 통해 투명하고 합리적인 미용 서비스를 제공받을 수 있는 **강아지 미용 중계 플랫폼**입니다. 😊
@@ -78,15 +78,15 @@
 
 ## 🗾 Architecture
 
-<img src='public/Readme/Architecture.png'>
+<img src='public/readme/Architecture.png'>
 
 ## ⎍ ERD
 
-<img src='public/Readme/ERD.png'>
+<img src='public/readme/ERD.png'>
 
 ## 🎨 Figma
 
-<img src='public/Readme/figma.png'>
+<img src='public/readme/figma.png'>
 
 ## 🧑🏻‍💻 프로젝트 관리 도구
 
@@ -113,9 +113,6 @@
 
 ## 🛠 BACK-END 기술
 
-<<<<<<< HEAD
-<img src='public/readme/Architecture.png'>
-=======
 | **목차** | **기술** | **도입 이유** |
 | -------- | -------------------------------- | ------------------------------------------------------------------------------------------------ |
 | Backend | **Java 17, Spring Boot 3.3.3** | 안정적이고 효율적인 서버 개발을 위해 최신 Java와 Spring Boot의 성능과 기능을 활용하기 위해 도입. |
@@ -130,7 +127,6 @@
 | | **Amazon S3** | 대규모 데이터 저장 및 관리, 정적 파일 호스팅을 위해 도입. |
 | 인프라 | **Docker** | 컨테이너 기반 환경으로 애플리케이션 배포 및 관리를 효율적으로 수행하기 위해 사용. |
 
-> > > > > > > 01937be (update readme)
 
 ## 💁🏻‍♀️ 역할 분담
 
